@@ -102,9 +102,15 @@ elif [ $1 = "push" ]; then
 	else
 		echo "Provide a branch name:"
 		read name
-		git add .
-		git commit -m "wix-cli quick commit"
-		git push origin $name
+		if [ $name = "" ]; then
+			git add .
+			git commit -m "wix-cli quick commit"
+			git push origin master
+		else
+			git add .
+			git commit -m "wix-cli quick commit"
+			git push origin $name
+		fi
 	fi
 elif [ $1 = "repo" ]; then
 	echo "repo"
