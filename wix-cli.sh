@@ -94,7 +94,7 @@ elif [ $1 = "git-init" ]; then
 		git remote add origin git@github.com:hwixley/$name.git
 		xdg-open https://github.com/new
 	fi
-elif [ $1 = "git-push" ]; then
+elif [ $1 = "push" ]; then
 	if [ $num_args -gt 1 ]; then
 		git add .
 		git commit -m "wix-cli quick commit"
@@ -106,8 +106,12 @@ elif [ $1 = "git-push" ]; then
 		git commit -m "wix-cli quick commit"
 		git push origin $name
 	fi
-elif [ $1 = "git-repo" ]; then
+elif [ $1 = "repo" ]; then
 	echo "repo"
+	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+	repo_url=${remote#"git@github.com:"}
+	repo_url=${repo_url%".git"}
+	xdg-open "https://github.com/$repo_url"
 else
-	echo "invalid command try again"
+	echo "Invalid command! Try again"
 fi
