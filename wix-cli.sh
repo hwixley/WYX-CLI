@@ -1,21 +1,22 @@
 #!/bin/bash
+GREEN=$(tput setaf 2)
+RED=$(tput setaf 1)
+RESET=$(tput setaf 7)
+echo ""
+echo -e "${GREEN} ██╗    ██╗██╗██╗  ██╗     ██████╗██╗     ██╗ "
+echo -e "${GREEN} ██║    ██║██║╚██╗██╔╝    ██╔════╝██║     ██║ "
+echo -e "${GREEN} ██║ █╗ ██║██║ ╚███╔╝     ██║     ██║     ██║ "
+echo -e "${GREEN} ██║███╗██║██║ ██╔██╗     ██║     ██║     ██║ "
+echo -e "${GREEN} ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║ "
+echo -e "${GREEN}  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
+echo ""
 
-echo ""
-echo " ██╗    ██╗██╗██╗  ██╗     ██████╗██╗     ██╗"
-echo " ██║    ██║██║╚██╗██╔╝    ██╔════╝██║     ██║"
-echo " ██║ █╗ ██║██║ ╚███╔╝     ██║     ██║     ██║"
-echo " ██║███╗██║██║ ██╔██╗     ██║     ██║     ██║"
-echo " ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║"
-echo "  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝"
-echo ""
 my_path=~/Documents/random-coding-projects/bashing
 gs_path=~/Documents/GetSkooled
 num_args="$#"
 if [ $num_args -lt 1 ]; then
-	echo "Where do you want to go?"
+	echo "Where do you want to go?${RESET}"
 	read dir
-	
-	
 	if [ "$dir" = "docs" ]; then
 		cd ~/Documents
 	elif [ "$dir" = "bashing" ]; then
@@ -27,13 +28,13 @@ if [ $num_args -lt 1 ]; then
 	elif [ "$dir" = "down" ]; then
 		cd ~/Downloads
 	else
-		echo "That path is not supported try: docs, bashing, gs, gs-website, down"
+		echo "${GREEN}That path is not supported try: docs, bashing, gs, gs-website, down"
 	fi
 elif [ "$1" = "new" ]; then
 	if [ "$2" = "gs" ]; then
-		echo "Generating new GetSkooled dir ($gs_path$3)..."
-		mkdir $gs_path$3
-		cd $gs_path$3
+		echo "Generating new GetSkooled dir ($gs_path/$3)..."
+		mkdir $gs_path/$3
+		cd $gs_path/$3
 	else
 		echo "This is only supported for gs currently"
 	fi
@@ -63,12 +64,17 @@ elif [ "$1" = "run" ]; then
 	fi
 elif [ "$1" = "delete" ]; then
 	if [ "$2" = "gs" ]; then
-		echo "Are you sure you want to delete $gs_path/$3? (Yy/Nn)"
+		echo "${RED}Are you sure you want to delete $gs_path/$3? [ Yy / Nn]${RESET}"
 		read response
 		if [ $response = "y" ] || [ $response = "Y" ]
 		then
-			echo "Deleting $gs_path/$3"
-			rm -rf $gs_path/$3
+			echo "${RED}Are you really sure you want to delete $gs_path/$3? [ Yy / Nn]${RESET}"
+			read response
+			if [ $response = "y" ] || [ $response = "Y" ]
+			then
+				echo "${RED}Deleting $gs_path/$3"
+				rm -rf $gs_path/$3
+			fi
 		fi
 	else
 		echo "This is only supported for gs currently"
@@ -91,7 +97,7 @@ elif [ "$1" = "git-init" ]; then
 		git remote add origin git@github.com:hwixley/$2.git
 		xdg-open https://github.com/new
 	else
-		echo "Provide a repo name:"
+		echo "Provide a repo name:${RESET}"
 		read name
 		git init
 		git add .
@@ -105,7 +111,7 @@ elif [ "$1" = "push" ]; then
 		git commit -m "wix-cli quick commit"
 		git push origin $2
 	else
-		echo "Provide a branch name:"
+		echo "Provide a branch name:${RESET}"
 		read name
 		if [ "$name" = "" ]; then
 			git add .
