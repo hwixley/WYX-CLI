@@ -70,8 +70,7 @@ elif [ $num_args -gt 2 ]; then
 	fi
 elif [ $1 = "edit" ]; then
 	echo "Edit wix-cli script..."
-	cd $my_path
-	gedit wix-cli.sh
+	gedit $my_path/wix-cli.sh
 	echo "Saving changes"
 	source ~/.bashrc
 elif [ $1 = "save" ]; then
@@ -87,7 +86,7 @@ elif [ $1 = "git-init" ]; then
 		git remote add origin git@github.com:hwixley/$2.git
 		xdg-open https://github.com/new
 	else
-		echo "provide a repo name:"
+		echo "Provide a repo name:"
 		read name
 		git init
 		git add .
@@ -95,6 +94,20 @@ elif [ $1 = "git-init" ]; then
 		git remote add origin git@github.com:hwixley/$name.git
 		xdg-open https://github.com/new
 	fi
+elif [ $1 = "git-push" ]; then
+	if [ $num_args -gt 1 ]; then
+		git add .
+		git commit -m "wix-cli quick commit"
+		git push origin $2
+	else
+		echo "Provide a branch name:"
+		read name
+		git add .
+		git commit -m "wix-cli quick commit"
+		git push origin $name
+	fi
+elif [ $1 = "git-repo" ]; then
+	echo "repo"
 else
 	echo "invalid command try again"
 fi
