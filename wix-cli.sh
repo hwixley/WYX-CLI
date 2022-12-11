@@ -3,8 +3,23 @@ GREEN=$(tput setaf 2)
 RED=$(tput setaf 1)
 RESET=$(tput setaf 7)
 
+# CLI CONSTS
 num_args="$#"
 mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
+gt1=$($num_args -gt 1)
+gt2=$($num_args -gt 2)
+
+# GIT CONSTS
+branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+repo_url=${remote#"git@github.com:"}
+repo_url=${repo_url%".git"}
+
+declare -A myorgs
+myorgs["gs"]="getskooled"
+
+# DIR CONSTS
+insertline=23
 
 declare -A mydirs
 mydirs["docs"]=~/Documents
@@ -15,16 +30,13 @@ mydirs["down"]=~/Downloads
 mydirs["pix"]=~/Pictures
 mydirs["rcp"]=~/Documents/random-coding-projects
 
-declare -A myorgs
-myorgs["gs"]="getskooled"
-
 diraliases=$(echo ${!mydirs[@]} | sed 's/ / - /g' )
-notsupported="${RED}That path is not supported try: $diraliases"
 
-branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-repo_url=${remote#"git@github.com:"}
-repo_url=${repo_url%".git"}
+# FILE EXTs
+exts=("sh" "txt" "py")
+
+# ECHOS
+notsupported="${RED}That path is not supported try: $diraliases"
 
 
 # DEFAULT
@@ -69,7 +81,7 @@ if [ $num_args -lt 1 ]; then
 # GENERAL
 
 elif [ "$1" = "cd" ]; then
-	if [ $num_args -gt 1 ]; then
+	if [ $gt1 ]; then
 		if [ -v mydirs[$2] ]; then
 			echo "${GREEN}Travelling to -> ${mydirs[$2]}"
 			cd ${mydirs[$2]}
@@ -146,7 +158,7 @@ elif [ "$1" = "cdir" ]; then
 	echo "${GREEN}Enter the directory:${RESET}"
 	read i_dir
 	echo "${GREEN}Adding $alias=$i_dir to custom dirs"
-	sed -i "15imydirs["$alias"]=$i_dir" $mypath
+	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
 	wix save
 	
 elif [ "$1" = "mydirs" ]; then
@@ -176,9 +188,9 @@ elif [ "$1" = "ginit" ]; then
 	git add .
 	git commit -m "first commit"
 	
-	if [ $num_args -gt 1 ]; then
+	if [ $gt1 ]; then
 		if [ -v myorgs[$2] ]; then
-			if [ $num_args -gt 1 ]; then
+			if [ $gt2 ]; then
 				git remote add origin "git@github.com:${myorgs[$2]}/$3.git"
 			else
 				echo "${GREEN}Provide a repo name:${RESET}"
@@ -198,7 +210,7 @@ elif [ "$1" = "ginit" ]; then
 	fi
 	
 elif [ "$1" = "push" ]; then
-	if [ $num_args -gt 1 ]; then
+	if [ $gt1 ]; then
 		echo "${GREEN}Provide a commit description:${RESET}"
 		read description
 		git checkout $2
@@ -249,7 +261,7 @@ elif [ "$1" = "pr" ]; then
 	xdg-open "https://github.com/$repo_url/pull/new/$branch"
 	
 elif [ "$1" = "bpr" ]; then
-	if [ $num_args -gt 1 ]; then
+	if [ $gt1 ]; then
 		git checkout -b $2
 		git add .
 		git commit -m "wix-cli quick commit"
@@ -268,6 +280,17 @@ elif [ "$1" = "bpr" ]; then
 			xdg-open "https://github.com/$repo_url/pull/new/$branch"
 		fi
 	fi
+
+
+# FILE CREATION
+
+elif [[ "${exts[*]}" =~ "$1" ]]; then
+	echo "${GREEN}Enter a filename for your $1 file:${RESET}"
+	read fname
+	echo "${GREEN}Creating $fname.$1"
+	touch $fname.$1
+	gedit $fname.$1	
+
 	
 # ERROR
 
