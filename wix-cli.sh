@@ -2,6 +2,7 @@
 
 # COLORS
 GREEN=$(tput setaf 2)
+ORANGE=$(tput setaf 3)
 RED=$(tput setaf 1)
 RESET=$(tput setaf 7)
 
@@ -10,7 +11,11 @@ num_args=$#
 mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
 
 # GIT CONSTS
-branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+user=hwixley
+branch=""
+if git rev-parse --git-dir > /dev/null 2>&1; then
+	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+fi
 remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
@@ -19,7 +24,7 @@ declare -A myorgs
 myorgs["gs"]="getskooled"
 
 # DIR CONSTS
-insertline=23
+insertline=25
 
 declare -A mydirs
 mydirs["docs"]=~/Documents
@@ -38,9 +43,13 @@ exts=("sh" "txt" "py")
 # PROMPTS
 notsupported="${RED}That path is not supported try: $diraliases"
 
-# FUNCTIONS
+# MODULAR FUNCTIONS
 function info_text() {
 	echo "${GREEN}$1${RESET}"
+}
+
+function warn_text() {
+	echo "${ORANGE}$1${RESET}"
 }
 
 function error_text() {
@@ -48,6 +57,14 @@ function error_text() {
 		echo $notsupported
 	else
 		echo "${RED}$1${RESET}"
+	fi
+}
+
+function empty() {
+	if [ "$1" = "" ]; then
+		return 0
+	else
+		return 1
 	fi
 }
 
@@ -67,9 +84,32 @@ function direxists() {
 	fi
 }
 
+function orgexists() {
+	if [ -v myorgs[$1] ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function is_git_repo() {
+	if ! empty $branch ; then
+		return 0
+	else
+		error_text "This is not a git repository..."
+		return 1
+	fi
+}
+
 function commit() {
 	git add .
-	git commit -m "${1:-wix-cli quick commit}"
+	if empty $2 ; then
+		info_text "Provide a commit description:"
+		read description
+		git commit -m "${description:-wix-cli quick commit}"
+	else
+		git commit -m "${1:-wix-cli quick commit}"
+	fi
 }
 
 function push() {
@@ -97,6 +137,123 @@ function openurl() {
 	xdg-open $2
 }
 
+function ginit() {
+	git init
+	if empty $2 ; then
+		info_text "Provide a name for this repository:"
+		read rname
+		echo "# $rname" >> README.md
+		push "master" "wix-cli: first commit"
+		git remote add origin git@github.com:$1/$rname.git
+		openurl https://github.com/$3
+	else
+		echo "# $2" >> README.md
+		push "master" "wix-cli: first commit"
+		git remote add origin git@github.com:$1/$2.git
+		openurl https://github.com/$3
+	fi
+}
+
+# COMMAND FUNCTIONS
+function wix_cd() {
+	if arggt "1" ; then
+		if direxists $1 ; then
+			info_text "Travelling to -> ${mydirs[$1]}"
+			cd ${mydirs[$1]}
+		else
+			error_text
+		fi
+	else
+		info_text "Where do you want to go?"
+		read dir
+		if direxists $dir ; then
+			echo "${GREEN}Travelling to -> ${mydirs[$dir]}"
+			cd ${mydirs[$dir]}
+		else
+			error_text
+		fi
+	fi
+}
+
+function wix_new() {
+	if direxists $1 ; then
+		if empty $2 ; then
+			info_text "Provide a name for this directory:"
+			read dname
+			info_text "Generating new dir (${mydirs[$1]}/$dname)..."
+			mkdir ${mydirs[$1]}/$dname
+			cd ${mydirs[$1]}/$dname
+		else
+			info_text "Generating new dir (${mydirs[$1]}/$2)..."
+			mkdir ${mydirs[$1]}/$2
+			cd ${mydirs[$1]}/$2
+		fi
+		return 0
+	else
+		error_text
+		return 1
+	fi
+}
+
+function wix_run() {
+	if [ "$1" = "gs" ]; then
+		info_text "Running GetSkooled localhost server on develop"
+		cd $gs_path/website/GetSkooled-MVP-Website
+		git checkout develop
+		git pull origin develop
+		php -S localhost:8081
+	else
+		error_text "This is only supported for gs currently"
+	fi
+}
+
+function wix_delete() {
+	if direxists $1 ; then
+		if empty "$2" ; then
+			error_text "You did not provide a path in this directory to delete, try again..."
+		else
+			error_text "Are you sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
+			read response
+			if [ $response = "y" ] || [ $response = "Y" ]
+			then
+				error_text "Are you really sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
+				read response
+				if [ $response = "y" ] || [ $response = "Y" ]
+				then
+					error_text "Deleting ${mydirs[$1]}/$2"
+					rm -rf ${mydirs[$1]}/$2
+				fi
+			fi
+		fi
+	else
+		error_text
+	fi
+}
+
+# GITHUB AUTOMATION COMMAND FUNCTIONS
+function wix_ginit() {
+	if ! is_git_repo ; then
+		if orgexists $1 ; then
+			ginit ${myorgs[$1]} $2 "organizations/${myorgs[$1]}/repositories/new"
+		else
+			ginit $user $2 "new"
+		fi
+	else
+		error_text "This is already a git repository..."
+	fi
+}
+
+function wix_gnew() {	
+	if wix_new $1 $2 ; then
+		wix_ginit $1 $2
+	fi
+}
+
+function giturl() {
+	if is_git_repo ; then
+		openurl $1 $2
+	fi
+}
 
 # DEFAULT
 
@@ -113,21 +270,21 @@ if [ $num_args -eq 0 ]; then
 	echo "v0.0.0.0"
 	echo ""
 	info_text "COMMANDS:"
-	echo "- cd <cdir> 		: navigation"
-	echo "- back 			: return to last dir"
-	echo "- new <cdir> 		: new directory"
-	echo "- run <cdir> 		: setup and run environment"
-	echo "- delete <cdir> 	: delete dir"
+	echo "- cd <cdir> 			: navigation"
+	echo "- back 				: return to last dir"
+	echo "- new <cdir> <subdir>		: new directory"
+	echo "- run <cdir> 			: setup and run environment"
+	echo "- delete <cdir> <subdir> 	: delete dir"
 	echo ""
 	info_text "GITHUB AUTOMATION:"
-	echo "- push <branch?>	: push changes"
-	echo "- ginit			: init git repo"
-	echo "- ngit <cdir>	 	: create and init git repo"
-	echo "- repo 			: go to repo url"
-	echo "- branch 		: go to branch url"
-	echo "- nbranch 		: create new branch"
-	echo "- pr 			: create PR for branch"
-	echo "- bpr 			: checkout changes and create PR for branch"
+	echo "- push <branch?>		: push changes"
+	echo "- ginit <org?> <repo>		: init git repo"
+	echo "- ngit <cdir/org> <repo> 	: create and init git repo"
+	echo "- repo 				: go to repo url"
+	echo "- branch 			: go to branch url"
+	echo "- nbranch <name?>		: create new branch"
+	echo "- pr 				: create PR for branch"
+	echo "- bpr 				: checkout changes and create PR for branch"
 	echo ""
 	info_text "CLI management:"
 	echo "- edit"
@@ -140,66 +297,21 @@ if [ $num_args -eq 0 ]; then
 # GENERAL
 
 elif [ "$1" = "cd" ]; then
-	if arggt "1" ; then
-		if direxists $2 ; then
-			info_text "Travelling to -> ${mydirs[$2]}"
-			cd ${mydirs[$2]}
-		else
-			error_text
-		fi
-	else
-		info_text "Where do you want to go?"
-		read dir
-		if direxists $dir ; then
-			echo "${GREEN}Travelling to -> ${mydirs[$dir]}"
-			cd ${mydirs[$dir]}
-		else
-			error_text
-		fi
-	fi
+	wix_cd $2
+	
 elif [ "$1" = "new" ]; then
-	if [ "$2" = "gs" ]; then
-		info_text "Generating new GetSkooled dir ($gs_path/$3)..."
-		mkdir $gs_path/$3
-		cd $gs_path/$3
-	else
-		error_text "This is only supported for gs currently"
-	fi
+	wix_new $2 $3
 	
 elif [ "$1" = "run" ]; then
-	if [ "$2" = "gs" ]; then
-		info_text "Running GetSkooled localhost server on develop"
-		cd $gs_path/website/GetSkooled-MVP-Website
-		git checkout develop
-		git pull origin develop
-		php -S localhost:8081
-	else
-		error_text "This is only supported for gs currently"
-	fi
+	wix_run $2
 	
 elif [ "$1" = "delete" ]; then
-	if [ "$2" = "gs" ]; then
-		error_text "Are you sure you want to delete $gs_path/$3? [ Yy / Nn]"
-		read response
-		if [ $response = "y" ] || [ $response = "Y" ]
-		then
-			error_text "Are you really sure you want to delete $gs_path/$3? [ Yy / Nn]${RESET}"
-			read response
-			if [ $response = "y" ] || [ $response = "Y" ]
-			then
-				error_text "Deleting $gs_path/$3"
-				rm -rf $gs_path/$3
-			fi
-		fi
-	else
-		error_text "This is only supported for gs currently"
-	fi
-	
+	wix_delete $2 $3
 
 # CLI MANAGEMENT
 
 elif [ "$1" = "edit" ]; then
-	info_text "Edit wix-cli script..."
+	warn_text "Edit wix-cli script..."
 	gedit $mypath
 	info_text "Saving changes to $mypath..."
 	source ~/.bashrc
@@ -227,61 +339,23 @@ elif [ "$1" = "mydirs" ]; then
 # GITHUB AUTOMATION
 
 elif [ "$1" = "gnew" ]; then
-	if [ "$2" = "gs" ]; then
-		info_text "Generating new GetSkooled dir ($gs_path/$3)..."
-		mkdir $gs_path/$3
-		cd $gs_path/$3
-		echo "# $3" >> README.md
-		git init
-		commit "first commit"
-		git remote add origin git@github.com:getskooled/$3.git
-		openurl "https://github.com/organizations/getskooled/repositories/new"
-	else
-		error_text "This is only supported for gs currently"
-	fi
+	wix_gnew $2 $3
 	
 elif [ "$1" = "ginit" ]; then
-	info_text "Initializing git repo..."
-	git init
-	commit "first commit"
-	
-	if arggt "1" ; then
-		if [ -v myorgs[$2] ]; then
-			if arggt "2" ; then
-				git remote add origin "git@github.com:${myorgs[$2]}/$3.git"
-			else
-				info_text "Provide a repo name:"
-				read name
-				git remote add origin "git@github.com:${myorgs[$2]}/$name.git"
-			fi
-			xdg-open "https://github.com/organizations/${myorgs[$2]}/repositories/new"
-		else
-			git remote add origin "git@github.com:hwixley/$2.git"
-			xdg-open "https://github.com/new"
-		fi
-	else
-		info_text "Provide a repo name:"
-		read name
-		git remote add origin git@github.com:hwixley/$name.git
-		xdg-open https://github.com/new
-	fi
+	wix_ginit $2 $3
 	
 elif [ "$1" = "push" ]; then
 	if arggt "1" ; then
-		info_text "Provide a commit description:"
-		read description
-		push $2 $description
+		push $2
 	else
-		info_text "Provide a commit description:"
-		read description
-		push $branch $description
+		push $branch
 	fi
 elif [ "$1" = "repo" ]; then
-	openurl "Redirecting to $repo_url" "https://github.com/$repo_url"
+	giturl "Redirecting to $repo_url" "https://github.com/$repo_url"
 
 elif [ "$1" = "branch" ]; then
-	openurl "Redirecting to $branch on $repo_url" "https://github.com/$repo_url/tree/$branch"
-
+	giturl "Redirecting to $branch on $repo_url" "https://github.com/$repo_url/tree/"
+	
 elif [ "$1" = "nbranch" ]; then
 	if arggt "1" ; then
 		npush $2
@@ -296,16 +370,18 @@ elif [ "$1" = "nbranch" ]; then
 	fi
 	
 elif [ "$1" = "pr" ]; then
-	openurl "Creating PR for $branch in $repo_url" "https://github.com/$repo_url/pull/new/$branch"
+	giturl "Creating PR for $branch in $repo_url" "https://github.com/$repo_url/pull/new/$branch"
 	
 elif [ "$1" = "bpr" ]; then
-	if arggt "1" ; then
-		bpr $2
-	else
-		info_text "Provide a branch name:"
-		read name
-		if [ "$name" != "" ]; then
-			bpr $name
+	if is_git_repo ; then
+		if arggt "1" ; then
+			bpr $2
+		else
+			info_text "Provide a branch name:"
+			read name
+			if [ "$name" != "" ]; then
+				bpr $name
+			fi
 		fi
 	fi
 
