@@ -1,13 +1,13 @@
 #!/bin/bash
+
+# COLORS
 GREEN=$(tput setaf 2)
 RED=$(tput setaf 1)
 RESET=$(tput setaf 7)
 
 # CLI CONSTS
-num_args="$#"
+num_args=$#
 mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
-[ $num_args -gt 1 ] ; gt1=$?
-[ $num_args -gt 2 ] ; gt2=$?
 
 # GIT CONSTS
 branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -35,32 +35,83 @@ diraliases=$(echo ${!mydirs[@]} | sed 's/ / - /g' )
 # FILE EXTs
 exts=("sh" "txt" "py")
 
-# ECHOS
+# PROMPTS
 notsupported="${RED}That path is not supported try: $diraliases"
+
+# FUNCTIONS
+function info_text() {
+	echo "${GREEN}$1${RESET}"
+}
+
+function error_text() {
+	if [ "$1" = "" ]; then
+		echo $notsupported
+	else
+		echo "${RED}$1${RESET}"
+	fi
+}
+
+function arggt() {
+	if [ "$num_args" -gt "$1" ]; then
+		return 0
+	else
+		return 1
+	fi	
+}
+
+function direxists() {
+	if [ -v mydirs[$1] ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function commit() {
+	git add .
+	git commit -m "${1:-wix-cli quick commit}"
+}
+
+function push() {
+	git checkout -b $1
+	commit $2
+	git push origin $1
+}
+
+function bpr() {
+	push $1
+	info_text "Creating PR for $branch in $repo_url..."
+	xdg-open "https://github.com/$repo_url/pull/new/$branch"
+}
+
+function openurl() {
+	info_text "$1..."
+	xdg-open $2
+}
 
 
 # DEFAULT
 
-if [ $num_args -lt 1 ]; then
+if [ $num_args -eq 0 ]; then
 	echo "Welcome to the..."
 	echo ""
-	echo -e "${GREEN} ██╗    ██╗██╗██╗  ██╗     ██████╗██╗     ██╗ "
-	echo -e "${GREEN} ██║    ██║██║╚██╗██╔╝    ██╔════╝██║     ██║ "
-	echo -e "${GREEN} ██║ █╗ ██║██║ ╚███╔╝     ██║     ██║     ██║ "
-	echo -e "${GREEN} ██║███╗██║██║ ██╔██╗     ██║     ██║     ██║ "
-	echo -e "${GREEN} ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║ "
-	echo -e "${GREEN}  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
+	info_text " ██╗    ██╗██╗██╗  ██╗     ██████╗██╗     ██╗ "
+	info_text " ██║    ██║██║╚██╗██╔╝    ██╔════╝██║     ██║ "
+	info_text " ██║ █╗ ██║██║ ╚███╔╝     ██║     ██║     ██║ "
+	info_text " ██║███╗██║██║ ██╔██╗     ██║     ██║     ██║ "
+	info_text " ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║ "
+	info_text "  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
 	echo ""
 	echo "v0.0.0.0"
 	echo ""
-	echo "COMMANDS:${RESET}"
+	info_text "COMMANDS:"
 	echo "- cd <cdir> 		: navigation"
 	echo "- back 			: return to last dir"
 	echo "- new <cdir> 		: new directory"
 	echo "- run <cdir> 		: setup and run environment"
 	echo "- delete <cdir> 	: delete dir"
 	echo ""
-	echo "${GREEN}GITHUB AUTOMATION:${RESET}"
+	info_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>	: push changes"
 	echo "- ginit			: init git repo"
 	echo "- ngit <cdir>	 	: create and init git repo"
@@ -70,7 +121,7 @@ if [ $num_args -lt 1 ]; then
 	echo "- pr 			: create PR for branch"
 	echo "- bpr 			: checkout changes and create PR for branch"
 	echo ""
-	echo "${GREEN}CLI management:${RESET}"
+	info_text "CLI management:"
 	echo "- edit"
 	echo "- save"
 	echo "- cat"
@@ -81,83 +132,84 @@ if [ $num_args -lt 1 ]; then
 # GENERAL
 
 elif [ "$1" = "cd" ]; then
-	if [ $gt1 ]; then
-		if [ -v mydirs[$2] ]; then
-			echo "${GREEN}Travelling to -> ${mydirs[$2]}"
+	if arggt "1" ; then
+		if direxists $2 ; then
+			info_text "Travelling to -> ${mydirs[$2]}"
 			cd ${mydirs[$2]}
 		else
-			echo $notsupported
+			error_text
 		fi
 	else
-		echo "${GREEN}Where do you want to go?${RESET}"
+		info_text "Where do you want to go?"
 		read dir
-		if [ -v mydirs[$dir] ]; then
+		if direxists $dir ; then
 			echo "${GREEN}Travelling to -> ${mydirs[$dir]}"
 			cd ${mydirs[$dir]}
 		else
-			echo $notsupported
+			error_text
 		fi
 	fi
 elif [ "$1" = "new" ]; then
 	if [ "$2" = "gs" ]; then
-		echo "${GREEN}Generating new GetSkooled dir ($gs_path/$3)..."
+		info_text "Generating new GetSkooled dir ($gs_path/$3)..."
 		mkdir $gs_path/$3
 		cd $gs_path/$3
 	else
-		echo "${GREEN}This is only supported for gs currently"
+		error_text "This is only supported for gs currently"
 	fi
 	
 elif [ "$1" = "run" ]; then
 	if [ "$2" = "gs" ]; then
-		echo "${GREEN}Running GetSkooled localhost server on develop"
+		info_text "Running GetSkooled localhost server on develop"
 		cd $gs_path/website/GetSkooled-MVP-Website
 		git checkout develop
 		git pull origin develop
 		php -S localhost:8081
 	else
-		echo "${GREEN}This is only supported for gs currently"
+		error_text "This is only supported for gs currently"
 	fi
 	
 elif [ "$1" = "delete" ]; then
 	if [ "$2" = "gs" ]; then
-		echo "${RED}Are you sure you want to delete $gs_path/$3? [ Yy / Nn]${RESET}"
+		error_text "Are you sure you want to delete $gs_path/$3? [ Yy / Nn]"
 		read response
 		if [ $response = "y" ] || [ $response = "Y" ]
 		then
-			echo "${RED}Are you really sure you want to delete $gs_path/$3? [ Yy / Nn]${RESET}"
+			error_text "Are you really sure you want to delete $gs_path/$3? [ Yy / Nn]${RESET}"
 			read response
 			if [ $response = "y" ] || [ $response = "Y" ]
 			then
-				echo "${RED}Deleting $gs_path/$3"
+				error_text "Deleting $gs_path/$3"
 				rm -rf $gs_path/$3
 			fi
 		fi
 	else
-		echo "This is only supported for gs currently"
+		error_text "This is only supported for gs currently"
 	fi
 	
 
 # CLI MANAGEMENT
 
 elif [ "$1" = "edit" ]; then
-	echo "${GREEN}Edit wix-cli script..."
-	gedit $my_path/wix-cli.sh
+	info_text "Edit wix-cli script..."
+	gedit $my_path
 	echo "Saving changes"
+	echo $my_path
 	source ~/.bashrc
 	
 elif [ "$1" = "save" ]; then
-	echo "${GREEN}Sourcing bash :)"
+	info_text "Sourcing bash :)"
 	source ~/.bashrc
 	
 elif [ "$1" = "cat" ]; then
-	cat $my_path/wix-cli.sh
+	cat $my_path
 
 elif [ "$1" = "cdir" ]; then
-	echo "${GREEN}Enter an alias for your new directory:${RESET}"
+	info_text "Enter an alias for your new directory:"
 	read alias
-	echo "${GREEN}Enter the directory:${RESET}"
+	info_text "Enter the directory:"
 	read i_dir
-	echo "${GREEN}Adding $alias=$i_dir to custom dirs"
+	info_text "Adding $alias=$i_dir to custom dirs"
 	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
 	wix save
 	
@@ -169,31 +221,29 @@ elif [ "$1" = "mydirs" ]; then
 
 elif [ "$1" = "gnew" ]; then
 	if [ "$2" = "gs" ]; then
-		echo "${GREEN}Generating new GetSkooled dir ($gs_path/$3)..."
+		info_text "Generating new GetSkooled dir ($gs_path/$3)..."
 		mkdir $gs_path/$3
 		cd $gs_path/$3
 		echo "# $3" >> README.md
 		git init
-		git add .
-		git commit -m "first commit"
+		commit "first commit"
 		git remote add origin git@github.com:getskooled/$3.git
-		xdg-open https://github.com/organizations/getskooled/repositories/new
+		openurl "https://github.com/organizations/getskooled/repositories/new"
 	else
-		echo "${GREEN}This is only supported for gs currently"
+		error_text "This is only supported for gs currently"
 	fi
 	
 elif [ "$1" = "ginit" ]; then
-	echo "${GREEN}Initializing git repo..."
+	info_text "Initializing git repo..."
 	git init
-	git add .
-	git commit -m "first commit"
+	commit "first commit"
 	
-	if [ $gt1 ]; then
+	if arggt "1" ; then
 		if [ -v myorgs[$2] ]; then
-			if [ $gt2 ]; then
+			if arggt "2" ; then
 				git remote add origin "git@github.com:${myorgs[$2]}/$3.git"
 			else
-				echo "${GREEN}Provide a repo name:${RESET}"
+				info_text "Provide a repo name:"
 				read name
 				git remote add origin "git@github.com:${myorgs[$2]}/$name.git"
 			fi
@@ -203,81 +253,52 @@ elif [ "$1" = "ginit" ]; then
 			xdg-open "https://github.com/new"
 		fi
 	else
-		echo "${GREEN}Provide a repo name:${RESET}"
+		info_text "Provide a repo name:"
 		read name
 		git remote add origin git@github.com:hwixley/$name.git
 		xdg-open https://github.com/new
 	fi
 	
 elif [ "$1" = "push" ]; then
-	if [ $gt1 ]; then
-		echo "${GREEN}Provide a commit description:${RESET}"
+	if arggt "1" ; then
+		info_text "Provide a commit description:"
 		read description
-		git checkout $2
-		git add .
-		git commit -m "${description:-wix-cli quick commit}"
-		git push origin $2
+		push $2 $description
 	else
-		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')	
-		echo "${GREEN}Provide a commit description:${RESET}"
+		info_text "Provide a commit description:"
 		read description
-		if [ "$name" = "" ]; then
-			git add .
-			git commit -m "${description:-wix-cli quick commit}"
-			git push origin $branch
-		else
-			git add .
-			git commit -m "${description:-wix-cli quick commit}"
-			git push origin $branch
-		fi
+		push $branch $description
 	fi
 elif [ "$1" = "repo" ]; then
-	echo "${GREEN}Redirecting to $repo_url..."
-	xdg-open "https://github.com/$repo_url"
+	openurl "Redirecting to $repo_url" "https://github.com/$repo_url"
 
 elif [ "$1" = "branch" ]; then
-	echo "${GREEN}Redirecting to $branch on $repo_url..."
-	xdg-open "https://github.com/$repo_url/tree/$branch"
+	openurl "Redirecting to $branch on $repo_url" "https://github.com/$repo_url/tree/$branch"
 
 elif [ "$1" = "nbranch" ]; then
-	if [ $num_args -gt 1 ]; then
-		git checkout -b $2
-		git add .
-		git commit -m "wix-cli quick commit"
-		git push origin $2
+	if arggt "1" ; then
+		push $2
 	else
-		echo "${GREEN}Provide a branch name:${RESET}"
+		info_text "Provide a branch name:"
 		read name
 		if [ "$name" != "" ]; then
-			git checkout -b $name
-			git add .
-			git commit -m "wix-cli quick commit"
-			git push origin $name
+			push $name
+		else
+			error_text "Invalid branch name"
 		fi
 	fi
 	
 elif [ "$1" = "pr" ]; then
-	echo "${GREEN}Creating PR for $branch in $repo_url..."
-	xdg-open "https://github.com/$repo_url/pull/new/$branch"
+	openurl "Creating PR for $branch in $repo_url" "https://github.com/$repo_url/pull/new/$branch"
 	
 elif [ "$1" = "bpr" ]; then
-	if [ $gt1 ]; then
-		git checkout -b $2
-		git add .
-		git commit -m "wix-cli quick commit"
-		git push origin $2
-		echo "${GREEN}Creating PR for $branch in $repo_url..."
-		xdg-open "https://github.com/$repo_url/pull/new/$branch"
+	if arggt "1" ; then
+		bpr $2
 	else
-		echo "${GREEN}Provide a branch name:${RESET}"
+		info_text "Provide a branch name:"
 		read name
 		if [ "$name" != "" ]; then
-			git checkout -b $name
-			git add .
-			git commit -m "wix-cli quick commit"
-			git push origin $name
-			echo "${GREEN}Creating PR for $branch in $repo_url..."
-			xdg-open "https://github.com/$repo_url/pull/new/$branch"
+			bpr $name
 		fi
 	fi
 
@@ -285,9 +306,9 @@ elif [ "$1" = "bpr" ]; then
 # FILE CREATION
 
 elif [[ "${exts[*]}" =~ "$1" ]]; then
-	echo "${GREEN}Enter a filename for your $1 file:${RESET}"
+	info_text "Enter a filename for your $1 file:"
 	read fname
-	echo "${GREEN}Creating $fname.$1"
+	info_text "Creating $fname.$1"
 	touch $fname.$1
 	gedit $fname.$1	
 
@@ -295,5 +316,5 @@ elif [[ "${exts[*]}" =~ "$1" ]]; then
 # ERROR
 
 else
-	echo "${RED}Invalid command! Try again"
+	error_text "Invalid command! Try again"
 fi
