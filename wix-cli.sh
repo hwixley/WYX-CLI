@@ -38,6 +38,8 @@ if [ $num_args -lt 1 ]; then
 	echo "- git-init"
 	echo "- new-git <cdir>"
 	echo "- repo"
+	echo "- branch"
+	echo "- new-branch"
 	echo "- pr"
 	echo "- branch-pr"
 	echo ""
@@ -182,13 +184,21 @@ elif [ "$1" = "push" ]; then
 		fi
 	fi
 elif [ "$1" = "repo" ]; then
-	echo "${GREEN}Redirecting to repo..."
 	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 	repo_url=${remote#"git@github.com:"}
 	repo_url=${repo_url%".git"}
+	echo "${GREEN}Redirecting to $repo_url..."
 	xdg-open "https://github.com/$repo_url"
-	
+
 elif [ "$1" = "branch" ]; then
+	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+	repo_url=${remote#"git@github.com:"}
+	repo_url=${repo_url%".git"}
+	echo "${GREEN}Redirecting to $branch on $repo_url..."
+	xdg-open "https://github.com/$repo_url"
+
+elif [ "$1" = "new-branch" ]; then
 	if [ $num_args -gt 1 ]; then
 		git checkout -b $2
 		git add .
