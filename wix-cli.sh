@@ -38,6 +38,8 @@ if [ $num_args -lt 1 ]; then
 	echo "- git-init"
 	echo "- new-git <cdir>"
 	echo "- repo"
+	echo "- pr"
+	echo "- branch-pr"
 	echo ""
 	echo "${GREEN}CLI management:${RESET}"
 	echo "- edit"
@@ -165,14 +167,16 @@ elif [ "$1" = "push" ]; then
 	else
 		echo "${GREEN}Provide a branch name:${RESET}"
 		read name
+		echo "${GREEN}Provide a commit description:${RESET}"
+		read description
 		if [ "$name" = "" ]; then
 			branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')	
 			git add .
-			git commit -m "wix-cli quick commit"
+			git commit -m "${description:-wix-cli quick commit}"
 			git push origin $branch
 		else
 			git add .
-			git commit -m "wix-cli quick commit"
+			git commit -m "${description:-wix-cli quick commit}"
 			git push origin $name
 		fi
 	fi
