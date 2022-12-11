@@ -200,9 +200,8 @@ elif [ "$1" = "delete" ]; then
 
 elif [ "$1" = "edit" ]; then
 	info_text "Edit wix-cli script..."
-	gedit $my_path
-	echo "Saving changes"
-	echo $my_path
+	gedit $mypath
+	info_text "Saving changes to $mypath..."
 	source ~/.bashrc
 	
 elif [ "$1" = "save" ]; then
