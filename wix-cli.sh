@@ -4,6 +4,9 @@
 GREEN=$(tput setaf 2)
 ORANGE=$(tput setaf 3)
 RED=$(tput setaf 1)
+BLUE=$(tput setaf 4)
+CYAN=$(tput setaf 6)
+BLACK=$(tput setaf 0)
 RESET=$(tput setaf 7)
 
 # CLI CONSTS
@@ -46,6 +49,14 @@ notsupported="${RED}That path is not supported try: $diraliases"
 # MODULAR FUNCTIONS
 function info_text() {
 	echo "${GREEN}$1${RESET}"
+}
+
+function h1_text() {
+	echo "${BLUE}$1${RESET}"
+}
+
+function h2_text() {
+	echo "${CYAN}$1${RESET}"
 }
 
 function warn_text() {
@@ -274,36 +285,42 @@ function giturl() {
 
 # DEFAULT
 
+
 if [ $num_args -eq 0 ]; then
 	echo "Welcome to the..."
 	echo ""
-	info_text " ██╗    ██╗██╗██╗  ██╗     ██████╗██╗     ██╗ "
-	info_text " ██║    ██║██║╚██╗██╔╝    ██╔════╝██║     ██║ "
-	info_text " ██║ █╗ ██║██║ ╚███╔╝     ██║     ██║     ██║ "
-	info_text " ██║███╗██║██║ ██╔██╗     ██║     ██║     ██║ "
-	info_text " ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║ "
-	info_text "  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
+	info_text " ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}888P ${CYAN}8${BLUE}88 ${CYAN}Y${BLUE}8b Y8P${GREEN}     e88'Y88 888     888 "
+	info_text "  ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8P  ${CYAN}8${BLUE}88  ${CYAN}Y${BLUE}8b Y${GREEN}     d888  'Y 888     888 "
+	info_text "   ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}   ${CYAN}8${BLUE}88   ${CYAN}Y${BLUE}8b${GREEN}     C8888     888     888 "
+	info_text "    ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b    ${CYAN}8${BLUE}88  e ${CYAN}Y${BLUE}8b${GREEN}     Y888  ,d 888  ,d 888 "
+	info_text "     ${CYAN}Y${BLUE}8P ${CYAN}Y${BLUE}     ${CYAN}8${BLUE}88 d8b ${CYAN}Y${BLUE}8b${GREEN}     \"88,d88 888,d88 888 "
+	# info_text " ██╗    ██╗██╗██╗  ██╗     ██████╗██╗     ██╗ "
+	# info_text " ██║    ██║██║╚██╗██╔╝    ██╔════╝██║     ██║ "
+	# info_text " ██║ █╗ ██║██║ ╚███╔╝     ██║     ██║     ██║ "
+	# info_text " ██║███╗██║██║ ██╔██╗     ██║     ██║     ██║ "
+	# info_text " ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║ "
+	# info_text "  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
 	echo ""
 	echo "v0.0.0.0"
 	echo ""
-	info_text "COMMANDS:"
-	echo "- cd <cdir> 			: navigation"
-	echo "- back 				: return to last dir"
-	echo "- new <cdir> <subdir>		: new directory"
-	echo "- run <cdir> 			: setup and run environment"
-	echo "- delete <cdir> <subdir> 	: delete dir"
+	h1_text "COMMANDS:"
+	echo "- cd <cdir> 			${ORANGE}: navigation${RESET}"
+	echo "- back 				${ORANGE}: return to last dir${RESET}"
+	echo "- new <cdir> <subdir>		${ORANGE}: new directory${RESET}"
+	echo "- run <cdir> 			${ORANGE}: setup and run environment${RESET}"
+	echo "- delete <cdir> <subdir> 	${ORANGE}: delete dir${RESET}"
 	echo ""
-	info_text "GITHUB AUTOMATION:"
-	echo "- push <branch?>		: push changes"
-	echo "- ginit <org?> <repo>		: init git repo"
-	echo "- gnew <cdir/org> <repo> 	: create and init git repo"
-	echo "- repo 				: go to repo url"
-	echo "- branch 			: go to branch url"
-	echo "- nbranch <name?>		: create new branch"
-	echo "- pr 				: create PR for branch"
-	echo "- bpr 				: checkout changes and create PR for branch"
+	h1_text "GITHUB AUTOMATION:"
+	echo "- push <branch?>		${ORANGE}: push changes${RESET}"
+	echo "- ginit <org?> <repo>		${ORANGE}: init git repo${RESET}"
+	echo "- gnew <cdir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
+	echo "- repo 				${ORANGE}: go to repo url${RESET}"
+	echo "- branch 			${ORANGE}: go to branch url${RESET}"
+	echo "- nbranch <name?>		${ORANGE}: create new branch${RESET}"
+	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
+	echo "- bpr 				${ORANGE}: checkout changes and create PR for branch${RESET}"
 	echo ""
-	info_text "CLI management:"
+	h1_text "CLI management:"
 	echo "- edit"
 	echo "- save"
 	echo "- cat"
