@@ -93,6 +93,9 @@ function orgexists() {
 }
 
 function is_git_repo() {
+	if git rev-parse --git-dir > /dev/null 2>&1; then
+		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+	fi
 	if ! empty $branch ; then
 		return 0
 	else
@@ -103,7 +106,7 @@ function is_git_repo() {
 
 function commit() {
 	git add .
-	if empty $2 ; then
+	if empty $1 ; then
 		info_text "Provide a commit description:"
 		read description
 		git commit -m "${description:-wix-cli quick commit}"
@@ -134,7 +137,7 @@ function bpr() {
 
 function openurl() {
 	info_text "$1..."
-	xdg-open $2
+	xdg-open "$1"
 }
 
 function ginit() {
@@ -143,14 +146,14 @@ function ginit() {
 		info_text "Provide a name for this repository:"
 		read rname
 		echo "# $rname" >> README.md
-		push "master" "wix-cli: first commit"
-		git remote add origin git@github.com:$1/$rname.git
-		openurl https://github.com/$3
+		commit "wix-cli: first commit"
+		git remote add origin "git@github.com:$1/$rname.git"
+		openurl "https://github.com/$3"
 	else
 		echo "# $2" >> README.md
-		push "master" "wix-cli: first commit"
-		git remote add origin git@github.com:$1/$2.git
-		openurl https://github.com/$3
+		commit "wix-cli: first commit"
+		git remote add origin "git@github.com:$1/$2.git"
+		openurl "https://github.com/$3"
 	fi
 }
 
@@ -158,19 +161,32 @@ function ginit() {
 function wix_cd() {
 	if arggt "1" ; then
 		if direxists $1 ; then
-			info_text "Travelling to -> ${mydirs[$1]}"
-			cd ${mydirs[$1]}
+			destination=${mydirs[$1]}
+			if ! empty $2 ; then
+				destination=${mydirs[$1]}/$2
+			fi
+			if [ -d "$destination" ]; then
+				info_text "Travelling to -> $destination"
+				cd $destination
+				return 0
+			else
+				error_text "The path $destination does not exist"
+				return 1
+			fi
 		else
 			error_text
+			return 1
 		fi
 	else
 		info_text "Where do you want to go?"
 		read dir
 		if direxists $dir ; then
-			echo "${GREEN}Travelling to -> ${mydirs[$dir]}"
+			info_text "Travelling to -> ${mydirs[$dir]}"
 			cd ${mydirs[$dir]}
+			return 0
 		else
 			error_text
+			return 1
 		fi
 	fi
 }
@@ -232,14 +248,16 @@ function wix_delete() {
 
 # GITHUB AUTOMATION COMMAND FUNCTIONS
 function wix_ginit() {
-	if ! is_git_repo ; then
-		if orgexists $1 ; then
-			ginit ${myorgs[$1]} $2 "organizations/${myorgs[$1]}/repositories/new"
+	if wix_cd $1 $2 ; then
+		if empty $branch ; then
+			if orgexists $1 ; then
+				ginit ${myorgs[$1]} $2 "organizations/${myorgs[$1]}/repositories/new"
+			else
+				ginit $user $2 "new"
+			fi
 		else
-			ginit $user $2 "new"
+			error_text "This is already a git repository..."
 		fi
-	else
-		error_text "This is already a git repository..."
 	fi
 }
 
@@ -279,7 +297,7 @@ if [ $num_args -eq 0 ]; then
 	info_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		: push changes"
 	echo "- ginit <org?> <repo>		: init git repo"
-	echo "- ngit <cdir/org> <repo> 	: create and init git repo"
+	echo "- gnew <cdir/org> <repo> 	: create and init git repo"
 	echo "- repo 				: go to repo url"
 	echo "- branch 			: go to branch url"
 	echo "- nbranch <name?>		: create new branch"
