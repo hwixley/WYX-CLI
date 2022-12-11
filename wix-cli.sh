@@ -19,10 +19,15 @@ declare -A myorgs
 myorgs["gs"]="getskooled"
 
 diraliases=$(echo ${!mydirs[@]} | sed 's/ / - /g' )
-
 notsupported="${RED}That path is not supported try: $diraliases"
 
+branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+repo_url=${remote#"git@github.com:"}
+repo_url=${repo_url%".git"}
 
+
+# DEFAULT
 
 if [ $num_args -lt 1 ]; then
 	echo "Welcome to the..."
@@ -33,6 +38,8 @@ if [ $num_args -lt 1 ]; then
 	echo -e "${GREEN} ██║███╗██║██║ ██╔██╗     ██║     ██║     ██║ "
 	echo -e "${GREEN} ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║ "
 	echo -e "${GREEN}  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
+	echo ""
+	echo "v0.0.0.0"
 	echo ""
 	echo "COMMANDS:${RESET}"
 	echo "- cd <cdir> 	: navigation"
@@ -57,6 +64,9 @@ if [ $num_args -lt 1 ]; then
 	echo "- cat"
 	echo "- cdir"
 	echo "- mydirs"
+
+
+# GENERAL
 
 elif [ "$1" = "cd" ]; then
 	if [ $num_args -gt 1 ]; then
@@ -114,7 +124,9 @@ elif [ "$1" = "delete" ]; then
 		echo "This is only supported for gs currently"
 	fi
 	
-	
+
+# CLI MANAGEMENT
+
 elif [ "$1" = "edit" ]; then
 	echo "${GREEN}Edit wix-cli script..."
 	gedit $my_path/wix-cli.sh
@@ -141,6 +153,8 @@ elif [ "$1" = "mydirs" ]; then
 	for x in "${!mydirs[@]}"; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
 	
 
+# GITHUB AUTOMATION
+
 elif [ "$1" = "gnew" ]; then
 	if [ "$2" = "gs" ]; then
 		echo "${GREEN}Generating new GetSkooled dir ($gs_path/$3)..."
@@ -164,7 +178,13 @@ elif [ "$1" = "ginit" ]; then
 	
 	if [ $num_args -gt 1 ]; then
 		if [ -v myorgs[$2] ]; then
-			git remote add origin "git@github.com:${myorgs[$2]}/$3.git"
+			if [ $num_args -gt 1 ]; then
+				git remote add origin "git@github.com:${myorgs[$2]}/$3.git"
+			else
+				echo "${GREEN}Provide a repo name:${RESET}"
+				read name
+				git remote add origin "git@github.com:${myorgs[$2]}/$name.git"
+			fi
 			xdg-open "https://github.com/organizations/${myorgs[$2]}/repositories/new"
 		else
 			git remote add origin "git@github.com:hwixley/$2.git"
@@ -200,17 +220,10 @@ elif [ "$1" = "push" ]; then
 		fi
 	fi
 elif [ "$1" = "repo" ]; then
-	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-	repo_url=${remote#"git@github.com:"}
-	repo_url=${repo_url%".git"}
 	echo "${GREEN}Redirecting to $repo_url..."
 	xdg-open "https://github.com/$repo_url"
 
 elif [ "$1" = "branch" ]; then
-	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-	repo_url=${remote#"git@github.com:"}
-	repo_url=${repo_url%".git"}
 	echo "${GREEN}Redirecting to $branch on $repo_url..."
 	xdg-open "https://github.com/$repo_url/tree/$branch"
 
@@ -232,10 +245,6 @@ elif [ "$1" = "nbranch" ]; then
 	fi
 	
 elif [ "$1" = "pr" ]; then
-	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-	repo_url=${remote#"git@github.com:"}
-	repo_url=${repo_url%".git"}
 	echo "${GREEN}Creating PR for $branch in $repo_url..."
 	xdg-open "https://github.com/$repo_url/pull/new/$branch"
 	
@@ -245,10 +254,6 @@ elif [ "$1" = "bpr" ]; then
 		git add .
 		git commit -m "wix-cli quick commit"
 		git push origin $2
-		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-		remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-		repo_url=${remote#"git@github.com:"}
-		repo_url=${repo_url%".git"}
 		echo "${GREEN}Creating PR for $branch in $repo_url..."
 		xdg-open "https://github.com/$repo_url/pull/new/$branch"
 	else
@@ -259,14 +264,13 @@ elif [ "$1" = "bpr" ]; then
 			git add .
 			git commit -m "wix-cli quick commit"
 			git push origin $name
-			branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-			remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-			repo_url=${remote#"git@github.com:"}
-			repo_url=${repo_url%".git"}
 			echo "${GREEN}Creating PR for $branch in $repo_url..."
 			xdg-open "https://github.com/$repo_url/pull/new/$branch"
 		fi
 	fi
+	
+# ERROR
+
 else
 	echo "${RED}Invalid command! Try again"
 fi
