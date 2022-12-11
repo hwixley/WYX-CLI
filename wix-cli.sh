@@ -8,12 +8,20 @@ mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
 
 declare -A mydirs
 mydirs["docs"]=~/Documents
-mydirs["bashing"]=~/Documents/random-coding-projects/bashing
+mydirs["self"]=~/Documents/random-coding-projects/bashing
 mydirs["gs"]=~/Documents/GetSkooled
 mydirs["gs-website"]=${mydirs["gs"]}/website/GetSkooled-MVP-Website
 mydirs["down"]=~/Downloads
 mydirs["pix"]=~/Pictures
 mydirs["rcp"]=~/Documents/random-coding-projects
+
+declare -A myorgs
+myorgs["gs"]="getskooled"
+
+diraliases=$(echo ${!mydirs[@]} | sed 's/ / - /g' )
+
+notsupported="${RED}That path is not supported try: $diraliases"
+
 
 
 if [ $num_args -lt 1 ]; then
@@ -27,35 +35,36 @@ if [ $num_args -lt 1 ]; then
 	echo -e "${GREEN}  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
 	echo ""
 	echo "COMMANDS:${RESET}"
-	echo "- dir <cdir> : navigation"
-	echo "- back : return to last dir"
-	echo "- new <cdir> : new directory"
-	echo "- run <cdir> : setup and run environment"
-	echo "- delete <cdir> : delete dir"
+	echo "- cd <cdir> 	: navigation"
+	echo "- back 		: return to last dir"
+	echo "- new <cdir> 	: new directory"
+	echo "- run <cdir> 	: setup and run environment"
+	echo "- delete <cdir> 	: delete dir"
 	echo ""
 	echo "${GREEN}GITHUB AUTOMATION:${RESET}"
-	echo "- push <branch?>"
-	echo "- git-init"
-	echo "- new-git <cdir>"
-	echo "- repo"
-	echo "- branch"
-	echo "- new-branch"
-	echo "- pr"
-	echo "- branch-pr"
+	echo "- push <branch?>	: push changes"
+	echo "- ginit		: init git repo"
+	echo "- ngit <cdir> 	: create and init git repo"
+	echo "- repo 		: go to repo url"
+	echo "- branch 	: go to branch url"
+	echo "- nbranch 	: create new branch"
+	echo "- pr 		: create PR for branch"
+	echo "- bpr 		: checkout changes and create PR for branch"
 	echo ""
 	echo "${GREEN}CLI management:${RESET}"
 	echo "- edit"
 	echo "- save"
 	echo "- cat"
 	echo "- cdir"
+	echo "- mydirs"
 
-elif [ "$1" = "dir" ]; then
+elif [ "$1" = "cd" ]; then
 	if [ $num_args -gt 1 ]; then
 		if [ -v mydirs[$2] ]; then
 			echo "${GREEN}Travelling to -> ${mydirs[$2]}"
 			cd ${mydirs[$2]}
 		else
-			echo "${GREEN}That path is not supported try: docs, bashing, gs, gs-website, down"
+			echo $notsupported
 		fi
 	else
 		echo "${GREEN}Where do you want to go?${RESET}"
@@ -64,7 +73,7 @@ elif [ "$1" = "dir" ]; then
 			echo "${GREEN}Travelling to -> ${mydirs[$dir]}"
 			cd ${mydirs[$dir]}
 		else
-			echo "${GREEN}That path is not supported try: docs, bashing, gs, gs-website, down"
+			echo $notsupported
 		fi
 	fi
 elif [ "$1" = "new" ]; then
@@ -128,8 +137,11 @@ elif [ "$1" = "cdir" ]; then
 	sed -i "15imydirs["$alias"]=$i_dir" $mypath
 	wix save
 	
+elif [ "$1" = "mydirs" ]; then
+	for x in "${!mydirs[@]}"; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
+	
 
-elif [ "$1" = "new-git" ]; then
+elif [ "$1" = "gnew" ]; then
 	if [ "$2" = "gs" ]; then
 		echo "${GREEN}Generating new GetSkooled dir ($gs_path/$3)..."
 		mkdir $gs_path/$3
@@ -144,19 +156,23 @@ elif [ "$1" = "new-git" ]; then
 		echo "${GREEN}This is only supported for gs currently"
 	fi
 	
-elif [ "$1" = "git-init" ]; then
+elif [ "$1" = "ginit" ]; then
+	echo "${GREEN}Initializing git repo..."
+	git init
+	git add .
+	git commit -m "first commit"
+	
 	if [ $num_args -gt 1 ]; then
-		git init
-		git add .
-		git commit -m "first commit"
-		git remote add origin git@github.com:hwixley/$2.git
-		xdg-open https://github.com/new
+		if [ -v myorgs[$2] ]; then
+			git remote add origin "git@github.com:${myorgs[$2]}/$3.git"
+			xdg-open "https://github.com/organizations/${myorgs[$2]}/repositories/new"
+		else
+			git remote add origin "git@github.com:hwixley/$2.git"
+			xdg-open "https://github.com/new"
+		fi
 	else
 		echo "${GREEN}Provide a repo name:${RESET}"
 		read name
-		git init
-		git add .
-		git commit -m "first commit"
 		git remote add origin git@github.com:hwixley/$name.git
 		xdg-open https://github.com/new
 	fi
@@ -198,7 +214,7 @@ elif [ "$1" = "branch" ]; then
 	echo "${GREEN}Redirecting to $branch on $repo_url..."
 	xdg-open "https://github.com/$repo_url/tree/$branch"
 
-elif [ "$1" = "new-branch" ]; then
+elif [ "$1" = "nbranch" ]; then
 	if [ $num_args -gt 1 ]; then
 		git checkout -b $2
 		git add .
@@ -223,7 +239,7 @@ elif [ "$1" = "pr" ]; then
 	echo "${GREEN}Creating PR for $branch in $repo_url..."
 	xdg-open "https://github.com/$repo_url/pull/new/$branch"
 	
-elif [ "$1" = "branch-pr" ]; then
+elif [ "$1" = "bpr" ]; then
 	if [ $num_args -gt 1 ]; then
 		git checkout -b $2
 		git add .
