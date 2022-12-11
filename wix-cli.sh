@@ -136,7 +136,6 @@ function bpr() {
 }
 
 function openurl() {
-	info_text "$1..."
 	xdg-open "$1"
 }
 
@@ -269,7 +268,7 @@ function wix_gnew() {
 
 function giturl() {
 	if is_git_repo ; then
-		openurl $1 $2
+		openurl $1
 	fi
 }
 
@@ -369,10 +368,12 @@ elif [ "$1" = "push" ]; then
 		push $branch
 	fi
 elif [ "$1" = "repo" ]; then
-	giturl "Redirecting to $repo_url" "https://github.com/$repo_url"
+	info_text "Redirecting to $repo_url..."
+	giturl "https://github.com/$repo_url"
 
 elif [ "$1" = "branch" ]; then
-	giturl "Redirecting to $branch on $repo_url" "https://github.com/$repo_url/tree/"
+	info_text "Redirecting to $branch on $repo_url..."
+	giturl "https://github.com/$repo_url/tree/"
 	
 elif [ "$1" = "nbranch" ]; then
 	if arggt "1" ; then
@@ -388,7 +389,8 @@ elif [ "$1" = "nbranch" ]; then
 	fi
 	
 elif [ "$1" = "pr" ]; then
-	giturl "Creating PR for $branch in $repo_url" "https://github.com/$repo_url/pull/new/$branch"
+	info_text "Creating PR for $branch in $repo_url..."
+	giturl "https://github.com/$repo_url/pull/new/$branch"
 	
 elif [ "$1" = "bpr" ]; then
 	if is_git_repo ; then
