@@ -21,7 +21,6 @@ repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
 
 declare -A myorgs
-myorgs["gs"]="getskooled"
 
 # DIR CONSTS
 insertline=30
@@ -29,11 +28,8 @@ insertline=30
 declare -A mydirs
 mydirs["docs"]=~/Documents
 mydirs["self"]=~/Documents/random-coding-projects/bashing
-mydirs["gs"]=~/Documents/GetSkooled
-mydirs["gs-website"]=${mydirs["gs"]}/website/GetSkooled-MVP-Website
 mydirs["down"]=~/Downloads
 mydirs["pix"]=~/Pictures
-mydirs["rcp"]=~/Documents/random-coding-projects
 
 diraliases=$(echo "${!mydirs[@]}" | sed 's/ / - /g' )
 
