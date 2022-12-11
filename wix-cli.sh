@@ -34,7 +34,7 @@ if [ $num_args -lt 1 ]; then
 	echo "- delete <cdir> : delete dir"
 	echo ""
 	echo "${GREEN}GITHUB AUTOMATION:${RESET}"
-	echo "- push"
+	echo "- push <branch?>"
 	echo "- git-init"
 	echo "- new-git <cdir>"
 	echo "- repo"
@@ -161,23 +161,24 @@ elif [ "$1" = "git-init" ]; then
 	
 elif [ "$1" = "push" ]; then
 	if [ $num_args -gt 1 ]; then
+		echo "${GREEN}Provide a commit description:${RESET}"
+		read description
+		git checkout $2
 		git add .
-		git commit -m "wix-cli quick commit"
+		git commit -m "${description:-wix-cli quick commit}"
 		git push origin $2
 	else
-		echo "${GREEN}Provide a branch name:${RESET}"
-		read name
+		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')	
 		echo "${GREEN}Provide a commit description:${RESET}"
 		read description
 		if [ "$name" = "" ]; then
-			branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')	
 			git add .
 			git commit -m "${description:-wix-cli quick commit}"
 			git push origin $branch
 		else
 			git add .
 			git commit -m "${description:-wix-cli quick commit}"
-			git push origin $name
+			git push origin $branch
 		fi
 	fi
 elif [ "$1" = "repo" ]; then
