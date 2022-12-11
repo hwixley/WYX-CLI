@@ -166,9 +166,10 @@ elif [ "$1" = "push" ]; then
 		echo "${GREEN}Provide a branch name:${RESET}"
 		read name
 		if [ "$name" = "" ]; then
+			branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')	
 			git add .
 			git commit -m "wix-cli quick commit"
-			git push origin master
+			git push origin $branch
 		else
 			git add .
 			git commit -m "wix-cli quick commit"
