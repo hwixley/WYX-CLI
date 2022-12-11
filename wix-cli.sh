@@ -73,7 +73,9 @@ function commit() {
 }
 
 function push() {
-	git checkout $1
+	if [ "$1" != "$branch" ]; then
+		git checkout $1
+	fi
 	commit $2
 	git push origin $1
 }
