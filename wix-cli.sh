@@ -6,8 +6,8 @@ RESET=$(tput setaf 7)
 # CLI CONSTS
 num_args="$#"
 mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
-gt1=$($num_args -gt 1)
-gt2=$($num_args -gt 2)
+[ $num_args -gt 1 ] ; gt1=$?
+[ $num_args -gt 2 ] ; gt2=$?
 echo "hi2"
 
 # GIT CONSTS
