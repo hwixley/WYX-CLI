@@ -182,6 +182,58 @@ elif [ "$1" = "repo" ]; then
 	repo_url=${repo_url%".git"}
 	xdg-open "https://github.com/$repo_url"
 	
+elif [ "$1" = "branch" ]; then
+	if [ $num_args -gt 1 ]; then
+		git checkout -b $2
+		git add .
+		git commit -m "wix-cli quick commit"
+		git push origin $2
+	else
+		echo "${GREEN}Provide a branch name:${RESET}"
+		read name
+		if [ "$name" != "" ]; then
+			git checkout -b $name
+			git add .
+			git commit -m "wix-cli quick commit"
+			git push origin $name
+		fi
+	fi
+	
+"""elif [ "$1" = "pr" ]; then
+	if [ $num_args -gt 1 ]; then
+		git checkout -b $2
+		git add .
+		git commit -m "wix-cli quick commit"
+		git push origin $2
+	else
+		echo "${GREEN}Provide a branch name:${RESET}"
+		read name
+		if [ "$name" != "" ]; then
+			git checkout -b $name
+			git add .
+			git commit -m "wix-cli quick commit"
+			git push origin $name
+		fi
+	fi
+
+elif [ "$1" = "branch-pr" ]; then
+	if [ $num_args -gt 1 ]; then
+		git checkout -b $2
+		git add .
+		git commit -m "wix-cli quick commit"
+		git push origin $2
+	else
+		echo "${GREEN}Provide a branch name:${RESET}"
+		read name
+		if [ "$name" != "" ]; then
+			git checkout -b $name
+			git add .
+			git commit -m "wix-cli quick commit"
+			git push origin $name
+		fi
+	fi
+
+"""
 else
 	echo "${RED}Invalid command! Try again"
 fi
