@@ -73,6 +73,12 @@ function commit() {
 }
 
 function push() {
+	git checkout $1
+	commit $2
+	git push origin $1
+}
+
+function npush() {
 	git checkout -b $1
 	commit $2
 	git push origin $1
@@ -277,12 +283,12 @@ elif [ "$1" = "branch" ]; then
 
 elif [ "$1" = "nbranch" ]; then
 	if arggt "1" ; then
-		push $2
+		npush $2
 	else
 		info_text "Provide a branch name:"
 		read name
 		if [ "$name" != "" ]; then
-			push $name
+			npush $name
 		else
 			error_text "Invalid branch name"
 		fi
