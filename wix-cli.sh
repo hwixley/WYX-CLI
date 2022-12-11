@@ -8,6 +8,7 @@ num_args="$#"
 mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
 gt1=$($num_args -gt 1)
 gt2=$($num_args -gt 2)
+echo "hi2"
 
 # GIT CONSTS
 branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
