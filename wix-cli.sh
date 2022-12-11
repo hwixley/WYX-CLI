@@ -34,10 +34,14 @@ if [ $num_args -lt 1 ]; then
 	echo "- delete <cdir> : delete dir"
 	echo ""
 	echo "${GREEN}GITHUB AUTOMATION:${RESET}"
-	echo "- push"
+	echo "- push <branch?>"
 	echo "- git-init"
 	echo "- new-git <cdir>"
 	echo "- repo"
+	echo "- branch"
+	echo "- new-branch"
+	echo "- pr"
+	echo "- branch-pr"
 	echo ""
 	echo "${GREEN}CLI management:${RESET}"
 	echo "- edit"
@@ -159,29 +163,94 @@ elif [ "$1" = "git-init" ]; then
 	
 elif [ "$1" = "push" ]; then
 	if [ $num_args -gt 1 ]; then
+		echo "${GREEN}Provide a commit description:${RESET}"
+		read description
+		git checkout $2
+		git add .
+		git commit -m "${description:-wix-cli quick commit}"
+		git push origin $2
+	else
+		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')	
+		echo "${GREEN}Provide a commit description:${RESET}"
+		read description
+		if [ "$name" = "" ]; then
+			git add .
+			git commit -m "${description:-wix-cli quick commit}"
+			git push origin $branch
+		else
+			git add .
+			git commit -m "${description:-wix-cli quick commit}"
+			git push origin $branch
+		fi
+	fi
+elif [ "$1" = "repo" ]; then
+	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+	repo_url=${remote#"git@github.com:"}
+	repo_url=${repo_url%".git"}
+	echo "${GREEN}Redirecting to $repo_url..."
+	xdg-open "https://github.com/$repo_url"
+
+elif [ "$1" = "branch" ]; then
+	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+	repo_url=${remote#"git@github.com:"}
+	repo_url=${repo_url%".git"}
+	echo "${GREEN}Redirecting to $branch on $repo_url..."
+	xdg-open "https://github.com/$repo_url/tree/$branch"
+
+elif [ "$1" = "new-branch" ]; then
+	if [ $num_args -gt 1 ]; then
+		git checkout -b $2
 		git add .
 		git commit -m "wix-cli quick commit"
 		git push origin $2
 	else
 		echo "${GREEN}Provide a branch name:${RESET}"
 		read name
-		if [ "$name" = "" ]; then
-			git add .
-			git commit -m "wix-cli quick commit"
-			git push origin master
-		else
+		if [ "$name" != "" ]; then
+			git checkout -b $name
 			git add .
 			git commit -m "wix-cli quick commit"
 			git push origin $name
 		fi
 	fi
-elif [ "$1" = "repo" ]; then
-	echo "${GREEN}Redirecting to repo..."
+	
+elif [ "$1" = "pr" ]; then
+	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 	repo_url=${remote#"git@github.com:"}
 	repo_url=${repo_url%".git"}
-	xdg-open "https://github.com/$repo_url"
+	echo "${GREEN}Creating PR for $branch in $repo_url..."
+	xdg-open "https://github.com/$repo_url/pull/new/$branch"
 	
+elif [ "$1" = "branch-pr" ]; then
+	if [ $num_args -gt 1 ]; then
+		git checkout -b $2
+		git add .
+		git commit -m "wix-cli quick commit"
+		git push origin $2
+		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+		remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+		repo_url=${remote#"git@github.com:"}
+		repo_url=${repo_url%".git"}
+		echo "${GREEN}Creating PR for $branch in $repo_url..."
+		xdg-open "https://github.com/$repo_url/pull/new/$branch"
+	else
+		echo "${GREEN}Provide a branch name:${RESET}"
+		read name
+		if [ "$name" != "" ]; then
+			git checkout -b $name
+			git add .
+			git commit -m "wix-cli quick commit"
+			git push origin $name
+			branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+			remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+			repo_url=${remote#"git@github.com:"}
+			repo_url=${repo_url%".git"}
+			echo "${GREEN}Creating PR for $branch in $repo_url..."
+			xdg-open "https://github.com/$repo_url/pull/new/$branch"
+		fi
+	fi
 else
 	echo "${RED}Invalid command! Try again"
 fi
