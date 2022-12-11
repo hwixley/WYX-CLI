@@ -196,7 +196,7 @@ elif [ "$1" = "branch" ]; then
 	repo_url=${remote#"git@github.com:"}
 	repo_url=${repo_url%".git"}
 	echo "${GREEN}Redirecting to $branch on $repo_url..."
-	xdg-open "https://github.com/$repo_url"
+	xdg-open "https://github.com/$repo_url/tree/$branch"
 
 elif [ "$1" = "new-branch" ]; then
 	if [ $num_args -gt 1 ]; then
