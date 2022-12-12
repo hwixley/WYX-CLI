@@ -9,12 +9,35 @@ CYAN=$(tput setaf 6)
 BLACK=$(tput setaf 0)
 RESET=$(tput setaf 7)
 
+function readfile() {
+	declare -A ary
+	readarray -t lines < "$1"
+
+	for line in "${lines[@]}"; do
+	   key=${line%%=*}
+	   value=${line#*=}
+	   ary[$key]=$value
+	done
+	return $ary
+}
+
 # CLI CONSTS
 num_args=$#
 mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
 
-# GIT CONSTS
-user=hwixley
+# DATA
+declare -A user
+user=readfile .wix-cli-data/git-user.txt
+
+declare -A myorgs
+myorgs=readfile .wix-cli-data/git-orgs.txt
+
+declare -A mydirs
+mydirs=readfile .wix-cli-data/dir-aliases.txt
+
+declare -A myscripts
+myscripts=readfile .wix-cli-data/run-configs.txt
+
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
 	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -23,22 +46,6 @@ remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/'
 repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
 
-declare -A myorgs
-myorgs["gs"]="getskooled"
-
-# DIR CONSTS
-insertline=30
-
-declare -A mydirs
-mydirs["docs"]=~/Documents
-mydirs["self"]=~/Documents/random-coding-projects/bashing
-mydirs["gs"]=~/Documents/GetSkooled
-mydirs["gs-website"]=${mydirs["gs"]}/website/GetSkooled-MVP-Website
-mydirs["down"]=~/Downloads
-mydirs["pix"]=~/Pictures
-mydirs["rcp"]=~/Documents/random-coding-projects
-
-diraliases=$(echo "${!mydirs[@]}" | sed 's/ / - /g' )
 
 # FILE EXTs
 exts=("sh" "txt" "py")
