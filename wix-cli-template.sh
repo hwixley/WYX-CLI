@@ -444,12 +444,33 @@ elif [ "$1" = "bpr" ]; then
 	fi
 
 elif [ "$1" = "ios-clients" ]; then
+    declare -a myclients
     while IFS= read -r line; do
         if [[ "$line" == *"ClientConfiguration(name:"* ]]; then
 #            echo "$line"
-            echo $line | cut -d \" -f2
+            client=$(echo $line | cut -d \" -f2)
+            myclients+="$client"
         fi
     done < "$mydirs[ios]/Project.swift"
+    
+    declare -a fl_clients
+    while IFS= read -r line; do
+        if [[ "$line" != *"  "* ]]; then
+            if ! empty "$line"; then
+                fl_clients+="$line"
+            fi
+            #myclients+="${echo $line | cut -d \" -f2}"
+        fi
+    done < "$mydirs[ios]/fastlane/config.yaml"
+    
+    info_text "TUIST NAMES:"
+        printf "'%s'  " "${myclients[@]}"
+    echo ""
+    info_text "FASTLANE NAMES:"
+    printf "'%s'  " "${fl_clients[@]}"
+#    for client in "${myclients[@]}"; do
+#
+#    done
 
 # FILE CREATION
 
