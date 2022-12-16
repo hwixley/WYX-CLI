@@ -1,5 +1,11 @@
 #!/bin/bash
 
+envfile=~/.bashrc
+
+if [ "$(uname)" = "Darwin" ]; then
+    envfile=~/.zshrc
+fi
+
 # COLORS
 GREEN=$(tput setaf 2)
 ORANGE=$(tput setaf 3)
@@ -8,7 +14,7 @@ RESET=$(tput setaf 7)
 
 # CLI CONSTS
 num_args=$#
-mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
+mypath=~/Documents/personal/wix-cli/wix-cli-template.sh
 
 # GIT CONSTS
 user=hwixley
@@ -21,17 +27,29 @@ repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
 
 declare -A myorgs
+myorgs[va]="venn-apps"
 
 # DIR CONSTS
-insertline=30
+insertline=38
 
 declare -A mydirs
-mydirs["docs"]=~/Documents
-mydirs["self"]=~/Documents/random-coding-projects/bashing
-mydirs["down"]=~/Downloads
-mydirs["pix"]=~/Pictures
+mydirs[docs]=~/Documents
+mydirs[self]=~/Documents/personal/wix-cli
+mydirs[down]=~/Downloads
+mydirs[pix]=~/Pictures
+mydirs[va]=~/Documents/venn-apps
+mydirs[api]=~/Documents/venn-apps/VennAPI
+mydirs[ios]=~/Documents/venn-apps/VennWL-iOS
 
-diraliases=$(echo "${!mydirs[@]}" | sed 's/ / - /g' )
+diraliases=""
+diraliasKeys=""
+if [ "$(uname)" != "Darwin" ]; then
+    diraliases=$(echo "${!mydirs[@]}" | sed 's/ / - /g' )
+    diraliasKeys=$(echo ${!mydirs[@]} | sed 's/ / /g' )
+else
+    diraliases=$(echo "${(@k)mydirs}" | sed 's/ / - /g' )
+    diraliasKeys=$(echo ${(@k)mydirs} | sed 's/ / /g' )
+fi
 
 # FILE EXTs
 exts=("sh" "txt" "py")
@@ -62,6 +80,14 @@ function empty() {
 	else
 		return 1
 	fi
+}
+
+function mac() {
+    if [ "$(uname)" = "Darwin" ]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 function arggt() {
@@ -126,14 +152,18 @@ function npush() {
 }
 
 function bpr() {
-	push $1
+	npush $1
 	info_text "Creating PR for $branch in $repo_url..."
-	xdg-open "https://github.com/$repo_url/pull/new/$branch"
+	openurl "https://github.com/$repo_url/pull/new/$branch"
 }
 
 function openurl() {
 	info_text "$1..."
-	xdg-open "$1"
+    if mac; then
+        open "$1"
+    else
+        xdg-open "$1"
+    fi
 }
 
 function ginit() {
@@ -157,9 +187,9 @@ function ginit() {
 function wix_cd() {
 	if arggt "1" ; then
 		if direxists $1 ; then
-			destination=${mydirs[$1]}
+			destination=$mydirs[$1]
 			if ! empty $2 ; then
-				destination=${mydirs[$1]}/$2
+				destination=$mydirs[$1]/$2
 			fi
 			if [ -d "$destination" ]; then
 				info_text "Travelling to -> $destination"
@@ -208,7 +238,14 @@ function wix_new() {
 }
 
 function wix_run() {
-	error_text "Add your own environment setups on the sh file in the 'wix_run' function"
+    if [ "$1" = "api" ]; then
+        vennapi
+    elif [ "$1" = "ios" ]; then
+        vennios
+    else
+        error_text "$1 is not supported..."
+        warn_text "Add your own environment setups on the sh file in the 'wix_run' function"
+    fi
 }
 
 function wix_delete() {
@@ -317,14 +354,22 @@ elif [ "$1" = "delete" ]; then
 # CLI MANAGEMENT
 
 elif [ "$1" = "edit" ]; then
-	warn_text "Edit wix-cli script..."
-	gedit $mypath
+    fpath=$mypath
+    warn_text "Edit $fpath file..."
+    if ! empty "$2"; then
+        fpath="$2"
+    fi
+    if mac; then
+        open -a Xcode $fpath
+    else
+        gedit $fpath
+    fi
 	info_text "Saving changes to $mypath..."
-	source ~/.bashrc
+	source "$envfile"
 	
 elif [ "$1" = "save" ]; then
 	info_text "Sourcing bash :)"
-	source ~/.bashrc
+	source "$envfile"
 	
 elif [ "$1" = "cat" ]; then
 	cat $my_path
@@ -335,11 +380,15 @@ elif [ "$1" = "cdir" ]; then
 	info_text "Enter the directory:"
 	read i_dir
 	info_text "Adding $alias=$i_dir to custom dirs"
-	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
+	sed -i "${insertline}imydirs[$alias]=$i_dir" $mypath
 	wix save
 	
 elif [ "$1" = "mydirs" ]; then
-	for x in "${!mydirs[@]}"; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
+    echo $diraliasKeys
+	for x in $diraliasKeys; do
+        echo $x
+        printf "[%s]=%s\n" "$x" "$(mydirs[$x])"
+    done
 	
 
 # GITHUB AUTOMATION
@@ -362,7 +411,7 @@ elif [ "$1" = "repo" ]; then
 
 elif [ "$1" = "branch" ]; then
 	info_text "Redirecting to $branch on $repo_url..."
-	giturl "https://github.com/$repo_url/tree/"
+	giturl "https://github.com/$repo_url/tree/$branch"
 	
 elif [ "$1" = "nbranch" ]; then
 	if arggt "1" ; then
@@ -402,7 +451,11 @@ elif [[ "${exts[*]}" =~ "$1" ]]; then
 	read fname
 	info_text "Creating $fname.$1"
 	touch $fname.$1
-	gedit $fname.$1	
+    if mac; then
+        open -a Xcode $fname.$1
+    else
+        gedit $fname.$1
+    fi
 
 	
 # ERROR
