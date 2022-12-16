@@ -443,6 +443,13 @@ elif [ "$1" = "bpr" ]; then
 		fi
 	fi
 
+elif [ "$1" = "ios-clients" ]; then
+    while IFS= read -r line; do
+        if [[ "$line" == *"ClientConfiguration(name:"* ]]; then
+#            echo "$line"
+            echo $line | cut -d \" -f2
+        fi
+    done < "$mydirs[ios]/Project.swift"
 
 # FILE CREATION
 
