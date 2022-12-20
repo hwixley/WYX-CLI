@@ -1,12 +1,12 @@
 #!/bin/bash
 
-source ./functions.sh
-
 # CLI CONSTS
 num_args=$#
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
+
+source $mydir/functions.sh
 
 # DATA
 declare -A user
@@ -40,7 +40,6 @@ for line in "${lines[@]}"; do
 	value=${line#*=}
 	myscripts[$key]=$value
 done
-echo "$myscripts"
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -49,8 +48,6 @@ fi
 remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
-
-echo "$branch"
 
 
 # MODULAR FUNCTIONS
@@ -83,7 +80,7 @@ function is_git_repo() {
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
-	if ! empty $branch ; then
+	if ! empty "$branch" ; then
 		return 0
 	else
 		error_text "This is not a git repository..."
@@ -93,9 +90,9 @@ function is_git_repo() {
 
 function commit() {
 	git add .
-	if empty $1 ; then
+	if empty "$1" ; then
 		info_text "Provide a commit description:"
-		read description
+		read -r description
 		git commit -m "${description:-wix-cli quick commit}"
 	else
 		git commit -m "${1:-wix-cli quick commit}"
@@ -104,29 +101,29 @@ function commit() {
 
 function push() {
 	if [ "$1" != "$branch" ]; then
-		git checkout $1
+		git checkout "$1"
 	fi
-	commit $2
-	git push origin $1
+	commit "$2"
+	git push origin "$1"
 }
 
 function npush() {
-	git checkout -b $1
-	commit $2
-	git push origin $1
+	git checkout -b "$1"
+	commit "$2"
+	git push origin "$1"
 }
 
 function bpr() {
-	push $1
+	push "$1"
 	info_text "Creating PR for $branch in $repo_url..."
 	openurl "https://github.com/$repo_url/pull/new/$branch"
 }
 
 function ginit() {
 	git init
-	if empty $2 ; then
+	if empty "$2" ; then
 		info_text "Provide a name for this repository:"
-		read rname
+		read -r rname
 		echo "# $rname" >> README.md
 		commit "wix-cli: first commit"
 		git remote add origin "git@github.com:$1/$rname.git"
@@ -142,14 +139,14 @@ function ginit() {
 # COMMAND FUNCTIONS
 function wix_cd() {
 	if arggt "1" ; then
-		if direxists $1 ; then
+		if direxists "$1" ; then
 			destination=${mydirs[$1]}
-			if ! empty $2 ; then
+			if ! empty "$2" ; then
 				destination=${mydirs[$1]}/$2
 			fi
 			if [ -d "$destination" ]; then
 				info_text "Travelling to -> $destination"
-				cd $destination
+				cd "$destination" || exit
 				return 0
 			else
 				error_text "The path $destination does not exist"
@@ -161,10 +158,10 @@ function wix_cd() {
 		fi
 	else
 		info_text "Where do you want to go?"
-		read dir
-		if direxists $dir ; then
+		read -r dir
+		if direxists "$dir" ; then
 			info_text "Travelling to -> ${mydirs[$dir]}"
-			cd ${mydirs[$dir]}
+			cd "${mydirs[$dir]:?}" || exit
 			return 0
 		else
 			error_text
@@ -174,17 +171,17 @@ function wix_cd() {
 }
 
 function wix_new() {
-	if direxists $1 ; then
-		if empty $2 ; then
+	if direxists "$1" ; then
+		if empty "$2" ; then
 			info_text "Provide a name for this directory:"
-			read dname
+			read -r dname
 			info_text "Generating new dir (${mydirs[$1]}/$dname)..."
-			mkdir ${mydirs[$1]}/$dname
-			cd ${mydirs[$1]}/$dname
+			mkdir "${mydirs[$1]:?}/$dname"
+			cd "${mydirs[$1]:?}/$dname" || exit
 		else
 			info_text "Generating new dir (${mydirs[$1]}/$2)..."
-			mkdir ${mydirs[$1]}/$2
-			cd ${mydirs[$1]}/$2
+			mkdir "${mydirs[$1]:?}/$2"
+			cd "${mydirs[$1]:?}/$2" || exit
 		fi
 		return 0
 	else
@@ -196,7 +193,7 @@ function wix_new() {
 function wix_run() {
 	if [ "$1" = "gs" ]; then
 		info_text "Running GetSkooled localhost server on develop"
-		cd $gs_path/website/GetSkooled-MVP-Website
+		cd "$gs_path/website/GetSkooled-MVP-Website" || exit
 		git checkout develop
 		git pull origin develop
 		php -S localhost:8081
@@ -206,20 +203,20 @@ function wix_run() {
 }
 
 function wix_delete() {
-	if direxists $1 ; then
+	if direxists "$1" ; then
 		if empty "$2" ; then
 			error_text "You did not provide a path in this directory to delete, try again..."
 		else
 			error_text "Are you sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
-			read response
-			if [ $response = "y" ] || [ $response = "Y" ]
+			read -r response
+			if [ "$response" = "y" ] || [ "$response" = "Y" ]
 			then
 				error_text "Are you really sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
-				read response
-				if [ $response = "y" ] || [ $response = "Y" ]
+				read -r response
+				if [ "$response" = "y" ] || [ "$response" = "Y" ]
 				then
 					error_text "Deleting ${mydirs[$1]}/$2"
-					rm -rf ${mydirs[$1]}/$2
+					rm -rf "${mydirs[$1]:?}/$2"
 				fi
 			fi
 		fi
@@ -230,12 +227,12 @@ function wix_delete() {
 
 # GITHUB AUTOMATION COMMAND FUNCTIONS
 function wix_ginit() {
-	if wix_cd $1 $2 ; then
-		if empty $branch ; then
-			if orgexists $1 ; then
-				ginit ${myorgs[$1]} $2 "organizations/${myorgs[$1]}/repositories/new"
+	if wix_cd "$1" "$2" ; then
+		if empty "$branch" ; then
+			if orgexists "$1" ; then
+				ginit "${myorgs[$1]}" "$2" "organizations/${myorgs[$1]}/repositories/new"
 			else
-				ginit $user $2 "new"
+				ginit "$user" "$2" "new"
 			fi
 		else
 			error_text "This is already a git repository..."
@@ -244,14 +241,14 @@ function wix_ginit() {
 }
 
 function wix_gnew() {	
-	if wix_new $1 $2 ; then
-		wix_ginit $1 $2
+	if wix_new "$1" "$2" ; then
+		wix_ginit "$1" "$2"
 	fi
 }
 
 function giturl() {
 	if is_git_repo ; then
-		openurl $1
+		openurl "$1"
 	fi
 }
 
@@ -303,37 +300,37 @@ if [ $num_args -eq 0 ]; then
 # GENERAL
 
 elif [ "$1" = "cd" ]; then
-	wix_cd $2
+	wix_cd "$2"
 	
 elif [ "$1" = "new" ]; then
-	wix_new $2 $3
+	wix_new "$2" "$3"
 	
 elif [ "$1" = "run" ]; then
-	wix_run $2
+	wix_run "$2"
 	
 elif [ "$1" = "delete" ]; then
-	wix_delete $2 $3
+	wix_delete "$2" "$3"
 
 # CLI MANAGEMENT
 
 elif [ "$1" = "edit" ]; then
 	warn_text "Edit wix-cli script..."
-	gedit $mypath
+	gedit "$mypath"
 	info_text "Saving changes to $mypath..."
-	source ~/.bashrc
+	source $(envfile)
 	
 elif [ "$1" = "save" ]; then
 	info_text "Sourcing bash :)"
-	source ~/.bashrc
+	source $(envfile)
 	
 elif [ "$1" = "cat" ]; then
-	cat $my_path
+	cat "$mypath"
 
 elif [ "$1" = "cdir" ]; then
 	info_text "Enter an alias for your new directory:"
-	read alias
+	read -r alias
 	info_text "Enter the directory:"
-	read i_dir
+	read -r i_dir
 	info_text "Adding $alias=$i_dir to custom dirs"
 	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
 	wix save
@@ -345,16 +342,16 @@ elif [ "$1" = "mydirs" ]; then
 # GITHUB AUTOMATION
 
 elif [ "$1" = "gnew" ]; then
-	wix_gnew $2 $3
+	wix_gnew "$2" "$3"
 	
 elif [ "$1" = "ginit" ]; then
-	wix_ginit $2 $3
+	wix_ginit "$2" "$3"
 	
 elif [ "$1" = "push" ]; then
 	if arggt "1" ; then
-		push $2
+		push "$2"
 	else
-		push $branch
+		push "$branch"
 	fi
 elif [ "$1" = "repo" ]; then
 	info_text "Redirecting to $repo_url..."
@@ -366,12 +363,12 @@ elif [ "$1" = "branch" ]; then
 	
 elif [ "$1" = "nbranch" ]; then
 	if arggt "1" ; then
-		npush $2
+		npush "$2"
 	else
 		info_text "Provide a branch name:"
-		read name
+		read -r name
 		if [ "$name" != "" ]; then
-			npush $name
+			npush "$name"
 		else
 			error_text "Invalid branch name"
 		fi
@@ -399,15 +396,14 @@ elif [ "$1" = "bpr" ]; then
 
 elif [[ "${exts[*]}" =~ "$1" ]]; then
 	info_text "Enter a filename for your $1 file:"
-	read fname
+	read -r fname
 	info_text "Creating $fname.$1"
-	touch $fname.$1
-	gedit $fname.$1	
+	touch "$fname.$1"
+	gedit "$fname.$1"	
 
 	
 # ERROR
 
 else
-	echo "$@"
 	error_text "Invalid command! Try again"
 fi
