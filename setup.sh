@@ -50,11 +50,13 @@ done
 # SETUP METADATA FILES
 md_dir=.wix-cli-data
 mkdir $md_dir
-touch $md_dir/git-user.txt
-touch $md_dir/git-orgs.txt
-touch $md_dir/dir-aliases.txt
-touch $md_dir/run-configs.txt
+declare -a files=("git-user" "git-orgs" "dir-aliases" "run-configs")
+for i in "${files[@]}"; do
+	touch $md_dir/$i.txt
+	chmod +rwx $md_dir/$i.txt
+done
 mkdir $md_dir/run-configs
+
 
 # GET USER SPECIFIC DETAILS
 echo ""

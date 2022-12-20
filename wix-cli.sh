@@ -1,42 +1,45 @@
 #!/bin/bash
 
-# COLORS
-GREEN=$(tput setaf 2)
-ORANGE=$(tput setaf 3)
-RED=$(tput setaf 1)
-BLUE=$(tput setaf 4)
-CYAN=$(tput setaf 6)
-BLACK=$(tput setaf 0)
-RESET=$(tput setaf 7)
-
-function readfile() {
-	declare -A ary
-	readarray -t lines < "$1"
-
-	for line in "${lines[@]}"; do
-	   key=${line%%=*}
-	   value=${line#*=}
-	   ary[$key]=$value
-	done
-	return $ary
-}
+source ./functions.sh
 
 # CLI CONSTS
 num_args=$#
-mypath=~/Documents/random-coding-projects/bashing/wix-cli.sh
+mypath=$(readlink -f "${BASH_SOURCE:-$0}")
+mydir=$(dirname "$mypath")
+datadir=$mydir/.wix-cli-data
 
 # DATA
 declare -A user
-user=readfile .wix-cli-data/git-user.txt
+readarray -t lines < "$datadir/git-user.txt"
+for line in "${lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	user[$key]=$value
+done
 
 declare -A myorgs
-myorgs=readfile .wix-cli-data/git-orgs.txt
+readarray -t lines < "$datadir/git-orgs.txt"
+for line in "${lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	myorgs[$key]=$value
+done
 
 declare -A mydirs
-mydirs=readfile .wix-cli-data/dir-aliases.txt
+readarray -t lines < "$datadir/dir-aliases.txt"
+for line in "${lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	mydirs[$key]=$value
+done
 
 declare -A myscripts
-myscripts=readfile .wix-cli-data/run-configs.txt
+readarray -t lines < "$datadir/run-configs.txt"
+for line in "${lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	myscripts[$key]=$value
+done
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -47,44 +50,7 @@ repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
 
 
-# FILE EXTs
-exts=("sh" "txt" "py")
-
-# PROMPTS
-notsupported="${RED}That path is not supported try: $diraliases"
-
 # MODULAR FUNCTIONS
-function info_text() {
-	echo "${GREEN}$1${RESET}"
-}
-
-function h1_text() {
-	echo "${BLUE}$1${RESET}"
-}
-
-function h2_text() {
-	echo "${CYAN}$1${RESET}"
-}
-
-function warn_text() {
-	echo "${ORANGE}$1${RESET}"
-}
-
-function error_text() {
-	if [ "$1" = "" ]; then
-		echo $notsupported
-	else
-		echo "${RED}$1${RESET}"
-	fi
-}
-
-function empty() {
-	if [ "$1" = "" ]; then
-		return 0
-	else
-		return 1
-	fi
-}
 
 function arggt() {
 	if [ "$num_args" -gt "$1" ]; then
@@ -150,11 +116,7 @@ function npush() {
 function bpr() {
 	push $1
 	info_text "Creating PR for $branch in $repo_url..."
-	xdg-open "https://github.com/$repo_url/pull/new/$branch"
-}
-
-function openurl() {
-	xdg-open "$1"
+	openurl "https://github.com/$repo_url/pull/new/$branch"
 }
 
 function ginit() {
@@ -374,7 +336,7 @@ elif [ "$1" = "cdir" ]; then
 	wix save
 	
 elif [ "$1" = "mydirs" ]; then
-	for x in "${!mydirs[@]}"; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
+	for x in $dirkeys; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
 	
 
 # GITHUB AUTOMATION
@@ -443,5 +405,6 @@ elif [[ "${exts[*]}" =~ "$1" ]]; then
 # ERROR
 
 else
+	echo "$@"
 	error_text "Invalid command! Try again"
 fi
