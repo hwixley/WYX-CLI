@@ -362,7 +362,7 @@ elif [ "$1" = "repo" ]; then
 
 elif [ "$1" = "branch" ]; then
 	info_text "Redirecting to $branch on $repo_url..."
-	giturl "https://github.com/$repo_url/tree/"
+	giturl "https://github.com/$repo_url/tree/$branch"
 	
 elif [ "$1" = "nbranch" ]; then
 	if arggt "1" ; then
