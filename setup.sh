@@ -76,7 +76,7 @@ echo "The default directory aliases setup are as follows:"
 echo "1) docs = ~/Documents"
 echo "2) down = ~/Downloads"
 h1_text "Would you like to include these? [ y / n ]"
-read keep_default_diraliases
+read -r keep_default_diraliases
 if [ "$keep_default_diraliases" = "y" ]; then
 	echo "docs=~/Documents" >> $md_dir/dir-aliases.txt
 	echo "down=~/Downloads" >> $md_dir/dir-aliases.txt

@@ -7,6 +7,8 @@ mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
 
 source $mydir/functions.sh
+source $mydir/functions.sh
+
 
 # DATA
 declare -A user
@@ -381,12 +383,12 @@ elif [ "$1" = "pr" ]; then
 elif [ "$1" = "bpr" ]; then
 	if is_git_repo ; then
 		if arggt "1" ; then
-			bpr $2
+			bpr "$2"
 		else
 			info_text "Provide a branch name:"
-			read name
+			read -r name
 			if [ "$name" != "" ]; then
-				bpr $name
+				bpr "$name"
 			fi
 		fi
 	fi
@@ -394,7 +396,7 @@ elif [ "$1" = "bpr" ]; then
 
 # FILE CREATION
 
-elif [[ "${exts[*]}" =~ "$1" ]]; then
+elif [[ "${exts[*]}" =~ $1 ]]; then
 	info_text "Enter a filename for your $1 file:"
 	read -r fname
 	info_text "Creating $fname.$1"
