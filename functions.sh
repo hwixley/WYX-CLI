@@ -66,15 +66,6 @@ function openurl() {
 	fi
 }
 
-function arraykeys() {
-	arg=$1
-	if mac; then
-		return "${(@k)arg}"
-	else
-		return "${!arg[@]}"
-	fi
-}
-
 function envfile() {
 	if mac; then
 		echo "~/.zshrc"

@@ -53,6 +53,15 @@ repo_url=${repo_url%".git"}
 
 # MODULAR FUNCTIONS
 
+function arraykeys() {
+	arg=$1
+	if mac; then
+		return "${(@k)arg}"
+	else
+		return "${!arg[@]}"
+	fi
+}
+
 function arggt() {
 	if [ "$num_args" -gt "$1" ]; then
 		return 0
@@ -88,6 +97,7 @@ function is_git_repo() {
 		return 1
 	fi
 }
+
 
 function commit() {
 	git add .
@@ -342,8 +352,8 @@ elif [ "$1" = "cdir" ]; then
 	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
 	wix save
 	
-elif [ "$1" = "mydirs" ]; then
-	for x in $dirkeys; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
+# elif [ "$1" = "mydirs" ]; then
+# 	for x in $dirkeys; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
 	
 
 # GITHUB AUTOMATION
@@ -398,6 +408,28 @@ elif [ "$1" = "bpr" ]; then
 		fi
 	fi
 
+
+# MY DATA
+
+elif [ "$1" = "user" ]; then
+	for key in "${!user[@]}"; do
+		echo "$key: ${user[$key]}"
+	done
+
+elif [ "$1" = "mydirs" ]; then
+	for key in "${!mydirs[@]}"; do
+		echo "$key: ${mydirs[$key]}"
+	done
+
+elif [ "$1" = "myorgs" ]; then
+	for key in "${!myorgs[@]}"; do
+		echo "$key: ${myorgs[$key]}"
+	done
+
+elif [ "$1" = "myscripts" ]; then
+	for key in "${!myscripts[@]}"; do
+		echo "$key: ${myscripts[$key]}"
+	done
 
 # FILE CREATION
 
