@@ -9,7 +9,6 @@ datadir=$mydir/.wix-cli-data
 source $mydir/functions.sh
 source $mydir/functions.sh
 
-
 # DATA
 declare -A user
 readarray -t lines < "$datadir/git-user.txt"
@@ -291,12 +290,18 @@ if [ $num_args -eq 0 ]; then
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes and create PR for branch${RESET}"
 	echo ""
+	h1_text "MY DATA:"
+	echo "- user"
+	echo "- myorgs"
+	echo "- mydirs"
+	echo "- myscripts"
+	echo "- edit-mydata <data>"
+	echo ""
 	h1_text "CLI management:"
 	echo "- edit"
 	echo "- save"
 	echo "- cat"
 	echo "- cdir"
-	echo "- mydirs"
 
 
 # GENERAL

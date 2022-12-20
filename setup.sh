@@ -86,10 +86,10 @@ fi
 echo ""
 info_text "Okay we should be good to go!"
 
-# echo "" >> "$envfile"
-# echo "# WIX CLI" >> "$envfile"
-# echo "alias wix=\"source $(pwd)/wix-cli-template.sh\"" >> "$envfile"
-# source "$envfile"
+echo "" >> "$envfile"
+echo "# WIX CLI" >> "$envfile"
+echo "alias wix=\"source $(pwd)/wix-cli.sh\"" >> "$envfile"
+source "$envfile"
 
 echo ""
 info_text "WIX CLI successfully added to $envfile !"
