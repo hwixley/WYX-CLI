@@ -40,6 +40,7 @@ for line in "${lines[@]}"; do
 	value=${line#*=}
 	myscripts[$key]=$value
 done
+echo "$myscripts"
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -48,6 +49,8 @@ fi
 remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
+
+echo "$branch"
 
 
 # MODULAR FUNCTIONS
