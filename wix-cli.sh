@@ -317,6 +317,13 @@ if [ $num_args -eq 0 ]; then
 
 # GENERAL
 
+elif [ "$1" = "sys-info" ]; then
+	if mac; then
+		echo "Mac (0_0)"
+	else
+		echo "Linux (-_-)"
+	fi
+
 elif [ "$1" = "cd" ]; then
 	wix_cd "$2"
 	
@@ -328,6 +335,9 @@ elif [ "$1" = "run" ]; then
 	
 elif [ "$1" = "delete" ]; then
 	wix_delete "$2" "$3"
+
+elif [ "$1" = "hide" ]; then
+	echo "not implemented yet"
 
 # CLI MANAGEMENT
 
@@ -442,13 +452,9 @@ elif [ "$1" = "edit-mydata" ]; then
 		declare -a datanames
 		found=1
 		datanames=( "user" "myorgs" "mydirs" "myscripts" )
-		for data in $datanames; do
-			if [ "$data_to_edit_prompt" = "$data" ]; then
-				found=0
-			fi
-		done
-		if ! found; then
-			error_text "$data_to_edit_prompt is not a valid piece of data, please try one of the following: $datanames"
+		if ! printf '%s\0' "${datanames[@]}" | grep -Fxqz -- "$data_to_edit_prompt"; then
+			error_text "'$data_to_edit_prompt' is not a valid piece of data, please try one of the following: ${datanames[*]}"
+			return 1
 		fi
 	fi
 	action="$3"
