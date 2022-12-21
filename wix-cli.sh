@@ -286,14 +286,15 @@ if [ $num_args -eq 0 ]; then
 	h1_text "COMMANDS:"
 	echo "- cd <cdir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
-	echo "- new <cdir> <subdir>		${ORANGE}: new directory${RESET}"
-	echo "- run <cdir> 			${ORANGE}: setup and run environment${RESET}"
-	echo "- delete <cdir> <subdir> 	${ORANGE}: delete dir${RESET}"
+	echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
+	echo "- run <mydir> 			${ORANGE}: setup and run environment${RESET}"
+	echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
+	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	echo ""
 	h1_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes${RESET}"
 	echo "- ginit <org?> <repo>		${ORANGE}: init git repo${RESET}"
-	echo "- gnew <cdir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
+	echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
 	echo "- repo 				${ORANGE}: go to repo url${RESET}"
 	echo "- branch 			${ORANGE}: go to branch url${RESET}"
 	echo "- nbranch <name?>		${ORANGE}: create new branch${RESET}"
@@ -305,7 +306,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- myorgs"
 	echo "- mydirs"
 	echo "- myscripts"
-	echo "- edit-mydata <data>"
+	echo "- edit-mydata <data> <action>"
 	echo ""
 	h1_text "CLI management:"
 	echo "- edit"
@@ -430,6 +431,38 @@ elif [ "$1" = "myscripts" ]; then
 	for key in "${!myscripts[@]}"; do
 		echo "$key: ${myscripts[$key]}"
 	done
+
+elif [ "$1" = "edit-mydata" ]; then
+	data_to_edit="$2"
+	if ! arggt "1"; then
+		info_text "What data would you like to edit?"
+		read -r data_to_edit_prompt
+		data_to_edit=$data_to_edit_prompt
+
+		declare -a datanames
+		found=1
+		datanames=( "user" "myorgs" "mydirs" "myscripts" )
+		for data in $datanames; do
+			if [ "$data_to_edit_prompt" = "$data" ]; then
+				found=0
+			fi
+		done
+		if ! found; then
+			error_text "$data_to_edit_prompt is not a valid piece of data, please try one of the following: $datanames"
+		fi
+	fi
+	action="$3"
+	if ! arggt "2" ; then
+		info_text "What action would you like to perform on this data? ${BLUE}[ create / edit / delete ]${RESET}"
+		read -r action_prompt
+		action=$action_prompt
+
+		declare -a actions
+		found=1
+		actions=( "create" "edit" "delete" )
+	fi
+	echo $data_to_edit
+	echo $action
 
 # FILE CREATION
 
