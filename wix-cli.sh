@@ -416,6 +416,9 @@ elif [ "$1" = "bpr" ]; then
 		fi
 	fi
 
+elif [ "$1" = "profile" ]; then
+	giturl "https://github.com/${user["name"]}"
+
 
 # MY DATA
 
