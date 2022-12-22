@@ -151,18 +151,13 @@ function ginit() {
 function wix_cd() {
 	if arggt "1" ; then
 		if direxists "$1" ; then
-			destination=${mydirs[$1]}
+			destination="${mydirs[$1]/~/${HOME}}"
 			if ! empty "$2" ; then
-				destination=${mydirs[$1]}/$2
+				destination="${mydirs[$1]/~/${HOME}}/$2"
 			fi
-			if [ -d "$destination" ]; then
-				info_text "Travelling to -> $destination"
-				cd "$destination" || exit
-				return 0
-			else
-				error_text "The path $destination does not exist"
-				return 1
-			fi
+			info_text "Travelling to -> $destination"
+			eval cd "$destination" || (error_text "The path $destination does not exist" && return 1)
+			return 0
 		else
 			error_text
 			return 1
@@ -450,25 +445,37 @@ elif [ "$1" = "edit-mydata" ]; then
 		data_to_edit=$data_to_edit_prompt
 
 		declare -a datanames
-		found=1
 		datanames=( "user" "myorgs" "mydirs" "myscripts" )
 		if ! printf '%s\0' "${datanames[@]}" | grep -Fxqz -- "$data_to_edit_prompt"; then
 			error_text "'$data_to_edit_prompt' is not a valid piece of data, please try one of the following: ${datanames[*]}"
 			return 1
 		fi
 	fi
-	action="$3"
-	if ! arggt "2" ; then
-		info_text "What action would you like to perform on this data? ${BLUE}[ create / edit / delete ]${RESET}"
-		read -r action_prompt
-		action=$action_prompt
+	# action="$3"
+	# if ! arggt "2" ; then
+	# 	info_text "What action would you like to perform on this data? ${BLUE}[ create / edit / delete ]${RESET}"
+	# 	read -r action_prompt
+	# 	action=$action_prompt
 
-		declare -a actions
-		found=1
-		actions=( "create" "edit" "delete" )
+	# 	declare -a actions
+	# 	actions=( "create" "edit" "delete" )
+	# 	if ! printf '%s\0' "${actions[@]}" | grep -Fxqz -- "$action_prompt"; then
+	# 		error_text "'$action_prompt' is not a valid action, please try one of the following: ${actions[*]}"
+	# 		return 1
+	# 	fi
+	# fi
+
+	if [ "$data_to_edit" = "user" ]; then
+		gedit "$datadir/git-user.txt"
+	elif [ "$data_to_edit" = "myorgs" ]; then
+		gedit "$datadir/git-orgs.txt"
+	elif [ "$data_to_edit" = "mydirs" ]; then
+		gedit "$datadir/dir-aliases.txt"
+	elif [ "$data_to_edit" = "myscripts" ]; then
+		gedit "$datadir/run-configs.txt"
 	fi
-	echo $data_to_edit
-	echo $action
+	# echo $data_to_edit
+	# echo $action
 
 # FILE CREATION
 
