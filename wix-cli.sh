@@ -303,7 +303,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- myorgs"
 	echo "- mydirs"
 	echo "- myscripts"
-	echo "- edit-mydata <data> <action>"
+	echo "- editd <data>"
 	echo ""
 	h1_text "CLI management:"
 	echo "- edit"
@@ -439,7 +439,7 @@ elif [ "$1" = "myscripts" ]; then
 		echo "$key: ${myscripts[$key]}"
 	done
 
-elif [ "$1" = "edit-mydata" ]; then
+elif [ "$1" = "editd" ]; then
 	data_to_edit="$2"
 	if ! arggt "1"; then
 		info_text "What data would you like to edit?"
@@ -453,20 +453,6 @@ elif [ "$1" = "edit-mydata" ]; then
 			return 1
 		fi
 	fi
-	# action="$3"
-	# if ! arggt "2" ; then
-	# 	info_text "What action would you like to perform on this data? ${BLUE}[ create / edit / delete ]${RESET}"
-	# 	read -r action_prompt
-	# 	action=$action_prompt
-
-	# 	declare -a actions
-	# 	actions=( "create" "edit" "delete" )
-	# 	if ! printf '%s\0' "${actions[@]}" | grep -Fxqz -- "$action_prompt"; then
-	# 		error_text "'$action_prompt' is not a valid action, please try one of the following: ${actions[*]}"
-	# 		return 1
-	# 	fi
-	# fi
-
 	if [ "$data_to_edit" = "user" ]; then
 		gedit "$datadir/git-user.txt"
 	elif [ "$data_to_edit" = "myorgs" ]; then
@@ -476,8 +462,6 @@ elif [ "$1" = "edit-mydata" ]; then
 	elif [ "$data_to_edit" = "myscripts" ]; then
 		gedit "$datadir/run-configs.txt"
 	fi
-	# echo $data_to_edit
-	# echo $action
 
 # FILE CREATION
 
