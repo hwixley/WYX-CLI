@@ -297,6 +297,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- nbranch <name?>		${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes and create PR for branch${RESET}"
+	echo "- profile			${ORANGE}: go to profile"
 	echo ""
 	h1_text "MY DATA:"
 	echo "- user"
