@@ -3,6 +3,7 @@
 # CLI CONSTS
 num_args=$#
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
+
 mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
 
@@ -56,6 +57,7 @@ repo_url=${repo_url%".git"}
 function arraykeys() {
 	arg=$1
 	if mac; then
+		# shellcheck disable=SC2296 # irrelevant given this is a zsh command which shellcheck does not recognise
 		return "${(@k)arg}"
 	else
 		return "${!arg[@]}"
