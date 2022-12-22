@@ -298,6 +298,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes and create PR for branch${RESET}"
 	echo "- profile			${ORANGE}: go to profile"
+	echo "- org	<org?>			${ORANGE}: go to org"
 	echo ""
 	h1_text "MY DATA:"
 	echo "- user"
@@ -420,6 +421,17 @@ elif [ "$1" = "bpr" ]; then
 elif [ "$1" = "profile" ]; then
 	giturl "https://github.com/${user["name"]}"
 
+elif [ "$1" = "org" ]; then
+	if arggt "1"; then
+		if orgexists "$2"; then
+			giturl "https://github.com/${myorgs[$2]}"
+		else
+			error_text "That organisation does not exist..."
+			info_text "Execute 'wix myorgs' to see your saved organisations"
+		fi
+	else
+		giturl "https://github.com/${myorgs[default]}"
+	fi
 
 # MY DATA
 
