@@ -207,8 +207,8 @@ function wix_new() {
 }
 
 function wix_run() {
-	echo $myscripts
 	if scriptexists "$1"; then
+		info_text "Running $1 script!"
 		source "$datadir/run-configs/${myscripts[$1]}.sh"
 	else
 		error_text "This is only supported for gs currently"
@@ -286,10 +286,10 @@ if [ $num_args -eq 0 ]; then
 	echo "v0.0.0.0"
 	echo ""
 	h1_text "COMMANDS:"
-	echo "- cd <cdir> 			${ORANGE}: navigation${RESET}"
+	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
 	echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
-	echo "- run <mydir> 			${ORANGE}: setup and run environment${RESET}"
+	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
 	echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
 	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	echo "- genpass			${ORANGE}: generate and copy random hex password${RESET}"
@@ -312,6 +312,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- mydirs"
 	echo "- myscripts"
 	echo "- editd <data>"
+	echo "- edits <myscript>"
 	echo ""
 	h1_text "CLI management:"
 	echo "- edit"
@@ -505,6 +506,20 @@ elif [ "$1" = "create-script" ]; then
 	touch "$fname"
 	chmod u+x "$fname"
 	gedit "$fname"
+
+elif [ "$1" = "edits" ]; then
+	script_to_edit="$2"
+	if ! arggt "1"; then
+		info_text "What script would you like to edit?"
+		read -r script_to_edit_prompt
+		script_to_edit=$script_to_edit_prompt
+	fi
+	if scriptexists "$script_to_edit"; then
+		info_text "Editing $script_to_edit script..."
+		gedit "$datadir/run-configs/$script_to_edit.sh"
+	else
+		error_text "This script does not exist... Please try again"
+	fi
 
 # FILE CREATION
 
