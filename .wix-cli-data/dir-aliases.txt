@@ -1,3 +1,4 @@
 docs=~/Documents
 down=~/Downloads
 self=~/Documents/random-coding-projects/bashing
+gs=~/Documents/GetSkooled

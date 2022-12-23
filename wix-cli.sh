@@ -88,6 +88,14 @@ function orgexists() {
 	fi
 }
 
+function scriptexists() {
+	if [[ -v myscripts[$1] ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
 function is_git_repo() {
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -199,12 +207,9 @@ function wix_new() {
 }
 
 function wix_run() {
-	if [ "$1" = "gs" ]; then
-		info_text "Running GetSkooled localhost server on develop"
-		cd "$gs_path/website/GetSkooled-MVP-Website" || exit
-		git checkout develop
-		git pull origin develop
-		php -S localhost:8081
+	echo $myscripts
+	if scriptexists "$1"; then
+		source "$datadir/run-configs/${myscripts[$1]}.sh"
 	else
 		error_text "This is only supported for gs currently"
 	fi
@@ -488,6 +493,18 @@ elif [ "$1" = "editd" ]; then
 	elif [ "$data_to_edit" = "myscripts" ]; then
 		gedit "$datadir/run-configs.txt"
 	fi
+
+elif [ "$1" = "create-script" ]; then
+	script_name="$2"
+	if ! arggt "1"; then
+		info_text "Enter the name of the script you would like to add:"
+		read -r script_name_prompt
+		script_name=$script_name_prompt
+	fi
+	fname="$datadir/run-configs/$script_name.sh"
+	touch "$fname"
+	chmod u+x "$fname"
+	gedit "$fname"
 
 # FILE CREATION
 
