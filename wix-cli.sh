@@ -287,7 +287,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- run <mydir> 			${ORANGE}: setup and run environment${RESET}"
 	echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
 	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
-	echo "- genpass						${ORANGE}: generate random hex password${RESET}"
+	echo "- genpass			${ORANGE}: generate and copy random hex password${RESET}"
 	echo ""
 	h1_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes${RESET}"
@@ -326,6 +326,9 @@ elif [ "$1" = "sys-info" ]; then
 
 elif [ "$1" = "cd" ]; then
 	wix_cd "$2"
+	
+elif [ "$1" = "back" ]; then
+	cd -
 	
 elif [ "$1" = "new" ]; then
 	wix_new "$2" "$3"
