@@ -287,6 +287,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- run <mydir> 			${ORANGE}: setup and run environment${RESET}"
 	echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
 	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
+	echo "- genpass						${ORANGE}: generate random hex password${RESET}"
 	echo ""
 	h1_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes${RESET}"
@@ -311,7 +312,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- edit"
 	echo "- save"
 	echo "- cat"
-	echo "- cdir"
+	# echo "- cdir"
 
 
 # GENERAL
@@ -338,6 +339,12 @@ elif [ "$1" = "delete" ]; then
 elif [ "$1" = "hide" ]; then
 	echo "not implemented yet"
 
+elif [ "$1" = "genpass" ]; then
+	pass=$(openssl rand -hex 16)
+	info_text "Your random password is: ${RESET}$pass"
+	info_text "This has been saved to your clipboard!"
+	echo "$pass" | xclip -selection c
+
 # CLI MANAGEMENT
 
 elif [ "$1" = "edit" ]; then
@@ -353,14 +360,14 @@ elif [ "$1" = "save" ]; then
 elif [ "$1" = "cat" ]; then
 	cat "$mypath"
 
-elif [ "$1" = "cdir" ]; then
-	info_text "Enter an alias for your new directory:"
-	read -r alias
-	info_text "Enter the directory:"
-	read -r i_dir
-	info_text "Adding $alias=$i_dir to custom dirs"
-	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
-	wix save
+# elif [ "$1" = "cdir" ]; then
+# 	info_text "Enter an alias for your new directory:"
+# 	read -r alias
+# 	info_text "Enter the directory:"
+# 	read -r i_dir
+# 	info_text "Adding $alias=$i_dir to custom dirs"
+# 	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
+# 	wix save
 	
 # elif [ "$1" = "mydirs" ]; then
 # 	for x in $dirkeys; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
