@@ -1,3 +1,7 @@
-# WIX CLI
+# WIX CLI: automate your development workflow in the terminal
 
-## Automate your development workflow with this CLI (supports bash and zsh)
+v0.0.0.0
+
+Supports bash and zsh
+
+#
