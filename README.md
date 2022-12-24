@@ -13,6 +13,8 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
 Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
 
+<hr>
+
 ## Dependencies
 
 The main dependencies include: `openssl` and `git`.
