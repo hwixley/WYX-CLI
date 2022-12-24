@@ -27,8 +27,9 @@ The code editor dependencies include; `VScode` and `Xcode` (for mac systems); ho
 ```
 git clone git@github.com:hwixley/wix-cli.git
 ```
-3. Give permissions to the setup script and run it:
+2. Give permissions to the setup script and run it:
 ```
 chmod +x setup.sh && ./setup.sh
 ```
-5. Type `wix` to see the list of commands and start developing some magic!
+
+Type `wix` to see the list of commands and start developing some magic!
