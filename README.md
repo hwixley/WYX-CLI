@@ -5,7 +5,9 @@
 
 # 
 
-Supports bash and zsh
+## Support
+
+Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
 # 
 
