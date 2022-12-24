@@ -290,7 +290,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
 	echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
 	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
-	echo "- vsc <mydir>		${ORANGE}: open dir in VSC${RESET}"
+	echo "- vsc <mydir>			${ORANGE}: open dir in VSC${RESET}"
 	echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
 	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	echo "- genpass			${ORANGE}: generate and copy random hex password${RESET}"
