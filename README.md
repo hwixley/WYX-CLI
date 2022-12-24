@@ -22,7 +22,11 @@ The code editor dependencies include; `VScode` and `Xcode` (for mac systems); ho
 ## Installation
 
 1. Clone this repository into a folder of your choice: 
-    ```git clone git@github.com:hwixley/wix-cli.git```
+```
+git clone git@github.com:hwixley/wix-cli.git
+```
 3. Give permissions to the setup script and run it:
-    ```chmod +x setup.sh && ./setup.sh```
+```
+chmod +x setup.sh && ./setup.sh
+```
 5. Type `wix` to see the list of commands and start developing some magic!
