@@ -13,7 +13,7 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
 ## What it does?
 
-Provides support for optimising the usage of commonly used commands, directories, environments, and scripts.
+Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
 
 ## Dependencies
 
