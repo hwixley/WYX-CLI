@@ -290,6 +290,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
 	echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
 	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
+	echo "- vsc <mydir>		${ORANGE}: open dir in VSC${RESET}"
 	echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
 	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	echo "- genpass			${ORANGE}: generate and copy random hex password${RESET}"
@@ -342,6 +343,15 @@ elif [ "$1" = "new" ]; then
 elif [ "$1" = "run" ]; then
 	wix_run "$2"
 	
+elif [ "$1" = "vsc" ]; then
+	if direxists "$2"; then
+		wix_cd "$2"
+		info_text "Opening up VSCode editor..."
+		code .
+	else
+		error_text "Error: this directory alias does not exist, please try again"
+	fi
+
 elif [ "$1" = "delete" ]; then
 	wix_delete "$2" "$3"
 
