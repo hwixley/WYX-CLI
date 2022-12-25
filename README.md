@@ -8,7 +8,7 @@
 ## Table of Contents
 
 1. [Support](https://github.com/hwixley/wix-cli#support)
-2. [What it does?](https://github.com/hwixley/wix-cli#what-it-does)
+2. [What does it do?](https://github.com/hwixley/wix-cli#what-it-does)
 3. [Customisation](https://github.com/hwixley/wix-cli#customisation)
 4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
 5. [Installation](https://github.com/hwixley/wix-cli#installation)
@@ -20,11 +20,13 @@
 
 Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
-## What it does?
+<hr>
+
+## What does it do?
 
 Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
 
-## Customisation
+## Why was it made?
 
 <hr>
 
