@@ -17,9 +17,9 @@ Provides developers with the ability for optimising the usage of commonly used c
 
 ## Dependencies
 
-The main dependencies include: `openssl` and `git`.
+<ins>The main dependencies include:</ins> `openssl` and `git`.
 
-The code editor dependencies include; `VScode` and `Xcode` (for mac systems); however, only the `vsc` and `xc` commands depend on these.
+<ins>The code editor dependencies include;</ins> `VScode` and `Xcode` (for mac systems); however, only the `vsc` and `xc` commands depend on these.
 
 ## Installation
 
