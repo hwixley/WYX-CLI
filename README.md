@@ -13,6 +13,8 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
 Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
 
+## Customisation
+
 <hr>
 
 ## Dependencies
@@ -37,6 +39,12 @@ Type `wix` to see the list of commands and start developing some magic!
 <hr>
 
 ## List of Commands
+
+Please note any command with an argument in angle brackets below (ie. `<branch>`) denotes a dynamic variable which is given by the user. If the text inside these angle has a '?' character at the end (ie. `<branch?>`) this denotes that this argument is optional and if left empty will fallback to the default.
+
+#### Defaults:
+- <branch?> : if left empty the current branch will be used
+- <org?> : if left empty the default GitHub organisation set in `myorgs` will be used.
 
 ### General Utility
 
