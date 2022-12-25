@@ -7,12 +7,12 @@
 
 ## Table of Contents
 
-1. [Support](https://github.com/hwixley/wix-cli/edit/master/README.md#Support)
-2. [What it does?](https://github.com/hwixley/wix-cli/edit/master/README.md#What%20it%20does?)
-3. [Customisation](https://github.com/hwixley/wix-cli/edit/master/README.md#Customisation)
-4. [Dependencies](https://github.com/hwixley/wix-cli/edit/master/README.md#Dependencies)
-5. [Installation](https://github.com/hwixley/wix-cli/edit/master/README.md#Installation)
-6. [List of Commands](https://github.com/hwixley/wix-cli/edit/master/README.md#List%20of%20Commands)
+1. [Support](https://github.com/hwixley/wix-cli#Support)
+2. [What it does?](https://github.com/hwixley/wix-cli#What%20it%20does?)
+3. [Customisation](https://github.com/hwixley/wix-cli#Customisation)
+4. [Dependencies](https://github.com/hwixley/wix-cli#Dependencies)
+5. [Installation](https://github.com/hwixley/wix-cli#Installation)
+6. [List of Commands](https://github.com/hwixley/wix-cli#List%20of%20Commands)
 
 <hr>
 
