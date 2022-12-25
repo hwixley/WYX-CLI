@@ -32,7 +32,7 @@ Please mark the title of your issues with the appropriate prefix (as listed belo
 
 ## What It Does
 
-Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
+Provides developers with the ability for optimising the execution of commonly performed tasks, commands, directory navigations, and environment setups/script executions.
 
 ## Why It Was Made
 
