@@ -33,3 +33,5 @@ chmod +x setup.sh && ./setup.sh
 ```
 
 Type `wix` to see the list of commands and start developing some magic!
+
+# hello
