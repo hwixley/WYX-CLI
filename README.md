@@ -59,12 +59,12 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 <br>
 
-**Note: all commands below should be preceded by the `wix` command, this was ommitted to prevent redundancy.**
+**Note: all commands below should be preceded by the `wix` command, this was ommitted to prevent redundancy and promote readability.**
 
 <br>
 
 ### General Utility
-1. `cd <mydir>`: directory navigation using custom aliases stores in `mydirs`
+1. `cd <mydir>`: directory navigation using custom aliases stored in `mydirs`
 2. `back`: go back to last directory
 3. `genpass`: generate and copy random 16-bit hex password
 
@@ -84,7 +84,10 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `push <branch?>`: push changes to the given repository branch (prompts you to enter a commit message on execution and leaves a default message if left empty)
 2. `pull <branch?>`: pull changes from the given repository branch
 3. `ginit <org?> <repo>`: initialize git repository in current directory under the specified organization (`<org?>` - the default user is used as the owner if left empty) and with the specified name (`<repo>`)
-4. 
+4. `gnew <mydir/org> <repo>`: create and initialize a new directory as a git repository
+5. `nbranch <name?>`: create a new branch
+6. `pr`: create a PR against the default branch from the current branch
+7. `bpr`: checkout changes to a new branch and create a PR from this branch
 
 ### Quick-access URLs
 1. `repo`: go to the respective GitHub repository url on the default branch from your current directory
@@ -94,9 +97,9 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 5. `help`: go to the wix-cli GitHub Pages url for documentation
 
 ### Customisable Data for Custom Scripting Logic
-1. `user`
-2. `myorgs`
-3. `mydirs`
-4. `myscripts`
-5. `editd <data>`
-6. `edits <myscript>`
+1. `user`: stores user-specific data such as GitHub username (for configuring GitHub urls)
+2. `myorgs`: stores aliases for user's GitHub organizations (for configuring GitHub urls)
+3. `mydirs`: stores aliases for user's directories (for efficient terminal navigation)
+4. `myscripts`: stores aliases for user's custom scripts (for efficient environment setup or script execution)
+5. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs` or `myscripts`)
+6. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
