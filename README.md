@@ -5,6 +5,17 @@
 
 <hr>
 
+## Table of Contents
+
+1. [Support](https://github.com/hwixley/wix-cli/edit/master/README.md#Support)
+2. [What it does?](https://github.com/hwixley/wix-cli/edit/master/README.md#What%20it%20does?)
+3. [Customisation](https://github.com/hwixley/wix-cli/edit/master/README.md#Customisation)
+4. [Dependencies](https://github.com/hwixley/wix-cli/edit/master/README.md#Dependencies)
+5. [Installation](https://github.com/hwixley/wix-cli/edit/master/README.md#Installation)
+6. [List of Commands](https://github.com/hwixley/wix-cli/edit/master/README.md#List%20of%20Commands)
+
+<hr>
+
 ## Support
 
 Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
