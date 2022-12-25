@@ -13,10 +13,19 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
 Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
 
-<details>
-<summary>### List of commands:</summary>
-1. Yes
-</details>
+## Commands
+
+### General Utility
+
+### Directory Management
+
+### Code Editing
+
+### Git Automation
+
+### Quick-access URLs
+
+### Customisable Data for Custom Scripting Logic
 
 <hr>
 
