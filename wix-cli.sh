@@ -134,6 +134,13 @@ function npush() {
 	git push origin "$1"
 }
 
+function pull() {
+	if [ "$1" != "$branch" ]; then
+		git checkout "$1"
+	fi
+	git pull origin "$1"
+}
+
 function bpr() {
 	push "$1"
 	info_text "Creating PR for $branch in $repo_url..."
@@ -302,6 +309,8 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	h1_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes${RESET}"
+	echo "- pull <branch?>		${ORANGE}: pull changes from current repo (and branch)${RESET}"
+	echo "- pullr [<repo:branch>]?		${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
 	echo "- ginit <org?> <repo>		${ORANGE}: init git repo${RESET}"
 	echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
 	echo "- nbranch <name?>		${ORANGE}: create new branch${RESET}"
@@ -342,7 +351,7 @@ elif [ "$1" = "cd" ]; then
 	wix_cd "$2"
 	
 elif [ "$1" = "back" ]; then
-	cd -
+	cd - || error_text "Failed to execute 'cd -'..."
 	
 elif [ "$1" = "new" ]; then
 	wix_new "$2" "$3"
@@ -413,6 +422,14 @@ elif [ "$1" = "push" ]; then
 	else
 		push "$branch"
 	fi
+
+elif [ "$1" = "pull" ]; then
+	if arggt "1" ; then
+		pull "$2"
+	else
+		pull "$branch"
+	fi
+
 elif [ "$1" = "repo" ]; then
 	info_text "Redirecting to $repo_url..."
 	giturl "https://github.com/$repo_url"
