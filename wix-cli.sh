@@ -310,7 +310,7 @@ if [ $num_args -eq 0 ]; then
 	h1_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes${RESET}"
 	echo "- pull <branch?>		${ORANGE}: pull changes from current repo (and branch)${RESET}"
-	echo "- pullr [<repo:branch>]?	${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
+	# echo "- pullr [<repo:branch>]?	${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
 	echo "- ginit <org?> <repo>		${ORANGE}: init git repo${RESET}"
 	echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
 	echo "- nbranch <name?>		${ORANGE}: create new branch${RESET}"
