@@ -24,10 +24,9 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 ## Creating Issues
 
 Please mark the title of your issues with the appropriate prefix (as listed below) so it is obvious the reason for your issue:
-- [BUG]: for submitting a bug report
-- [QUESTION]: for asking a question about the tool
-- [NEW-FEATURE]: for proposing new features to add to the tool
-- [SYSTEM-SUPPORT]: for requesting support for a particular system that it does not currently work on
+- `[BUG]`: for submitting a bug report
+- `[QUESTION]`: for asking a question about the tool
+- `[NEW-FEATURE]`: for proposing new features to add to the tool
 
 <hr>
 
