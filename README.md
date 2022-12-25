@@ -57,9 +57,9 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 - `<branch?>` : if left empty the current branch will be used
 - `<org?>` : if left empty the default GitHub organisation set in `myorgs` will be used
 
-
+<br>
 **Note: all commands below should be preceded by the `wix` command, this was ommitted to prevent redundancy.**
-
+<br>
 
 ### General Utility
 1. `cd <mydir>`: directory navigation using custom aliases stores in `mydirs`
