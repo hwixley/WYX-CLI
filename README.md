@@ -8,8 +8,8 @@
 ## Table of Contents
 
 1. [Support](https://github.com/hwixley/wix-cli#support)
-2. [What does it do?](https://github.com/hwixley/wix-cli#what-it-does)
-3. [Customisation](https://github.com/hwixley/wix-cli#customisation)
+2. [What it does](https://github.com/hwixley/wix-cli#what-it-does)
+3. [Why it was made](https://github.com/hwixley/wix-cli#why-it-was-made)
 4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
 5. [Installation](https://github.com/hwixley/wix-cli#installation)
 6. [List of Commands](https://github.com/hwixley/wix-cli#list-of-commands)
@@ -22,11 +22,11 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
 <hr>
 
-## What does it do?
+## What it does
 
 Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
 
-## Why was it made?
+## Why it was made
 
 I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser needlessly repetitive and time-wasting. I decided to start developing my own bash script to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal. I knew I was not the only one who had suffered from these productivity issues as my co-workers saw interest in the tool I was developing. Upon this I decided to start developing a more generic and robust version of my original tool to allow developers across the world optimize their productivity with this tool too!
 
