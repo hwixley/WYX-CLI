@@ -303,8 +303,10 @@ if [ $num_args -eq 0 ]; then
 	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	echo ""
 	h1_text "CODE:"
-	echo "- vsc <mydir>			${ORANGE}: open dir in VSC${RESET}"
-	echo "- xc <mydir>			${ORANGE}: open dir in XCode${RESET}"
+	echo "- vsc <mydir>			${ORANGE}: open dir in Visual Studio Code${RESET}"
+	if mac; then
+		echo "- xc <mydir>			${ORANGE}: open dir in XCode${RESET}"
+	fi
 	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
 	echo ""
 	h1_text "GITHUB AUTOMATION:"
@@ -322,6 +324,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- branch 			${ORANGE}: go to git branch url${RESET}"
 	echo "- profile			${ORANGE}: go to git profile url${RESET}"
 	echo "- org <org?>			${ORANGE}: go to git org url${RESET}"
+	echo "- help				${ORANGE}: go to wix-cli GitHub Pages url${RESET}"
 	echo ""
 	h1_text "MY DATA:"
 	echo "- user"
@@ -482,6 +485,11 @@ elif [ "$1" = "org" ]; then
 	else
 		giturl "https://github.com/${myorgs[default]}"
 	fi
+
+# URLs
+
+elif [ "$1" = "help" ]; then
+	openurl "https://hwixley.github.io/wix-cli"
 
 # MY DATA
 
