@@ -13,20 +13,6 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 
 Provides developers with the ability for optimising the usage of commonly used commands, directories, environments, and scripts.
 
-## Commands
-
-### General Utility
-
-### Directory Management
-
-### Code Editing
-
-### Git Automation
-
-### Quick-access URLs
-
-### Customisable Data for Custom Scripting Logic
-
 <hr>
 
 ## Dependencies
@@ -47,3 +33,19 @@ chmod +x setup.sh && ./setup.sh
 ```
 
 Type `wix` to see the list of commands and start developing some magic!
+
+<hr>
+
+## List of Commands
+
+### General Utility
+
+### Directory Management
+
+### Code Editing
+
+### Git Automation
+
+### Quick-access URLs
+
+### Customisable Data for Custom Scripting Logic
