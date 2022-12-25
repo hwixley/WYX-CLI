@@ -96,11 +96,11 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 4. `org <org?>`: go to the specified url of the GitHub organization
 5. `help`: go to the wix-cli GitHub Pages url for documentation
 
-### Customisable Data for Custom Scripting Logic
-1. `user`: stores user-specific data such as GitHub username (for configuring GitHub urls)
-2. `myorgs`: stores aliases for user's GitHub organizations (for configuring GitHub urls)
-3. `mydirs`: stores aliases for user's directories (for efficient terminal navigation)
-4. `myscripts`: stores aliases for user's custom scripts (for efficient environment setup or script execution)
+### Data for Custom Scripting Logic
+1. `user`: displays stored user-specific data such as GitHub username (for configuring GitHub urls)
+2. `myorgs`: displays stored aliases for user's GitHub organizations (for configuring GitHub urls)
+3. `mydirs`: displays stored aliases for user's directories (for efficient terminal navigation)
+4. `myscripts`: displays stored aliases for user's custom scripts (for efficient environment setup or script execution)
 
 ### Editing Data for Custom Scripting Logic
 1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs` or `myscripts`)
