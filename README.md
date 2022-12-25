@@ -101,5 +101,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 2. `myorgs`: stores aliases for user's GitHub organizations (for configuring GitHub urls)
 3. `mydirs`: stores aliases for user's directories (for efficient terminal navigation)
 4. `myscripts`: stores aliases for user's custom scripts (for efficient environment setup or script execution)
-5. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs` or `myscripts`)
-6. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
+
+### Editing Data for Custom Scripting Logic
+1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs` or `myscripts`)
+2. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
