@@ -79,8 +79,8 @@ rm -rf .wix-cli-data/
         gedit ~/.bashrc
         ```
         If `gedit` is not available you can always replace this with vim (using `vi`).
-    - Remove the 2 lines for the wix-cli:
-        The first line is a comment - `# WIX-CLI`
+    - Remove the 2 lines for the wix-cli:<br>
+        The first line is a comment - `# WIX-CLI`<br>
         The second line is where the command is actually setup - `alias wix="<path-of-installation>/wix-cli.sh"`
 4. Run the setup script
 ```
