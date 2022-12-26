@@ -79,7 +79,7 @@ rm -rf .wix-cli-data/
         ```
         gedit ~/.bashrc
         ```
-        If `gedit` is not available you can always replace this with vim (using `vi`).
+        If `gedit` is not available you can always replace this with vim (using `vi`).<br>
         <br>
     - Remove the 2 lines for the wix-cli:<br>
         The first line is a comment - `# WIX-CLI`<br>
