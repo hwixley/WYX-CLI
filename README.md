@@ -82,7 +82,10 @@ rm -rf .wix-cli-data/
     - Remove the 2 lines for the wix-cli:
         The first line is a comment - `# WIX-CLI`
         The second line is where the command is actually setup - `alias wix="<path-of-installation>/wix-cli.sh"`
-4. 
+4. Run the setup script
+```
+./setup.sh
+```
 
 <hr>
 
