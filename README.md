@@ -13,7 +13,8 @@
 3. [Why it was made](https://github.com/hwixley/wix-cli#why-it-was-made)
 4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
 5. [Installation](https://github.com/hwixley/wix-cli#installation)
-6. [List of Commands](https://github.com/hwixley/wix-cli#list-of-commands)
+6. [Factory-reset Installation](https://github.com/hwixley/wix-cli#factory-reset-installation)
+7. [List of Commands](https://github.com/hwixley/wix-cli#list-of-commands)
 
 <hr>
 
