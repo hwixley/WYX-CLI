@@ -75,7 +75,7 @@ rm -rf <path-of-installation>
         ```
         gedit ~/.bashrc
         ```
-        If `gedit` is not available you can always replace this with vim:
+        If `gedit` is not available you can always use vim:
         ```
         vi ~/.bashrc
         ```
