@@ -60,6 +60,7 @@ git clone git@github.com:hwixley/wix-cli.git
 ```
 chmod +x setup.sh && ./setup.sh
 ```
+3. Reopen your terminal or run `source ~/.bashrc` (`~/.zshrc` for unix systems)
 
 Type `wix` to see the list of commands and start developing some magic!
 
@@ -73,12 +74,13 @@ wix cd self
 ```
 rm -rf .wix-cli-data/
 ```
-3. Remove script setup in environment file (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems)
-    - Open the file in an editor:
+3. Remove script setup in environment file
+    - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems) 
         ```
         gedit ~/.bashrc
         ```
         If `gedit` is not available you can always replace this with vim (using `vi`).
+        <br>
     - Remove the 2 lines for the wix-cli:<br>
         The first line is a comment - `# WIX-CLI`<br>
         The second line is where the command is actually setup - `alias wix="<path-of-installation>/wix-cli.sh"`
@@ -86,6 +88,7 @@ rm -rf .wix-cli-data/
 ```
 ./setup.sh
 ```
+5. Reopen your terminal or run `source ~/.bashrc` (`~/.zshrc` for unix systems)
 
 <hr>
 
