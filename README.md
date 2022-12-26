@@ -78,8 +78,8 @@ rm -rf <path-of-installation>
         If `gedit` is not available you can always replace this with vim (using `vi`).<br>
         <br>
     - Remove the 2 lines for the wix-cli:<br>
-        The first line is a comment - `# WIX-CLI`<br>
-        The second line is where the command is actually setup - `alias wix="<path-of-installation>/wix-cli.sh"`
+        - The first line is a comment: `# WIX-CLI`<br>
+        - The second line is where the command is actually setup: `alias wix="<path-of-installation>/wix-cli.sh"`
 3. Follow the [installation instructions](https://github.com/hwixley/wix-cli#installation)
 
 <hr>
