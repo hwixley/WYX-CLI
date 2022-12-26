@@ -101,10 +101,13 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 <br>
 
-### General Utility
+### Navigation
 1. `cd <mydir>`: directory navigation using custom aliases stored in `mydirs`
 2. `back`: go back to last directory
-3. `genpass`: generate and copy random 16-bit hex password
+
+### Pseudo-random String Generation
+3. `genhex <hex-length?>`: generate and copy pseudo-random hex string of specified length (of default length 32)
+3. `genb64 <base64-length?>`: generate and copy pseudo-random base64 string of specified length (of default length 32)
 
 ### Directory Management
 1. `new <mydir> <subdir>`: create new directory in location of alias

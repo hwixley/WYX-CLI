@@ -292,11 +292,13 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	echo "v0.0.0.0"
 	echo ""
-	h1_text "GENERAL UTILITY:"
+	h1_text "NAVIGATION:"
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
+	echo ""
+	h1_text "PSEUDO-RANDOM STRING GENERATION:"
 	echo "- genhex <hex-length?>		${ORANGE}: generate and copy pseudo-random hex string (of default length 32)${RESET}"
-	echo "- genhex <base64-length?>		${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
+	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
 	echo ""
 	h1_text "DIR MANAGEMENT:"
 	echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
@@ -393,7 +395,7 @@ elif [ "$1" = "genhex" ]; then
 	info_text "This has been saved to your clipboard!"
 	echo "$pass" | xclip -selection c
 
-elif [ "$1" = "genbase64" ]; then
+elif [ "$1" = "genb64" ]; then
 	hex_size=32
 	if arggt "1"; then
 		if ! [[ "$2" =~ ^[0-9]+$ ]]; then
