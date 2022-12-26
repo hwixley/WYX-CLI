@@ -25,7 +25,7 @@ Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
 ## Creating Issues
 
 Please mark the title of your issues with the appropriate prefix (as listed below) so it is obvious the reason for your issue:
-- `[BUG]`: for submitting a bug report
+- `[BUG]`: for submitting a bug report (please include a summary of your system details when submitting this)
 - `[QUESTION]`: for asking a question about the tool
 - `[NEW-FEATURE]`: for proposing new features to add to the tool
 
@@ -46,7 +46,7 @@ I knew I was not the only one who had suffered from these productivity issues as
 ## Dependencies
 
 <ins>The dependencies include:</ins>
-- `openssl` for the [Pseudo-random String Generation](https://github.com/hwixley/wix-cli#pseudo-random-string-generation) command.
+- `openssl` for the [Pseudo-random String Generation](https://github.com/hwixley/wix-cli#pseudo-random-string-generation) commands.
 - `git` for all [Git Automation](https://github.com/hwixley/wix-cli#git-automation) commands.
 - Visual Studio Code for the `vsc` code editor command.
 - XCode for the `xc` code editor command (only available for Macintosh systems).
