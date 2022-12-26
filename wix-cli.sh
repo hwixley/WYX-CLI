@@ -378,8 +378,32 @@ elif [ "$1" = "hide" ]; then
 	echo "not implemented yet"
 
 elif [ "$1" = "genhex" ]; then
-	pass=$(openssl rand -hex 16)
-	info_text "Your random hex is: ${RESET}$pass"
+	hex_size=32
+	if arggt "1"; then
+		if ! [[ "$2" =~ ^[0-9]+$ ]]; then
+        	error_text "Error: the hex-length argument must be an integer"
+			return 1
+		else
+			hex_size=$2
+		fi
+	fi
+	pass=$(openssl rand -hex "$hex_size")
+	info_text "Your pseudo-random hex string is: ${RESET}$pass"
+	info_text "This has been saved to your clipboard!"
+	echo "$pass" | xclip -selection c
+
+elif [ "$1" = "genbase64" ]; then
+	hex_size=32
+	if arggt "1"; then
+		if ! [[ "$2" =~ ^[0-9]+$ ]]; then
+        	error_text "Error: the base64-length argument must be an integer"
+			return 1
+		else
+			hex_size=$2
+		fi
+	fi
+	pass=$(openssl rand -base64 "$hex_size")
+	info_text "Your pseudo-random base64 string is: ${RESET}$pass"
 	info_text "This has been saved to your clipboard!"
 	echo "$pass" | xclip -selection c
 
