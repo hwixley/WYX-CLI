@@ -295,7 +295,7 @@ if [ $num_args -eq 0 ]; then
 	h1_text "GENERAL UTILITY:"
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
-	echo "- genpass			${ORANGE}: generate and copy random hex password${RESET}"
+	echo "- genhex			${ORANGE}: generate and copy random hex string${RESET}"
 	echo ""
 	h1_text "DIR MANAGEMENT:"
 	echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
@@ -377,9 +377,9 @@ elif [ "$1" = "delete" ]; then
 elif [ "$1" = "hide" ]; then
 	echo "not implemented yet"
 
-elif [ "$1" = "genpass" ]; then
+elif [ "$1" = "genhex" ]; then
 	pass=$(openssl rand -hex 16)
-	info_text "Your random password is: ${RESET}$pass"
+	info_text "Your random hex is: ${RESET}$pass"
 	info_text "This has been saved to your clipboard!"
 	echo "$pass" | xclip -selection c
 
