@@ -66,15 +66,11 @@ Type `wix` to see the list of commands and start developing some magic!
 
 ## Factory-reset Installation
 
-1. Navigate into this repository from the terminal
+1. Remove your installation
 ```
-wix cd self
+rm -rf <path-of-installation>
 ```
-2. Remove data folder
-```
-rm -rf .wix-cli-data/
-```
-3. Remove the wix-cli script setup in environment file
+2. Remove the wix-cli script setup in your environment file
     - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems) 
         ```
         gedit ~/.bashrc
@@ -84,11 +80,7 @@ rm -rf .wix-cli-data/
     - Remove the 2 lines for the wix-cli:<br>
         The first line is a comment - `# WIX-CLI`<br>
         The second line is where the command is actually setup - `alias wix="<path-of-installation>/wix-cli.sh"`
-4. Run the setup script
-```
-./setup.sh
-```
-5. Reopen your terminal or run `source ~/.bashrc` (`~/.zshrc` for unix systems)
+3. Follow the [installation instructions](https://github.com/hwixley/wix-cli#installation)
 
 <hr>
 
