@@ -80,7 +80,6 @@ rm -rf <path-of-installation>
         ```
         vi ~/.bashrc
         ```
-        <br>
     - Remove the 2 lines for the wix-cli:<br>
         - The first line is a comment: `# WIX-CLI`<br>
         - The second line is where the command is actually setup: `alias wix="<path-of-installation>/wix-cli.sh"`
