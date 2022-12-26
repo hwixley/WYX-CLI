@@ -46,7 +46,7 @@ I knew I was not the only one who had suffered from these productivity issues as
 ## Dependencies
 
 <ins>The dependencies include:</ins>
-- `openssl` for the `genhex` command.
+- `openssl` for the [Pseudo-random String Generation](https://github.com/hwixley/wix-cli#pseudo-random-string-generation) command.
 - `git` for all [Git Automation](https://github.com/hwixley/wix-cli#git-automation) commands.
 - Visual Studio Code for the `vsc` code editor command.
 - XCode for the `xc` code editor command (only available for Macintosh systems).
