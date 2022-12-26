@@ -75,7 +75,10 @@ rm -rf <path-of-installation>
         ```
         gedit ~/.bashrc
         ```
-        If `gedit` is not available you can always replace this with vim (using `vi`).<br>
+        If `gedit` is not available you can always replace this with vim (using `vi`).
+        ```
+        vi ~/.bashrc
+        ```
         <br>
     - Remove the 2 lines for the wix-cli:<br>
         - The first line is a comment: `# WIX-CLI`<br>
