@@ -74,7 +74,7 @@ wix cd self
 ```
 rm -rf .wix-cli-data/
 ```
-3. Remove script setup in environment file
+3. Remove the wix-cli script setup in environment file
     - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems) 
         ```
         gedit ~/.bashrc
