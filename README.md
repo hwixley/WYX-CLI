@@ -44,9 +44,11 @@ I knew I was not the only one who had suffered from these productivity issues as
 
 ## Dependencies
 
-<ins>The main dependencies include:</ins> `openssl` and `git`.
-
-<ins>The code editor dependencies include:</ins> `VScode` and `Xcode` (for mac systems), however, only the `vsc` and `xc` commands depend on these.
+<ins>The dependencies include:</ins>
+- `openssl` for the `genhex` command.
+- `git` for all [Git Automation](https://github.com/hwixley/wix-cli#git-automation) commands.
+- Visual Studio Code for the `vsc` code editor command.
+- XCode for the `xc` code editor command (only available for Macintosh systems).
 
 ## Installation
 
@@ -60,6 +62,27 @@ chmod +x setup.sh && ./setup.sh
 ```
 
 Type `wix` to see the list of commands and start developing some magic!
+
+## Factory-reset Installation
+
+1. Navigate into this repository from the terminal
+```
+wix cd self
+```
+2. Remove data folder
+```
+rm -rf .wix-cli-data/
+```
+3. Remove script setup in environment file (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems)
+    - Open the file in an editor:
+        ```
+        gedit ~/.bashrc
+        ```
+        If `gedit` is not available you can always replace this with vim (using `vi`).
+    - Remove the 2 lines for the wix-cli:
+        The first line is a comment - `# WIX-CLI`
+        The second line is where the command is actually setup - `alias wix="<path-of-installation>/wix-cli.sh"`
+4. 
 
 <hr>
 
