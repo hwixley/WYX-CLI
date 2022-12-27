@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # CLI CONSTS
+version="0.0.0.0"
 num_args=$#
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 
@@ -290,7 +291,7 @@ if [ $num_args -eq 0 ]; then
 	# info_text " ╚███╔███╔╝██║██╔╝ ██╗    ╚██████╗███████╗██║ "
 	# info_text "  ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝ "
 	echo ""
-	echo "v0.0.0.0"
+	echo "v$version"
 	echo ""
 	h1_text "NAVIGATION:"
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
@@ -341,6 +342,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- edit"
 	echo "- save"
 	echo "- cat"
+	echo "- version"
 	# echo "- cdir"
 
 
@@ -424,6 +426,9 @@ elif [ "$1" = "save" ]; then
 	
 elif [ "$1" = "cat" ]; then
 	cat "$mypath"
+
+elif [ "$1" = "-v" ] || [ "$1" = "--version" ] || [ "$1" = "version" ]; then
+	echo "v$version"
 
 # elif [ "$1" = "cdir" ]; then
 # 	info_text "Enter an alias for your new directory:"
