@@ -8,7 +8,6 @@
 ## Table of Contents
 
 1. [Support](https://github.com/hwixley/wix-cli#support)
-2. [Creating Issues](https://github.com/hwixley/wix-cli#creating-issues)
 2. [What it does](https://github.com/hwixley/wix-cli#what-it-does)
 3. [Why it was made](https://github.com/hwixley/wix-cli#why-it-was-made)
 4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
@@ -21,13 +20,6 @@
 ## Support
 
 Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
-
-## Creating Issues
-
-Please mark the title of your issues with the appropriate prefix (as listed below) so it is obvious the reason for your issue:
-- `[BUG]`: for submitting a bug report (please include a summary of your system details when submitting this)
-- `[QUESTION]`: for asking a question about the tool
-- `[NEW-FEATURE]`: for proposing new features to add to the tool
 
 <hr>
 
