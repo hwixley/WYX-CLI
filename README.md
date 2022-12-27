@@ -8,7 +8,7 @@
 ## Table of Contents
 
 1. [Support](https://github.com/hwixley/wix-cli#support)
-2. [Creating Issues](https://github.com/hwixley/wix-cli#creating-issues)
+2. [Bugs, New Features, & Questions](https://github.com/hwixley/wix-cli#bugs-new-features--questions)
 2. [What it does](https://github.com/hwixley/wix-cli#what-it-does)
 3. [Why it was made](https://github.com/hwixley/wix-cli#why-it-was-made)
 4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
