@@ -8,6 +8,7 @@
 ## Table of Contents
 
 1. [Support](https://github.com/hwixley/wix-cli#support)
+2. [Creating Issues](https://github.com/hwixley/wix-cli#creating-issues)
 2. [What it does](https://github.com/hwixley/wix-cli#what-it-does)
 3. [Why it was made](https://github.com/hwixley/wix-cli#why-it-was-made)
 4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
@@ -20,6 +21,10 @@
 ## Support
 
 Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
+
+## Bugs, New Features, & Questions
+
+Please post bug reports and new features in the issues section - there are custom templates you can use for each of these. And please post any questions you may have in the discussion section, I will reply to these as soon as I can! :)
 
 <hr>
 
