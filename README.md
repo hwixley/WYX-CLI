@@ -1,5 +1,5 @@
 # WIX CLI: optimize your development productivity in the terminal
-[![PAGES](https://badgen.net/badge/Github%20Pages/active/green)](https://hwixley.github.io/wix-cli/)
+https://github.com/hwixley/wix-cli/actions/workflows/pages/pages-build-deployment/badge.svg
 [![LICENSE](https://badgen.net/badge/License/MIT/purple)](https://github.com/hwixley/wix-cli/blob/master/LICENSE.md)
 [![VERSION](https://badgen.net/badge/Version/0.0.0.0/blue)](https://github.com/hwixley/wix-cli)
 
