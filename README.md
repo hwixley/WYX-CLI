@@ -7,13 +7,13 @@
 
 ## Table of Contents
 
-1. [Support](https://github.com/hwixley/wix-cli#support)
-2. [Bugs, New Features, & Questions](https://github.com/hwixley/wix-cli#bugs-new-features--questions)
-2. [What it does](https://github.com/hwixley/wix-cli#what-it-does)
-3. [Why it was made](https://github.com/hwixley/wix-cli#why-it-was-made)
-4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
-5. [Installation](https://github.com/hwixley/wix-cli#installation)
-6. [Factory-reset Installation](https://github.com/hwixley/wix-cli#factory-reset-installation)
+1. [Support](#support)
+2. [Bugs, New Features, & Questions](#bugs-new-features--questions)
+2. [What it does](#what-it-does)
+3. [Why it was made](#why-it-was-made)
+4. [Dependencies](#dependencies)
+5. [Installation](#installation)
+6. [Factory-reset Installation](#factory-reset-installation)
 7. [List of Commands](#list-of-commands)
 
 <hr>
