@@ -14,7 +14,7 @@
 4. [Dependencies](https://github.com/hwixley/wix-cli#dependencies)
 5. [Installation](https://github.com/hwixley/wix-cli#installation)
 6. [Factory-reset Installation](https://github.com/hwixley/wix-cli#factory-reset-installation)
-7. [List of Commands](https://github.com/hwixley/wix-cli#list-of-commands)
+7. [List of Commands](#list-of-commands)
 
 <hr>
 
