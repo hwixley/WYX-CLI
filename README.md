@@ -5,6 +5,10 @@
 
 <hr>
 
+![wix-cli](https://user-images.githubusercontent.com/57837950/210313323-7253f035-3d53-404a-94c2-0b24ff4ff840.png)
+
+<hr>
+
 ## Table of Contents
 
 1. [Support](#support)
