@@ -18,7 +18,7 @@
 
 <hr>
 
-![wix-cli](https://user-images.githubusercontent.com/57837950/210313493-f17d02bd-2b9e-4552-aef0-2b19b09e0c9e.png)
+![wix-cli](https://user-images.githubusercontent.com/57837950/210315432-84cff68f-4560-49a6-a29d-095dc2efb391.png)
 
 <hr>
 
