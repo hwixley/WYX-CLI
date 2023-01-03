@@ -393,9 +393,10 @@ elif [ "$1" = "genhex" ]; then
 		fi
 	fi
 	pass=$(openssl rand -hex "$hex_size")
-	info_text "Your pseudo-random hex string is: ${RESET}$pass"
+	truncated_pass="${pass:0:$hex_size}"
+	info_text "Your pseudo-random hex string is: ${RESET}$truncated_pass"
 	info_text "This has been saved to your clipboard!"
-	echo "$pass" | xclip -selection c
+	echo "$truncated_pass" | xclip -selection c
 
 elif [ "$1" = "genb64" ]; then
 	hex_size=32
@@ -408,9 +409,10 @@ elif [ "$1" = "genb64" ]; then
 		fi
 	fi
 	pass=$(openssl rand -base64 "$hex_size")
-	info_text "Your pseudo-random base64 string is: ${RESET}$pass"
+	truncated_pass="${pass:0:$hex_size}"
+	info_text "Your pseudo-random base64 string is: ${RESET}$truncated_pass"
 	info_text "This has been saved to your clipboard!"
-	echo "$pass" | xclip -selection c
+	echo "$truncated_pass" | xclip -selection c
 
 # CLI MANAGEMENT
 
