@@ -5,7 +5,7 @@
 
 <hr>
 
-![wix-cli](https://user-images.githubusercontent.com/57837950/210313323-7253f035-3d53-404a-94c2-0b24ff4ff840.png)
+![wix-cli](https://user-images.githubusercontent.com/57837950/210313493-f17d02bd-2b9e-4552-aef0-2b19b09e0c9e.png)
 
 <hr>
 
