@@ -5,10 +5,6 @@
 
 <hr>
 
-![wix-cli](https://user-images.githubusercontent.com/57837950/210313493-f17d02bd-2b9e-4552-aef0-2b19b09e0c9e.png)
-
-<hr>
-
 ## Table of Contents
 
 1. [Support](#support)
@@ -19,6 +15,10 @@
 5. [Installation](#installation)
 6. [Factory-reset Installation](#factory-reset-installation)
 7. [List of Commands](#list-of-commands)
+
+<hr>
+
+![wix-cli](https://user-images.githubusercontent.com/57837950/210313493-f17d02bd-2b9e-4552-aef0-2b19b09e0c9e.png)
 
 <hr>
 
