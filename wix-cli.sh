@@ -14,32 +14,44 @@ source $mydir/functions.sh
 
 # DATA
 declare -A user
-readarray -t lines < "$datadir/git-user.txt"
-for line in "${lines[@]}"; do
+declare -a user_lines user_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    user_lines+=("$line")
+done < "$datadir/git-user.txt"
+for line in "${user_lines[@]}"; do
 	key=${line%%=*}
 	value=${line#*=}
 	user[$key]=$value
 done
 
 declare -A myorgs
-readarray -t lines < "$datadir/git-orgs.txt"
-for line in "${lines[@]}"; do
+declare -a org_lines org_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    org_lines+=("$line")
+done < "$datadir/git-orgs.txt"
+for line in "${org_lines[@]}"; do
 	key=${line%%=*}
 	value=${line#*=}
 	myorgs[$key]=$value
 done
 
 declare -A mydirs
-readarray -t lines < "$datadir/dir-aliases.txt"
-for line in "${lines[@]}"; do
+declare -a dir_lines dir_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    dir_lines+=("$line")
+done < "$datadir/dir-aliases.txt"
+for line in "${dir_lines[@]}"; do
 	key=${line%%=*}
 	value=${line#*=}
 	mydirs[$key]=$value
 done
 
 declare -A myscripts
-readarray -t lines < "$datadir/run-configs.txt"
-for line in "${lines[@]}"; do
+declare -a script_lines script_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    script_lines+=("$line")
+done < "$datadir/run-configs.txt"
+for line in "${script_lines[@]}"; do
 	key=${line%%=*}
 	value=${line#*=}
 	myscripts[$key]=$value
@@ -377,9 +389,9 @@ if [ $num_args -eq 0 ]; then
 
 elif [ "$1" = "sys-info" ]; then
 	if mac; then
-		echo "Mac (0_0)"
+		echo "ZSH (0_0)"
 	else
-		echo "Linux (-_-)"
+		echo "BASH (-_-)"
 	fi
 
 elif [ "$1" = "cd" ]; then
@@ -533,7 +545,7 @@ elif [ "$1" = "bpr" ]; then
 	fi
 
 elif [ "$1" = "profile" ]; then
-	giturl "https://github.com/${user["username"]}"
+	openurl "https://github.com/${user["username"]}"
 
 elif [ "$1" = "org" ]; then
 	if arggt "1"; then
@@ -555,30 +567,19 @@ elif [ "$1" = "help" ]; then
 # MY DATA
 
 elif [ "$1" = "user" ]; then
-	for key in "${!user[@]}"; do
-		echo "$key: ${user[$key]}"
-	done
+	cat "$datadir/git-user.txt"
 
 elif [ "$1" = "mydirs" ]; then
-	for key in "${!mydirs[@]}"; do
-		echo "$key: ${mydirs[$key]}"
-	done
+	cat "$datadir/dir-aliases.txt"
 
 elif [ "$1" = "myorgs" ]; then
-	for key in "${!myorgs[@]}"; do
-		echo "$key: ${myorgs[$key]}"
-	done
+	cat "$datadir/git-orgs.txt"
 
 elif [ "$1" = "myscripts" ]; then
-	for key in "${!myscripts[@]}"; do
-		echo "$key: ${myscripts[$key]}"
-	done
+	cat "$datadir/run-configs.txt"
 
 elif [ "$1" = "todo" ]; then
-	readarray -t lines < "$datadir/todo.txt"
-	for line in "${lines[@]}"; do
-		echo "$line"
-	done
+	cat "$datadir/todo.txt"
 
 elif [ "$1" = "editd" ]; then
 	data_to_edit="$2"
