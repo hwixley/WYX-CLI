@@ -50,7 +50,7 @@ function empty() {
 }
 
 # MAC & LINUX FUNCTIONS
-function mac() {
+function zsh() {
 	if [ "$(ps -p$$ -ocmd=)" = "zsh" ]; then
 		return 0
 	else
@@ -59,7 +59,7 @@ function mac() {
 }
 
 function openurl() {
-	if mac; then
+	if zsh; then
 		open "$1"
 	else
 		xdg-open "$1"
@@ -67,7 +67,7 @@ function openurl() {
 }
 
 function envfile() {
-	if mac; then
+	if zsh; then
 		echo "$HOME/.zshrc"
 	else
 		echo "$HOME/.bashrc"

@@ -68,14 +68,12 @@ repo_url=${repo_url%".git"}
 
 # MODULAR FUNCTIONS
 
-function arraykeys() {
-	arg=$1
-	if mac; then
-		# shellcheck disable=SC2296 # irrelevant given this is a zsh command which shellcheck does not recognise
-		return "${(@k)arg}"
-	else
-		return "${!arg[@]}"
-	fi
+function editfile() {
+    if zsh; then
+        vi "$1"
+    else
+        gedit "$1"
+    fi
 }
 
 function arggt() {
@@ -346,7 +344,7 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	h1_text "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open dir in Visual Studio Code${RESET}"
-	if mac; then
+	if zsh; then
 		echo "- xc <mydir>			${ORANGE}: open dir in XCode${RESET}"
 	fi
 	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
@@ -388,7 +386,7 @@ if [ $num_args -eq 0 ]; then
 # GENERAL
 
 elif [ "$1" = "sys-info" ]; then
-	if mac; then
+	if zsh; then
 		echo "ZSH (0_0)"
 	else
 		echo "BASH (-_-)"
@@ -457,7 +455,7 @@ elif [ "$1" = "genb64" ]; then
 
 elif [ "$1" = "edit" ]; then
 	warn_text "Edit wix-cli script..."
-	gedit "$mypath"
+	editfile "$mypath"
 	info_text "Saving changes to $mypath..."
 	source $(envfile)
 	
@@ -596,15 +594,15 @@ elif [ "$1" = "editd" ]; then
 		fi
 	fi
 	if [ "$data_to_edit" = "user" ]; then
-		gedit "$datadir/git-user.txt"
+		editfile "$datadir/git-user.txt"
 	elif [ "$data_to_edit" = "myorgs" ]; then
-		gedit "$datadir/git-orgs.txt"
+		editfile "$datadir/git-orgs.txt"
 	elif [ "$data_to_edit" = "mydirs" ]; then
-		gedit "$datadir/dir-aliases.txt"
+		editfile "$datadir/dir-aliases.txt"
 	elif [ "$data_to_edit" = "myscripts" ]; then
-		gedit "$datadir/run-configs.txt"
+		editfile "$datadir/run-configs.txt"
 	elif [ "$data_to_edit" = "todo" ]; then
-		gedit "$datadir/todo.txt"
+		editfile "$datadir/todo.txt"
 	fi
 
 elif [ "$1" = "create-script" ]; then
@@ -617,7 +615,7 @@ elif [ "$1" = "create-script" ]; then
 	fname="$datadir/run-configs/$script_name.sh"
 	touch "$fname"
 	chmod u+x "$fname"
-	gedit "$fname"
+	editfile "$fname"
 
 elif [ "$1" = "edits" ]; then
 	script_to_edit="$2"
@@ -628,7 +626,7 @@ elif [ "$1" = "edits" ]; then
 	fi
 	if scriptexists "$script_to_edit"; then
 		info_text "Editing $script_to_edit script..."
-		gedit "$datadir/run-configs/$script_to_edit.sh"
+		editfile "$datadir/run-configs/$script_to_edit.sh"
 	else
 		error_text "This script does not exist... Please try again"
 	fi
@@ -640,7 +638,7 @@ elif [[ "${exts[*]}" =~ $1 ]]; then
 	read -r fname
 	info_text "Creating $fname.$1"
 	touch "$fname.$1"
-	gedit "$fname.$1"	
+	editfile "$fname.$1"	
 
 	
 # ERROR
