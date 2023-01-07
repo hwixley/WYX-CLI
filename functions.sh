@@ -68,9 +68,9 @@ function openurl() {
 
 function envfile() {
 	if mac; then
-		echo "~/.zshrc"
+		echo "$HOME/.zshrc"
 	else
-		echo "~/.bashrc"
+		echo "$HOME/.bashrc"
 	fi
 	return 0
 }

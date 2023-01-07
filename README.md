@@ -110,10 +110,10 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 3. `genhex <hex-length?>`: generate and copy pseudo-random hex string of specified length (of default length 32)
 3. `genb64 <base64-length?>`: generate and copy pseudo-random base64 string of specified length (of default length 32)
 
-### Directory Management
+<!-- ### Directory Management
 1. `new <mydir> <subdir>`: create new directory in location of alias
 2. `delete <mydir> <subdir>`: delete directory in location of alias
-3. `hide <mydir> <subdir>`: hide directory in location of alias
+3. `hide <mydir> <subdir>`: hide directory in location of alias -->
 
 ### Code Editing
 1. `vsc <mydir>`: open location of alias in Visual Studio Code
@@ -125,8 +125,8 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 ### Git Automation
 1. `push <branch?>`: push changes to the given repository branch (prompts you to enter a commit message on execution and leaves a default message if left empty)
 2. `pull <branch?>`: pull changes from the given repository branch
-3. `ginit <org?> <repo>`: initialize git repository in current directory under the specified organization (`<org?>` - the default user is used as the owner if left empty) and with the specified name (`<repo>`)
-4. `gnew <mydir/org> <repo>`: create and initialize a new directory as a git repository
+3. `ginit <newdir?>`: initialize git repository in current directory if `<newdir>` is not set, otherwise, a new directory is created called `<newdir>` and a git repository is initialized there instead
+<!-- 4. `gnew <mydir/org> <repo>`: create and initialize a new directory as a git repository -->
 5. `nbranch <name?>`: create a new branch
 6. `pr`: create a PR against the default branch from the current branch
 7. `bpr`: checkout changes to a new branch and create a PR from this branch
@@ -135,12 +135,12 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `repo`: go to the respective GitHub repository url on the default branch from your current directory
 2. `branch`: go to the respective GitHub repository url on the current branch from your current directory
 3. `profile`: go to your GitHub profile
-4. `org <org?>`: go to the specified url of the GitHub organization
+4. `org <myorg?>`: go to the specified url of the GitHub organization
 5. `help`: go to the wix-cli GitHub Pages url for documentation
 
 ### Data for Custom Scripting Logic
-1. `user`: displays stored user-specific data such as GitHub username (for configuring GitHub urls)
-2. `myorgs`: displays stored aliases for user's GitHub organizations (for configuring GitHub urls)
+1. `user`: displays stored user-specific data such as: `username` - which represents the user's GitHub username (for configuring GitHub urls), `name`  - for software licensing copyright clauses (when setting up GitHub software licenses for your repositories)
+2. `myorgs`: displays stored aliases for user's GitHub organizations (for configuring GitHub urls). Please note you can use the `default` alias for your most commonly used organization, allowing you to not have to type the organization alias in cases where a `<myorg?>` argument is present
 3. `mydirs`: displays stored aliases for user's directories (for efficient terminal navigation)
 4. `myscripts`: displays stored aliases for user's custom scripts (for efficient environment setup or script execution)
 

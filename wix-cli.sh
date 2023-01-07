@@ -4,6 +4,8 @@
 version="0.0.0.0"
 num_args=$#
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
+date=$(date)
+year="${date:25:29}"
 
 mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
@@ -154,6 +156,13 @@ function ginit() {
 		info_text "Provide a name for this repository:"
 		read -r rname
 		echo "# $rname" >> README.md
+		info_text "Would you like to add a MIT license to this repository? [ Yy / Nn ]"
+		read -r rlicense
+		if [ "$rlicense" = "y" ] || [ "$rlicense" = "Y" ]
+		then
+			touch "LICENSE.md"
+			echo -e "MIT License\n\nCopyright (c) ${user["name"]} $year\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE." >> "LICENSE.md"
+		fi
 		commit "wix-cli: first commit"
 		git remote add origin "git@github.com:$1/$rname.git"
 		openurl "https://github.com/$3"
@@ -248,16 +257,34 @@ function wix_delete() {
 
 # GITHUB AUTOMATION COMMAND FUNCTIONS
 function wix_ginit() {
-	if wix_cd "$1" "$2" ; then
-		if empty "$branch" ; then
-			if orgexists "$1" ; then
-				ginit "${myorgs[$1]}" "$2" "organizations/${myorgs[$1]}/repositories/new"
+	if ! empty "$1"; then
+		mkdir "$1"
+		cd "$1" || return 1
+	fi
+
+	if empty "$branch" ; then
+		info_text "Would you like you to host this repository under a GitHub organization? [ Yy / Nn ]"
+		read -r response
+		if [ "$response" = "y" ] || [ "$response" = "Y" ]
+		then
+			echo ""
+			h1_text "Your saved GitHub organization aliases:"
+			for key in "${!myorgs[@]}"; do
+				echo "$key: ${myorgs[$key]}"
+			done
+			echo ""
+			info_text "Please enter the organization name alias you would like to use:"
+			read -r orgalias
+			if orgexists "$orgalias" ; then
+				ginit "${myorgs[$orgalias]}" "$2" "organizations/${myorgs[$orgalias]}/repositories/new"
 			else
 				ginit "$user" "$2" "new"
 			fi
 		else
-			error_text "This is already a git repository..."
+			ginit "$user" "$2" "new"
 		fi
+	else
+		error_text "This is already a git repository..."
 	fi
 }
 
@@ -300,11 +327,11 @@ if [ $num_args -eq 0 ]; then
 	h1_text "PSEUDO-RANDOM STRING GENERATION:"
 	echo "- genhex <hex-length?>		${ORANGE}: generate and copy pseudo-random hex string (of default length 32)${RESET}"
 	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
-	echo ""
-	h1_text "DIR MANAGEMENT:"
-	echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
-	echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
-	echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
+	# echo ""
+	# h1_text "DIR MANAGEMENT:"
+	# echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
+	# echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
+	# echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	echo ""
 	h1_text "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open dir in Visual Studio Code${RESET}"
@@ -317,8 +344,8 @@ if [ $num_args -eq 0 ]; then
 	echo "- push <branch?>		${ORANGE}: push changes to repo branch${RESET}"
 	echo "- pull <branch?>		${ORANGE}: pull changes from repo branch${RESET}"
 	# echo "- pullr [<repo:branch>]?	${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
-	echo "- ginit <org?> <repo>		${ORANGE}: init git repo${RESET}"
-	echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
+	echo "- ginit <newdir?>		${ORANGE}: setup git repo in existing/new directory${RESET}"
+	# echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
 	echo "- nbranch <name?>		${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
@@ -327,22 +354,23 @@ if [ $num_args -eq 0 ]; then
 	echo "- repo 				${ORANGE}: go to git repo url${RESET}"
 	echo "- branch 			${ORANGE}: go to git branch url${RESET}"
 	echo "- profile			${ORANGE}: go to git profile url${RESET}"
-	echo "- org <org?>			${ORANGE}: go to git org url${RESET}"
+	echo "- org <myorg?>			${ORANGE}: go to git org url${RESET}"
 	echo "- help				${ORANGE}: go to wix-cli GitHub Pages url${RESET}"
 	echo ""
 	h1_text "MY DATA:"
-	echo "- user"
-	echo "- myorgs"
-	echo "- mydirs"
-	echo "- myscripts"
-	echo "- editd <data>"
-	echo "- edits <myscript>"
+	echo "- user 				${ORANGE}: view your user-specific data (ie. name, GitHub username)${RESET}"
+	echo "- myorgs 			${ORANGE}: view your GitHub organizations and their aliases${RESET}"
+	echo "- mydirs 			${ORANGE}: view your directory aliases${RESET}"
+	echo "- myscripts 			${ORANGE}: view your script aliases${RESET}"
+	echo "- todo				${ORANGE}: view your to-do list${RESET}"
+	echo "- editd <data> 			${ORANGE}: edit a piece of your data (ie. user, myorgsm mydirs, myscripts)${RESET}"
+	echo "- edits <myscript> 		${ORANGE}: edit a script (you must use an alias present in myscripts)${RESET}"
 	echo ""
-	h1_text "CLI management:"
-	echo "- edit"
-	echo "- save"
-	echo "- cat"
-	echo "- version"
+	# h1_text "CLI management:"
+	# echo "- edit"
+	# echo "- save"
+	# echo "- cat"
+	# echo "- version"
 	# echo "- cdir"
 
 
@@ -447,11 +475,11 @@ elif [ "$1" = "-v" ] || [ "$1" = "--version" ] || [ "$1" = "version" ]; then
 
 # GITHUB AUTOMATION
 
-elif [ "$1" = "gnew" ]; then
-	wix_gnew "$2" "$3"
+# elif [ "$1" = "gnew" ]; then
+# 	wix_gnew "$2" "$3"
 	
 elif [ "$1" = "ginit" ]; then
-	wix_ginit "$2" "$3"
+	wix_ginit "$2"
 	
 elif [ "$1" = "push" ]; then
 	if arggt "1" ; then
@@ -506,7 +534,7 @@ elif [ "$1" = "bpr" ]; then
 	fi
 
 elif [ "$1" = "profile" ]; then
-	giturl "https://github.com/${user["name"]}"
+	giturl "https://github.com/${user["username"]}"
 
 elif [ "$1" = "org" ]; then
 	if arggt "1"; then
@@ -547,6 +575,12 @@ elif [ "$1" = "myscripts" ]; then
 		echo "$key: ${myscripts[$key]}"
 	done
 
+elif [ "$1" = "todo" ]; then
+	readarray -t lines < "$datadir/todo.txt"
+	for line in "${lines[@]}"; do
+		echo "$line"
+	done
+
 elif [ "$1" = "editd" ]; then
 	data_to_edit="$2"
 	if ! arggt "1"; then
@@ -569,6 +603,8 @@ elif [ "$1" = "editd" ]; then
 		gedit "$datadir/dir-aliases.txt"
 	elif [ "$data_to_edit" = "myscripts" ]; then
 		gedit "$datadir/run-configs.txt"
+	elif [ "$data_to_edit" = "todo" ]; then
+		gedit "$datadir/todo.txt"
 	fi
 
 elif [ "$1" = "create-script" ]; then
@@ -611,4 +647,5 @@ elif [[ "${exts[*]}" =~ $1 ]]; then
 
 else
 	error_text "Invalid command! Try again"
+	echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 fi

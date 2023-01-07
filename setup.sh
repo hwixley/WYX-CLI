@@ -61,12 +61,17 @@ mkdir $md_dir/run-configs
 # GET USER SPECIFIC DETAILS
 echo ""
 h1_text "Please enter your github username:"
-read gituser
-echo "name=$gituser" >> $md_dir/git-user.txt
+read -r gituser
+echo "username=$gituser" >> $md_dir/git-user.txt
+
+echo ""
+h1_text "Please enter your full name (this will be used for copyright clauses on GitHub software licenses):"
+read -r fullname
+echo "name=$fullname" >> $md_dir/git-user.txt
 
 echo ""
 h1_text "Please enter the default github organization you want to setup with this cli: (enter it's github username) ***leave empty if none***"
-read gitorg
+read -r gitorg
 if [ "$gitorg" != "" ]; then
 	echo "default=$gitorg" >> $md_dir/git-orgs.txt
 fi
