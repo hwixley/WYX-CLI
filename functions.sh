@@ -51,7 +51,7 @@ function empty() {
 
 # MAC & LINUX FUNCTIONS
 function mac() {
-	if [ "$(uname)" == "Darwin" ]; then
+	if [ "$(ps -p$$ -ocmd=)" = "zsh" ]; then
 		return 0
 	else
 		return 1

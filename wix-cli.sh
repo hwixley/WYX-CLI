@@ -11,7 +11,6 @@ mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
 
 source $mydir/functions.sh
-source $mydir/functions.sh
 
 # DATA
 declare -A user
