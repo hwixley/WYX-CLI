@@ -68,6 +68,15 @@ repo_url=${repo_url%".git"}
 
 # MODULAR FUNCTIONS
 
+function clipboard() {
+	info_text "This has been saved to your clipboard!"
+	if zsh; then
+		echo $1 | pbcopy
+	else
+		echo $1 | xclip -selection c
+	fi
+}
+
 function editfile() {
     if zsh; then
         vi "$1"
@@ -432,8 +441,7 @@ elif [ "$1" = "genhex" ]; then
 	pass=$(openssl rand -hex "$hex_size")
 	truncated_pass="${pass:0:$hex_size}"
 	info_text "Your pseudo-random hex string is: ${RESET}$truncated_pass"
-	info_text "This has been saved to your clipboard!"
-	echo "$truncated_pass" | xclip -selection c
+	clipboard "$truncated_pass"
 
 elif [ "$1" = "genb64" ]; then
 	hex_size=32
@@ -448,8 +456,7 @@ elif [ "$1" = "genb64" ]; then
 	pass=$(openssl rand -base64 "$hex_size")
 	truncated_pass="${pass:0:$hex_size}"
 	info_text "Your pseudo-random base64 string is: ${RESET}$truncated_pass"
-	info_text "This has been saved to your clipboard!"
-	echo "$truncated_pass" | xclip -selection c
+	clipboard "$truncated_pass"
 
 # CLI MANAGEMENT
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mydir=$(dirname "$mypath")
+source $mydir/functions.sh
+
 # COLORS
 GREEN=$(tput setaf 2)
 ORANGE=$(tput setaf 3)
@@ -22,29 +25,20 @@ function warn_text() {
 	echo "${ORANGE}$1${RESET}"
 }
 
-info_text "Setting up wix-cli..."
-
-chmod +x wix-cli-template.sh
-
-
-# SETUP ENVFILE
-
-envfile=~/.bashrc
-
-if [ "$(uname)" == "Darwin" ]; then
-	envfile=~/.zshrc
+# INITIAL SETUP
+info_text "Installing dependencies..."
+if zsh; then
+	if arm; then
+		arch -arm64 brew install xclip
+	else
+		brew install xclip
+	fi
+else
+	sudo apt-get install xclip
 fi
 
-while ! [ -f "$envfile" ]; do
-	echo ""
-	info_text "Please enter the path of your shell file:"
-	read -r shellpath
-	envfile=$shellpath
-
-	if ! [ -f "$envfile" ]; then
-		warn_text "Error: that file does not exist, please try again"
-	fi
-done
+info_text "Setting up wix-cli..."
+chmod +x wix-cli.sh
 
 
 # SETUP METADATA FILES
@@ -91,12 +85,12 @@ fi
 echo ""
 info_text "Okay we should be good to go!"
 
-echo "" >> "$envfile"
-echo "# WIX CLI" >> "$envfile"
-echo "alias wix=\"source $(pwd)/wix-cli.sh\"" >> "$envfile"
-source "$envfile"
+echo "" >> "$(envfile)"
+echo "# WIX CLI" >> "$(envfile)"
+echo "alias wix=\"source $(pwd)/wix-cli.sh\"" >> "$(envfile)"
+source "$(envfile)"
 
 echo ""
-info_text "WIX CLI successfully added to $envfile !"
+info_text "WIX CLI successfully added to $(envfile) !"
 info_text "Use 'wix' to get going :)"
 echo ""

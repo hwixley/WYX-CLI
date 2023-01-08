@@ -74,3 +74,15 @@ function envfile() {
 	fi
 	return 0
 }
+
+function arm() {
+	if zsh; then
+		if [[ "$(sysctl -n sysctl.proc_translated)" == "1" ]] || [[ "$(uname -m)" == "arm64" ]]; then
+			return 0;
+		else
+			return 1;
+		fi
+	else
+		return 1;
+	fi
+}
