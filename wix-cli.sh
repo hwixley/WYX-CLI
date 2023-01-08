@@ -381,8 +381,11 @@ if [ $num_args -eq 0 ]; then
 	echo "- mydirs 			${ORANGE}: view your directory aliases${RESET}"
 	echo "- myscripts 			${ORANGE}: view your script aliases${RESET}"
 	echo "- todo				${ORANGE}: view your to-do list${RESET}"
-	echo "- editd <data> 			${ORANGE}: edit a piece of your data (ie. user, myorgs, mydirs, myscripts)${RESET}"
+	echo ""
+	h1_text "MANAGE MY DATA:"
+	echo "- editd <data> 			${ORANGE}: edit a piece of your data (ie. user, myorgs, mydirs, myscripts, todo)${RESET}"
 	echo "- edits <myscript> 		${ORANGE}: edit a script (you must use an alias present in myscripts)${RESET}"
+	echo "- newscript <script-name?>	${ORANGE}: create a new script${RESET}"
 	echo ""
 	# h1_text "CLI management:"
 	# echo "- edit"
@@ -636,6 +639,22 @@ elif [ "$1" = "edits" ]; then
 		editfile "$datadir/run-configs/$script_to_edit.sh"
 	else
 		error_text "This script does not exist... Please try again"
+	fi
+
+elif [ "$1" = "newscript" ]; then
+	name="$2"
+	if ! arggt "1"; then
+		info_text "What would you like to call your script? (no spaces)"
+		read -r name_prompt
+		name="$name_prompt"
+	fi
+	if [ -f "$datadir/$name.sh" ]; then
+		error_text "Error: this script name already exists"
+	else
+		info_text "Creating new script..."
+		echo "$name=$name" >> "$datadir/run-configs.txt"
+		touch "$datadir/run-configs/$name.sh"
+		editfile "$datadir/run-configs/$name.sh"
 	fi
 
 # FILE CREATION

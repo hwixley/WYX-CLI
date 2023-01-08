@@ -132,7 +132,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 <!-- 4. `gnew <mydir/org> <repo>`: create and initialize a new directory as a git repository -->
 5. `nbranch <name?>`: create a new branch
 6. `pr`: create a PR against the default branch from the current branch
-7. `bpr`: checkout changes to a new branch and create a PR from this branch
+7. `bpr <name?>`: checkout changes to a new branch and create a PR from this branch
 
 ### Quick-access URLs
 1. `repo`: go to the respective GitHub repository url on the default branch from your current directory
@@ -150,3 +150,4 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 ### Editing Data for Custom Scripting Logic
 1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs` or `myscripts`)
 2. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
+3. `newscript <script-name?>`: allows the user to create a new script
