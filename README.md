@@ -43,7 +43,7 @@ Please post bug reports and new features in the issues section - there are custo
 
 ## Support This Project
 
-I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a buymeacoffee sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :)
+I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :)
 
 <hr>
 
