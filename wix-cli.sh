@@ -550,7 +550,7 @@ elif [ "$1" = "bpr" ]; then
 	fi
 
 elif [ "$1" = "profile" ]; then
-	openurl "https://github.com/${user["username"]}"
+	openurl "https://github.com/${user[username]}"
 
 elif [ "$1" = "org" ]; then
 	if arggt "1"; then

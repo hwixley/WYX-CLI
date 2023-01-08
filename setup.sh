@@ -44,7 +44,7 @@ chmod +x wix-cli.sh
 # SETUP METADATA FILES
 md_dir=.wix-cli-data
 mkdir $md_dir
-declare -a files=("git-user" "git-orgs" "dir-aliases" "run-configs")
+declare -a files=("git-user" "git-orgs" "dir-aliases" "run-configs" "todo")
 for i in "${files[@]}"; do
 	touch $md_dir/$i.txt
 	chmod +rwx $md_dir/$i.txt
