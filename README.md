@@ -8,28 +8,18 @@
 
 ## Table of Contents
 
-1. [Support](#support)
-2. [Bugs, New Features, & Questions](#bugs-new-features--questions)
-2. [What it does](#what-it-does)
-3. [Why it was made](#why-it-was-made)
-4. [Dependencies](#dependencies)
-5. [Installation](#installation)
-6. [Factory-reset Installation](#factory-reset-installation)
-7. [List of Commands](#list-of-commands)
+1. [What It Does](#what-it-does)
+2. [Why It Was Made](#why-it-was-made)
+3. [Bugs, New Features, & Questions](#bugs-new-features--questions)
+4. [Support This Project](#support-this-project)
+5. [Dependencies](#dependencies)
+6. [Installation](#installation)
+7. [Factory-reset Installation](#factory-reset-installation)
+8. [List of Commands](#list-of-commands)
 
 <hr>
 
 ![wix-cli](https://user-images.githubusercontent.com/57837950/210315432-84cff68f-4560-49a6-a29d-095dc2efb391.png)
-
-<hr>
-
-## Support
-
-Supports unix and linux kernels with `.zshrc` or `.bashrc` environment files.
-
-## Bugs, New Features, & Questions
-
-Please post bug reports and new features in the issues section - there are custom templates you can use for each of these. And please post any questions you may have in the discussion section, I will reply to these as soon as I can! :)
 
 <hr>
 
@@ -42,6 +32,18 @@ Provides developers with the ability for optimising the execution of commonly pe
 I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser repetitive and time-wasting. I decided to start developing my own bash script to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal.
 
 I knew I was not the only one who had suffered from these productivity issues as my co-workers saw interest in the tool I was developing. Upon this I decided to start developing a more generic and robust version of my original tool to allow developers across the world optimize their productivity with this tool too!
+
+<hr>
+
+## Bugs, New Features, & Questions
+
+Please post bug reports and new features in the issues section - there are custom templates you can use for each of these. And please post any questions you may have in the discussion section, I will reply to these as soon as I can! :)
+
+<hr>
+
+## Support This Project
+
+I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a buymeacoffee sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :)
 
 <hr>
 
