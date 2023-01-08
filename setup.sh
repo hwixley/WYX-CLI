@@ -26,14 +26,8 @@ function warn_text() {
 }
 
 # INITIAL SETUP
-info_text "Installing dependencies..."
-if zsh; then
-	if arm; then
-		arch -arm64 brew install xclip
-	else
-		brew install xclip
-	fi
-else
+if ! zsh; then
+	info_text "Installing dependencies..."
 	sudo apt-get install xclip
 fi
 
