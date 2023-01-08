@@ -19,8 +19,7 @@
 
 <hr>
 
-![wix-cli](https://user-images.githubusercontent.com/57837950/210315432-84cff68f-4560-49a6-a29d-095dc2efb391.png)
-![wix](https://user-images.githubusercontent.com/57837950/211174685-198a16f4-da6c-4a24-8c73-24d3808de463.png)
+![wix](https://user-images.githubusercontent.com/57837950/211174719-e2f22eeb-8189-4b19-9f64-ef9a4d8463a8.png)
 
 <hr>
 
