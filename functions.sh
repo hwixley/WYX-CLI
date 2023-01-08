@@ -51,7 +51,7 @@ function empty() {
 
 # MAC & LINUX FUNCTIONS
 function zsh() {
-	if [ "$(ps -p$$ -ocmd=)" = "zsh" ]; then
+	if [[ "$(echo $0)" == *"zsh"* ]]; then
 		return 0
 	else
 		return 1
