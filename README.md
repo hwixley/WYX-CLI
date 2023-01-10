@@ -61,11 +61,15 @@ I am developing this project in my spare time to help developer's across the glo
 ```
 git clone git@github.com:hwixley/wix-cli.git
 ```
-2. Give permissions to the setup script and run it:
+2. Navigate into the directory:
+```
+cd wix-cli
+```
+3. Give permissions to the setup script and run it:
 ```
 chmod +x setup.sh && ./setup.sh
 ```
-3. Reopen your terminal or run `source ~/.bashrc` (`~/.zshrc` for unix systems)
+4. Reopen your terminal or run `source ~/.bashrc` (`source ~/.zshrc` for unix systems)
 
 Type `wix` to see the list of commands and start developing some magic!
 

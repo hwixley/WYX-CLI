@@ -51,7 +51,7 @@ function empty() {
 
 # MAC & LINUX FUNCTIONS
 function zsh() {
-	if [[ "$(echo $0)" == *"zsh"* ]]; then
+	if [[ "$SHELL" = *"zsh"* ]]; then
 		return 0
 	else
 		return 1

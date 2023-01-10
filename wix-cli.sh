@@ -163,9 +163,9 @@ function pull() {
 }
 
 function bpr() {
-	push "$1"
+	npush "$1"
 	info_text "Creating PR for $branch in $repo_url..."
-	openurl "https://github.com/$repo_url/pull/new/$branch"
+	openurl "https://github.com/$repo_url/pull/new/$1"
 }
 
 function ginit() {
