@@ -660,7 +660,7 @@ elif [[ "${exts[*]}" =~ $1 ]]; then
 	touch "$fname.$1"
 	editfile "$fname.$1"	
 
-	
+
 # ERROR
 
 else
