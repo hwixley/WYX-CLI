@@ -381,6 +381,10 @@ if [ $num_args -eq 0 ]; then
 	echo "- edits <myscript> 		${ORANGE}: edit a script (you must use an alias present in myscripts)${RESET}"
 	echo "- newscript <script-name?>	${ORANGE}: create a new script${RESET}"
 	echo ""
+	h1_text "OTHER UTILITIES:"
+	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
+	echo "- ip				${ORANGE}: get local and public IP addresses of your computer"
+	echo ""
 	# h1_text "CLI management:"
 	# echo "- edit"
 	# echo "- save"
@@ -660,6 +664,24 @@ elif [[ "${exts[*]}" =~ $1 ]]; then
 	touch "$fname.$1"
 	editfile "$fname.$1"	
 
+# FIND FILE
+
+elif [ "$1" = "find" ]; then
+	if arggt "1"; then
+		find . -type f -name "$2"
+	else
+		info_text "Enter the filename you would like to find:"
+		read -r fname
+		find . -type f -name "$fname"
+	fi
+
+# IP ADDRESS
+
+elif [ "$1" = "ip" ]; then
+	info_text "Local IPs:"
+	hostname -I
+	info_text "Public IP:"
+	curl ifconfig.co/
 
 # ERROR
 
