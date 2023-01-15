@@ -155,3 +155,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs` or `myscripts`)
 2. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
 3. `newscript <script-name?>`: allows the user to create a new script
+
+### Other Utilities
+1. `find \"<fname>.<fext>\"`: find a file inside the current directory with the respective name (use "*.<ext>" for finding all files with the given extension)
+2. `ip`: get local and public IP addresses of your computer
