@@ -152,7 +152,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 4. `myscripts`: displays stored aliases for user's custom scripts (for efficient environment setup or script execution)
 
 ### Editing Data for Custom Scripting Logic
-1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs` or `myscripts`)
+1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs`, `myscripts`, or `todo`)
 2. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
 3. `newscript <script-name?>`: allows the user to create a new script
 
