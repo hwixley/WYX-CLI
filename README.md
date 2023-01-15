@@ -157,5 +157,5 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 3. `newscript <script-name?>`: allows the user to create a new script
 
 ### Other Utilities
-1. `find \"<fname>.<fext>\"`: find a file inside the current directory with the respective name (use "*.<ext>" for finding all files with the given extension)
+1. `find "<fname>.<fext>"`: find a file inside the current directory with the respective name (use "*.<ext>" for finding all files with the given extension)
 2. `ip`: get local and public IP addresses of your computer
