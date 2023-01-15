@@ -19,7 +19,6 @@
 
 <hr>
 
-<!-- ![wix-terminal](https://user-images.githubusercontent.com/57837950/211174801-e3294f52-0765-4fe1-bd34-db6ca2cf7763.png) -->
 ![wix-terminal](https://user-images.githubusercontent.com/57837950/212565330-6145d50a-1518-471b-acbd-c0b22b7fa71d.png)
 
 <hr>
