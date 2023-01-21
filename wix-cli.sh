@@ -383,7 +383,8 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	h1_text "OTHER UTILITIES:"
 	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
-	echo "- ip				${ORANGE}: get local and public IP addresses of your computer"
+	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
+	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo ""
 	# h1_text "CLI management:"
 	# echo "- edit"
@@ -682,6 +683,26 @@ elif [ "$1" = "ip" ]; then
 	hostname -I
 	info_text "Public IP:"
 	curl ifconfig.co/
+
+# QR CODE
+
+elif [ "$1" = "genqr" ]; then
+	link="$2"
+	fname="$3"
+	if ! arggt "1"; then
+		info_text "Enter the URL you would like to link to:"
+		read -r url
+		link="$url"
+
+		if ! arggt "2"; then
+			info_text "Enter the name for your QR code:"
+			read -r qrname
+			fname="$qrname"
+		fi
+	fi
+	info_text "Generating a QR code..."
+	qrencode -o "$fname.png" "$link"
+	display "$fname.png"
 
 # ERROR
 

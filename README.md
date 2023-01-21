@@ -159,3 +159,4 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 ### Other Utilities
 1. `find "<fname>.<fext>"`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
 2. `ip`: get local and public IP addresses of your computer
+3. `genqr <url?> <fname?>`: generate a png QR code for the specified URL"
