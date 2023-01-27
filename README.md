@@ -156,7 +156,10 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 2. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
 3. `newscript <script-name?>`: allows the user to create a new script
 
+### File Utilities
+1. `fopen`: open the current directory in your native files application
+2. `find "<fname>.<fext>"`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
+
 ### Other Utilities
-1. `find "<fname>.<fext>"`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
-2. `ip`: get local and public IP addresses of your computer
-3. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
+1. `ip`: get local and public IP addresses of your computer
+2. `genqr <url?> <fname?>`: generate a png QR code for the specified URL

@@ -381,8 +381,11 @@ if [ $num_args -eq 0 ]; then
 	echo "- edits <myscript> 		${ORANGE}: edit a script (you must use an alias present in myscripts)${RESET}"
 	echo "- newscript <script-name?>	${ORANGE}: create a new script${RESET}"
 	echo ""
-	h1_text "OTHER UTILITIES:"
+	h1_text "FILE UTILITIES:"
+	echo "- fopen					${ORANGE}: open current directory in files application${RESET}"
 	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
+	echo ""
+	h1_text "OTHER UTILITIES:"
 	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo ""
@@ -703,6 +706,11 @@ elif [ "$1" = "genqr" ]; then
 	info_text "Generating a QR code..."
 	qrencode -o "$fname.png" "$link"
 	display "$fname.png"
+
+# OPEN FILE
+
+elif [ "$1" = "fopen" ]; then
+	openfile "$(pwd)"
 
 # ERROR
 

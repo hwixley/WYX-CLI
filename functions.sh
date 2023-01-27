@@ -86,3 +86,7 @@ function arm() {
 		return 1;
 	fi
 }
+
+function openfile() {
+	xdg-open "file:///$1"
+}
