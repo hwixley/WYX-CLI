@@ -296,10 +296,10 @@ function wix_ginit() {
 			if orgexists "$orgalias" ; then
 				ginit "${myorgs[$orgalias]}" "$2" "organizations/${myorgs[$orgalias]}/repositories/new"
 			else
-				ginit "$user" "$2" "new"
+				ginit "${user[username]}" "$2" "new"
 			fi
 		else
-			ginit "$user" "$2" "new"
+			ginit "${user[username]}" "$2" "new"
 		fi
 	else
 		error_text "This is already a git repository..."
@@ -711,6 +711,13 @@ elif [ "$1" = "genqr" ]; then
 
 elif [ "$1" = "fopen" ]; then
 	openfile "$(pwd)"
+
+# UPDATE
+
+elif [ "$1" = "update" ]; then
+	cd $mydir
+	git pull origin master
+	cd -
 
 # ERROR
 
