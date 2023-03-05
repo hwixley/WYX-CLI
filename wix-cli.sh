@@ -9,6 +9,7 @@ year="${date:25:29}"
 
 mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
+scriptdir=$mydir/scripts
 
 source $mydir/functions.sh
 
@@ -382,11 +383,12 @@ if [ $num_args -eq 0 ]; then
 	echo "- newscript <script-name?>	${ORANGE}: create a new script${RESET}"
 	echo ""
 	h1_text "FILE UTILITIES:"
-	echo "- fopen					${ORANGE}: open current directory in files application${RESET}"
+	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
 	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
 	echo ""
 	h1_text "OTHER UTILITIES:"
 	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
+	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo ""
 	# h1_text "CLI management:"
@@ -706,6 +708,25 @@ elif [ "$1" = "genqr" ]; then
 	info_text "Generating a QR code..."
 	qrencode -o "$fname.png" "$link"
 	display "$fname.png"
+
+# UPSCALE PHOTO
+
+elif [ "$1" = "upscale" ]; then
+	fname="$2"
+	alpha="$3"
+	if ! arggt "1"; then
+		info_text "Enter the file you would like to upscale:"
+		read -r url
+		fname="$url"
+
+		if ! arggt "2"; then
+			info_text "Enter the scale multiplier:"
+			read -r mult
+			alpha="$mult"
+		fi
+	fi
+	info_text "Upscaling $fname..."
+	python3 "$scriptdir/photo-upscale.py" "$fname" "$alpha"
 
 # OPEN FILE
 
