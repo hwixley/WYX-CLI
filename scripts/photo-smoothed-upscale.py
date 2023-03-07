@@ -8,6 +8,7 @@ import skimage.exposure
 
 img_file = sys.argv[1]
 alpha = int(sys.argv[2])
+beta = int(sys.argv[3])
 
 a_offset = 2
 
@@ -46,19 +47,19 @@ for row in range(x):
 diffs = np.empty((x*alpha, y*alpha,3))
 
 for col in range(y*alpha):
-    diff = upscaled_x[:,col+alpha,:] - upscaled_x[:,col,:] if col+alpha < y*alpha else np.zeros((upscaled_x.shape[0],upscaled_x.shape[2]))
-    for a in range(min(alpha,y*alpha - col-1)):
-        if a < alpha:
+    diff = upscaled_x[:,col+beta,:] - upscaled_x[:,col,:] if col+beta < y*alpha else np.zeros((upscaled_x.shape[0],upscaled_x.shape[2]))
+    for b in range(min(beta,y*alpha - col-1)):
+        if b < beta:
             # print(diff.shape)
             # upscaled_x[:,col*alpha+a,:]
-            diffs[:,col+a,:] += upscaled_x[:,col+a,:] + diff*(a/alpha)#*abs((a/alpha) - 0.5)
+            diffs[:,col+b,:] += upscaled_x[:,col+b,:] + diff*(b/beta)#*abs((a/alpha) - 0.5)
 
 for row in range(x*alpha):
-    diff = upscaled_x[row+alpha,:,:] - upscaled_x[row,:,:]  if row+alpha < x*alpha else np.zeros((upscaled_x.shape[1],upscaled_x.shape[2]))
-    for a in range(min(alpha,x*alpha - row-1)):
-        if a < alpha:
+    diff = upscaled_x[row+beta,:,:] - upscaled_x[row,:,:]  if row+beta < x*alpha else np.zeros((upscaled_x.shape[1],upscaled_x.shape[2]))
+    for b in range(min(beta,x*alpha - row-1)):
+        if b < beta:
             #upscaled_x
-            diffs[row+a,:,:] += upscaled_x[row+a,:,:] + diff*(a/alpha)#*abs((a/alpha) - 0.5)
+            diffs[row+b,:,:] += upscaled_x[row+b,:,:] + diff*(b/beta)#*abs((a/alpha) - 0.5)
 
 diffs = diffs/2
 
