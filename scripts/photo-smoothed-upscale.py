@@ -9,6 +9,8 @@ import skimage.exposure
 img_file = sys.argv[1]
 alpha = int(sys.argv[2])
 beta = int(sys.argv[3])
+sig_x = int(sys.argv[4])
+sig_y = int(sys.argv[5])
 
 a_offset = 2
 
@@ -65,7 +67,7 @@ diffs = diffs/2
 
 new_img = upscaled_x + diffs*0.1
 
-blur = cv2.GaussianBlur(new_img, (0,0), sigmaX=8, sigmaY=8, borderType = cv2.BORDER_DEFAULT)
+blur = cv2.GaussianBlur(new_img, (0,0), sigmaX=sig_x, sigmaY=sig_y, borderType = cv2.BORDER_DEFAULT)
 
 # stretch so that 255 -> 255 and 127.5 -> 0
 # C = A*X+B
@@ -75,7 +77,10 @@ blur = cv2.GaussianBlur(new_img, (0,0), sigmaX=8, sigmaY=8, borderType = cv2.BOR
 #aa = a*2.0-255.0 does not work correctly, so use skimage
 result = skimage.exposure.rescale_intensity(blur, in_range=(127.5,255), out_range=(0,255))
 
+kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+# Apply the sharpening kernel to the image using filter2D
+sharpened = cv2.filter2D(result, -1, kernel)
 # res = Image.fromarray(new_img.astype('uint8'), 'RGB')
 # res = res.filter(ImageFilter.ModeFilter(size=alpha))
 
-cv2.imwrite(f"{fname}-{x*alpha}x{y*alpha}.png", result) #new_img)# np.array(res))
+cv2.imwrite(f"{fname}-{x*alpha}x{y*alpha}.png", sharpened) #new_img)# np.array(res))
