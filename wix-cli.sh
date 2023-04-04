@@ -319,6 +319,36 @@ function giturl() {
 	fi
 }
 
+
+# AUTO UPDATE
+
+function wix_update() {
+	if ! empty "$1" ; then
+		if [ "$1" = "force" ] ; then
+			info_text "Forcing update..."
+			git pull origin master
+			return 0
+		fi
+	fi
+	info_text "Checking for updates..."
+	git fetch origin master
+	LOCAL=$(git rev-parse @)
+	REMOTE=$(git rev-parse @{u})
+	BASE=$(git merge-base @ @{u})
+	if [ $LOCAL = $REMOTE ]; then
+		info_text "You are up to date!"
+	elif [ $LOCAL = $BASE ]; then
+		info_text "Updating..."
+		git pull origin master
+	elif [ $REMOTE = $BASE ]; then
+		info_text "You have unpushed commits..."
+	else
+		info_text "You have diverged..."
+	fi
+}
+
+wix_update ""
+
 # DEFAULT
 
 
@@ -359,7 +389,7 @@ if [ $num_args -eq 0 ]; then
 	# echo "- pullr [<repo:branch>]?	${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
 	echo "- ginit <newdir?>		${ORANGE}: setup git repo in existing/new directory${RESET}"
 	# echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
-	echo "- nbranch <name?>		${ORANGE}: create new branch${RESET}"
+	echo "- nb <name?>		${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
 	echo ""
@@ -526,7 +556,7 @@ elif [ "$1" = "branch" ]; then
 	info_text "Redirecting to $branch on $repo_url..."
 	giturl "https://github.com/$repo_url/tree/$branch"
 	
-elif [ "$1" = "nbranch" ]; then
+elif [ "$1" = "nb" ]; then
 	if arggt "1" ; then
 		npush "$2"
 	else
