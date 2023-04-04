@@ -684,10 +684,16 @@ elif [ "$1" = "find" ]; then
 # IP ADDRESS
 
 elif [ "$1" = "ip" ]; then
+	echo ""
 	info_text "Local IPs:"
 	hostname -I
+	echo ""
 	info_text "Public IP:"
 	curl ifconfig.co/
+	echo ""
+	info_text "Eth0 MAC Address:"
+	cat "/sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address"
+	echo ""
 
 # QR CODE
 
