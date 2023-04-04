@@ -12,6 +12,8 @@ datadir=$mydir/.wix-cli-data
 scriptdir=$mydir/scripts
 
 source $mydir/functions.sh
+source $scriptdir/bash_loading_animations.sh
+trap BLA::stop_loading_animation SIGINT
 
 # DATA
 declare -A user
@@ -348,7 +350,13 @@ function wix_update() {
 	echo ""
 }
 
-wix_update ""
+# BLA::start_loading_animation "${BLA_classic_utf8[@]}"
+{
+	wix_update ""
+} &> /dev/null
+# BLA::stop_loading_animation "${BLA_classic_utf8[@]}" &> /dev/null
+# echo ""
+# echo ""
 
 
 # DEFAULT

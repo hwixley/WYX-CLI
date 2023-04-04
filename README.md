@@ -16,6 +16,7 @@
 6. [Installation](#installation)
 7. [Factory-reset Installation](#factory-reset-installation)
 8. [List of Commands](#list-of-commands)
+9. [Credits](#credits)
 
 <hr>
 
@@ -163,3 +164,9 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 ### Other Utilities
 1. `ip`: get local and public IP addresses of your computer
 2. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
+
+<hr>
+
+## Credits
+
+- The loading animations used (found in `scripts/bash_loading_animations.sh`) was taken from [github.com/Silejonu/bash_loading_animations](https://github.com/Silejonu/bash_loading_animations).
