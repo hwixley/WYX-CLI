@@ -134,9 +134,9 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 2. `pull <branch?>`: pull changes from the given repository branch
 3. `ginit <newdir?>`: initialize git repository in current directory if `<newdir>` is not set, otherwise, a new directory is created called `<newdir>` and a git repository is initialized there instead
 <!-- 4. `gnew <mydir/org> <repo>`: create and initialize a new directory as a git repository -->
-5. `nbranch <name?>`: create a new branch
-6. `pr`: create a PR against the default branch from the current branch
-7. `bpr <name?>`: checkout changes to a new branch and create a PR from this branch
+4. `nb <name?>`: create a new branch
+5. `pr`: create a PR against the default branch from the current branch
+6. `bpr <name?>`: checkout changes to a new branch and create a PR from this branch
 
 ### Quick-access URLs
 1. `repo`: go to the respective GitHub repository url on the default branch from your current directory
