@@ -320,7 +320,7 @@ function giturl() {
 }
 
 
-# AUTO UPDATE
+# AUTO UPDATE CLI
 
 function wix_update() {
 	if ! empty "$1" ; then
@@ -348,6 +348,7 @@ function wix_update() {
 }
 
 wix_update ""
+
 
 # DEFAULT
 
