@@ -345,6 +345,7 @@ function wix_update() {
 	else
 		info_text "You have diverged..."
 	fi
+	echo ""
 }
 
 wix_update ""
