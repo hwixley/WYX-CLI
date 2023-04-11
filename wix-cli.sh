@@ -430,6 +430,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
 	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
+	echo "- wifi				${ORANGE}: list information on your available wifi networks${RESET}"
 	echo ""
 	# h1_text "CLI management:"
 	# echo "- edit"
@@ -734,6 +735,9 @@ elif [ "$1" = "ip" ]; then
 	info_text "Eth0 MAC Address:"
 	cat "/sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address"
 	echo ""
+
+elif [ "$1" = "wifi" ]; then
+	python3 "${scriptdir}/wifi_sniffer.py"
 
 # QR CODE
 
