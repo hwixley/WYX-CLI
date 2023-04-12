@@ -425,6 +425,8 @@ if [ $num_args -eq 0 ]; then
 	h1_text "FILE UTILITIES:"
 	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
 	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
+	echo "- regex \"<regex?>\" \"<fname?>\"		${ORANGE}: return the number of regex matches in the given file${RESET}"
+	echo "- rgxmatch \"<regex?>\" \"<fname?>\"		${ORANGE}: return the string matches of your regex in the given file${RESET}"
 	echo ""
 	h1_text "OTHER UTILITIES:"
 	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
@@ -782,6 +784,90 @@ elif [ "$1" = "upscale" ]; then
 
 elif [ "$1" = "fopen" ]; then
 	openfile "$(pwd)"
+
+# REGEX SEARCH
+
+elif [ "$1" = "regex" ]; then
+	if arggt "1"; then
+		regex="$2"
+		if arggt "2"; then
+			fname="$3"
+			if [ -f "$fname" ]; then
+				info_text "Searching for $regex in $fname..."
+				info_text "Number of matches:"
+				grep -E "$regex" "$fname" | wc -l
+			else
+				error_text "File does not exist"
+			fi
+		else
+			info_text "Enter the filename you would like to search:"
+			read -r fname
+			if [ -f "$fname" ]; then
+				info_text "Searching for $regex in $fname..."
+				info_text "Number of matches:"
+				grep -E "$regex" "$fname" | wc -l
+			else
+				error_text "File does not exist"
+			fi
+		fi
+	else
+		info_text "Enter the regex you would like to search for:"
+		read -r regex
+		info_text "Enter the filename you would like to search:"
+		read -r fname
+		if [ -f "$fname" ]; then
+			info_text "Searching for $regex in $fname..."
+			grep -E "$regex" "$fname"
+		else
+			error_text "File does not exist"
+		fi
+	fi
+
+elif [ "$1" = "rgxmatch" ]; then
+	if arggt "1"; then
+		regex="$2"
+		if arggt "2"; then
+			fname="$3"
+			if [ -f "$fname" ]; then
+				info_text "Searching for $regex in $fname..."
+				echo ""
+				info_text "Matches: "
+				data=$(cat "$fname")
+				[[ "$data" =~ $regex ]]
+				token=$(echo "${BASH_REMATCH[1]}")
+				echo "$token"
+				clipboard "$token"
+			else
+				error_text "File does not exist"
+			fi
+		else
+			info_text "Enter the filename you would like to search:"
+			read -r fname
+			if [ -f "$fname" ]; then
+				info_text "Searching for $regex in $fname..."
+				echo ""
+				info_text "Matches: "
+				data=$(cat "$fname")
+				[[ "$data" =~ $regex ]]
+				token=$(echo "${BASH_REMATCH[1]}")
+				echo "$token"
+				clipboard "$token"
+			else
+				error_text "File does not exist"
+			fi
+		fi
+	else
+		info_text "Enter the regex you would like to search for:"
+		read -r regex
+		info_text "Enter the filename you would like to search:"
+		read -r fname
+		if [ -f "$fname" ]; then
+			info_text "Searching for $regex in $fname..."
+			grep -E "$regex" "$fname" | wc -l
+		else
+			error_text "File does not exist"
+		fi
+	fi
 
 # UPDATE
 

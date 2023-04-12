@@ -165,6 +165,8 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `ip`: get local and public IP addresses of your computer
 2. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
 3. `wifi`: lists details about available wifi networks on your host machine
+4. `regex <regex?> <fname?>`: counts number of regex matches found in the given file
+5. `rgxmatch <regex?> <fname?>`: returns strings of regex matches found in the given file
 
 <hr>
 
