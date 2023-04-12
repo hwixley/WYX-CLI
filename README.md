@@ -1,22 +1,36 @@
-# WIX CLI: optimize your development productivity in the terminal
-[![GITHUB_PAGES](https://github.com/hwixley/wix-cli/actions/workflows/pages/pages-build-deployment/badge.svg)](https://hwixley.github.io/wix-cli/)
-[![LICENSE](https://badgen.net/badge/License/MIT/purple)](https://github.com/hwixley/wix-cli/blob/master/LICENSE.md)
-[![VERSION](https://badgen.net/badge/Version/0.0.0/blue)](https://github.com/hwixley/wix-cli)
-[![PLATFORMS](https://badgen.net/badge/Platforms/bash%20%26%20zsh/orange)](https://github.com/hwixley/wix-cli)
+# ⚡️ WIX CLI ⚡️
+Optimize your development productivity in the terminal
+
+<hr>
+
+[![GITHUB_PAGES](https://github.com/hwixley/wix-cli/actions/workflows/pages/pages-build-deployment/badge.svg)](https://hwixley.github.io/wix-cli/) [![LICENSE](https://badgen.net/badge/License/MIT/purple)](https://github.com/hwixley/wix-cli/blob/master/LICENSE.md) [![VERSION](https://badgen.net/badge/Version/0.0.0/blue)](https://github.com/hwixley/wix-cli) [![PLATFORMS](https://badgen.net/badge/Platforms/bash%20%26%20zsh/orange)](https://github.com/hwixley/wix-cli)
 
 <hr>
 
 ## Table of Contents
 
-1. [What It Does](#what-it-does)
-2. [Why It Was Made](#why-it-was-made)
-3. [Bugs, New Features, & Questions](#bugs-new-features--questions)
-4. [Support This Project](#support-this-project)
-5. [Dependencies](#dependencies)
-6. [Installation](#installation)
-7. [Factory-reset Installation](#factory-reset-installation)
-8. [List of Commands](#list-of-commands)
-9. [Credits](#credits)
+- [⚡️ WIX CLI ⚡️](#️-wix-cli-️)
+  - [Table of Contents](#table-of-contents)
+  - [What It Does](#what-it-does)
+  - [Why It Was Made](#why-it-was-made)
+  - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
+  - [Support This Project](#support-this-project)
+  - [Dependencies](#dependencies)
+  - [Installation](#installation)
+  - [Factory-reset Installation](#factory-reset-installation)
+  - [List of Commands](#list-of-commands)
+      - [Defaults:](#defaults)
+    - [Navigation](#navigation)
+    - [Pseudo-random String Generation](#pseudo-random-string-generation)
+    - [Code Editing](#code-editing)
+    - [Custom Script/Environment Execution](#custom-scriptenvironment-execution)
+    - [Git Automation](#git-automation)
+    - [Quick-access URLs](#quick-access-urls)
+    - [Data for Custom Scripting Logic](#data-for-custom-scripting-logic)
+    - [Editing Data for Custom Scripting Logic](#editing-data-for-custom-scripting-logic)
+    - [File Utilities](#file-utilities)
+    - [Other Utilities](#other-utilities)
+  - [Credits](#credits)
 
 <hr>
 
@@ -160,13 +174,13 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 ### File Utilities
 1. `fopen`: open the current directory in your native files application
 2. `find "<fname>.<fext>"`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
+3. `regex <regex?> <fname?>`: counts number of regex matches found in the given file
+4. `rgxmatch <regex?> <fname?>`: returns strings of regex matches found in the given file
 
 ### Other Utilities
 1. `ip`: get local and public IP addresses of your computer
 2. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
 3. `wifi`: lists details about available wifi networks on your host machine
-4. `regex <regex?> <fname?>`: counts number of regex matches found in the given file
-5. `rgxmatch <regex?> <fname?>`: returns strings of regex matches found in the given file
 
 <hr>
 
