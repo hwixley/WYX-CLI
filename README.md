@@ -3,8 +3,7 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-[![GITHUB_PAGES](https://github.com/hwixley/wix-cli/actions/workflows/pages/pages-build-deployment/badge.svg)](https://hwixley.github.io/wix-cli/) [![LICENSE](https://badgen.net/badge/License/MIT/purple)](https://github.com/hwixley/wix-cli/blob/master/LICENSE.md) [![VERSION](https://badgen.net/badge/Version/0.0.0/blue)](https://github.com/hwixley/wix-cli) [![PLATFORMS](https://badgen.net/badge/Platforms/bash%20%26%20zsh/orange)](https://github.com/hwixley/wix-cli)
-
+[![GITHUB_PAGES](https://github.com/hwixley/wix-cli/actions/workflows/pages/pages-build-deployment/badge.svg)](https://hwixley.github.io/wix-cli/) ![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-0.0.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
 <hr>
 
 ## Table of Contents
