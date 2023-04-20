@@ -12,8 +12,6 @@ datadir=$mydir/.wix-cli-data
 scriptdir=$mydir/scripts
 
 source $mydir/functions.sh
-source $scriptdir/bash_loading_animations.sh
-trap BLA::stop_loading_animation SIGINT
 
 # DATA
 declare -A user
@@ -350,13 +348,9 @@ function wix_update() {
 	echo ""
 }
 
-# BLA::start_loading_animation "${BLA_classic_utf8[@]}"
 {
 	wix_update ""
 } &> /dev/null
-# BLA::stop_loading_animation "${BLA_classic_utf8[@]}" &> /dev/null
-# echo ""
-# echo ""
 
 
 # DEFAULT
@@ -399,7 +393,7 @@ if [ $num_args -eq 0 ]; then
 	# echo "- pullr [<repo:branch>]?	${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
 	echo "- ginit <newdir?>		${ORANGE}: setup git repo in existing/new directory${RESET}"
 	# echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
-	echo "- nb <name?>		${ORANGE}: create new branch${RESET}"
+	echo "- nb <name?>			${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
 	echo ""
@@ -425,14 +419,15 @@ if [ $num_args -eq 0 ]; then
 	h1_text "FILE UTILITIES:"
 	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
 	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
-	echo "- regex \"<regex?>\" \"<fname?>\"		${ORANGE}: return the number of regex matches in the given file${RESET}"
-	echo "- rgxmatch \"<regex?>\" \"<fname?>\"		${ORANGE}: return the string matches of your regex in the given file${RESET}"
+	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
+	echo "- rgxmatch \"<regex?>\" \"<fname?>\"${ORANGE}: return the string matches of your regex in the given file${RESET}"
 	echo ""
 	h1_text "OTHER UTILITIES:"
 	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
 	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo "- wifi				${ORANGE}: list information on your available wifi networks${RESET}"
+	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
 	# h1_text "CLI management:"
 	# echo "- edit"
@@ -722,6 +717,21 @@ elif [ "$1" = "find" ]; then
 		info_text "Enter the filename you would like to find:"
 		read -r fname
 		find . -type f -name "$fname"
+	fi
+
+# CLIPBOARD
+
+elif [ "$1" = "copy" ]; then
+	if arggt "1"; then
+		if [[ "$2" =~ ^\$\(.*\)$ ]]; then
+			echo $2 | xclip -selection clipboard
+		else
+			echo "$2" | xclip -selection clipboard
+		fi
+	else
+		info_text "Enter the text you would like to copy to your clipboard:"
+		read -r text
+		echo "$text" | xclip -selection clipboard
 	fi
 
 # IP ADDRESS

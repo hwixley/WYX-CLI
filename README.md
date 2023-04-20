@@ -29,7 +29,6 @@ Optimize your development productivity in the terminal
     - [Editing Data for Custom Scripting Logic](#editing-data-for-custom-scripting-logic)
     - [File Utilities](#file-utilities)
     - [Other Utilities](#other-utilities)
-  - [Credits](#credits)
 
 <hr>
 
@@ -172,7 +171,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 ### File Utilities
 1. `fopen`: open the current directory in your native files application
-2. `find "<fname>.<fext>"`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
+2. `find <fname>.<fext>`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
 3. `regex <regex?> <fname?>`: counts number of regex matches found in the given file
 4. `rgxmatch <regex?> <fname?>`: returns strings of regex matches found in the given file
 
@@ -180,9 +179,6 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `ip`: get local and public IP addresses of your computer
 2. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
 3. `wifi`: lists details about available wifi networks on your host machine
+4. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
 
 <hr>
-
-## Credits
-
-- The loading animations used (found in `scripts/bash_loading_animations.sh`) was taken from [github.com/Silejonu/bash_loading_animations](https://github.com/Silejonu/bash_loading_animations).
