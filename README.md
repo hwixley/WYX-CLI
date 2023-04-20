@@ -6,7 +6,7 @@ Optimize your development productivity in the terminal
 [![GITHUB_PAGES](https://github.com/hwixley/wix-cli/actions/workflows/pages/pages-build-deployment/badge.svg)](https://hwixley.github.io/wix-cli/) ![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-1.0.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
 <hr>
 
-![wix-terminal](https://user-images.githubusercontent.com/57837950/212565330-6145d50a-1518-471b-acbd-c0b22b7fa71d.png)
+![wix-terminal](https://user-images.githubusercontent.com/57837950/233463510-d7bf606c-d0a9-45d6-902f-ce0df53862a7.png)
 
 <hr>
 
