@@ -798,7 +798,19 @@ elif [ "$1" = "upscale" ]; then
 # OPEN FILE
 
 elif [ "$1" = "fopen" ]; then
-	openfile "$(pwd)"
+	if arggt "1"; then
+		dir="$2"
+		if direxists "$dir"; then
+			mydir="${mydirs[$dir]/\~/${HOME}}"
+			info_text "Opening $mydir..."
+			openfile "$mydir"
+		else
+			error_text "Directory alias does not exist"
+		fi
+	else
+		info_text "Opening current directory..."
+		openfile "$(pwd)"
+	fi
 
 # REGEX SEARCH
 

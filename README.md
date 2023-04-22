@@ -15,14 +15,12 @@ Optimize your development productivity in the terminal
 - [⚡️ WIX CLI ⚡️](#️-wix-cli-️)
   - [Table of Contents](#table-of-contents)
   - [What It Does](#what-it-does)
-  - [Why It Was Made](#why-it-was-made)
-  - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
-  - [Support This Project](#support-this-project)
+    - [Why It Was Made](#why-it-was-made)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
   - [Factory-reset Installation](#factory-reset-installation)
   - [List of Commands](#list-of-commands)
-      - [Defaults:](#defaults)
+      - [Defaults](#defaults)
     - [Navigation](#navigation)
     - [Pseudo-random String Generation](#pseudo-random-string-generation)
     - [Code Editing](#code-editing)
@@ -33,6 +31,9 @@ Optimize your development productivity in the terminal
     - [Editing Data for Custom Scripting Logic](#editing-data-for-custom-scripting-logic)
     - [File Utilities](#file-utilities)
     - [Other Utilities](#other-utilities)
+  - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
+  - [Make A Contribution](#make-a-contribution)
+  - [Support This Project](#support-this-project)
 
 <hr>
 
@@ -40,23 +41,11 @@ Optimize your development productivity in the terminal
 
 Provides developers with the ability for optimising the execution of commonly performed tasks, commands, directory navigations, and environment setups/script executions.
 
-## Why It Was Made
+### Why It Was Made
 
 I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser repetitive and time-wasting. I decided to start developing my own bash script to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal.
 
 I knew I was not the only one who had suffered from these productivity issues as my co-workers saw interest in the tool I was developing. Upon this I decided to start developing a more generic and robust version of my original tool to allow developers across the world optimize their productivity with this tool too!
-
-<hr>
-
-## Bugs, New Features, & Questions
-
-Please post bug reports and new features in the issues section - there are custom templates you can use for each of these. And please post any questions you may have in the discussion section, I will reply to these as soon as I can! :)
-
-<hr>
-
-## Support This Project
-
-I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :)
 
 <hr>
 
@@ -68,15 +57,17 @@ I am developing this project in my spare time to help developer's across the glo
 - Visual Studio Code for the `vsc` code editor command.
 - XCode for the `xc` code editor command (only available for Macintosh systems).
 
+<hr>
+
 ## Installation
 
 1. Clone this repository into a folder of your choice: 
 ```
-git clone git@github.com:hwixley/wix-cli.git
+git clone git@github.com:hwixley/WIX-CLI.git
 ```
 2. Navigate into the directory:
 ```
-cd wix-cli
+cd WIX-CLI
 ```
 3. Give permissions to the setup script and run it:
 ```
@@ -112,14 +103,14 @@ rm -rf <path-of-installation>
 
 Please note any command with an argument in angle brackets below (ie. `<branch>`) denotes a dynamic variable which is given by the user. If the text inside these angle has a `?` character at the end (ie. `<branch?>`) this denotes that this argument is optional and if left empty will fallback to the default.
 
-#### Defaults:
+#### Defaults
 - `<branch?>` : if left empty the current branch will be used
 - `<org?>` : if left empty the default GitHub organisation set in `myorgs` will be used
+- Any other optional arguments that you omit will be prompted upon execution
 
 <br>
 
-**<ins>Note:</ins> all commands below should be preceded by the `wix` command, this was ommitted to prevent redundancy and promote readability.**
-
+<i>**\*\*Note: all commands below should be preceded by the `wix` command, this was ommitted for readability.\*\***</i>
 <br>
 
 ### Navigation
@@ -183,3 +174,19 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 5. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
 
 <hr>
+
+## Bugs, New Features, & Questions
+
+Please post bug reports and new features in the issues section - there are custom templates you can use for each of these. And please post any questions you may have in the discussion section, I will reply to these as soon as I can! :)
+
+<hr>
+
+## Make A Contribution
+
+Contributions are welcome! Pick up a ticket from the Issues section and link it in your PR, I will review it when I can!
+
+<hr>
+
+## Support This Project
+
+I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :coffee: :zap:
