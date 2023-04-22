@@ -427,6 +427,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo "- wifi				${ORANGE}: list information on your available wifi networks${RESET}"
+	echo "- wpass				${ORANGE}: list your saved wifi passwords${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
 	# h1_text "CLI management:"
@@ -750,6 +751,10 @@ elif [ "$1" = "ip" ]; then
 
 elif [ "$1" = "wifi" ]; then
 	python3 "${scriptdir}/wifi_sniffer.py"
+
+elif [ "$1" = "wpass" ]; then
+	info_text "Listing saved Wifi passwords:"
+	sudo grep -r '^psk=' /etc/NetworkManager/system-connections/
 
 # QR CODE
 
