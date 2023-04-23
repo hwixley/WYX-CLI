@@ -5,7 +5,7 @@ version="1.0.0"
 num_args=$#
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 date=$(date)
-year="${date:25:29}"
+year="${date:24:29}"
 
 mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
