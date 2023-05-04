@@ -51,7 +51,7 @@ empty() {
 
 # MAC & LINUX FUNCTIONS
 zsh() {
-	if [[ "$SHELL" = *"zsh"* ]]; then
+	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 		return 0
 	else
 		return 1
