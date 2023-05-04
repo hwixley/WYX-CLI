@@ -69,7 +69,7 @@ repo_url=${repo_url%".git"}
 
 # MODULAR FUNCTIONS
 
-function clipboard() {
+clipboard() {
 	info_text "This has been saved to your clipboard!"
 	if zsh; then
 		echo $1 | pbcopy
@@ -78,7 +78,7 @@ function clipboard() {
 	fi
 }
 
-function editfile() {
+editfile() {
     if zsh; then
         vi "$1"
     else
@@ -86,7 +86,7 @@ function editfile() {
     fi
 }
 
-function arggt() {
+arggt() {
 	if [ "$num_args" -gt "$1" ]; then
 		return 0
 	else
@@ -94,7 +94,7 @@ function arggt() {
 	fi	
 }
 
-function direxists() {
+direxists() {
 	if [[ -v mydirs[$1] ]]; then
 		return 0
 	else
@@ -102,7 +102,7 @@ function direxists() {
 	fi
 }
 
-function orgexists() {
+orgexists() {
 	if [[ -v myorgs[$1] ]]; then
 		return 0
 	else
@@ -110,7 +110,7 @@ function orgexists() {
 	fi
 }
 
-function scriptexists() {
+scriptexists() {
 	if [[ -v myscripts[$1] ]]; then
 		return 0
 	else
@@ -118,7 +118,7 @@ function scriptexists() {
 	fi
 }
 
-function is_git_repo() {
+is_git_repo() {
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
@@ -131,7 +131,7 @@ function is_git_repo() {
 }
 
 
-function commit() {
+commit() {
 	git add .
 	if empty "$1" ; then
 		info_text "Provide a commit description:"
@@ -142,7 +142,7 @@ function commit() {
 	fi
 }
 
-function push() {
+push() {
 	if [ "$1" != "$branch" ]; then
 		git checkout "$1"
 	fi
@@ -150,26 +150,26 @@ function push() {
 	git push origin "$1"
 }
 
-function npush() {
+npush() {
 	git checkout -b "$1"
 	commit "$2"
 	git push origin "$1"
 }
 
-function pull() {
+pull() {
 	if [ "$1" != "$branch" ]; then
 		git checkout "$1"
 	fi
 	git pull origin "$1"
 }
 
-function bpr() {
+bpr() {
 	npush "$1"
 	info_text "Creating PR for $branch in $repo_url..."
 	openurl "https://github.com/$repo_url/pull/new/$1"
 }
 
-function ginit() {
+ginit() {
 	git init
 	if empty "$2" ; then
 		info_text "Provide a name for this repository:"
@@ -194,7 +194,7 @@ function ginit() {
 }
 
 # COMMAND FUNCTIONS
-function wix_cd() {
+wix_cd() {
 	if arggt "1" ; then
 		if direxists "$1" ; then
 			destination="${mydirs[$1]/~/${HOME}}"
@@ -222,7 +222,7 @@ function wix_cd() {
 	fi
 }
 
-function wix_new() {
+wix_new() {
 	if direxists "$1" ; then
 		if empty "$2" ; then
 			info_text "Provide a name for this directory:"
@@ -242,7 +242,7 @@ function wix_new() {
 	fi
 }
 
-function wix_run() {
+wix_run() {
 	if scriptexists "$1"; then
 		info_text "Running $1 script!"
 		source "$datadir/run-configs/${myscripts[$1]}.sh"
@@ -251,7 +251,7 @@ function wix_run() {
 	fi
 }
 
-function wix_delete() {
+wix_delete() {
 	if direxists "$1" ; then
 		if empty "$2" ; then
 			error_text "You did not provide a path in this directory to delete, try again..."
@@ -275,7 +275,7 @@ function wix_delete() {
 }
 
 # GITHUB AUTOMATION COMMAND FUNCTIONS
-function wix_ginit() {
+wix_ginit() {
 	if ! empty "$1"; then
 		mkdir "$1"
 		cd "$1" || return 1
@@ -307,13 +307,13 @@ function wix_ginit() {
 	fi
 }
 
-function wix_gnew() {	
+wix_gnew() {	
 	if wix_new "$1" "$2" ; then
 		wix_ginit "$1" "$2"
 	fi
 }
 
-function giturl() {
+giturl() {
 	if is_git_repo ; then
 		openurl "$1"
 	fi
@@ -322,7 +322,7 @@ function giturl() {
 
 # AUTO UPDATE CLI
 
-function wix_update() {
+wix_update() {
 	if ! empty "$1" ; then
 		if [ "$1" = "force" ] ; then
 			info_text "Forcing update..."
