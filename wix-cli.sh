@@ -70,11 +70,14 @@ repo_url=${repo_url%".git"}
 # MODULAR FUNCTIONS
 
 clipboard() {
-	info_text "This has been saved to your clipboard!"
-	if zsh; then
-		echo $1 | pbcopy
+	if command -v pbcopy >/dev/null 2>&1; then
+		info_text "This has been saved to your clipboard!"
+		echo "$1" | pbcopy
+	elif command -v xclip >/dev/null 2>&1; then
+		info_text "This has been saved to your clipboard!"
+		echo "$1" | xclip -selection c
 	else
-		echo $1 | xclip -selection c
+		warn_text "Clipboard not supported on this system, please install xclip or pbcopy."
 	fi
 }
 
