@@ -50,7 +50,7 @@ empty() {
 }
 
 # MAC & LINUX FUNCTIONS
-zsh() {
+using_zsh() {
 	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 		return 0
 	else
@@ -59,7 +59,7 @@ zsh() {
 }
 
 openurl() {
-	if zsh; then
+	if using_zsh; then
 		open "$1"
 	else
 		xdg-open "$1"
@@ -67,7 +67,7 @@ openurl() {
 }
 
 envfile() {
-	if zsh; then
+	if using_zsh; then
 		echo "$HOME/.zshrc"
 	else
 		echo "$HOME/.bashrc"
@@ -76,7 +76,7 @@ envfile() {
 }
 
 arm() {
-	if zsh; then
+	if using_zsh; then
 		if [[ "$(sysctl -n sysctl.proc_translated)" == "1" ]] || [[ "$(uname -m)" == "arm64" ]]; then
 			return 0;
 		else

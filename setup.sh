@@ -26,7 +26,7 @@ warn_text() {
 }
 
 # INITIAL SETUP
-if ! zsh; then
+if ! using_zsh; then
 	info_text "Installing dependencies..."
 	sudo apt-get install xclip
 fi

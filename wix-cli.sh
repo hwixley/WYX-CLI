@@ -82,7 +82,7 @@ clipboard() {
 }
 
 editfile() {
-    if zsh; then
+    if using_zsh; then
         vi "$1"
     else
         gedit "$1"
@@ -385,7 +385,7 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	h1_text "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open directory in Visual Studio Code${RESET}"
-	if zsh; then
+	if using_zsh; then
 		echo "- xc <mydir>			${ORANGE}: open directory in XCode${RESET}"
 	fi
 	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
@@ -444,7 +444,7 @@ if [ $num_args -eq 0 ]; then
 # GENERAL
 
 elif [ "$1" = "sys-info" ]; then
-	if zsh; then
+	if using_zsh; then
 		echo "ZSH (0_0)"
 	else
 		echo "BASH (-_-)"
