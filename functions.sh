@@ -16,23 +16,23 @@ export exts=("sh" "txt" "py")
 export notsupported="${RED}This path is not supported${RESET}"
 
 # PROMPTS
-function info_text() {
+info_text() {
 	echo "${GREEN}$1${RESET}"
 }
 
-function h1_text() {
+h1_text() {
 	echo "${BLUE}$1${RESET}"
 }
 
-function h2_text() {
+h2_text() {
 	echo "${CYAN}$1${RESET}"
 }
 
-function warn_text() {
+warn_text() {
 	echo "${ORANGE}$1${RESET}"
 }
 
-function error_text() {
+error_text() {
 	if [ "$1" = "" ]; then
 		echo "$notsupported"
 	else
@@ -41,7 +41,7 @@ function error_text() {
 }
 
 # VALIDATION
-function empty() {
+empty() {
 	if [ "$1" = "" ]; then
 		return 0
 	else
@@ -50,24 +50,24 @@ function empty() {
 }
 
 # MAC & LINUX FUNCTIONS
-function zsh() {
-	if [[ "$SHELL" = *"zsh"* ]]; then
+using_zsh() {
+	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 		return 0
 	else
 		return 1
 	fi
 }
 
-function openurl() {
-	if zsh; then
+openurl() {
+	if using_zsh; then
 		open "$1"
 	else
 		xdg-open "$1"
 	fi
 }
 
-function envfile() {
-	if zsh; then
+envfile() {
+	if using_zsh; then
 		echo "$HOME/.zshrc"
 	else
 		echo "$HOME/.bashrc"
@@ -75,8 +75,8 @@ function envfile() {
 	return 0
 }
 
-function arm() {
-	if zsh; then
+arm() {
+	if using_zsh; then
 		if [[ "$(sysctl -n sysctl.proc_translated)" == "1" ]] || [[ "$(uname -m)" == "arm64" ]]; then
 			return 0;
 		else
@@ -87,6 +87,6 @@ function arm() {
 	fi
 }
 
-function openfile() {
+openfile() {
 	xdg-open "file:///$1"
 }

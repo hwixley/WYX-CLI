@@ -13,20 +13,20 @@ BLACK=$(tput setaf 0)
 RESET=$(tput setaf 7)
 
 # FUNCTIONS
-function info_text() {
+info_text() {
 	echo "${GREEN}$1${RESET}"
 }
 
-function h1_text() {
+h1_text() {
 	echo "${BLUE}$1${RESET}"
 }
 
-function warn_text() {
+warn_text() {
 	echo "${ORANGE}$1${RESET}"
 }
 
 # INITIAL SETUP
-if ! zsh; then
+if ! using_zsh; then
 	info_text "Installing dependencies..."
 	sudo apt-get install xclip
 fi
