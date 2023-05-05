@@ -728,14 +728,14 @@ elif [ "$1" = "find" ]; then
 elif [ "$1" = "copy" ]; then
 	if arggt "1"; then
 		if [[ "$2" =~ ^\$\(.*\)$ ]]; then
-			echo $2 | xclip -selection clipboard
+			clipboard $2
 		else
-			echo "$2" | xclip -selection clipboard
+			clipboard "$2"
 		fi
 	else
 		info_text "Enter the text you would like to copy to your clipboard:"
 		read -r text
-		echo "$text" | xclip -selection clipboard
+		clipboard "$text"
 	fi
 
 # IP ADDRESS
