@@ -62,7 +62,9 @@ openurl() {
 	if using_zsh; then
 		open "$1"
 	else
-		xdg-open "$1"
+		{
+			xdg-open "$1"
+		} &> /dev/null
 	fi
 }
 
