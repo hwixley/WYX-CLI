@@ -560,6 +560,10 @@ elif [ "$1" = "pull" ]; then
 		pull "$branch"
 	fi
 
+elif [ "$1" = "mpull" ]; then
+	git checkout master
+	pull "master"
+
 elif [ "$1" = "repo" ]; then
 	info_text "Redirecting to $repo_url..."
 	giturl "https://github.com/$repo_url"
