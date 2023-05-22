@@ -56,6 +56,7 @@ I knew I was not the only one who had suffered from these productivity issues as
 - `git` for all [Git Automation](https://github.com/hwixley/wix-cli#git-automation) commands.
 - Visual Studio Code for the `vsc` code editor command.
 - XCode for the `xc` code editor command (only available for Macintosh systems).
+- `speedtest` (the Ookla speedtest-cli) for runnning network speed tests. The installation commands for this on MacOS and Debian are in `setup.sh`.
 
 <hr>
 
@@ -171,7 +172,8 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 2. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
 3. `wifi`: lists details about available wifi networks on your host machine
 4. `wpass`: lists your saved wifi passwords
-5. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
+5. `speedtest`: run a network speedtest
+6. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
 
 <hr>
 

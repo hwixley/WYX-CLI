@@ -431,6 +431,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo "- wifi				${ORANGE}: list information on your available wifi networks${RESET}"
 	echo "- wpass				${ORANGE}: list your saved wifi passwords${RESET}"
+	echo "- speedtest			${ORANGE}: run a network speedtest${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
 	# h1_text "CLI management:"
@@ -779,6 +780,10 @@ elif [ "$1" = "wifi" ]; then
 elif [ "$1" = "wpass" ]; then
 	info_text "Listing saved Wifi passwords:"
 	sudo grep -r '^psk=' /etc/NetworkManager/system-connections/
+
+elif [ "$1" = "speedtest" ]; then
+	info_text "Running speedtest..."
+	speedtest
 
 # QR CODE
 
