@@ -562,7 +562,6 @@ elif [ "$1" = "pull" ]; then
 	fi
 
 elif [ "$1" = "mpull" ]; then
-	git checkout master
 	pull "master"
 
 elif [ "$1" = "repo" ]; then
