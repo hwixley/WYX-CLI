@@ -750,7 +750,24 @@ elif [ "$1" = "ip" ]; then
 	hostname -I
 	echo ""
 	info_text "Public IP:"
-	curl ifconfig.co/
+	public_ip=$(curl ifconfig.co/json)
+	ip=$(echo "$public_ip" | jq -r '.ip')
+	city=$(echo "$public_ip" | jq -r '.city')
+	region=$(echo "$public_ip" | jq -r '.region_name')
+	zip=$(echo "$public_ip" | jq -r '.zip_code')
+	country=$(echo "$public_ip" | jq -r '.country')
+	lat=$(echo "$public_ip" | jq -r '.latitude')
+	long=$(echo "$public_ip" | jq -r '.longitude')
+	time_zone=$(echo "$public_ip" | jq -r '.time_zone')
+	asn_org=$(echo "$public_ip" | jq -r '.asn_org')
+	echo ""
+	echo "IP: $ip"
+	echo ""
+	echo "${ORANGE}Address:${RESET} $city, $region, $zip, $country"
+	echo "${ORANGE}Latitude & Longitude:${RESET} ($lat, $long)"
+	echo "${ORANGE}Timezone:${RESET} $time_zone"
+	echo "${ORANGE}ASN Org:${RESET} $asn_org"
+	
 	echo ""
 	info_text "Eth0 MAC Address:"
 	cat "/sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address"
