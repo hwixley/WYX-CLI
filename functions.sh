@@ -92,3 +92,11 @@ arm() {
 openfile() {
 	xdg-open "file:///$1"
 }
+
+mac() {
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}

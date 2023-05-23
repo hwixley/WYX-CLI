@@ -747,7 +747,11 @@ elif [ "$1" = "copy" ]; then
 elif [ "$1" = "ip" ]; then
 	echo ""
 	info_text "Local IPs:"
-	hostname -I
+	if mac; then
+		ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
+	else
+		hostname -I
+	fi
 	echo ""
 	info_text "Public IP:"
 	public_ip=$(curl ifconfig.co/json)
@@ -770,7 +774,11 @@ elif [ "$1" = "ip" ]; then
 	
 	echo ""
 	info_text "Eth0 MAC Address:"
-	cat "/sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address"
+	if mac; then
+		ifconfig en1 | awk '/ether/{print $2}'
+	else
+		cat "/sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address"
+	fi
 	echo ""
 
 elif [ "$1" = "wifi" ]; then
