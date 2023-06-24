@@ -732,7 +732,8 @@ elif [ "$1" = "find" ]; then
 elif [ "$1" = "copy" ]; then
 	if arggt "1"; then
 		if [[ "$2" =~ ^\$\(.*\)$ ]]; then
-			clipboard $2
+			DATA="$2"
+			clipboard "$DATA"
 		else
 			clipboard "$2"
 		fi
