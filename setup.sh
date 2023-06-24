@@ -3,7 +3,7 @@
 mydir=$(dirname "$mypath")
 source "$mydir/functions.sh"
 
-# COLORS
+# COLORS #
 GREEN=$(tput setaf 2)
 ORANGE=$(tput setaf 3)
 RED=$(tput setaf 1)

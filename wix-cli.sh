@@ -139,7 +139,8 @@ commit() {
 	if empty "$1" ; then
 		info_text "Provide a commit description:"
 		read -r description
-		git commit -m "${description:-wix-cli quick commit}"
+		gptea_commit=$(python3 "$scriptdir/services/openai_service.py")
+		git commit -m "${description:-gptea_commit}"
 	else
 		git commit -m "${1:-wix-cli quick commit}"
 	fi
