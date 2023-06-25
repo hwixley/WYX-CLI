@@ -5,6 +5,7 @@ from logger import error, info
 class OpenAIService:
 
     FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+    REPO_PATH = FILE_PATH.replace("/scripts/services", "")
     LOCAL_PATH = os.getcwd()
     KEY_FILE="../../.wix-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
@@ -31,16 +32,18 @@ class OpenAIService:
         response = completion.choices[0].message.content
         return response
     
+    def get_git_diff(self):
+        cd_cmd = f"cd {self.REPO_PATH}"
+        return f"`git diff` output: {os.popen(f'{cd_cmd} && git diff').read()}. `git status` output: {os.popen(f'{cd_cmd} && git status').read()}."
+    
     def get_commit_title(self):
-        git_output = f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
-        title_prompt = f"Write a 1 line commit message (less than or equal to 50 characters) using the following bash git outputs. {git_output} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed."
+        title_prompt = f"Write a 1 line commit message (less than or equal to 60 characters) using the following bash git outputs. {self.get_git_diff()} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed."
         title_response = self.get_response(title_prompt)
         return f"GPT-commit: {title_response}"
     
     def get_commit_description(self):
-        git_output = f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
         title = self.get_commit_title()
-        description_prompt = f"Write a 2 line commit message using the following bash git outputs, and elaborates on the commit title: \"{title}\". {git_output}"
+        description_prompt = f"Write a 2 line commit message using the following bash git outputs: {self.get_git_diff()}, and elaborates on the commit title: \"{title}\". You should mention the reasoning for the modifications not just what files changed."
         description_response = self.get_response(description_prompt)
         return description_response
 
