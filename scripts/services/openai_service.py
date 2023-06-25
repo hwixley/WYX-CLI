@@ -1,7 +1,6 @@
 import os, sys
 import openai
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
+from logger import error, info
 
 class OpenAIService:
 
@@ -9,31 +8,31 @@ class OpenAIService:
     LOCAL_PATH = os.getcwd()
     KEY_FILE="../../.wix-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
+    ENGINE="gpt-3.5-turbo"
 
     def __init__(self):
-        # self.completion = openai.Completion()
-        API_KEY = os.environ.get(self.KEY_NAME)
-        if API_KEY == None:
+        self.API_KEY = os.environ.get(self.KEY_NAME)
+        if self.API_KEY == None:
             if os.path.exists(f"{self.FILE_PATH}/{self.KEY_FILE}"):
                 with open(f"{self.FILE_PATH}/{self.KEY_FILE}", "r") as f:
-                    API_KEY = f.read().replace(f"{self.KEY_NAME}=", "")
+                    self.API_KEY = f.read().replace(f"{self.KEY_NAME}=", "")
             else:
-                self.error("No API key found.")
+                error("No API key found.")
                 sys.exit()
         
-        openai.api_key = API_KEY
+        openai.api_key = self.API_KEY
 
     def get_response(self, prompt):
         message = { "role": "user", "content": prompt }
         completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model=self.ENGINE,
             messages=[message]
         )
         response = completion.choices[0].message.content
         return response
     
     def get_commit_message(self):
-        prompt = f"Write a 1 line commit message using the following bash git outputs. `git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
+        prompt = f"Write a 1 line commit message using the following bash git outputs. You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed. `git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
         response = self.get_response(prompt)
         return f"GPT-commit: {response}"
 
