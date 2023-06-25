@@ -137,11 +137,10 @@ is_git_repo() {
 commit() {
 	git add .
 	if empty "$1" ; then
-		gptea_commit_title=$(python3 "$scriptdir/services/openai_service.py" "title")
-		gptea_commit_body=$(python3 "$scriptdir/services/openai_service.py" "description")
-		info_text "Provide a commit description: (defaults to '$gptea_commit_title')"
+		gptea_smart_commit=$(python3 "$scriptdir/services/openai_service.py" "smart")
+		info_text "Provide a commit description: (defaults to '$gptea_smart_commit')"
 		read -r description
-		git commit -m "${description:-$gptea_commit_title}" -m "${gptea_commit_body}"
+		git commit -m "${description:-$gptea_smart_commit}"
 	else
 		git commit -m "${1:-wix-cli quick commit}"
 	fi

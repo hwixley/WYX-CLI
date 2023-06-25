@@ -7,15 +7,15 @@ class OpenAIService:
     FILE_PATH = os.path.dirname(os.path.abspath(__file__))
     REPO_PATH = FILE_PATH.replace("/scripts/services", "")
     LOCAL_PATH = os.getcwd()
-    KEY_FILE="../../.wix-cli-data/.env"
+    KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
 
     def __init__(self):
         self.API_KEY = os.environ.get(self.KEY_NAME)
         if self.API_KEY == None:
-            if os.path.exists(f"{self.FILE_PATH}/{self.KEY_FILE}"):
-                with open(f"{self.FILE_PATH}/{self.KEY_FILE}", "r") as f:
+            if os.path.exists(f"{self.KEY_PATH}"):
+                with open(f"{self.KEY_PATH}", "r") as f:
                     self.API_KEY = f.read().replace(f"{self.KEY_NAME}=", "")
             else:
                 error("No API key found.")
@@ -45,7 +45,11 @@ class OpenAIService:
         title = self.get_commit_title()
         description_prompt = f"Write a 2 line commit message using the following bash git outputs: {self.get_git_diff()}, and elaborates on the commit title: \"{title}\". You should mention the reasoning for the modifications not just what files changed."
         description_response = self.get_response(description_prompt)
-        return description_response
+        return (title, description_response)
+    
+    def get_smart_commit(self):
+        title, description = self.get_commit_description()
+        return f"\"{title}\" -m \"{description}\""
 
 
 if __name__ == "__main__":
@@ -54,4 +58,10 @@ if __name__ == "__main__":
         if sys.argv[1] == "title":
             print(openai_service.get_commit_title())
         elif sys.argv[1] == "description":
-            print(openai_service.get_commit_description())
+            print(openai_service.get_commit_description()[1])
+        elif sys.argv[1] == "smart":
+            print(openai_service.get_smart_commit())
+        else:
+            print(openai_service.get_response(sys.argv[1]))
+        sys.exit()
+
