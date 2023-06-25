@@ -137,13 +137,21 @@ is_git_repo() {
 commit() {
 	git add .
 	if empty "$1" ; then
-		gptea_smart_commit=$(python3 "$scriptdir/services/openai_service.py" "smart")
-		set -o noglob         # See special Note, below.
-		IFS=$'\n' lines=("$gptea_smart_commit")
-		set +o noglob         # See special Note, below.
-		info_text "Provide a commit description: (defaults to '${lines[0]}')"
-		read -r description
-		git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
+		if [ -f "${datadir}/.env" ]; then
+			if grep -q "OPENAI_API_KEY=" "${datadir}/.env"; then
+				gptea_smart_commit=$(python3 "$scriptdir/services/openai_service.py" "smart")
+				set -o noglob         # See special Note, below.
+				IFS=$'\n' lines=("$gptea_smart_commit")
+				set +o noglob         # See special Note, below.
+				info_text "Provide a commit description: (defaults to '${lines[0]}')"
+				read -r description
+				git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
+			else
+				git commit -m "${1:-wix-cli quick commit}"
+			fi
+		else
+			git commit -m "${1:-wix-cli quick commit}"
+		fi
 	else
 		git commit -m "${1:-wix-cli quick commit}"
 	fi
