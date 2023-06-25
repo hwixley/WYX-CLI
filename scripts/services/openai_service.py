@@ -35,11 +35,12 @@ class OpenAIService:
         git_output = f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
         title_prompt = f"Write a 1 line commit message (less than or equal to 50 characters) using the following bash git outputs. {git_output} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed."
         title_response = self.get_response(title_prompt)
-        return title_response
+        return f"GPT-commit: {title_response}"
     
     def get_commit_description(self):
         git_output = f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
-        description_prompt = f"Write a 2 line commit message (less than or equal to 75 characters) using the following bash git outputs. {git_output} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed."
+        title = self.get_commit_title()
+        description_prompt = f"Write a 2 line commit message using the following bash git outputs, and elaborates on the commit title: \"{title}\". {git_output}"
         description_response = self.get_response(description_prompt)
         return description_response
 
