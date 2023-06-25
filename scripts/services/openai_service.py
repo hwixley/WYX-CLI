@@ -33,7 +33,7 @@ class OpenAIService:
         return response
     
     def get_commit_message(self):
-        prompt = f"Write a 2 line commit message using the following bash git outputs. `git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
+        prompt = f"Write a 1 line commit message using the following bash git outputs. `git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
         response = self.get_response(prompt)
         return f"GPT-commit: {response}"
 
