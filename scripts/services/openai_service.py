@@ -34,7 +34,7 @@ class OpenAIService:
     
     def get_commit_message(self):
         git_diff = os.popen("git diff").read()
-        prompt = f"Human: write a 1 line commit message about the following `git diff` output: {git_diff}\nAI: "
+        prompt = f"Write a 1 line commit message using the following bash git outputs. `git diff` output: {git_diff}. `git status` output: {os.popen('git status').read()}."
         response = self.get_response(prompt)
         return f"GPT-Commit: {response}"
 
