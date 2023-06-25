@@ -49,7 +49,7 @@ class OpenAIService:
     
     def get_smart_commit(self):
         title, description = self.get_commit_description()
-        return f"\"{title}\" -m \"{description}\""
+        return f"{title}\n{description}"
 
 
 if __name__ == "__main__":
