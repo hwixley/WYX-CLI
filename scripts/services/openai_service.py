@@ -16,7 +16,10 @@ class OpenAIService:
         if self.API_KEY == None:
             if os.path.exists(f"{self.KEY_PATH}"):
                 with open(f"{self.KEY_PATH}", "r") as f:
-                    self.API_KEY = f.read().replace(f"{self.KEY_NAME}=", "")
+                    for l in f.read().split("\n"):
+                        if l.startswith(self.KEY_NAME):
+                            self.API_KEY = l.replace(f"{self.KEY_NAME}=", "")
+                            break
             else:
                 error("No API key found.")
                 sys.exit()
