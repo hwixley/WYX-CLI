@@ -31,12 +31,23 @@ class OpenAIService:
         response = completion.choices[0].message.content
         return response
     
-    def get_commit_message(self):
-        prompt = f"Write a 1 line commit message using the following bash git outputs. You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed. `git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
-        response = self.get_response(prompt)
-        return f"GPT-commit: {response}"
+    def get_commit_title(self):
+        git_output = f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
+        title_prompt = f"Write a 1 line commit message (less than or equal to 50 characters) using the following bash git outputs. {git_output} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed."
+        title_response = self.get_response(title_prompt)
+        return title_response
+    
+    def get_commit_description(self):
+        git_output = f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
+        description_prompt = f"Write a 2 line commit message (less than or equal to 75 characters) using the following bash git outputs. {git_output} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed."
+        description_response = self.get_response(description_prompt)
+        return description_response
 
 
 if __name__ == "__main__":
     openai_service = OpenAIService()
-    print(openai_service.get_commit_message())
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "title":
+            print(openai_service.get_commit_title())
+        elif sys.argv[1] == "description":
+            print(openai_service.get_commit_description())
