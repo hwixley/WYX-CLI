@@ -46,7 +46,7 @@ class OpenAIService:
     
     def get_commit_description(self):
         title = self.get_commit_title()
-        description_prompt = f"Write a 2 line commit message technically describing the following bash git outputs: {self.get_git_diff()}, and elaborates on the commit title: \"{title}\". You should not repeat the commit title in this message, and you should mention the technical reasoning for the modifications not just what files changed."
+        description_prompt = f"Write a 2 line commit message technically describing the following bash git outputs: {self.get_git_diff()}, and elaborates on the commit title: \"{title}\". You should not repeat the commit title in this message, you do not need to explain the meaning of `git diff` and `git status`, and you should mention the technical reasoning for the modifications not just what files changed."
         description_response = self.get_response(description_prompt)
         return (title, description_response)
     

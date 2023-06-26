@@ -139,13 +139,10 @@ commit() {
 	if empty "$1" ; then
 		if [ -f "${datadir}/.env" ]; then
 			if grep -q "OPENAI_API_KEY=" "${datadir}/.env" && grep -q "USE_SMART_COMMIT=true" "${datadir}/.env" ; then
-				gptea_smart_commit=$(python3 "$scriptdir/services/openai_service.py" "smart")
-				set -o noglob         # See special Note, below.
-				IFS=$'\n' lines=("$gptea_smart_commit")
-				set +o noglob         # See special Note, below.
-				info_text "Provide a commit description: (defaults to '${lines[0]}')"
+				IFS=$'\n' lines=($(python3 "$scriptdir/services/openai_service.py" "smart"))
+				info_text "Provide a commit description: (defaults to '${lines[1]}')"
 				read -r description
-				git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
+				git commit -m "${description:-${lines[1]}}" -m "${lines[2]}"
 			else
 				info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
 				read -r description
