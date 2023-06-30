@@ -146,12 +146,12 @@ commit() {
 			else
 				info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
 				read -r description
-				git commit -m "${1:-wix-cli quick commit}"
+				git commit -m "${description:-wix-cli quick commit}"
 			fi
 		else
 			info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
 			read -r description
-			git commit -m "${1:-wix-cli quick commit}"
+			git commit -m "${description:-wix-cli quick commit}"
 		fi
 	else
 		git commit -m "${1:-wix-cli quick commit}"
