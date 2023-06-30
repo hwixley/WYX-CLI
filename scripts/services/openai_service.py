@@ -36,8 +36,7 @@ class OpenAIService:
         return response
     
     def get_git_diff(self):
-        cd_cmd = f"cd {self.REPO_PATH}"
-        return f"`git diff` output: {os.popen(f'{cd_cmd} && git diff').read()}. `git status` output: {os.popen(f'{cd_cmd} && git status').read()}."
+        return f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
     
     def get_commit_title(self):
         title_prompt = f"Write a 1 line commit message (less than or equal to 50 characters) technically describing the following bash git outputs. {self.get_git_diff()} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed."
