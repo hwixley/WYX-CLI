@@ -1,9 +1,9 @@
 #!/bin/bash
 
 mydir=$(dirname "$mypath")
-source $mydir/functions.sh
+source "$mydir/functions.sh"
 
-# COLORS
+# COLORS #
 GREEN=$(tput setaf 2)
 ORANGE=$(tput setaf 3)
 RED=$(tput setaf 1)
@@ -47,10 +47,10 @@ chmod +x wix-cli.sh
 # SETUP METADATA FILES
 md_dir=.wix-cli-data
 mkdir $md_dir
-declare -a files=("git-user" "git-orgs" "dir-aliases" "run-configs" "todo")
+declare -a files=("git-user.txt" "git-orgs.txt" "dir-aliases.txt" "run-configs.txt" "todo.txt" ".env")
 for i in "${files[@]}"; do
-	touch $md_dir/$i.txt
-	chmod +rwx $md_dir/$i.txt
+	touch "$md_dir/$i"
+	chmod +rwx "$md_dir/$i"
 done
 mkdir $md_dir/run-configs
 
@@ -80,8 +80,7 @@ echo "2) down = ~/Downloads"
 h1_text "Would you like to include these? [ y / n ]"
 read -r keep_default_diraliases
 if [ "$keep_default_diraliases" = "y" ]; then
-	echo "docs=~/Documents" >> $md_dir/dir-aliases.txt
-	echo "down=~/Downloads" >> $md_dir/dir-aliases.txt
+	{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> $md_dir/dir-aliases.txt
 fi
 
 # FINAL SETUP
@@ -89,9 +88,7 @@ echo ""
 info_text "Okay we should be good to go!"
 
 envfile=$(envfile)
-echo "" >> "$envfile"
-echo "# WIX CLI" >> "$envfile"
-echo "alias wix=\"source $(pwd)/wix-cli.sh\"" >> "$envfile"
+{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "$envfile"
 source "$envfile"
 
 echo ""

@@ -137,9 +137,26 @@ is_git_repo() {
 commit() {
 	git add .
 	if empty "$1" ; then
-		info_text "Provide a commit description:"
-		read -r description
-		git commit -m "${description:-wix-cli quick commit}"
+		if [ -f "${datadir}/.env" ]; then
+			if grep -q "OPENAI_API_KEY=" "${datadir}/.env" && grep -q "USE_SMART_COMMIT=true" "${datadir}/.env" ; then
+				IFS=$'\n' lines=($(python3 "$scriptdir/services/openai_service.py" "smart"))
+				h2_text "GPT-3 Suggestion"
+				h2_text "Title:${RESET}	${lines[0]}"
+				h2_text "Description:${RESET} ${lines[1]}"
+				echo ""
+				info_text "Press enter to use this suggestion or type your own description."
+				read -r description
+				git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
+			else
+				info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
+				read -r description
+				git commit -m "${description:-wix-cli quick commit}"
+			fi
+		else
+			info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
+			read -r description
+			git commit -m "${description:-wix-cli quick commit}"
+		fi
 	else
 		git commit -m "${1:-wix-cli quick commit}"
 	fi
@@ -399,6 +416,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- nb <name?>			${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
+	echo "- setup smart_commit		${ORANGE}: setup smart commit${RESET}"
 	echo ""
 	h1_text "URLS:"
 	echo "- repo 				${ORANGE}: go to git repo url${RESET}"
@@ -939,6 +957,23 @@ elif [ "$1" = "update" ]; then
 	cd $mydir
 	git pull origin master
 	cd -
+
+# EXTRA FEATURE SETUP
+
+elif [ "$1" = "setup" ]; then
+	if [ "$2" = "smart_commit" ]; then
+		info_text "Setting up smart commit..."
+		echo ""
+		info_text "Enter an OpenAI API key:"
+		read -r apikey
+		echo ""
+		rm -rf "${datadir}/.env"
+		{ echo "OPENAI_API_KEY=$apikey"; echo "USE_SMART_COMMIT=true"; } >> "${datadir}/.env"
+		info_text "You are done!"
+	else
+		error_text "Invalid command! Try again"
+		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
+	fi
 
 # ERROR
 

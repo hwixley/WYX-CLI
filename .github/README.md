@@ -18,6 +18,7 @@ Optimize your development productivity in the terminal
     - [Why It Was Made](#why-it-was-made)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
+  - [Extra Feature Setup](#extra-feature-setup)
   - [Factory-reset Installation](#factory-reset-installation)
   - [List of Commands](#list-of-commands)
       - [Defaults](#defaults)
@@ -78,13 +79,19 @@ chmod +x setup.sh && ./setup.sh
 
 Type `wix` to see the list of commands and start developing some magic!
 
+## Extra Feature Setup
+
+1. You can use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs) when using the `wix push` command. <i>This requires an OpenAI API key.</i>
+```
+wix setup smart_commit
+```
 ## Factory-reset Installation
 
 1. Remove your installation
 ```
 rm -rf <path-of-installation>
 ```
-2. Remove the wix-cli script setup in your environment file
+1. Remove the wix-cli script setup in your environment file
     - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems) 
         ```
         gedit ~/.bashrc
@@ -96,7 +103,7 @@ rm -rf <path-of-installation>
     - Remove the 2 lines for the wix-cli:<br>
         - The first line is a comment: `# WIX-CLI`<br>
         - The second line is where the command is actually setup: `alias wix="<path-of-installation>/wix-cli.sh"`
-3. Follow the [installation instructions](https://github.com/hwixley/wix-cli#installation)
+2. Follow the [installation instructions](https://github.com/hwixley/wix-cli#installation)
 
 <hr>
 
@@ -142,6 +149,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 4. `nb <name?>`: create a new branch
 5. `pr`: create a PR against the default branch from the current branch
 6. `bpr <name?>`: checkout changes to a new branch and create a PR from this branch
+7. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.</i>
 
 ### Quick-access URLs
 1. `repo`: go to the respective GitHub repository url on the default branch from your current directory
