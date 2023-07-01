@@ -39,13 +39,13 @@ class OpenAIService:
         return f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
     
     def get_commit_title(self):
-        title_prompt = f"Write a 1 line commit message (less than or equal to 50 characters) technically describing the following bash git outputs. {self.get_git_diff()} You do not need to mention anything about the branch these changes were made on, and you should mention the reasoning for the modifications not just what files changed. Make sure to act as if you are writing this commit message for a team of developers."
+        title_prompt = f"Pretend you are in a team of developers working on a project. Write a 1 line commit message (less than or equal to 50 characters) technically describing the following bash git outputs. {self.get_git_diff()} Do not mention anything about the branch these changes were made on. Mention the reasoning for the modifications ie. mention what functions, classes or variables were modified/created/deleted."
         title_response = self.get_response(title_prompt)
         return f"GPT-commit: {title_response}"
     
     def get_commit_description(self):
         title = self.get_commit_title()
-        description_prompt = f"Write a 2 line commit message technically describing the following bash git outputs: {self.get_git_diff()}, and elaborates on the commit title: \"{title}\". You should not repeat the commit title in this message, you do not need to explain the meaning of `git diff` and `git status`, and you should mention the technical reasoning for the modifications not just what files changed. Make sure to act as if you are writing this commit message for a team of developers."
+        description_prompt = f"Pretend you are in a team of developers working on a project. Write a 2 line commit message technically describing the following bash git outputs. {self.get_git_diff()} Do not repeat the title \"{title}\", and do not mention anything about the branch these changes were made on. Mention the reasoning for the modifications ie. mention what functions, classes or variables were modified/created/deleted."
         description_response = self.get_response(description_prompt)
         return (title, description_response)
     
