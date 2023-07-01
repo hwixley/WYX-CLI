@@ -416,6 +416,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- nb <name?>			${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
+	echo "- setup smart_commit		${ORANGE}: setup smart commit${RESET}"
 	echo ""
 	h1_text "URLS:"
 	echo "- repo 				${ORANGE}: go to git repo url${RESET}"
@@ -956,6 +957,23 @@ elif [ "$1" = "update" ]; then
 	cd $mydir
 	git pull origin master
 	cd -
+
+# EXTRA FEATURE SETUP
+
+elif [ "$1" = "setup" ]; then
+	if [ "$2" = "smart_commit" ]; then
+		info_text "Setting up smart commit..."
+		echo ""
+		info_text "Enter an OpenAI API key:"
+		read -r apikey
+		echo ""
+		rm -rf "${datadir}/.env"
+		{ echo "OPENAI_API_KEY=$apikey"; echo "USE_SMART_COMMIT=true"; } >> "${datadir}/.env"
+		info_text "You are done!"
+	else
+		error_text "Invalid command! Try again"
+		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
+	fi
 
 # ERROR
 

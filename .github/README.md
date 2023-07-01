@@ -81,14 +81,17 @@ Type `wix` to see the list of commands and start developing some magic!
 
 ## Extra Feature Setup
 
-1. `wix setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs) when using the `wix push` command. <i>This requires an OpenAI API key.</i>
+1. You can use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs) when using the `wix push` command. <i>This requires an OpenAI API key.</i>
+```
+wix setup smart_commit
+```
 ## Factory-reset Installation
 
 1. Remove your installation
 ```
 rm -rf <path-of-installation>
 ```
-2. Remove the wix-cli script setup in your environment file
+1. Remove the wix-cli script setup in your environment file
     - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems) 
         ```
         gedit ~/.bashrc
@@ -100,7 +103,7 @@ rm -rf <path-of-installation>
     - Remove the 2 lines for the wix-cli:<br>
         - The first line is a comment: `# WIX-CLI`<br>
         - The second line is where the command is actually setup: `alias wix="<path-of-installation>/wix-cli.sh"`
-3. Follow the [installation instructions](https://github.com/hwixley/wix-cli#installation)
+2. Follow the [installation instructions](https://github.com/hwixley/wix-cli#installation)
 
 <hr>
 
