@@ -146,7 +146,7 @@ commit() {
 				echo ""
 				info_text "Press enter to use this suggestion or type your own description."
 				read -r description
-				git commit -m "${description:-${lines[1]}}" -m "${lines[2]}"
+				git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
 			else
 				info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
 				read -r description
