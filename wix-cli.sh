@@ -140,7 +140,11 @@ commit() {
 		if [ -f "${datadir}/.env" ]; then
 			if grep -q "OPENAI_API_KEY=" "${datadir}/.env" && grep -q "USE_SMART_COMMIT=true" "${datadir}/.env" ; then
 				IFS=$'\n' lines=($(python3 "$scriptdir/services/openai_service.py" "smart"))
-				info_text "Provide a commit description: (defaults to '${lines[1]}')"
+				h2_text "GPT-3 Suggestion"
+				h2_text "Title:${RESET}	${lines[0]}"
+				h2_text "Description:${RESET} ${lines[1]}"
+				echo ""
+				info_text "Press enter to use this suggestion or type your own description."
 				read -r description
 				git commit -m "${description:-${lines[1]}}" -m "${lines[2]}"
 			else
