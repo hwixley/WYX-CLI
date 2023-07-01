@@ -149,7 +149,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 4. `nb <name?>`: create a new branch
 5. `pr`: create a PR against the default branch from the current branch
 6. `bpr <name?>`: checkout changes to a new branch and create a PR from this branch
-7. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.<i>
+7. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.</i>
 
 ### Quick-access URLs
 1. `repo`: go to the respective GitHub repository url on the default branch from your current directory
