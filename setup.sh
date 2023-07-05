@@ -68,7 +68,9 @@ for i in "${files[@]}"; do
 		fi
 	fi
 done
-mkdir $md_dir/run-configs
+if ! [ -d "$md_dir/run-configs" ]; then
+	mkdir "$md_dir/run-configs"
+fi
 
 
 # GET USER SPECIFIC DETAILS
