@@ -55,8 +55,18 @@ md_dir=.wix-cli-data
 mkdir $md_dir
 declare -a files=("git-user.txt" "git-orgs.txt" "dir-aliases.txt" "run-configs.txt" "todo.txt" ".env")
 for i in "${files[@]}"; do
-	touch "$md_dir/$i"
-	chmod +rwx "$md_dir/$i"
+	if ! [ -f "$md_dir/$i" ]; then
+		touch "$md_dir/$i"
+		chmod +rwx "$md_dir/$i"
+	else
+		warn_text "File $i already exists. Would you like to overwrite it? [ y / n ]"
+		read -r overwrite_file
+		if [ "$overwrite_file" = "y" ]; then
+			rm "$md_dir/$i"
+			touch "$md_dir/$i"
+			chmod +rwx "$md_dir/$i"
+		fi
+	fi
 done
 mkdir $md_dir/run-configs
 
