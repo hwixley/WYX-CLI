@@ -25,6 +25,12 @@ warn_text() {
 	echo "${ORANGE}$1${RESET}"
 }
 
+setup_alias() {
+	envfile=$(envfile)
+	{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "$envfile"
+	source "$envfile"
+}
+
 # INITIAL SETUP
 if ! using_zsh; then
 	info_text "Installing dependencies..."
@@ -87,9 +93,18 @@ fi
 echo ""
 info_text "Okay we should be good to go!"
 
+# ADD ALIAS TO ENV FILE
 envfile=$(envfile)
-{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "$envfile"
-source "$envfile"
+if [ "$(alias wix)" != "" ]; then
+	warn_text "It looks like you already have a wix alias setup. Would you like to overwrite it? [ y / n ]"
+	read -r overwrite_alias
+    if [ "$overwrite_alias" = "y" ]; then
+		echo "${ORANGE}Please edit the $envfile file manually to remove your old alias${RESET}"
+        setup_alias
+    fi
+else
+	setup_alias
+fi
 
 echo ""
 info_text "WIX CLI successfully added to $envfile !"
