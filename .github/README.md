@@ -33,7 +33,9 @@ Optimize your development productivity in the terminal
     - [Data for Custom Scripting Logic](#data-for-custom-scripting-logic)
     - [Editing Data for Custom Scripting Logic](#editing-data-for-custom-scripting-logic)
     - [File Utilities](#file-utilities)
-    - [Other Utilities](#other-utilities)
+    - [Network Utilities](#network-utilities)
+    - [Image Utilities](#image-utilities)
+    - [Text Utilities](#text-utilities)
   - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
   - [Make A Contribution](#make-a-contribution)
   - [Support This Project](#support-this-project)
@@ -56,7 +58,7 @@ I knew I was not the only one who had suffered from these productivity issues as
 
 <ins>The dependencies include:</ins>
 
-- `openssl` for the [Pseudo-random String Generation](https://github.com/hwixley/wix-cli#pseudo-random-string-generation) commands.
+- `openssl` for the [Pseudo-random String Generation](https://github.com/hwixley/wix-cli#text-utilities) commands.
 - `git` for all [Git Automation](https://github.com/hwixley/wix-cli#git-automation) commands.
 - Visual Studio Code for the `vsc` code editor command.
 - XCode for the `xc` code editor command (only available for Macintosh systems).
@@ -140,11 +142,6 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `cd <mydir>`: directory navigation using custom aliases stored in `mydirs`
 2. `back`: go back to last directory
 
-### Pseudo-random String Generation
-
-1. `genhex <hex-length?>`: generate and copy pseudo-random hex string of specified length (of default length 32)
-2. `genb64 <base64-length?>`: generate and copy pseudo-random base64 string of specified length (of default length 32)
-
 <!-- ### Directory Management
 1. `new <mydir> <subdir>`: create new directory in location of alias
 2. `delete <mydir> <subdir>`: delete directory in location of alias
@@ -213,7 +210,9 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 ### Text Utilities
 
-1. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
+1. `genhex <hex-length?>`: generate and copy pseudo-random hex string of specified length (of default length 32)
+2. `genb64 <base64-length?>`: generate and copy pseudo-random base64 string of specified length (of default length 32)
+3. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
 
 <hr>
 
