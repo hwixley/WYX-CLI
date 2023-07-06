@@ -46,6 +46,9 @@ if mac; then
 	brew install speedtest --force
 fi
 
+info_text "Installing python dependencies..."
+pip3 install -r requirements.txt
+
 info_text "Setting up wix-cli..."
 chmod +x wix-cli.sh
 
