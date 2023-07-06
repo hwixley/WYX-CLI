@@ -206,11 +206,14 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 4. `speedtest`: run a network speedtest
 5. `hardware-ports`: list your hardware network ports
 
-### Other Utilities
+### Image Utilities
 
 1. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
 2. `upscale <fname?> <scale?>`: upscale an image's resolution (**does not smooth interpolated pixels**)
-3. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
+
+### Text Utilities
+
+1. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
 
 <hr>
 
