@@ -396,6 +396,11 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	echo "v$version"
 	echo ""
+	h1_text	"MAINTENANCE:"
+	echo "- sys-info			${ORANGE}: view shell info${RESET}"
+	echo "- update			${ORANGE}: update wix-cli${RESET}"
+	echo "- install-deps			${ORANGE}: install dependencies${RESET}"
+	echo ""
 	h1_text "DIRECTORY NAVIGATION:"
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
@@ -980,6 +985,24 @@ elif [ "$1" = "update" ]; then
 	cd $mydir
 	git pull origin master
 	cd -
+
+elif [ "$1" = "install-deps" ]; then
+	if ! using_zsh; then
+		info_text "Installing dependencies..."
+		sudo apt-get install xclip
+		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+		sudo apt-get install speedtest
+	fi
+
+	if mac; then
+		info_text "Installing dependencies..."
+		brew install xclip jq
+		brew tap teamookla/speedtest
+		brew install speedtest --force
+	fi
+
+	info_text "Installing python dependencies..."
+	pip3 install -r requirements.txt
 
 # EXTRA FEATURE SETUP
 
