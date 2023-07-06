@@ -452,13 +452,16 @@ if [ $num_args -eq 0 ]; then
 	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
 	echo "- rgxmatch \"<regex?>\" \"<fname?>\"${ORANGE}: return the string matches of your regex in the given file${RESET}"
 	echo ""
-	h1_text "OTHER UTILITIES:"
-	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
-	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
+	h1_text "NETWORK UTILITIES:"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo "- wifi				${ORANGE}: list information on your available wifi networks${RESET}"
 	echo "- wpass				${ORANGE}: list your saved wifi passwords${RESET}"
 	echo "- speedtest			${ORANGE}: run a network speedtest${RESET}"
+	echo "- hardware-ports		${ORANGE}: list your hardware ports${RESET}"
+	echo ""
+	h1_text "OTHER UTILITIES:"
+	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
+	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
 	# h1_text "CLI management:"
@@ -814,6 +817,13 @@ elif [ "$1" = "wifi" ]; then
 		/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport scan
 	else
 		python3 "${scriptdir}/wifi_sniffer.py"
+	fi
+
+elif [ "$1" = "hardware-ports" ]; then
+	if mac; then
+		networksetup -listallhardwareports
+	else
+		echo "Not supported on this OS"
 	fi
 
 elif [ "$1" = "wpass" ]; then
