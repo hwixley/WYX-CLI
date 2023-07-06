@@ -25,6 +25,12 @@ warn_text() {
 	echo "${ORANGE}$1${RESET}"
 }
 
+setup_alias() {
+	envfile=$(envfile)
+	{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "$envfile"
+	source "$envfile"
+}
+
 # INITIAL SETUP
 if ! using_zsh; then
 	info_text "Installing dependencies..."
@@ -40,6 +46,9 @@ if mac; then
 	brew install speedtest --force
 fi
 
+info_text "Installing python dependencies..."
+pip3 install -r requirements.txt
+
 info_text "Setting up wix-cli..."
 chmod +x wix-cli.sh
 
@@ -49,10 +58,22 @@ md_dir=.wix-cli-data
 mkdir $md_dir
 declare -a files=("git-user.txt" "git-orgs.txt" "dir-aliases.txt" "run-configs.txt" "todo.txt" ".env")
 for i in "${files[@]}"; do
-	touch "$md_dir/$i"
-	chmod +rwx "$md_dir/$i"
+	if ! [ -f "$md_dir/$i" ]; then
+		touch "$md_dir/$i"
+		chmod +rwx "$md_dir/$i"
+	else
+		warn_text "File $i already exists. Would you like to overwrite it? [ y / n ]"
+		read -r overwrite_file
+		if [ "$overwrite_file" = "y" ]; then
+			rm "$md_dir/$i"
+			touch "$md_dir/$i"
+			chmod +rwx "$md_dir/$i"
+		fi
+	fi
 done
-mkdir $md_dir/run-configs
+if ! [ -d "$md_dir/run-configs" ]; then
+	mkdir "$md_dir/run-configs"
+fi
 
 
 # GET USER SPECIFIC DETAILS
@@ -87,9 +108,18 @@ fi
 echo ""
 info_text "Okay we should be good to go!"
 
+# ADD ALIAS TO ENV FILE
 envfile=$(envfile)
-{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "$envfile"
-source "$envfile"
+if [ "$(alias wix)" != "" ]; then
+	warn_text "It looks like you already have a wix alias setup. Would you like to overwrite it? [ y / n ]"
+	read -r overwrite_alias
+    if [ "$overwrite_alias" = "y" ]; then
+		echo "${ORANGE}Please edit the $envfile file manually to remove your old alias${RESET}"
+        setup_alias
+    fi
+else
+	setup_alias
+fi
 
 echo ""
 info_text "WIX CLI successfully added to $envfile !"

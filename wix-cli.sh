@@ -396,19 +396,20 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	echo "v$version"
 	echo ""
+	h1_text	"MAINTENANCE:"
+	echo "- sys-info			${ORANGE}: view shell info${RESET}"
+	echo "- update			${ORANGE}: update wix-cli${RESET}"
+	echo "- install-deps			${ORANGE}: install dependencies${RESET}"
+	echo ""
 	h1_text "DIRECTORY NAVIGATION:"
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
 	echo ""
-	h1_text "PSEUDO-RANDOM STRING GENERATION:"
-	echo "- genhex <hex-length?>		${ORANGE}: generate and copy pseudo-random hex string (of default length 32)${RESET}"
-	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
 	# echo ""
 	# h1_text "DIR MANAGEMENT:"
 	# echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
 	# echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
 	# echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
-	echo ""
 	h1_text "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open directory in Visual Studio Code${RESET}"
 	if using_zsh; then
@@ -452,13 +453,20 @@ if [ $num_args -eq 0 ]; then
 	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
 	echo "- rgxmatch \"<regex?>\" \"<fname?>\"${ORANGE}: return the string matches of your regex in the given file${RESET}"
 	echo ""
-	h1_text "OTHER UTILITIES:"
-	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
-	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
+	h1_text "NETWORK UTILITIES:"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo "- wifi				${ORANGE}: list information on your available wifi networks${RESET}"
 	echo "- wpass				${ORANGE}: list your saved wifi passwords${RESET}"
 	echo "- speedtest			${ORANGE}: run a network speedtest${RESET}"
+	echo "- hardware-ports		${ORANGE}: list your hardware ports${RESET}"
+	echo ""
+	h1_text "IMAGE UTILITIES:"
+	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
+	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
+	echo ""
+	h1_text "TEXT UTILITIES:"
+	echo "- genhex <hex-length?>		${ORANGE}: generate and copy pseudo-random hex string (of default length 32)${RESET}"
+	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
 	# h1_text "CLI management:"
@@ -810,7 +818,18 @@ elif [ "$1" = "ip" ]; then
 	echo ""
 
 elif [ "$1" = "wifi" ]; then
-	python3 "${scriptdir}/wifi_sniffer.py"
+	if mac; then
+		/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport scan
+	else
+		python3 "${scriptdir}/wifi_sniffer.py"
+	fi
+
+elif [ "$1" = "hardware-ports" ]; then
+	if mac; then
+		networksetup -listallhardwareports
+	else
+		echo "Not supported on this OS"
+	fi
 
 elif [ "$1" = "wpass" ]; then
 	info_text "Listing saved Wifi passwords:"
@@ -966,6 +985,24 @@ elif [ "$1" = "update" ]; then
 	cd $mydir
 	git pull origin master
 	cd -
+
+elif [ "$1" = "install-deps" ]; then
+	if ! using_zsh; then
+		info_text "Installing dependencies..."
+		sudo apt-get install xclip
+		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+		sudo apt-get install speedtest
+	fi
+
+	if mac; then
+		info_text "Installing dependencies..."
+		brew install xclip jq
+		brew tap teamookla/speedtest
+		brew install speedtest --force
+	fi
+
+	info_text "Installing python dependencies..."
+	pip3 install -r requirements.txt
 
 # EXTRA FEATURE SETUP
 
