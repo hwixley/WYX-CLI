@@ -8,7 +8,8 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-![wix-terminal](https://user-images.githubusercontent.com/57837950/233463510-d7bf606c-d0a9-45d6-902f-ce0df53862a7.png)
+<!--![wix-terminal](https://user-images.githubusercontent.com/57837950/233463510-d7bf606c-d0a9-45d6-902f-ce0df53862a7.png)-->
+<img src="https://github.com/hwixley/WIX-CLI/assets/57837950/4dc97b6e-53c7-4f15-9b43-ed8fb106378c" style="width: 100%">
 
 <hr>
 
