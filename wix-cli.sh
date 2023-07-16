@@ -429,11 +429,14 @@ if [ $num_args -eq 0 ]; then
 	echo "- setup smart_commit		${ORANGE}: setup smart commit${RESET}"
 	echo ""
 	h1_text "URLS:"
-	echo "- repo 				${ORANGE}: go to git repo url${RESET}"
-	echo "- branch 			${ORANGE}: go to git branch url${RESET}"
-	echo "- profile			${ORANGE}: go to git profile url${RESET}"
-	echo "- org <myorg?>			${ORANGE}: go to git org url${RESET}"
-	echo "- help				${ORANGE}: go to wix-cli GitHub Pages url${RESET}"
+	echo "- repo 				${ORANGE}: go to git repo URL${RESET}"
+	echo "- branch 			${ORANGE}: go to git branch URL${RESET}"
+	echo "- prs 				${ORANGE}: go to git repo Pull Requests URL${RESET}"
+	echo "- actions 			${ORANGE}: go to git repo Actions URL${RESET}"
+	echo "- issues 			${ORANGE}: go to git repo Issues URL${RESET}"
+	echo "- profile			${ORANGE}: go to git profile URL${RESET}"
+	echo "- org <myorg?>			${ORANGE}: go to git org URL${RESET}"
+	echo "- help				${ORANGE}: go to wix-cli GitHub Pages URL${RESET}"
 	echo ""
 	h1_text "MY DATA:"
 	echo "- user 				${ORANGE}: view your user-specific data (ie. name, GitHub username)${RESET}"
@@ -612,7 +615,19 @@ elif [ "$1" = "repo" ]; then
 elif [ "$1" = "branch" ]; then
 	info_text "Redirecting to $branch on $repo_url..."
 	giturl "https://github.com/$repo_url/tree/$branch"
-	
+
+elif [ "$1" = "actions" ]; then
+	info_text "Redirecting to Action Workflows on $repo_url..."
+	giturl "https://github.com/$repo_url/actions"
+
+elif [ "$1" = "issues" ]; then
+	info_text "Redirecting to Issues on $repo_url..."
+	giturl "https://github.com/$repo_url/issues"
+
+elif [ "$1" = "prs" ]; then
+	info_text "Redirecting to Pull Requests on $repo_url..."
+	giturl "https://github.com/$repo_url/pulls"
+
 elif [ "$1" = "nb" ]; then
 	if arggt "1" ; then
 		npush "$2"
