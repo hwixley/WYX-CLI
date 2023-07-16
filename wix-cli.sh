@@ -597,9 +597,9 @@ elif [ "$1" = "pull" ]; then
 	fi
 
 elif [ "$1" = "mpull" ]; then
-	if [ `git branch --list master` ]; then
+	if [ "$(git branch --list master)" ]; then
 		pull "master"
-	elif [ `git branch --list main` ]; then
+	elif [ "$(git branch --list main)" ]; then
 		pull "main"
 	else
 		warn_text "No master or main branch found..."
