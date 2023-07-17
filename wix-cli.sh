@@ -434,6 +434,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- prs 				${ORANGE}: go to git repo Pull Requests URL${RESET}"
 	echo "- actions 			${ORANGE}: go to git repo Actions URL${RESET}"
 	echo "- issues 			${ORANGE}: go to git repo Issues URL${RESET}"
+	echo "- notifs			${ORANGE}: go to git notifications URL${RESET}"
 	echo "- profile			${ORANGE}: go to git profile URL${RESET}"
 	echo "- org <myorg?>			${ORANGE}: go to git org URL${RESET}"
 	echo "- help				${ORANGE}: go to wix-cli GitHub Pages URL${RESET}"
@@ -627,6 +628,10 @@ elif [ "$1" = "issues" ]; then
 elif [ "$1" = "prs" ]; then
 	info_text "Redirecting to Pull Requests on $repo_url..."
 	giturl "https://github.com/$repo_url/pulls"
+
+elif [ "$1" = "notifs" ]; then
+	info_text "Redirecting to your Notifications..."
+	giturl "https://github.com/notifications"
 
 elif [ "$1" = "nb" ]; then
 	if arggt "1" ; then

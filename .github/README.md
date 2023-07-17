@@ -24,7 +24,7 @@ Optimize your development productivity in the terminal
   - [Extra Feature Setup](#extra-feature-setup)
   - [Factory-reset Installation](#factory-reset-installation)
   - [List of Commands](#list-of-commands)
-      - [Defaults](#defaults)
+    - [Defaults](#defaults)
     - [Navigation](#navigation)
     - [Code Editing](#code-editing)
     - [Custom Script/Environment Execution](#custom-scriptenvironment-execution)
@@ -174,9 +174,10 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 3. `prs`: go to the Pull Requests page for the respective GitHub repository url from your current directory
 4. `actions`: go to the Action Workflows page for the respective GitHub repository url from your current directory
 5. `issues`: go to the Issues page for the respective GitHub repository url from your current directory
-6. `profile`: go to your GitHub profile
-7. `org <myorg?>`: go to the specified url of the GitHub organization
-8. `help`: go to the wix-cli GitHub Pages url for documentation
+6. `notifs`: go to your GitHub Notifications
+7. `profile`: go to your GitHub profile
+8. `org <myorg?>`: go to the specified url of the GitHub organization
+9. `help`: go to the wix-cli GitHub Pages url for documentation
 
 ### Data for Custom Scripting Logic
 
