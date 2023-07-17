@@ -472,6 +472,10 @@ if [ $num_args -eq 0 ]; then
 	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
+	h1_text "SMART UTILITIES:"
+	echo "- explain \"<cmd?>\"			${ORANGE}: explain a command${RESET}"
+	echo ""
+
 	# h1_text "CLI management:"
 	# echo "- edit"
 	# echo "- save"
@@ -1006,6 +1010,22 @@ elif [ "$1" = "rgxmatch" ]; then
 		else
 			error_text "File does not exist"
 		fi
+	fi
+
+# SMART UTILITIES
+
+elif [ "$1" = "explain" ]; then
+	if arggt "1"; then
+		cmd="$2"
+		info_text "Finding explanation for $cmd..."
+		cmd="${2// /+}"
+		openurl "https://explainshell.com/explain?cmd=$cmd"
+	else
+		info_text "Enter the command you would like to explain:"
+		read -r cmd
+		info_text "Finding explanation for $cmd..."
+		cmd="${2// /+}"
+		openurl "https://explainshell.com/explain?cmd=$cmd"
 	fi
 
 # UPDATE
