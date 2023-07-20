@@ -473,8 +473,8 @@ if [ $num_args -eq 0 ]; then
 	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
-	h1_text "SMART UTILITIES:"
-	echo "- explain \"<cmd?>\"			${ORANGE}: explain a command${RESET}"
+	h1_text "HELP UTILITIES:"
+	echo "- explain \"<cmd?>\"		${ORANGE}: explain the syntax of the input bash command${RESET}"
 	echo ""
 
 	# h1_text "CLI management:"
@@ -1017,7 +1017,7 @@ elif [ "$1" = "rgxmatch" ]; then
 		fi
 	fi
 
-# SMART UTILITIES
+# HELP UTILITIES
 
 elif [ "$1" = "explain" ]; then
 	if arggt "1"; then
