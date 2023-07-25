@@ -637,6 +637,13 @@ elif [ "$1" = "notifs" ]; then
 	info_text "Redirecting to your Notifications..."
 	giturl "https://github.com/notifications"
 
+elif [ "$1" = "commits" ]; then
+	git log --pretty=format:"${GREEN}%H${RESET} - ${BLUE}%an${RESET}, ${ORANGE}%ar${RESET} : %s"
+
+elif [ "$1" = "lastcommit" ]; then
+	clipboard $(git rev-parse HEAD)
+	git show HEAD
+
 elif [ "$1" = "nb" ]; then
 	if arggt "1" ; then
 		npush "$2"
