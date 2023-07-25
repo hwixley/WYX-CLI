@@ -360,21 +360,7 @@ wix_update() {
 		fi
 	fi
 	info_text "Checking for updates..."
-	git fetch origin master
-	LOCAL=$(git rev-parse @)
-	REMOTE=$(git rev-parse @{u})
-	BASE=$(git merge-base @ @{u})
-	if [ $LOCAL = $REMOTE ]; then
-		info_text "You are up to date!"
-	elif [ $LOCAL = $BASE ]; then
-		info_text "Updating..."
-		git pull origin master
-	elif [ $REMOTE = $BASE ]; then
-		info_text "You have unpushed commits..."
-	else
-		info_text "You have diverged..."
-	fi
-	echo ""
+	pull "$branch"
 }
 
 {
@@ -426,6 +412,8 @@ if [ $num_args -eq 0 ]; then
 	echo "- nb <name?>			${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
+	echo "- commits			${ORANGE}: view commit history${RESET}"
+	echo "- lastcommit			${ORANGE}: view last commit${RESET}"
 	echo "- setup smart_commit		${ORANGE}: setup smart commit${RESET}"
 	echo ""
 	h1_text "URLS:"
