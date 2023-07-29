@@ -461,6 +461,10 @@ if [ $num_args -eq 0 ]; then
 	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
+	h1_text	"MISC UTILITIES:"
+	echo "- weather			${ORANGE}: get the weather forecast for your current location${RESET}"
+	echo "- moon				${ORANGE}: get the current moon phase${RESET}"
+	echo ""
 	h1_text "HELP UTILITIES:"
 	echo "- explain \"<cmd?>\"		${ORANGE}: explain the syntax of the input bash command${RESET}"
 	echo ""
@@ -1011,6 +1015,22 @@ elif [ "$1" = "rgxmatch" ]; then
 			error_text "File does not exist"
 		fi
 	fi
+
+# MISC UTILITIES
+
+elif [ "$1" = "weather" ]; then
+	if arggt "1"; then
+		city="$2"
+		info_text "Getting weather for $city..."
+		curl wttr.in/"$city"
+	else
+		info_text "Getting weather for your current location..."
+		curl wttr.in
+	fi
+
+elif [ "$1" = "moon" ]; then
+	info_text "Getting moon phase..."
+	curl wttr.in/moon
 
 # HELP UTILITIES
 
