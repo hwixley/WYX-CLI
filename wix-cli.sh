@@ -462,7 +462,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo ""
 	h1_text	"MISC UTILITIES:"
-	echo "- weather			${ORANGE}: get the weather forecast for your current location${RESET}"
+	echo "- weather <city?>		${ORANGE}: get the weather forecast for your current location${RESET}"
 	echo "- moon				${ORANGE}: get the current moon phase${RESET}"
 	echo ""
 	h1_text "HELP UTILITIES:"

@@ -36,6 +36,7 @@ Optimize your development productivity in the terminal
     - [Network Utilities](#network-utilities)
     - [Image Utilities](#image-utilities)
     - [Text Utilities](#text-utilities)
+    - [Miscellaneous Utilities](#miscellaneous-utilities)
     - [Help Utilities](#help-utilities)
   - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
   - [Make A Contribution](#make-a-contribution)
@@ -220,6 +221,11 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `genhex <hex-length?>`: generate and copy pseudo-random hex string of specified length (of default length 32)
 2. `genb64 <base64-length?>`: generate and copy pseudo-random base64 string of specified length (of default length 32)
 3. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
+
+### Miscellaneous Utilities
+
+1. `weather <city?>`: get the weather for your current/specified location
+2. `moon`: get the current moon phase 
 
 ### Help Utilities
 1. `explain "<cmd?>"`: explain the syntax of the specified bash command
