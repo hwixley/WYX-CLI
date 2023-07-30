@@ -1016,6 +1016,54 @@ elif [ "$1" = "rgxmatch" ]; then
 		fi
 	fi
 
+# FINANCE UTILITIES
+
+elif [ "$1" = "currency" ]; then
+	if [ -f "${datadir}/.env" ]; then
+		if grep -q "OPENEXCHANGE_API_KEY=" "${datadir}/.env"; then
+			OPENEXCHANGE_API_KEY=$(grep "OPENEXCHANGE_API_KEY=" "${datadir}/.env" | sed 's/OPENEXCHANGE_API_KEY=//')
+			{
+				exchange_data=$(curl -X GET "https://openexchangerates.org/api/latest.json?app_id=$OPENEXCHANGE_API_KEY")
+			} &> /dev/null
+
+			if arggt "1"; then
+				if [ "$2" = "summary" ]; then
+					info_text "GBP:"
+					jq -r ".rates.GBP" <<< "$exchange_data"
+					info_text "EUR:"
+					jq -r ".rates.EUR" <<< "$exchange_data"
+					info_text "CAD:"
+					jq -r ".rates.CAD" <<< "$exchange_data"
+					info_text "AUD:"
+					jq -r ".rates.AUD" <<< "$exchange_data"
+					info_text "JPY:"
+					jq -r ".rates.JPY" <<< "$exchange_data"
+					info_text "ZAR:"
+					jq -r ".rates.ZAR" <<< "$exchange_data"
+					
+				else
+					currency_code="${2^^}"
+					info_text "$currency_code:"
+					jq -r ".rates.$currency_code" <<< "$exchange_data"
+				fi
+			else
+				jq -r ".rates" <<< "$exchange_data"
+			fi
+		else
+			warn_text "You have not setup your OpenExchange API key yet..."
+			info_text "Enter your OpenExchange API key:"
+			read -r OPENEXCHANGE_API_KEY
+			{ echo "OPENEXCHANGE_API_KEY=$OPENEXCHANGE_API_KEY"; } >> "${datadir}/.env"
+		fi
+	else
+		warn_text "You have not setup your OpenExchange API key yet..."
+		mkdir -p "${datadir}"
+		touch "${datadir}/.env"
+		info_text "Enter your OpenExchange API key:"
+		read -r OPENEXCHANGE_API_KEY
+		{ echo "OPENEXCHANGE_API_KEY=$OPENEXCHANGE_API_KEY"; } >> "${datadir}/.env"
+	fi
+
 # MISC UTILITIES
 
 elif [ "$1" = "weather" ]; then
