@@ -1047,7 +1047,48 @@ elif [ "$1" = "leap-year" ]; then
 	next_one=$((year + 4 - (year % 4)))
 	info_text "The next leap year is $next_one"
 
+# FINANCE UTILITIES
 
+elif [ "$1" = "currency" ]; then
+
+	if [ -d "$datadir" ] && [ -f "$datadir/.env" ]; then
+		# if [ grep -E "ALPHAVANTAGE_API_KEY\=((.*))" "$data_dir/.env" | wc -l  ]; then
+		ALPHAVANTAGE_API_KEY=$(grep -E "ALPHAVANTAGE_API_KEY\=((.*))" "$datadir/.env" | sed -E "s/ALPHAVANTAGE_API_KEY\=//g")
+		EXCHANGERATES_API_KEY=$(grep -E "EXCHANGERATES_API_KEY\=((.*))" "$datadir/.env" | sed -E "s/EXCHANGERATES_API_KEY\=//g")
+		if grep -q "EXCHANGERATES_API_KEY" "$datadir/.env"; then
+
+			if arggt "1"; then
+				currency="$2"
+				info_text "Getting exchange rate for $currency..."
+				curl "http://api.exchangeratesapi.io/latest?access_key=$EXCHANGERATES_API_KEY&base=$currency"
+			else
+				info_text "Enter the currency you would like to get exchange rates for:"
+				read -r currency
+			fi
+			info_text "Getting exchange rate for GBP..."
+			curl "http://api.exchangeratesapi.io/latest?access_key=$EXCHANGERATES_API_KEY" #&base=$currency"
+
+			# fi
+			# info_text "Getting exchange rate for USD..."
+			# curl "http://api.exchangeratesapi.io/latest?access_key=$EXCHANGERATES_API_KEY?base="
+			# -H access_key: "$ALPHAVANTAGE_API_KEY"
+			# curl "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=GBP&apikey=$ALPHAVANTAGE_API_KEY"
+		else
+			info_text "Getting exchange rate for USD..."
+			curl "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=GBP&apikey=$ALPHAVANTAGE_API_KEY"
+		fi
+			# if []
+		# fi
+		echo ""
+	fi
+	# if arggt "1"; then
+	# 	currency="$2"
+	# 	info_text "Getting exchange rate for $currency..."
+	# 	curl "https://api.exchangeratesapi.io/latest?base=$currency"
+	# else
+	# 	info_text "Getting exchange rate for USD..."
+	# 	curl "https://api.exchangeratesapi.io/latest?base=USD"
+	# fi
 
 # HELP UTILITIES
 
