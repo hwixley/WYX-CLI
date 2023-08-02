@@ -352,16 +352,9 @@ giturl() {
 # AUTO UPDATE CLI
 
 wix_update() {
-	# if ! empty "$1" ; then
-	# 	if [ "$1" = "force" ] ; then
-	# 		info_text "Forcing update..."
-	# 		git pull origin master
-	# 		return 0
-	# 	fi
-	# fi
 	info_text "Checking for updates..."
+	cd "$mydir" || return 1
 	git fetch
-	# pull "$branch"
 	UPSTREAM=${1:-'@{u}'}
 	LOCAL=$(git rev-parse @)
 	REMOTE=$(git rev-parse "$UPSTREAM")
@@ -373,13 +366,16 @@ wix_update() {
 		info_text "Updating..."
 		pull "$branch"
 		wix "${@:1}"
-		exit 						#) || error_text "Failed to source $mypath..."
+		exit
 	elif [ "$REMOTE" = "$BASE" ]; then
 		echo "Need to push"
 	else
 		echo "Diverged"
 	fi
 	echo ""
+	{
+		cd - || return 1
+	} &> /dev/null
 }
 
 # {
@@ -387,7 +383,7 @@ wix_update() {
 # } &> /dev/null
 
 wix_update ""
-warn_text "Testing... did this work ?"
+
 
 # DEFAULT
 
