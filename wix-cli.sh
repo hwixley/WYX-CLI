@@ -387,6 +387,7 @@ wix_update() {
 
 wix_update ""
 
+warn_text "Testing... 1 2 3... Testing..."
 
 # DEFAULT
 
