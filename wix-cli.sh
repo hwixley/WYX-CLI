@@ -793,12 +793,21 @@ elif [ "$1" = "newscript" ]; then
 
 # FILE CREATION
 
-elif [[ "${exts[*]}" =~ $1 ]]; then
-	info_text "Enter a filename for your $1 file:"
-	read -r fname
-	info_text "Creating $fname.$1"
-	touch "$fname.$1"
-	editfile "$fname.$1"	
+elif [ "$1" = "newf" ]; then
+	fext="sh"
+	if arggt "1"; then
+		fext="$2"
+	else
+		info_text "Enter the file extension you would like to use:"
+		read -r fext
+	fi
+	if [[ "${exts[*]}" =~ $fext ]]; then
+		info_text "Enter a filename for your $1 file:"
+		read -r fname
+		info_text "Creating $fname.$1"
+		touch "$fname.$1"
+		editfile "$fname.$1"
+	fi
 
 # FIND FILE
 
