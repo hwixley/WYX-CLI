@@ -383,7 +383,7 @@ wix_update() {
 # } &> /dev/null
 
 wix_update ""
-
+warn_text "Another test..."
 
 # DEFAULT
 
