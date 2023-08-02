@@ -387,7 +387,7 @@ wix_update() {
 # } &> /dev/null
 
 wix_update ""
-
+warn_text "Testing... did this work ?"
 
 # DEFAULT
 
