@@ -372,7 +372,8 @@ wix_update() {
 	elif [ "$LOCAL" = "$BASE" ]; then
 		info_text "Updating..."
 		pull "$branch"
-		(source "$mypath" "${@:1}" && exit) || error_text "Failed to source $mypath..."
+		wix "${@:1}"
+		exit 						#) || error_text "Failed to source $mypath..."
 	elif [ "$REMOTE" = "$BASE" ]; then
 		echo "Need to push"
 	else
