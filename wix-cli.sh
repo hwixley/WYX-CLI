@@ -69,6 +69,13 @@ repo_url=${repo_url%".git"}
 
 # MODULAR FUNCTIONS
 
+getnews() {
+  curl https://newsapi.org/v2/top-headlines -s -G \
+  -d sources=$1 \
+  -d apiKey=YOUR_API_KEY \
+   | jq -r '.articles[] | .title, .url, .description, ""'
+}
+
 clipboard() {
 	if command -v pbcopy >/dev/null 2>&1; then
 		info_text "This has been saved to your clipboard!"
