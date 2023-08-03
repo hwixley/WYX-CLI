@@ -365,8 +365,8 @@ wix_update() {
 	elif [ "$LOCAL" = "$BASE" ]; then
 		info_text "Updating..."
 		pull "$branch"
-		wix "${@:1}"
-		exit
+		# wix "${@:1}"
+		# exit
 	elif [ "$REMOTE" = "$BASE" ]; then
 		echo "Need to push"
 	else
@@ -382,7 +382,7 @@ wix_update() {
 # 	wix_update ""
 # } &> /dev/null
 
-# wix_update ""
+wix_update ""
 # warn_text "Another test..."
 
 # DEFAULT
