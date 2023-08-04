@@ -221,6 +221,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `genhex <hex-length?>`: generate and copy pseudo-random hex string of specified length (of default length 32)
 2. `genb64 <base64-length?>`: generate and copy pseudo-random base64 string of specified length (of default length 32)
 3. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
+4. `lastcmd`: copy the last command you ran to your clipboard
 
 ### Miscellaneous Utilities
 

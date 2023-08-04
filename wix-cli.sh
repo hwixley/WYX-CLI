@@ -477,6 +477,7 @@ if [ $num_args -eq 0 ]; then
 	echo "- genhex <hex-length?>		${ORANGE}: generate and copy pseudo-random hex string (of default length 32)${RESET}"
 	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
+	echo "- lastcmd			${ORANGE}: copy the last command you ran to your clipboard${RESET}"
 	echo ""
 	h1_text	"MISC UTILITIES:"
 	echo "- weather <city?>		${ORANGE}: get the weather forecast for your current location${RESET}"
@@ -832,6 +833,13 @@ elif [ "$1" = "copy" ]; then
 		read -r text
 		clipboard "$text"
 	fi
+
+# LAST COMMAND
+
+elif [ "$1" = "lastcmd" ]; then
+	lastcmd=$(fc -ln -1)
+	trimmed=$(echo "$lastcmd" | xargs)
+	clipboard "$trimmed"
 
 # IP ADDRESS
 
