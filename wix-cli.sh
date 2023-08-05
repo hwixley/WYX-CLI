@@ -17,6 +17,13 @@ repo_url=${repo_url%".git"}
 
 # AUTO UPDATE CLI
 
+pull() {
+	if [ "$1" != "$branch" ]; then
+		git checkout "$1"
+	fi
+	git pull origin "$1"
+}
+
 wix_update() {
 	info_text "Checking for updates..."
 	cd "$mydir" || return 1
