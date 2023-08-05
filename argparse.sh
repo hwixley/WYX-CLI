@@ -383,7 +383,7 @@ wix_update() {
 # } &> /dev/null
 
 # wix_update ""
-# warn_text "Another test..."
+warn_text "Testing modular argparse autoupdate..."
 
 # DEFAULT
 
