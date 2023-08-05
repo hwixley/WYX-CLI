@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # CLI CONSTS
-version="1.0.0"
+version="1.1.0"
 num_args=$#
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 date=$(date)
