@@ -209,7 +209,7 @@ ginit() {
 		if [ "$rlicense" = "y" ] || [ "$rlicense" = "Y" ]
 		then
 			touch "LICENSE.md"
-			echo -e "MIT License\n\nCopyright (c) ${user["name"]} $year\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE." >> "LICENSE.md"
+			echo -e "MIT License\n\nCopyright (c) ${user["name"]} $year\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE." >> "LICENSE.md"
 		fi
 		commit "wix-cli: first commit"
 		git remote add origin "git@github.com:$1/$rname.git"
@@ -615,7 +615,7 @@ elif [ "$1" = "commits" ]; then
 	git log --pretty=format:"${GREEN}%H${RESET} - ${BLUE}%an${RESET}, ${ORANGE}%ar${RESET} : %s"
 
 elif [ "$1" = "lastcommit" ]; then
-	clipboard $(git rev-parse HEAD)
+	clipboard "$(git rev-parse HEAD)"
 	git show HEAD
 
 elif [ "$1" = "nb" ]; then
@@ -940,7 +940,7 @@ elif [ "$1" = "regex" ]; then
 			if [ -f "$fname" ]; then
 				info_text "Searching for $regex in $fname..."
 				info_text "Number of matches:"
-				grep -E "$regex" "$fname" | wc -l
+				grep -c "$regex" "$fname"
 			else
 				error_text "File does not exist"
 			fi
@@ -950,7 +950,7 @@ elif [ "$1" = "regex" ]; then
 			if [ -f "$fname" ]; then
 				info_text "Searching for $regex in $fname..."
 				info_text "Number of matches:"
-				grep -E "$regex" "$fname" | wc -l
+				grep -c "$regex" "$fname"
 			else
 				error_text "File does not exist"
 			fi
@@ -1008,7 +1008,7 @@ elif [ "$1" = "rgxmatch" ]; then
 		read -r fname
 		if [ -f "$fname" ]; then
 			info_text "Searching for $regex in $fname..."
-			grep -E "$regex" "$fname" | wc -l
+			grep -c "$regex" "$fname"
 		else
 			error_text "File does not exist"
 		fi
@@ -1066,9 +1066,9 @@ elif [ "$1" = "explain" ]; then
 # UPDATE
 
 elif [ "$1" = "update" ]; then
-	cd $mydir
+	cd "$mydir" || error_text "Failed to execute 'cd $mydir'..." && exit
 	git pull origin master
-	cd -
+	cd - || error_text "Failed to execute 'cd -'..." && exit
 
 elif [ "$1" = "install-deps" ]; then
 	if ! using_zsh; then
