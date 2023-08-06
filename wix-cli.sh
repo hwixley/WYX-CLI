@@ -26,6 +26,11 @@ pull() {
 
 wix_update() {
 	info_text "Checking for updates..."
+	if [ "$branch" != "master" ]; then
+		warn_text "Not on master branch, skipping update"
+		return 1
+	fi 
+
 	cd "$mydir" || return 1
 	git fetch
 	UPSTREAM=${1:-'@{u}'}
