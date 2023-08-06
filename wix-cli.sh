@@ -53,4 +53,5 @@ wix_update ""
 
 # ARGPARSE
 
+source "$mydir/completion.sh"
 source "$mydir/argparse.sh" "${@:1}"
