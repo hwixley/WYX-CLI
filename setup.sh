@@ -31,6 +31,11 @@ setup_alias() {
 	source "$envfile"
 }
 
+setup_completion() {
+	{ echo ""; echo "# WIX CLI"; echo "source $(pwd)/completion.sh"; } >> "$HOME/.bash_completion"
+	source "$HOME/.bash_completion"
+}
+
 # INITIAL SETUP
 if ! using_zsh; then
 	info_text "Installing dependencies..."
@@ -119,6 +124,32 @@ if [ "$(alias wix)" != "" ]; then
     fi
 else
 	setup_alias
+fi
+
+# ADD COMPLETION TO COMPLETION FILE
+completionfile="$HOME/.bash_completion"
+if [ -f "$completionfile" ]; then
+	completion_search=$(cat "$completionfile" | grep -c "$(pwd)/completion.sh")
+	if [ "$completion_search" != "" ]; then
+		warn_text "It looks like you already have wix completion setup. Would you like to overwrite it? [ y / n ]"
+		read -r overwrite_completion
+		if [ "$overwrite_completion" = "y" ]; then
+			echo "${ORANGE}Please edit the $HOME/.bashrc file manually to remove your old completion${RESET}"
+			setup_completion
+		fi
+	else
+		setup_completion
+	fi
+else
+	warn_text "It looks like you don't have a $HOME/.bash_completion file (allowing you to use the wix command with tab-completion)."
+	warn_text "Would you like to create one? [ y / n ]"
+	read -r create_completion
+	if [ "$create_completion" = "y" ]; then
+		touch "$HOME/.bash_completion"
+		setup_completion
+	else
+		error_text "You need to have a $HOME/.bash_completion file to use wix completion, rerun this setup script if you would like to create one."
+	fi
 fi
 
 echo ""
