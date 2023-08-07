@@ -26,12 +26,19 @@ pull() {
 
 wix_update() {
 	info_text "Checking for updates..."
-	if [ "$branch" != "master" ]; then
+
+	current_dir=$(pwd)
+	cd "$mydir" || return 1
+	repo_branch=""
+	if git rev-parse --git-dir > /dev/null 2>&1; then
+		repo_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+	fi
+	if [ "$repo_branch" != "master" ]; then
 		warn_text "Not on master branch, skipping update"
+		cd "$current_dir" || return 1
 		return 1
 	fi 
 
-	cd "$mydir" || return 1
 	git fetch
 	UPSTREAM=${1:-'@{u}'}
 	LOCAL=$(git rev-parse @)
@@ -49,9 +56,9 @@ wix_update() {
 		echo "Diverged"
 	fi
 	echo ""
-	{
-		cd - || return 1
-	} &> /dev/null
+	# {
+	cd "$current_dir" || return 1
+	# } &> /dev/null
 }
 
 wix_update ""
