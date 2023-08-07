@@ -27,6 +27,7 @@ pull() {
 wix_update() {
 	info_text "Checking for updates..."
 
+	current_dir=$(pwd)
 	cd "$mydir" || return 1
 	repo_branch=""
 	if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -34,6 +35,7 @@ wix_update() {
 	fi
 	if [ "$repo_branch" != "master" ]; then
 		warn_text "Not on master branch, skipping update"
+		cd "$current_dir" || return 1
 		return 1
 	fi 
 
@@ -54,9 +56,9 @@ wix_update() {
 		echo "Diverged"
 	fi
 	echo ""
-	{
-		cd - || return 1
-	} &> /dev/null
+	# {
+	cd "$current_dir" || return 1
+	# } &> /dev/null
 }
 
 wix_update ""
