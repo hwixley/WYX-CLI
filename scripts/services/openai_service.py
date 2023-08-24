@@ -1,6 +1,7 @@
 import os, sys
 import openai
 from logger import error, info
+from termcolor import colored
 
 class OpenAIService:
 
@@ -58,12 +59,13 @@ class OpenAIService:
         return f"{title}\n{description}"
 
     def conversate(self):
-        print("Starting a conversation with OpenAI. Type \"quit\" to exit.")
+        print(colored("\n" + "-"*150 + "\nStarting a conversation with OpenAI. Type \"quit\" to exit.\n" + "-"*150, "blue"))
         latest_question = ""
         chat_history = [self.ASSISTANT_MESSAGE]
         while True:
-            latest_question = input("\n\nYou: ")
+            latest_question = input(colored("\nYou: ", "green"))
             if latest_question == "quit":
+                print(colored("\n\nQuitting conversation...\n","yellow"))
                 break
 
             question_response = self.get_response(latest_question, chat_history)
@@ -71,7 +73,8 @@ class OpenAIService:
             chat_history.append(self.format_message("user", latest_question))
             chat_history.append(self.format_message("assistant", question_response))
 
-            print(f"\nOpenAI: {question_response}")
+            print(colored("\nOpenAI:", "blue") + f" {question_response}")
+            print(colored("\n" + "-"*150 + "\n", "blue"))
 
 
 
