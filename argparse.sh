@@ -1066,6 +1066,16 @@ elif [ "$1" = "explain" ]; then
 elif [ "$1" = "ask-gpt" ]; then
 	python3 "${scriptdir}/services/openai_service.py" "conversate"
 
+elif [ "$1" = "google" ]; then
+	if arggt "1"; then
+		openurl "https://www.google.com/search?q=$2"
+	else
+		prompt_text "\nEnter your Google search query:"
+		read -r query
+		openurl "https://www.google.com/search?q=$query"
+	fi
+	echo ""
+
 # UPDATE
 
 elif [ "$1" = "update" ]; then
