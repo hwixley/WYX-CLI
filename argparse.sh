@@ -1021,7 +1021,7 @@ elif [ "$1" = "weather" ]; then
 		city="$2"
 		info_text "Getting weather for $city..."
 		curl wttr.in/"$city"
-	else
+	elseq
 		info_text "Getting weather for your current location..."
 		curl wttr.in
 	fi
@@ -1062,6 +1062,9 @@ elif [ "$1" = "explain" ]; then
 		cmd="${cmd// /+}"
 		openurl "https://explainshell.com/explain?cmd=$cmd"
 	fi
+
+elif [ "$1" = "ask-gpt" ]; then
+	python3 "${scriptdir}/services/openai_service.py" "conversate"
 
 # UPDATE
 
