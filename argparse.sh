@@ -510,7 +510,7 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	h1_text "HELP UTILITIES:"
 	echo "- explain \"<cmd?>\"		${ORANGE}: explain the syntax of the input bash command${RESET}"
-	echo "- ask-gpt				${ORANGE}: start a conversation with OpenAI's ChatGPT${RESET}"
+	echo "- ask-gpt			${ORANGE}: start a conversation with OpenAI's ChatGPT${RESET}"
 	echo "- google \"<query?>\"		${ORANGE}: google a query${RESET}"
 	echo ""
 

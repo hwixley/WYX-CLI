@@ -238,7 +238,8 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 ### Help Utilities
 1. `explain "<cmd?>"`: explain the syntax of the specified bash command
-2. `ask-gpt`: start a conversation with OpenAI's ChatGPT
+2. `ask-gpt`: start a conversation with OpenAI's ChatGPT. <i>This requires an OpenAI API key.</i>
+3. `google <query?>`: google a query
 
 <hr>
 
