@@ -12,6 +12,7 @@ class OpenAIService:
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
     ASSISTANT_MESSAGE = { "role": "system", "content": "You are a helpful assistant."}
+    SEPARATOR="-"*110
 
     def __init__(self):
         self.API_KEY = os.environ.get(self.KEY_NAME)
@@ -59,23 +60,37 @@ class OpenAIService:
         return f"{title}\n{description}"
 
     def conversate(self):
-        print(colored("\n" + "-"*150 + "\nStarting a conversation with OpenAI. Type \"quit\" to exit.\n" + "-"*150, "blue"))
+        print(colored("\n" + self.SEPARATOR + "\nStarting a conversation with OpenAI. Type \"quit\" to exit, or \"save\" to save the conversation to a txt file.\n" + self.SEPARATOR, "blue"))
         latest_question = ""
         chat_history = [self.ASSISTANT_MESSAGE]
+
         while True:
             latest_question = input(colored("\nYou: ", "green"))
+
             if latest_question == "quit":
                 print(colored("\n\nQuitting conversation...\n","yellow"))
                 break
 
-            question_response = self.get_response(latest_question, chat_history)
+            elif latest_question == "save" and len(chat_history) > 1:
+                self.save_chat_history(chat_history[1:])
+                print(colored("\n\nSaving conversation...\n","yellow"))
+                
+            else:
+                question_response = self.get_response(latest_question, chat_history)
 
-            chat_history.append(self.format_message("user", latest_question))
-            chat_history.append(self.format_message("assistant", question_response))
+                chat_history.append(self.format_message("user", latest_question))
+                chat_history.append(self.format_message("assistant", question_response))
 
-            print(colored("\nOpenAI:", "blue") + f" {question_response}")
-            print(colored("\n" + "-"*150 + "\n", "blue"))
+                print(colored("\nOpenAI:", "blue") + f" {question_response}")
+            
+            print(colored("\n" + self.SEPARATOR, "blue"))
 
+    def save_chat_history(self, chat_history: list):
+        file_name = input(colored("\n\nEnter the name of your txt file to save the chat history to: ", "yellow"))
+        with open(f"{self.LOCAL_PATH}/{file_name}.txt", "w") as f:
+            f.write("Chat history:\n")
+            for message in chat_history:
+                f.write(f"\n{message['role']}: {message['content']}\n")
 
 
 if __name__ == "__main__":

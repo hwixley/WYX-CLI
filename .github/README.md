@@ -35,6 +35,7 @@ Optimize your development productivity in the terminal
     - [Quick-access URLs](#quick-access-urls)
     - [Data for Custom Scripting Logic](#data-for-custom-scripting-logic)
     - [Editing Data for Custom Scripting Logic](#editing-data-for-custom-scripting-logic)
+    - [Env/Keystore Management](#envkeystore-management)
     - [File Utilities](#file-utilities)
     - [Network Utilities](#network-utilities)
     - [Image Utilities](#image-utilities)
@@ -172,7 +173,6 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 6. `bpr <name?>`: checkout changes to a new branch and create a PR from this branch
 7. `commits`: view detailed commit history
 8. `lastcommit`: view last commit
-9. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.</i>
 
 ### Quick-access URLs
 
@@ -198,6 +198,10 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs`, `myscripts`, or `todo`)
 2. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
 3. `newscript <script-name?>`: allows the user to create a new script
+
+### Env/Keystore Management
+1. `setup openai_key`: this allows you to use `ask-gpt` and smart commit features which use OpenAI's API.
+2. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.</i>
 
 ### File Utilities
 
@@ -233,6 +237,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 ### Help Utilities
 1. `explain "<cmd?>"`: explain the syntax of the specified bash command
+2. `ask-gpt`: start a conversation with OpenAI's ChatGPT
 
 <hr>
 

@@ -121,6 +121,62 @@ scriptexists() {
 	fi
 }
 
+check_keystore() {
+	envfile="$datadir/.env1"
+	if [[ -f "$envfile" ]]; then
+		# Check if key-value pair exists in .env file
+		if grep -q "^$1=" "$envfile"; then
+			# Prompt user to replace the existing value
+			read -rp "${GREEN}Key \"$1\" already exists. Do you want to replace the value? (y/n):${RESET} " choice
+			if [[ $choice == "y" || $choice == "Y" ]]; then
+				if [ -n "$2" ]; then
+					# Replace the value in .env
+					sed -i "s/^$1=.*/$1=$2/" "$envfile"
+					info_text "Value for key \"$1\" replaced successfully!"
+				else
+					# Prompt user to enter the value
+					read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+
+					# Replace the value in .env
+					sed -i "s/^$1=.*/$1=$value/" "$envfile"
+					info_text "Value for key \"$1\" replaced successfully!"
+				fi
+			else
+				info_text "Value for key \"$1\" not replaced."
+			fi
+		else
+			if [ -n "$2" ]; then
+				# Append key-value pair to .env
+				echo "$1=$2" >> "$envfile"
+				info_text "Value for key \"$1\" appended successfully!"
+			else
+				# Prompt user to enter the value
+				read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+
+				# Append key-value pair to .env
+				echo "$1=$value" >> "$envfile"
+				info_text "Value for key \"$1\" appended successfully!"
+			fi
+		fi
+	else
+		if [ -n "$2" ]; then
+			# Create .env file and add the key-value pair
+			echo "$1=$2" > "$envfile"
+			info_text ".env file created successfully!"
+			info_text "Value for key \"$1\" appended successfully!"
+		else
+			# Prompt user to enter the value
+			read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+
+			# Create .env file and add the key-value pair
+			echo "$1=$value" > "$envfile"
+			info_text ".env file created successfully!"
+			info_text "Value for key \"$1\" appended successfully!"
+		fi
+	fi
+	echo ""
+}
+
 is_git_repo() {
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -449,6 +505,8 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	h1_text "HELP UTILITIES:"
 	echo "- explain \"<cmd?>\"		${ORANGE}: explain the syntax of the input bash command${RESET}"
+	echo "- ask-gpt				${ORANGE}: start a conversation with OpenAI's ChatGPT${RESET}"
+	echo "- google \"<query?>\"		${ORANGE}: google a query${RESET}"
 	echo ""
 
 	# h1_text "CLI management:"
@@ -1021,7 +1079,7 @@ elif [ "$1" = "weather" ]; then
 		city="$2"
 		info_text "Getting weather for $city..."
 		curl wttr.in/"$city"
-	elseq
+	else
 		info_text "Getting weather for your current location..."
 		curl wttr.in
 	fi
@@ -1104,15 +1162,21 @@ elif [ "$1" = "install-deps" ]; then
 # EXTRA FEATURE SETUP
 
 elif [ "$1" = "setup" ]; then
-	if [ "$2" = "smart_commit" ]; then
+	envfile="$datadir/.env1"
+
+	if [ "$2" = "openai_key" ]; then
+		info_text "Setting up OpenAI key..."
+		echo ""
+		check_keystore "OPENAI_API_KEY"
+		info_text "You are done!"
+
+	elif [ "$2" = "smart_commit" ]; then
 		info_text "Setting up smart commit..."
 		echo ""
-		info_text "Enter an OpenAI API key:"
-		read -r apikey
-		echo ""
-		rm -rf "${datadir}/.env"
-		{ echo "OPENAI_API_KEY=$apikey"; echo "USE_SMART_COMMIT=true"; } >> "${datadir}/.env"
+		check_keystore "OPENAI_API_KEY"
+		check_keystore "USE_SMART_COMMIT" "true"
 		info_text "You are done!"
+		
 	else
 		error_text "Invalid command! Try again"
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
