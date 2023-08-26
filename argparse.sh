@@ -121,6 +121,62 @@ scriptexists() {
 	fi
 }
 
+check_keystore() {
+	envfile="$datadir/.env"
+	if [[ -f "$envfile" ]]; then
+		# Check if key-value pair exists in .env file
+		if grep -q "^$1=" "$envfile"; then
+			# Prompt user to replace the existing value
+			read -rp "${GREEN}Key \"$1\" already exists. Do you want to replace the value? (y/n):${RESET} " choice
+			if [[ $choice == "y" || $choice == "Y" ]]; then
+				if [ -n "$2" ]; then
+					# Replace the value in .env
+					sed -i "s/^$1=.*/$1=$2/" "$envfile"
+					info_text "Value for key \"$1\" replaced successfully!"
+				else
+					# Prompt user to enter the value
+					read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+
+					# Replace the value in .env
+					sed -i "s/^$1=.*/$1=$value/" "$envfile"
+					info_text "Value for key \"$1\" replaced successfully!"
+				fi
+			else
+				info_text "Value for key \"$1\" not replaced."
+			fi
+		else
+			if [ -n "$2" ]; then
+				# Append key-value pair to .env
+				echo "$1=$2" >> "$envfile"
+				info_text "Value for key \"$1\" appended successfully!"
+			else
+				# Prompt user to enter the value
+				read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+
+				# Append key-value pair to .env
+				echo "$1=$value" >> "$envfile"
+				info_text "Value for key \"$1\" appended successfully!"
+			fi
+		fi
+	else
+		if [ -n "$2" ]; then
+			# Create .env file and add the key-value pair
+			echo "$1=$2" > "$envfile"
+			info_text ".env file created successfully!"
+			info_text "Value for key \"$1\" appended successfully!"
+		else
+			# Prompt user to enter the value
+			read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+
+			# Create .env file and add the key-value pair
+			echo "$1=$value" > "$envfile"
+			info_text ".env file created successfully!"
+			info_text "Value for key \"$1\" appended successfully!"
+		fi
+	fi
+	echo ""
+}
+
 is_git_repo() {
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -420,6 +476,11 @@ if [ $num_args -eq 0 ]; then
 	echo "- edits <myscript> 		${ORANGE}: edit a script (you must use an alias present in myscripts)${RESET}"
 	echo "- newscript <script-name?>	${ORANGE}: create a new script${RESET}"
 	echo ""
+	h1_text "ENV/KEYSTORE:"
+	echo "- keystore <key> <value?>	${ORANGE}: add a key-value pair to your keystore${RESET}"
+	echo "- setup openai_key		${ORANGE}: setup your OpenAI API key${RESET}"
+	echo "- setup smart_commit		${ORANGE}: setup your smart commit${RESET}"
+	echo ""
 	h1_text "FILE UTILITIES:"
 	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
 	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
@@ -449,6 +510,8 @@ if [ $num_args -eq 0 ]; then
 	echo ""
 	h1_text "HELP UTILITIES:"
 	echo "- explain \"<cmd?>\"		${ORANGE}: explain the syntax of the input bash command${RESET}"
+	echo "- ask-gpt			${ORANGE}: start a conversation with OpenAI's ChatGPT${RESET}"
+	echo "- google \"<query?>\"		${ORANGE}: google a query${RESET}"
 	echo ""
 
 	# h1_text "CLI management:"
@@ -1063,6 +1126,19 @@ elif [ "$1" = "explain" ]; then
 		openurl "https://explainshell.com/explain?cmd=$cmd"
 	fi
 
+elif [ "$1" = "ask-gpt" ]; then
+	python3 "${scriptdir}/services/openai_service.py" "conversate"
+
+elif [ "$1" = "google" ]; then
+	if arggt "1"; then
+		openurl "https://www.google.com/search?q=$2"
+	else
+		prompt_text "\nEnter your Google search query:"
+		read -r query
+		openurl "https://www.google.com/search?q=$query"
+	fi
+	echo ""
+
 # UPDATE
 
 elif [ "$1" = "update" ]; then
@@ -1090,18 +1166,35 @@ elif [ "$1" = "install-deps" ]; then
 
 # EXTRA FEATURE SETUP
 
+elif [ "$1" = "keystore" ]; then
+	if arggt "1"; then
+		if arggt "2"; then
+			check_keystore "$2" "$3"
+		else
+			check_keystore "$2"
+		fi
+	else
+		read -rp "${GREEN}Enter the key you would like to add to your keystore:${RESET} " key
+		check_keystore "$key"
+	fi
+	info_text "You're done!"
+
 elif [ "$1" = "setup" ]; then
-	if [ "$2" = "smart_commit" ]; then
+	if [ "$2" = "openai_key" ]; then
+		info_text "Setting up OpenAI key..."
+		echo ""
+		check_keystore "OPENAI_API_KEY"
+		info_text "You're done!"
+
+	elif [ "$2" = "smart_commit" ]; then
 		info_text "Setting up smart commit..."
 		echo ""
-		info_text "Enter an OpenAI API key:"
-		read -r apikey
-		echo ""
-		rm -rf "${datadir}/.env"
-		{ echo "OPENAI_API_KEY=$apikey"; echo "USE_SMART_COMMIT=true"; } >> "${datadir}/.env"
-		info_text "You are done!"
+		check_keystore "OPENAI_API_KEY"
+		check_keystore "USE_SMART_COMMIT" "true"
+		info_text "You're done!"
+		
 	else
-		error_text "Invalid command! Try again"
+		error_text "Invalid setup command! Try again"
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
 
