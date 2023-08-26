@@ -200,8 +200,9 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 3. `newscript <script-name?>`: allows the user to create a new script
 
 ### Env/Keystore Management
-1. `setup openai_key`: this allows you to use `ask-gpt` and smart commit features which use OpenAI's API.
-2. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.</i>
+1. `keystore <key> <value?>`: this allows you to add a key-value pair to your '.env' keystore
+2. `setup openai_key`: this allows you to use `ask-gpt` and smart commit features which use OpenAI's API.
+3. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.</i>
 
 ### File Utilities
 

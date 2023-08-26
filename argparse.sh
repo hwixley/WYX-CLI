@@ -122,7 +122,7 @@ scriptexists() {
 }
 
 check_keystore() {
-	envfile="$datadir/.env1"
+	envfile="$datadir/.env"
 	if [[ -f "$envfile" ]]; then
 		# Check if key-value pair exists in .env file
 		if grep -q "^$1=" "$envfile"; then
@@ -475,6 +475,11 @@ if [ $num_args -eq 0 ]; then
 	echo "- editd <data> 			${ORANGE}: edit a piece of your data (ie. user, myorgs, mydirs, myscripts, todo)${RESET}"
 	echo "- edits <myscript> 		${ORANGE}: edit a script (you must use an alias present in myscripts)${RESET}"
 	echo "- newscript <script-name?>	${ORANGE}: create a new script${RESET}"
+	echo ""
+	h1_text "ENV/KEYSTORE:"
+	echo "- keystore <key> <value?>	${ORANGE}: add a key-value pair to your keystore${RESET}"
+	echo "- setup openai_key		${ORANGE}: setup your OpenAI API key${RESET}"
+	echo "- setup smart_commit		${ORANGE}: setup your smart commit${RESET}"
 	echo ""
 	h1_text "FILE UTILITIES:"
 	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
@@ -1161,24 +1166,35 @@ elif [ "$1" = "install-deps" ]; then
 
 # EXTRA FEATURE SETUP
 
-elif [ "$1" = "setup" ]; then
-	envfile="$datadir/.env1"
+elif [ "$1" = "keystore" ]; then
+	if arggt "1"; then
+		if arggt "2"; then
+			check_keystore "$2" "$3"
+		else
+			check_keystore "$2"
+		fi
+	else
+		read -rp "${GREEN}Enter the key you would like to add to your keystore:${RESET} " key
+		check_keystore "$key"
+	fi
+	info_text "You're done!"
 
+elif [ "$1" = "setup" ]; then
 	if [ "$2" = "openai_key" ]; then
 		info_text "Setting up OpenAI key..."
 		echo ""
 		check_keystore "OPENAI_API_KEY"
-		info_text "You are done!"
+		info_text "You're done!"
 
 	elif [ "$2" = "smart_commit" ]; then
 		info_text "Setting up smart commit..."
 		echo ""
 		check_keystore "OPENAI_API_KEY"
 		check_keystore "USE_SMART_COMMIT" "true"
-		info_text "You are done!"
+		info_text "You're done!"
 		
 	else
-		error_text "Invalid command! Try again"
+		error_text "Invalid setup command! Try again"
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
 
