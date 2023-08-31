@@ -42,8 +42,8 @@ jobs:
     - name: Setup dependencies
       run: |
         sudo apt install imagemagick
-        sed -i 's/\(<policy domain="resource" name="width" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
-        sed -i 's/\(<policy domain="resource" name="height" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
+        sudo sed -i 's/\(<policy domain="resource" name="width" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
+        sudo sed -i 's/\(<policy domain="resource" name="height" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
       shell: bash
 
     # Run the script
