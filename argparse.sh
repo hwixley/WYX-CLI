@@ -1190,8 +1190,6 @@ elif [ "$1" = "setup" ]; then
 
 elif [ "$1" = "img_stdout" ]; then
 	output=$(command_info | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
-	output=$(echo "$output" | sed "s/</[/g")
-	output=$(echo "$output" | sed "s/>/]/g")
 	output="\$ wix\n\n$output\n"
 
 	convert -background "#300A24" -fill white -font "Ubuntu-Mono" -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"$output" .generated/wixcli-output-preview.png
