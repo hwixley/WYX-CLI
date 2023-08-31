@@ -41,6 +41,7 @@ Optimize your development productivity in the terminal
     - [Network Utilities](#network-utilities)
     - [Image Utilities](#image-utilities)
     - [Text Utilities](#text-utilities)
+    - [Web Utilities](#web-utilities)
     - [Miscellaneous Utilities](#miscellaneous-utilities)
     - [Help Utilities](#help-utilities)
   - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
@@ -232,10 +233,15 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 3. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
 4. `lastcmd`: copy the last command you ran to your clipboard
 
+### Web Utilities
+
+1. Extract readable text from a website
+
 ### Miscellaneous Utilities
 
 1. `weather <city?>`: get the weather for your current/specified location
 2. `moon`: get the current moon phase 
+3. `leap-year`: tells you the next leap year
 
 ### Help Utilities
 1. `explain "<cmd?>"`: explain the syntax of the specified bash command
