@@ -493,9 +493,13 @@ command_info() {
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo "- lastcmd			${ORANGE}: copy the last command you ran to your clipboard${RESET}"
 	echo ""
+	h1_text "WEB UTILITIES:"
+	echo "- webtext <url?>		${ORANGE}: extract readable text from a website" 
+	echo ""
 	h1_text	"MISC UTILITIES:"
 	echo "- weather <city?>		${ORANGE}: get the weather forecast for your current location${RESET}"
 	echo "- moon				${ORANGE}: get the current moon phase${RESET}"
+	echo "- leap-year			${ORANGE}: tells you the next leap year"
 	echo ""
 	h1_text "HELP UTILITIES:"
 	echo "- explain \"<cmd?>\"		${ORANGE}: explain the syntax of the input bash command${RESET}"
@@ -1096,7 +1100,16 @@ elif [ "$1" = "leap-year" ]; then
 	next_one=$((year + 4 - (year % 4)))
 	info_text "The next leap year is $next_one"
 
+# WEB UTILITIES
 
+elif [ "$1" = "webtext" ]; then
+	if arggt "1"; then
+		lynx --dump "$2"
+	else
+		info_text "Enter the webpage you would like to parse:"
+		read -r webpage
+		lynx --dump "$webpage"
+	fi
 
 # HELP UTILITIES
 
