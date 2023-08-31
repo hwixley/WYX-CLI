@@ -56,6 +56,6 @@ jobs:
       run: |
         git config --local user.name "hwixley"
         git config --local user.email "hwixley1@gmail.com"
-        git add generated/
+        git add yml-test.png
         git commit -m "Update wix command output"
         git push
