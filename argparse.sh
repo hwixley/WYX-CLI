@@ -404,11 +404,7 @@ giturl() {
 	fi
 }
 
-
-# DEFAULT
-
-
-if [ $num_args -eq 0 ]; then
+command_info() {
 	echo "Welcome to the..."
 	echo ""
 	info_text " ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}888P ${CYAN}8${BLUE}88 ${CYAN}Y${BLUE}8b Y8P${GREEN}     e88'Y88 888     888 "
@@ -520,7 +516,13 @@ if [ $num_args -eq 0 ]; then
 	# echo "- cat"
 	# echo "- version"
 	# echo "- cdir"
+}
 
+
+# DEFAULT
+
+if [ $num_args -eq 0 ]; then
+	command_info
 
 # GENERAL
 
@@ -1197,6 +1199,23 @@ elif [ "$1" = "setup" ]; then
 		error_text "Invalid setup command! Try again"
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
+
+elif [ "$1" = "img_stdout" ]; then
+	output=$(command_info | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
+	# output=$(echo "$output" | tr -cd '[:alnum:]._-')
+	# echo "$output"
+	# convert \
+    # -size 165x70 \
+    # xc:lightblue \
+    # -font Bookman-DemiItalic \
+    # -pointsize 12 \
+    # -fill blue \
+    # -gravity center \
+    # -draw "text 0,0 '$output'" \
+    # image.png
+	# convert hi.jpg -gravity west -pointsize 6 -annotate 0 "$output" temp1.jpg
+	# convert -size 720x480 xc:none -draw -pointsize 16 -annotate 0 "$output" temp1.png
+	convert -background lightblue -fill blue -pointsize 18 label:"$output" label1.gif
 
 # ERROR
 
