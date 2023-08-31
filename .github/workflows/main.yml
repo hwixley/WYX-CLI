@@ -41,14 +41,14 @@ jobs:
     # Setup apt dependencies
     - name: Setup dependencies
       run: |
-        apt install imagemagick
+        sudo apt install imagemagick
       shell: bash
 
     # Run the script
     - name: Run script file
       run: |
-         chmod +x ./wix-cli.sh
-         ./wix-cli.sh img_stdout
+        chmod +x ./wix-cli.sh
+        ./wix-cli.sh img_stdout
       shell: bash
 
     # Commit and push changes
