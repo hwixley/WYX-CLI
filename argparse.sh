@@ -404,11 +404,7 @@ giturl() {
 	fi
 }
 
-
-# DEFAULT
-
-
-if [ $num_args -eq 0 ]; then
+command_info() {
 	echo "Welcome to the..."
 	echo ""
 	info_text " ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}888P ${CYAN}8${BLUE}88 ${CYAN}Y${BLUE}8b Y8P${GREEN}     e88'Y88 888     888 "
@@ -428,11 +424,6 @@ if [ $num_args -eq 0 ]; then
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
 	echo ""
-	# echo ""
-	# h1_text "DIR MANAGEMENT:"
-	# echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
-	# echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
-	# echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	h1_text "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open directory in Visual Studio Code${RESET}"
 	if using_zsh; then
@@ -443,9 +434,7 @@ if [ $num_args -eq 0 ]; then
 	h1_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes to repo branch${RESET}"
 	echo "- pull <branch?>		${ORANGE}: pull changes from repo branch${RESET}"
-	# echo "- pullr [<repo:branch>]?	${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
 	echo "- ginit <newdir?>		${ORANGE}: setup git repo in existing/new directory${RESET}"
-	# echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
 	echo "- nb <name?>			${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
@@ -513,14 +502,13 @@ if [ $num_args -eq 0 ]; then
 	echo "- ask-gpt			${ORANGE}: start a conversation with OpenAI's ChatGPT${RESET}"
 	echo "- google \"<query?>\"		${ORANGE}: google a query${RESET}"
 	echo ""
+}
 
-	# h1_text "CLI management:"
-	# echo "- edit"
-	# echo "- save"
-	# echo "- cat"
-	# echo "- version"
-	# echo "- cdir"
 
+# DEFAULT
+
+if [ $num_args -eq 0 ]; then
+	command_info
 
 # GENERAL
 
@@ -1197,6 +1185,14 @@ elif [ "$1" = "setup" ]; then
 		error_text "Invalid setup command! Try again"
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
+
+# COMMAND INFO IMAGE OUTPUT - FOR GITHUB ACTIONS WORKFLOW
+
+elif [ "$1" = "img_stdout" ]; then
+	output=$(command_info | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
+	output="\$ wix\n\n$output\n"
+
+	convert -background "#300A24" -fill white -font "DejaVu-Sans-Mono" -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"$output" .generated/wixcli-output-preview.png
 
 # ERROR
 
