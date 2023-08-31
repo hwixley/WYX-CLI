@@ -41,7 +41,7 @@ jobs:
     # Setup apt dependencies
     - name: Setup dependencies
       run: |
-        sudo apt install imagemagick
+        sudo apt install ghostscript imagemagick
         sudo sed -i 's/\(<policy domain="resource" name="width" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
         sudo sed -i 's/\(<policy domain="resource" name="height" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
       shell: bash
@@ -49,7 +49,7 @@ jobs:
     # Run the script
     - name: Run script file
       run: |
-        chmod +x ./wix-cli.sh
+        chmod +x wix-cli.sh
         ./wix-cli.sh img_stdout
       shell: bash
 
