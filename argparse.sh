@@ -1202,6 +1202,7 @@ elif [ "$1" = "setup" ]; then
 
 elif [ "$1" = "img_stdout" ]; then
 	output=$(command_info | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
+	output="\$ wix\n\n$output\n"
 	# output=$(echo "$output" | tr -cd '[:alnum:]._-')
 	# echo "$output"
 	# convert \
@@ -1215,7 +1216,7 @@ elif [ "$1" = "img_stdout" ]; then
     # image.png
 	# convert hi.jpg -gravity west -pointsize 6 -annotate 0 "$output" temp1.jpg
 	# convert -size 720x480 xc:none -draw -pointsize 16 -annotate 0 "$output" temp1.png
-	convert -background lightblue -fill blue -pointsize 18 label:"$output" label1.gif
+	convert -background "#300A24" -fill white -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"$output" yml-test.png
 
 # ERROR
 
