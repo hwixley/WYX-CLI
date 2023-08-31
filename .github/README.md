@@ -235,7 +235,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 ### Web Utilities
 
-1. Extract readable text from a website
+1. `webtext`: extract readable text from a website
 
 ### Miscellaneous Utilities
 
