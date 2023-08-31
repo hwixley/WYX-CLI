@@ -424,11 +424,6 @@ command_info() {
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
 	echo ""
-	# echo ""
-	# h1_text "DIR MANAGEMENT:"
-	# echo "- new <mydir> <subdir>		${ORANGE}: new directory${RESET}"
-	# echo "- delete <mydir> <subdir> 	${ORANGE}: delete dir${RESET}"
-	# echo "- hide <mydir> <subdir>		${ORANGE}: hide dir${RESET}"
 	h1_text "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open directory in Visual Studio Code${RESET}"
 	if using_zsh; then
@@ -439,9 +434,7 @@ command_info() {
 	h1_text "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes to repo branch${RESET}"
 	echo "- pull <branch?>		${ORANGE}: pull changes from repo branch${RESET}"
-	# echo "- pullr [<repo:branch>]?	${ORANGE}: pull changes from respective repo and branch combinations${RESET}"
 	echo "- ginit <newdir?>		${ORANGE}: setup git repo in existing/new directory${RESET}"
-	# echo "- gnew <mydir/org> <repo> 	${ORANGE}: create and init git repo${RESET}"
 	echo "- nb <name?>			${ORANGE}: create new branch${RESET}"
 	echo "- pr 				${ORANGE}: create PR for branch${RESET}"
 	echo "- bpr 				${ORANGE}: checkout changes to new branch and create PR${RESET}"
@@ -509,13 +502,6 @@ command_info() {
 	echo "- ask-gpt			${ORANGE}: start a conversation with OpenAI's ChatGPT${RESET}"
 	echo "- google \"<query?>\"		${ORANGE}: google a query${RESET}"
 	echo ""
-
-	# h1_text "CLI management:"
-	# echo "- edit"
-	# echo "- save"
-	# echo "- cat"
-	# echo "- version"
-	# echo "- cdir"
 }
 
 
@@ -1200,23 +1186,15 @@ elif [ "$1" = "setup" ]; then
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
 
+# COMMAND INFO IMAGE OUTPUT - FOR GITHUB ACTIONS WORKFLOW
+
 elif [ "$1" = "img_stdout" ]; then
 	output=$(command_info | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
+	output=$(echo "$output" | sed "s/</[/g")
+	output=$(echo "$output" | sed "s/>/]/g")
 	output="\$ wix\n\n$output\n"
-	# output=$(echo "$output" | tr -cd '[:alnum:]._-')
-	# echo "$output"
-	# convert \
-    # -size 165x70 \
-    # xc:lightblue \
-    # -font Bookman-DemiItalic \
-    # -pointsize 12 \
-    # -fill blue \
-    # -gravity center \
-    # -draw "text 0,0 '$output'" \
-    # image.png
-	# convert hi.jpg -gravity west -pointsize 6 -annotate 0 "$output" temp1.jpg
-	# convert -size 720x480 xc:none -draw -pointsize 16 -annotate 0 "$output" temp1.png
-	convert -background "#300A24" -fill white -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"$output" yml-test.png
+
+	convert -background "#300A24" -fill white -font "Ubuntu-Mono" -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"$output" .generated/wixcli-output-preview.png
 
 # ERROR
 
