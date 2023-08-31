@@ -30,7 +30,6 @@ jobs:
     # Run the script
     - name: Run script file
       run: |
-        convert -list font
         chmod +x wix-cli.sh
         ./wix-cli.sh img_stdout
       shell: bash
