@@ -475,6 +475,8 @@ command_info() {
 	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
 	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
 	echo "- rgxmatch \"<regex?>\" \"<fname?>\"${ORANGE}: return the string matches of your regex in the given file${RESET}"
+	echo "- encrypt <dirname|fname?>	${ORANGE}: GPG encrypt a file/directory (saves as a new .gpg file)${RESET}"
+	echo "- decrypt <fname?>	${ORANGE}: GPG decrypt a file (must be a .gpg file)${RESET}"
 	echo ""
 	h1_text "NETWORK UTILITIES:"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
@@ -1066,6 +1068,63 @@ elif [ "$1" = "rgxmatch" ]; then
 			grep -c "$regex" "$fname"
 		else
 			error_text "File does not exist"
+		fi
+	fi
+
+# ENCRYPTION
+
+elif [ "$1" = "encrypt" ]; then
+	info_text "Encrypting $2..."
+	if arggt "1"; then
+		if [ -d "$2" ]; then
+			tar -cvf "$2.tar" "$2"
+			gpg -c "$2.tar"
+			rm "$2.tar"
+			info_text "$2.tar.gpg file created successfully!"
+		
+		elif [ -f "$2" ]; then
+			gpg -c "$2"
+			info_text "$2.gpg file created successfully!"
+		
+		else
+			error_text "File path provided does not exist. Please try again"
+		fi
+	else
+		info_text "Enter the file/directory you would like to encrypt:"
+		read -r filepath
+
+		if [ -d "$filepath" ]; then
+			tar -cvf "$filepath.tar" "$filepath"
+			gpg -c "$filepath.tar"
+			rm "$filepath.tar"
+			info_text "$filepath.tar.gpg file created successfully!"
+		
+		elif [ -f "$filepath" ]; then
+			gpg -c "$filepath"
+			info_text "$filepath.gpg file created successfully!"
+
+		else
+			error_text "File path provided does not exist. Please try again"
+		fi
+	fi
+
+elif [ "$1" = "decrypt" ]; then
+	info_text "Decrypting $2..."
+	if arggt "1"; then
+		if [ -f "$2" ]; then
+			gpg -d "$2"
+			info_text "$2 file decrypted successfully!"
+		else
+			error_text "File path provided does not exist. Please try again"
+		fi
+	else
+		info_text "Enter the file you would like to decrypt: (must have a .gpg extension)"
+		read -r filepath
+		if [ -f "$filepath" ]; then
+			gpg -d "$filepath"
+			info_text "$filepath file decrypted successfully!"
+		else
+			error_text "File path provided does not exist. Please try again"
 		fi
 	fi
 
