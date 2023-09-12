@@ -669,7 +669,7 @@ elif [ "$1" = "notifs" ]; then
 	giturl "https://github.com/notifications"
 
 elif [ "$1" = "commits" ]; then
-	git log --pretty=format:"${GREEN}%H${RESET} - ${BLUE}%an${RESET}, ${ORANGE}%ar${RESET} : %s"
+	git log --pretty=format:"${GREEN}%H${RESET} - ${BLUE}%an${RESET}, ${ORANGE}%cr [%cd]${RESET} : %s"
 
 elif [ "$1" = "lastcommit" ]; then
 	clipboard "$(git rev-parse HEAD)"
