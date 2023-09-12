@@ -476,7 +476,7 @@ command_info() {
 	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
 	echo "- rgxmatch \"<regex?>\" \"<fname?>\"${ORANGE}: return the string matches of your regex in the given file${RESET}"
 	echo "- encrypt <dirname|fname?>	${ORANGE}: GPG encrypt a file/directory (saves as a new .gpg file)${RESET}"
-	echo "- decrypt <dirname|fname?>	${ORANGE}: GPG decrypt a file/directory (must be a .gpg file)${RESET}"
+	echo "- decrypt <fname?>	${ORANGE}: GPG decrypt a file (must be a .gpg file)${RESET}"
 	echo ""
 	h1_text "NETWORK UTILITIES:"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
