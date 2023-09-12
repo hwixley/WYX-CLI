@@ -213,7 +213,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 3. `regex <regex?> <fname?>`: counts number of regex matches found in the given file
 4. `rgxmatch <regex?> <fname?>`: returns strings of regex matches found in the given file
 5. `encrypt <dirname|fname?>`: GPG encrypt a file/directory (saves a new .gpg file)
-6. `decrypt <fname?>`: GPG decrypt a file (must be a .gpg fileW)
+6. `decrypt <fname?>`: GPG decrypt a file (must be a .gpg file)
 
 ### Network Utilities
 
