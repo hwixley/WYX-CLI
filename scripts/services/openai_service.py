@@ -60,14 +60,14 @@ class OpenAIService:
         return f"{title}\n{description}"
 
     def conversate(self):
-        print(colored("\n" + self.SEPARATOR + "\nStarting a conversation with OpenAI. Type \"quit\" to exit, or \"save\" to save the conversation to a txt file.\n" + self.SEPARATOR, "blue"))
+        print(colored("\n" + self.SEPARATOR + "\nStarting a conversation with OpenAI. Type \"quit\", \"exit\", or \"q\" to exit, or \"save\" to save the conversation to a txt file.\n" + self.SEPARATOR, "blue"))
         latest_question = ""
         chat_history = [self.ASSISTANT_MESSAGE]
 
         while True:
             latest_question = input(colored("\nYou: ", "green"))
 
-            if latest_question == "quit":
+            if latest_question in ["quit", "exit", "q"]:
                 print(colored("\n\nQuitting conversation...\n","yellow"))
                 break
 
