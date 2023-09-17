@@ -404,6 +404,10 @@ giturl() {
 	fi
 }
 
+webtext() {
+	lynx -dump -cookies "$1"
+}
+
 command_info() {
 	echo "Welcome to the..."
 	echo ""
@@ -1163,11 +1167,11 @@ elif [ "$1" = "leap-year" ]; then
 
 elif [ "$1" = "webtext" ]; then
 	if arggt "1"; then
-		lynx --dump "$2"
+		webtext "$2"
 	else
 		info_text "Enter the webpage you would like to parse:"
 		read -r webpage
-		lynx --dump "$webpage"
+		webtext "$webpage"
 	fi
 
 # HELP UTILITIES
