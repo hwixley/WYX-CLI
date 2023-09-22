@@ -494,8 +494,9 @@ command_info() {
 	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo ""
 	h1_text "TEXT UTILITIES:"
-	echo "- genhex <hex-length?>		${ORANGE}: generate and copy pseudo-random hex string (of default length 32)${RESET}"
-	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy pseudo-random base64 string (of default length 32)${RESET}"
+	echo "- genpass <pass-length?>		${ORANGE}: generate and copy random password string (of default length 16)${RESET}"
+	echo "- genhex <hex-length?>		${ORANGE}: generate and copy random hex string (of default length 32)${RESET}"
+	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo "- lastcmd			${ORANGE}: copy the last command you ran to your clipboard${RESET}"
 	echo ""
@@ -556,6 +557,20 @@ elif [ "$1" = "delete" ]; then
 elif [ "$1" = "hide" ]; then
 	echo "not implemented yet"
 
+elif [ "$1" = "genpass" ]; then
+	pass_size=16
+	if arggt "1"; then
+		if ! [[ "$2" =~ ^[0-9]+$ ]]; then
+        	error_text "Error: the password-length argument must be an integer"
+			return 1
+		else
+			pass_size=$2
+		fi
+	fi
+	pass=$(python3 "${scriptdir}/random_string_gen.py" "$pass_size")
+	info_text "Your random password string is: ${RESET}$truncated_pass"
+	clipboard "$truncated_pass"
+
 elif [ "$1" = "genhex" ]; then
 	hex_size=32
 	if arggt "1"; then
@@ -568,7 +583,7 @@ elif [ "$1" = "genhex" ]; then
 	fi
 	pass=$(openssl rand -hex "$hex_size")
 	truncated_pass="${pass:0:$hex_size}"
-	info_text "Your pseudo-random hex string is: ${RESET}$truncated_pass"
+	info_text "Your random hex string is: ${RESET}$truncated_pass"
 	clipboard "$truncated_pass"
 
 elif [ "$1" = "genb64" ]; then
@@ -583,7 +598,7 @@ elif [ "$1" = "genb64" ]; then
 	fi
 	pass=$(openssl rand -base64 "$hex_size")
 	truncated_pass="${pass:0:$hex_size}"
-	info_text "Your pseudo-random base64 string is: ${RESET}$truncated_pass"
+	info_text "Your random base64 string is: ${RESET}$truncated_pass"
 	clipboard "$truncated_pass"
 
 # CLI MANAGEMENT
