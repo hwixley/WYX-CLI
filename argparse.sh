@@ -494,7 +494,7 @@ command_info() {
 	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo ""
 	h1_text "TEXT UTILITIES:"
-	echo "- genpass <pass-length?>		${ORANGE}: generate and copy random password string (of default length 16)${RESET}"
+	echo "- genpass <pass-length?>	${ORANGE}: generate and copy random password string (of default length 16)${RESET}"
 	echo "- genhex <hex-length?>		${ORANGE}: generate and copy random hex string (of default length 32)${RESET}"
 	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
