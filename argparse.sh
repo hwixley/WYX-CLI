@@ -568,8 +568,8 @@ elif [ "$1" = "genpass" ]; then
 		fi
 	fi
 	pass=$(python3 "${scriptdir}/random_string_gen.py" "$pass_size")
-	info_text "Your random password string is: ${RESET}$truncated_pass"
-	clipboard "$truncated_pass"
+	info_text "Your random password string is: ${RESET}$pass"
+	clipboard "$pass"
 
 elif [ "$1" = "genhex" ]; then
 	hex_size=32
