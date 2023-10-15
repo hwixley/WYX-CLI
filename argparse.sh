@@ -1285,6 +1285,59 @@ elif [ "$1" = "img_stdout" ]; then
 
 	convert -background "#300A24" -fill white -font "DejaVu-Sans-Mono" -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"$output" .generated/wixcli-output-preview.png
 
+# test
+
+elif [ "$1" = "test" ]; then
+	declare -a BLA_active_loading_animation
+	duration=0
+
+	BLA::play_loading_animation_loop() {
+		end_time=$(( SECONDS + duration ))
+		curr_time=$SECONDS
+		while [ $curr_time -lt $end_time ]; do
+			for frame in "${BLA_active_loading_animation[@]}" ; do
+				printf "\r%s" "${frame}"
+				# echo "$frame"
+				sleep "${BLA_loading_animation_frame_interval}"
+			done
+			curr_time=$(( curr_time + 1 ))
+
+		done
+	}
+
+	BLA::start_loading_animation() {
+		# echo $@
+		# echo "${@:2}"
+		duration=$1
+		BLA_active_loading_animation=( "${@:2}" )
+		# echo "$BLA_active_loading_animation"
+		# Extract the delay between each frame from array BLA_active_loading_animation
+		BLA_loading_animation_frame_interval="${BLA_active_loading_animation[0]}"
+		unset "BLA_active_loading_animation[0]"
+		tput civis # Hide the terminal cursor
+		BLA::play_loading_animation_loop
+		# &
+		# BLA_loading_animation_pid="${!}"
+	}
+
+	# sleep 2
+
+	# BLA::stop_loading_animation() {
+	# 	kill "${BLA_loading_animation_pid}" &> /dev/null
+	# 	printf "\n"
+	# 	tput cnorm # Restore the terminal cursor
+	# }
+
+	# trap BLA::stop_loading_animation SIGINT
+
+	# anim=( 0.25 '-' "\\" '|' '/' )
+	anim=( 0.2 "HHHHH\nIIIIII\nJJJJJJ" "a" "b" "c" )
+
+	# echo "${anim[@]}"
+	BLA::start_loading_animation 2 "${anim[@]}"
+	# sleep 2
+	# BLA::stop_loading_animation
+
 # ERROR
 
 else
