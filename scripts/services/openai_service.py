@@ -13,6 +13,7 @@ class OpenAIService:
     ENGINE="gpt-3.5-turbo"
     ASSISTANT_MESSAGE = { "role": "system", "content": "You are a helpful assistant."}
     SEPARATOR="-"*110
+    MAX_TOKENS=4097
 
     def __init__(self):
         self.API_KEY = os.environ.get(self.KEY_NAME)
@@ -33,7 +34,7 @@ class OpenAIService:
         return { "role": role, "content": message }
 
     def get_response(self, prompt, chat_history: list = []):
-        history = chat_history + [self.format_message("user", prompt)]
+        history = chat_history + [self.format_message("user", prompt[:self.MAX_TOKENS])]
         completion = openai.ChatCompletion.create(
             model=self.ENGINE,
             messages=history
@@ -42,16 +43,16 @@ class OpenAIService:
         return response
     
     def get_git_diff(self):
-        return f"`git diff` output: {os.popen('git diff').read()}. `git status` output: {os.popen('git status').read()}."
+        return f"`git diff` output: {os.popen('git diff').read()}, and `git status` output: {os.popen('git status').read()}."
     
     def get_commit_title(self):
-        title_prompt = f"Pretend you are in a team of developers working on a project. Write a 1 line commit message less than or equal to 50 characters technically describing the following bash git outputs. {self.get_git_diff()} Do not mention anything about the branch these changes were made on. Mention specifically which functions, classes or variables were modified/created/deleted and why."
+        title_prompt = f"You are in a team of developers working on a project. Write a 1 line commit message less than or equal to 50 characters technically describing the following bash git outputs. {self.get_git_diff()} Do not mention anything about the branch these changes were made on. Mention specifically which functions, classes or variables were modified/created/deleted and why."
         title_response = self.get_response(title_prompt)
         return f"GPT-commit: {title_response}"
     
     def get_commit_description(self):
         title = self.get_commit_title()
-        description_prompt = f"Pretend you are in a team of developers working on a project. Write a 2 line commit message technically describing the following bash git outputs. {self.get_git_diff()} Do not repeat the title \"{title}\", and do not mention anything about the branch these changes were made on. Mention specifically which functions, classes or variables were modified/created/deleted and why."
+        description_prompt = f"You are in a team of developers working on a project. Write a 2 line commit message technically describing the following bash git outputs. {self.get_git_diff()} Do not repeat the title \"{title}\", and do not mention anything about the branch these changes were made on. Mention specifically which functions, classes or variables were modified/created/deleted and why."
         description_response = self.get_response(description_prompt)
         return (title, description_response)
     
