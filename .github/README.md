@@ -4,8 +4,7 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-[![CODEQL](https://github.com/hwixley/wix-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wix-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml)
-![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-1.1.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
+[![CODEQL](https://github.com/hwixley/wix-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wix-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-1.1.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
 
 <hr>
 
