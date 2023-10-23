@@ -20,7 +20,7 @@ jobs:
     # Setup apt dependencies
     - name: Setup dependencies
       run: |
-        sudo apt install ghostscript fonts-freefont-otf imagemagick
+        sudo apt -y install ghostscript fonts-freefont-otf imagemagick
         sudo sed -i 's/\(<policy domain="resource" name="width" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
         sudo sed -i 's/\(<policy domain="resource" name="height" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
       shell: bash

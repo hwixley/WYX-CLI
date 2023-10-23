@@ -742,7 +742,7 @@ elif [ "$1" = "org" ]; then
 # URLs
 
 elif [ "$1" = "help" ]; then
-	openurl "https://hwixley.github.io/wix-cli"
+	openurl "https://hwixley.github.io/WIX-CLI/index.html"
 
 # MY DATA
 
