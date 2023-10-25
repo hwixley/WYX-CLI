@@ -61,7 +61,7 @@ class OpenAIService:
         return f"{title}\n{description}"
 
     def conversate(self):
-        print(colored("\n" + self.SEPARATOR + "\nStarting a conversation with OpenAI. Type \"quit\", \"exit\", or \"q\" to exit, or \"save\" to save the conversation to a txt file.\n" + self.SEPARATOR, "blue"))
+        print(colored("\n" + self.SEPARATOR + "\nStarting a conversation with ChatGPT. Type \"quit\", \"exit\", or \"q\" to exit, or \"save\" to save the conversation to a txt file.\n" + self.SEPARATOR, "blue"))
         latest_question = ""
         chat_history = [self.ASSISTANT_MESSAGE]
 
@@ -82,7 +82,7 @@ class OpenAIService:
                 chat_history.append(self.format_message("user", latest_question))
                 chat_history.append(self.format_message("assistant", question_response))
 
-                print(colored("\nOpenAI:", "blue") + f" {question_response}")
+                print(colored("\n🤖:", "blue") + f" {question_response}")
             
             print(colored("\n" + self.SEPARATOR, "blue"))
 
