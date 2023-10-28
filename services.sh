@@ -171,7 +171,7 @@ check_keystore() {
 			read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
 
 			# Create .env file and add the key-value pair
-			echo "$1=$value" > "${envfile}"
+			echo "$1=${value}" > "${envfile}"
 			info_text ".env file created successfully!"
 			info_text "Value for key \"$1\" appended successfully!"
 		fi
@@ -198,7 +198,7 @@ commit() {
 	if empty "$1" ; then
 		if [[ -f "${datadir}/.env" ]]; then
 			if grep -q "OPENAI_API_KEY=" "${datadir}/.env" && grep -q "USE_SMART_COMMIT=true" "${datadir}/.env" ; then
-				IFS=$'\n' lines=($(python3 "$scriptdir/services/openai_service.py" "smart"))
+				IFS=$'\n' lines=($(python3 "${scriptdir}/services/openai_service.py" "smart"))
 				h2_text "GPT-3 Suggestion"
 				if using_zsh; then
 					h2_text "Title:${RESET}	${lines[1]}"
@@ -289,8 +289,8 @@ wix_cd() {
 			if ! empty "$2" ; then
 				destination="${mydirs[$1]/~/${HOME}}/$2"
 			fi
-			info_text "Travelling to -> $destination"
-			eval cd "${destination}" || (error_text "The path $destination does not exist" && return 1)
+			info_text "Travelling to -> ${destination}"
+			eval cd "${destination}" || (error_text "The path ${destination} does not exist" && return 1)
 			return 0
 		else
 			error_text
@@ -316,8 +316,8 @@ wix_new() {
 			info_text "Provide a name for this directory:"
 			read -r dname
 			info_text "Generating new dir (${mydirs[$1]}/$dname)..."
-			mkdir "${mydirs[$1]:?}/$dname"
-			cd "${mydirs[$1]:?}/$dname" || exit
+			mkdir "${mydirs[$1]:?}/${dname}"
+			cd "${mydirs[$1]:?}/${dname}" || exit
 		else
 			info_text "Generating new dir (${mydirs[$1]}/$2)..."
 			mkdir "${mydirs[$1]:?}/$2"
@@ -333,7 +333,7 @@ wix_new() {
 wix_run() {
 	if scriptexists "$1"; then
 		info_text "Running $1 script!"
-		source "$datadir/run-configs/${myscripts[$1]}.sh"
+		source "${datadir}/run-configs/${myscripts[$1]}.sh"
 	else
 		error_text "This is only supported for gs currently"
 	fi
@@ -420,7 +420,7 @@ command_info() {
 	info_text "    ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b    ${CYAN}8${BLUE}88  e ${CYAN}Y${BLUE}8b${GREEN}     Y888  ,d 888  ,d 888 "
 	info_text "     ${CYAN}Y${BLUE}8P ${CYAN}Y${BLUE}     ${CYAN}8${BLUE}88 d8b ${CYAN}Y${BLUE}8b${GREEN}     \"88,d88 888,d88 888 "
 	echo ""
-	echo "v$version"
+	echo "v${version}"
 	echo ""
 	h1_text	"MAINTENANCE:"
 	echo "- sys-info			${ORANGE}: view shell info${RESET}"

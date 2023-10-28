@@ -70,9 +70,9 @@ openurl() {
 
 envfile() {
 	if using_zsh; then
-		echo "$HOME/.zshrc"
+		echo "${HOME}/.zshrc"
 	else
-		echo "$HOME/.bashrc"
+		echo "${HOME}/.bashrc"
 	fi
 	return 0
 }

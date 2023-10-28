@@ -4,13 +4,16 @@
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 mydir=$(dirname "${mypath}")
 
-source $mydir/functions.sh
+# shellcheck source=functions.sh
+source "${mydir}/functions.sh"
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
-	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+	git_branch=$(git branch)
+	branch=$(echo "${git_branch}" | sed -n -e 's/^\* \(.*\)/\1/p')
 fi
-remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+git_remote=$(git config --get remote.origin.url)
+remote=$(echo "${git_remote}" | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 repo_url=${remote#"git@github.com:"}
 repo_url=${repo_url%".git"}
 
@@ -65,5 +68,7 @@ wix_update ""
 
 # ARGPARSE
 
-source "$mydir/completion.sh"
-source "$mydir/argparse.sh" "${@:1}"
+# shellcheck source=completion.sh
+source "${mydir}/completion.sh"
+# shellcheck source=argparse.sh
+source "${mydir}/argparse.sh" "${@:1}"
