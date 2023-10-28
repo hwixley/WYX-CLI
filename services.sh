@@ -290,7 +290,7 @@ wix_cd() {
 				destination="${mydirs[$1]/~/${HOME}}/$2"
 			fi
 			info_text "Travelling to -> $destination"
-			eval cd "$destination" || (error_text "The path $destination does not exist" && return 1)
+			eval cd "${destination}" || (error_text "The path $destination does not exist" && return 1)
 			return 0
 		else
 			error_text
@@ -299,7 +299,7 @@ wix_cd() {
 	else
 		info_text "Where do you want to go?"
 		read -r dir
-		if direxists "$dir" ; then
+		if direxists "${dir}" ; then
 			info_text "Travelling to -> ${mydirs[$dir]}"
 			cd "${mydirs[$dir]:?}" || exit
 			return 0
@@ -346,11 +346,11 @@ wix_delete() {
 		else
 			error_text "Are you sure you want to delete ${mydirs[$1]}/$2? [[ Yy / Nn]"
 			read -r response
-			if [[ "$response" = "y" ]] || [[ "$response" = "Y" ]];
+			if [[ "${response}" = "y" ]] || [[ "${response}" = "Y" ]];
 			then
 				error_text "Are you really sure you want to delete ${mydirs[$1]}/$2? [[ Yy / Nn]"
 				read -r response
-				if [[ "$response" = "y" ]] || [[ "$response" = "Y" ]];
+				if [[ "${response}" = "y" ]] || [[ "${response}" = "Y" ]];
 				then
 					error_text "Deleting ${mydirs[$1]}/$2"
 					rm -rf "${mydirs[$1]:?}/$2"
@@ -369,10 +369,10 @@ wix_ginit() {
 		cd "$1" || return 1
 	fi
 
-	if empty "$branch" ; then
+	if empty "${branch}" ; then
 		info_text "Would you like you to host this repository under a GitHub organization? [[ Yy / Nn ]"
 		read -r response
-		if [[ "$response" = "y" ]] || [[ "$response" = "Y" ]
+		if [[ "${response}" = "y" ]] || [[ "${response}" = "Y" ]];
 		then
 			echo ""
 			h1_text "Your saved GitHub organization aliases:"
@@ -382,7 +382,7 @@ wix_ginit() {
 			echo ""
 			info_text "Please enter the organization name alias you would like to use:"
 			read -r orgalias
-			if orgexists "$orgalias" ; then
+			if orgexists "${orgalias}" ; then
 				ginit "${myorgs[$orgalias]}" "$2" "organizations/${myorgs[$orgalias]}/repositories/new"
 			else
 				ginit "${user[username]}" "$2" "new"

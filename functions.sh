@@ -34,7 +34,7 @@ warn_text() {
 
 error_text() {
 	if [[ "$1" = "" ]]; then
-		echo "$notsupported"
+		echo "${notsupported}"
 	else
 		echo "${RED}$1${RESET}"
 	fi
@@ -94,7 +94,7 @@ openfile() {
 }
 
 mac() {
-	if [[ "$OSTYPE" == "darwin"* ]]; then
+	if [[ "${OSTYPE}" == "darwin"* ]]; then
 		return 0
 	else
 		return 1

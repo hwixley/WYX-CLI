@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mydir=$(dirname "$mypath")
+mydir=$(dirname "${mypath}")
 source "$mydir/functions.sh"
 
 # COLORS #
@@ -27,8 +27,8 @@ warn_text() {
 
 setup_alias() {
 	envfile=$(envfile)
-	{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "$envfile"
-	source "$envfile"
+	{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "${envfile}"
+	source "${envfile}"
 }
 
 setup_completion() {
@@ -69,7 +69,7 @@ for i in "${files[@]}"; do
 	else
 		warn_text "File $i already exists. Would you like to overwrite it? [[ y / n ]"
 		read -r overwrite_file
-		if [[ "$overwrite_file" = "y" ]]; then
+		if [[ "${overwrite_file}" = "y" ]]; then
 			rm "$md_dir/$i"
 			touch "$md_dir/$i"
 			chmod +rwx "$md_dir/$i"
@@ -95,7 +95,7 @@ echo "name=$fullname" >> $md_dir/git-user.txt
 echo ""
 h1_text "Please enter the default github organization you want to setup with this cli: (enter it's github username) ***leave empty if none***"
 read -r gitorg
-if [[ "$gitorg" != "" ]]; then
+if [[ "${gitorg}" != "" ]]; then
 	echo "default=$gitorg" >> $md_dir/git-orgs.txt
 fi
 
@@ -105,7 +105,7 @@ echo "1) docs = ~/Documents"
 echo "2) down = ~/Downloads"
 h1_text "Would you like to include these? [[ y / n ]"
 read -r keep_default_diraliases
-if [[ "$keep_default_diraliases" = "y" ]]; then
+if [[ "${keep_default_diraliases}" = "y" ]]; then
 	{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> $md_dir/dir-aliases.txt
 fi
 
@@ -118,7 +118,7 @@ envfile=$(envfile)
 if [[ "$(alias wix)" != "" ]]; then
 	warn_text "It looks like you already have a wix alias setup. Would you like to overwrite it? [[ y / n ]"
 	read -r overwrite_alias
-    if [[ "$overwrite_alias" = "y" ]]; then
+    if [[ "${overwrite_alias}" = "y" ]]; then
 		echo "${ORANGE}Please edit the $envfile file manually to remove your old alias${RESET}"
         setup_alias
     fi
@@ -128,12 +128,12 @@ fi
 
 # ADD COMPLETION TO COMPLETION FILE
 completionfile="$HOME/.bash_completion"
-if [[ -f "$completionfile" ]]; then
-	completion_search=$(cat "$completionfile" | grep -c "$(pwd)/completion.sh")
-	if [[ "$completion_search" != "" ]]; then
+if [[ -f "${completionfile}" ]]; then
+	completion_search=$(cat "${completionfile}" | grep -c "$(pwd)/completion.sh")
+	if [[ "${completion_search}" != "" ]]; then
 		warn_text "It looks like you already have wix completion setup. Would you like to overwrite it? [[ y / n ]"
 		read -r overwrite_completion
-		if [[ "$overwrite_completion" = "y" ]]; then
+		if [[ "${overwrite_completion}" = "y" ]]; then
 			echo "${ORANGE}Please edit the $HOME/.bashrc file manually to remove your old completion${RESET}"
 			setup_completion
 		fi
@@ -144,7 +144,7 @@ else
 	warn_text "It looks like you don't have a $HOME/.bash_completion file (allowing you to use the wix command with tab-completion)."
 	warn_text "Would you like to create one? [[ y / n ]"
 	read -r create_completion
-	if [[ "$create_completion" = "y" ]]; then
+	if [[ "${create_completion}" = "y" ]]; then
 		touch "$HOME/.bash_completion"
 		setup_completion
 	else

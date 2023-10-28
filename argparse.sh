@@ -67,9 +67,9 @@ elif [[ "$1" = "genpass" ]]; then
 			pass_size=$2
 		fi
 	fi
-	pass=$(python3 "${scriptdir}/random_string_gen.py" "$pass_size")
+	pass=$(python3 "${scriptdir}/random_string_gen.py" "${pass_size}")
 	info_text "Your random password string is: ${RESET}$pass"
-	clipboard "$pass"
+	clipboard "${pass}"
 
 elif [[ "$1" = "genhex" ]]; then
 	hex_size=32
@@ -81,10 +81,10 @@ elif [[ "$1" = "genhex" ]]; then
 			hex_size=$2
 		fi
 	fi
-	pass=$(openssl rand -hex "$hex_size")
-	truncated_pass="${pass:0:$hex_size}"
-	info_text "Your random hex string is: ${RESET}$truncated_pass"
-	clipboard "$truncated_pass"
+	pass=$(openssl rand -hex "${hex_size}")
+	truncated_pass="${pass}:0:${hex_size}"
+	info_text "Your random hex string is: ${RESET}${truncated_pass}"
+	clipboard "${truncated_pass}"
 
 elif [[ "$1" = "genb64" ]]; then
 	hex_size=32
@@ -96,16 +96,16 @@ elif [[ "$1" = "genb64" ]]; then
 			hex_size=$2
 		fi
 	fi
-	pass=$(openssl rand -base64 "$hex_size")
+	pass=$(openssl rand -base64 "${hex_size}")
 	truncated_pass="${pass:0:$hex_size}"
 	info_text "Your random base64 string is: ${RESET}$truncated_pass"
-	clipboard "$truncated_pass"
+	clipboard "${truncated_pass}"
 
 # CLI MANAGEMENT
 
 elif [[ "$1" = "edit" ]]; then
 	warn_text "Edit wix-cli script..."
-	editfile "$mypath"
+	editfile "${mypath}"
 	info_text "Saving changes to $mypath..."
 	source $(envfile)
 	
@@ -114,7 +114,7 @@ elif [[ "$1" = "save" ]]; then
 	source $(envfile)
 	
 elif [[ "$1" = "cat" ]]; then
-	cat "$mypath"
+	cat "${mypath}"
 
 elif [[ "$1" = "-v" ]] || [[ "$1" = "--version" ]] || [[ "$1" = "version" ]]; then
 	echo "v$version"
@@ -125,11 +125,11 @@ elif [[ "$1" = "-v" ]] || [[ "$1" = "--version" ]] || [[ "$1" = "version" ]]; th
 # 	info_text "Enter the directory:"
 # 	read -r i_dir
 # 	info_text "Adding $alias=$i_dir to custom dirs"
-# 	sed -i "${insertline}imydirs["$alias"]=$i_dir" $mypath
+# 	sed -i "${insertline}imydirs["${alias}"]=$i_dir" $mypath
 # 	wix save
 	
 # elif [[ "$1" = "mydirs" ]]; then
-# 	for x in $dirkeys; do printf "[%s]=%s\n" "$x" "${mydirs[$x]}" ; done
+# 	for x in $dirkeys; do printf "[%s]=%s\n" "${x}" "${mydirs[$x]}" ; done
 	
 
 # GITHUB AUTOMATION
@@ -144,14 +144,14 @@ elif [[ "$1" = "push" ]]; then
 	if arggt "1" ; then
 		push "$2"
 	else
-		push "$branch"
+		push "${branch}"
 	fi
 
 elif [[ "$1" = "pull" ]]; then
 	if arggt "1" ; then
 		pull "$2"
 	else
-		pull "$branch"
+		pull "${branch}"
 	fi
 
 elif [[ "$1" = "mpull" ]]; then
@@ -200,8 +200,8 @@ elif [[ "$1" = "nb" ]]; then
 	else
 		info_text "Provide a branch name:"
 		read -r name
-		if [[ "$name" != "" ]]; then
-			npush "$name"
+		if [[ "${name}" != "" ]]; then
+			npush "${name}"
 		else
 			error_text "Invalid branch name"
 		fi
@@ -218,8 +218,8 @@ elif [[ "$1" = "bpr" ]]; then
 		else
 			info_text "Provide a branch name:"
 			read -r name
-			if [[ "$name" != "" ]]; then
-				bpr "$name"
+			if [[ "${name}" != "" ]]; then
+				bpr "${name}"
 			fi
 		fi
 	fi
@@ -270,20 +270,20 @@ elif [[ "$1" = "editd" ]]; then
 
 		declare -a datanames
 		datanames=( "user" "myorgs" "mydirs" "myscripts" )
-		if ! printf '%s\0' "${datanames[@]}" | grep -Fxqz -- "$data_to_edit_prompt"; then
+		if ! printf '%s\0' "${datanames[@]}" | grep -Fxqz -- "${data_to_edit_prompt}"; then
 			error_text "'$data_to_edit_prompt' is not a valid piece of data, please try one of the following: ${datanames[*]}"
 			return 1
 		fi
 	fi
-	if [[ "$data_to_edit" = "user" ]]; then
+	if [[ "${data_to_edit}" = "user" ]]; then
 		editfile "$datadir/git-user.txt"
-	elif [[ "$data_to_edit" = "myorgs" ]]; then
+	elif [[ "${data_to_edit}" = "myorgs" ]]; then
 		editfile "$datadir/git-orgs.txt"
-	elif [[ "$data_to_edit" = "mydirs" ]]; then
+	elif [[ "${data_to_edit}" = "mydirs" ]]; then
 		editfile "$datadir/dir-aliases.txt"
-	elif [[ "$data_to_edit" = "myscripts" ]]; then
+	elif [[ "${data_to_edit}" = "myscripts" ]]; then
 		editfile "$datadir/run-configs.txt"
-	elif [[ "$data_to_edit" = "todo" ]]; then
+	elif [[ "${data_to_edit}" = "todo" ]]; then
 		editfile "$datadir/todo.txt"
 	fi
 
@@ -295,9 +295,9 @@ elif [[ "$1" = "create-script" ]]; then
 		script_name=$script_name_prompt
 	fi
 	fname="$datadir/run-configs/$script_name.sh"
-	touch "$fname"
-	chmod u+x "$fname"
-	editfile "$fname"
+	touch "${fname}"
+	chmod u+x "${fname}"
+	editfile "${fname}"
 
 elif [[ "$1" = "edits" ]]; then
 	script_to_edit="$2"
@@ -306,7 +306,7 @@ elif [[ "$1" = "edits" ]]; then
 		read -r script_to_edit_prompt
 		script_to_edit=$script_to_edit_prompt
 	fi
-	if scriptexists "$script_to_edit"; then
+	if scriptexists "${script_to_edit}"; then
 		info_text "Editing $script_to_edit script..."
 		editfile "$datadir/run-configs/$script_to_edit.sh"
 	else
@@ -318,7 +318,7 @@ elif [[ "$1" = "newscript" ]]; then
 	if ! arggt "1"; then
 		info_text "What would you like to call your script? (no spaces)"
 		read -r name_prompt
-		name="$name_prompt"
+		name="${name_prompt}"
 	fi
 	if [[ -f "$datadir/$name.sh" ]]; then
 		error_text "Error: this script name already exists"
@@ -355,7 +355,7 @@ elif [[ "$1" = "find" ]]; then
 	else
 		info_text "Enter the filename you would like to find:"
 		read -r fname
-		find . -type f -name "$fname"
+		find . -type f -name "${fname}"
 	fi
 
 # CLIPBOARD
@@ -364,22 +364,22 @@ elif [[ "$1" = "copy" ]]; then
 	if arggt "1"; then
 		if [[ "$2" =~ ^\$\(.*\)$ ]]; then
 			DATA="$2"
-			clipboard "$DATA"
+			clipboard "${DATA}"
 		else
 			clipboard "$2"
 		fi
 	else
 		info_text "Enter the text you would like to copy to your clipboard:"
 		read -r text
-		clipboard "$text"
+		clipboard "${text}"
 	fi
 
 # LAST COMMAND
 
 elif [[ "$1" = "lastcmd" ]]; then
 	lastcmd=$(fc -ln -1)
-	trimmed=$(echo "$lastcmd" | xargs)
-	clipboard "$trimmed"
+	trimmed=$(echo "${lastcmd}" | xargs)
+	clipboard "${trimmed}"
 
 # IP ADDRESS
 
@@ -394,15 +394,15 @@ elif [[ "$1" = "ip" ]]; then
 	echo ""
 	info_text "Public IP:"
 	public_ip=$(curl ifconfig.co/json)
-	ip=$(echo "$public_ip" | jq -r '.ip')
-	city=$(echo "$public_ip" | jq -r '.city')
-	region=$(echo "$public_ip" | jq -r '.region_name')
-	zip=$(echo "$public_ip" | jq -r '.zip_code')
-	country=$(echo "$public_ip" | jq -r '.country')
-	lat=$(echo "$public_ip" | jq -r '.latitude')
-	long=$(echo "$public_ip" | jq -r '.longitude')
-	time_zone=$(echo "$public_ip" | jq -r '.time_zone')
-	asn_org=$(echo "$public_ip" | jq -r '.asn_org')
+	ip=$(echo "${public_ip}" | jq -r '.ip')
+	city=$(echo "${public_ip}" | jq -r '.city')
+	region=$(echo "${public_ip}" | jq -r '.region_name')
+	zip=$(echo "${public_ip}" | jq -r '.zip_code')
+	country=$(echo "${public_ip}" | jq -r '.country')
+	lat=$(echo "${public_ip}" | jq -r '.latitude')
+	long=$(echo "${public_ip}" | jq -r '.longitude')
+	time_zone=$(echo "${public_ip}" | jq -r '.time_zone')
+	asn_org=$(echo "${public_ip}" | jq -r '.asn_org')
 	echo ""
 	echo "IP: $ip"
 	echo ""
@@ -439,7 +439,7 @@ elif [[ "$1" = "wpass" ]]; then
 		info_text "Enter the SSID of the network you would like to get the password for:"
 		read -r ssid
 		info_text "Getting password for $ssid..."
-		security find-generic-password -ga "$ssid" | grep "password:"
+		security find-generic-password -ga "${ssid}" | grep "password:"
 		echo ""
 	else
 		info_text "Listing saved Wifi passwords:"
@@ -458,16 +458,16 @@ elif [[ "$1" = "genqr" ]]; then
 	if ! arggt "1"; then
 		info_text "Enter the URL you would like to link to:"
 		read -r url
-		link="$url"
+		link="${url}"
 
 		if ! arggt "2"; then
 			info_text "Enter the name for your QR code:"
 			read -r qrname
-			fname="$qrname"
+			fname="${qrname}"
 		fi
 	fi
 	info_text "Generating a QR code..."
-	qrencode -o "$fname.png" "$link"
+	qrencode -o "$fname.png" "${link}"
 	display "$fname.png"
 
 # UPSCALE PHOTO
@@ -478,26 +478,26 @@ elif [[ "$1" = "upscale" ]]; then
 	if ! arggt "1"; then
 		info_text "Enter the file you would like to upscale:"
 		read -r url
-		fname="$url"
+		fname="${url}"
 
 		if ! arggt "2"; then
 			info_text "Enter the scale multiplier:"
 			read -r mult
-			alpha="$mult"
+			alpha="${mult}"
 		fi
 	fi
 	info_text "Upscaling $fname..."
-	python3 "$scriptdir/photo-upscale.py" "$fname" "$alpha"
+	python3 "$scriptdir/photo-upscale.py" "${fname}" "${alpha}"
 
 # OPEN FILE
 
 elif [[ "$1" = "fopen" ]]; then
 	if arggt "1"; then
 		dir="$2"
-		if direxists "$dir"; then
+		if direxists "${dir}"; then
 			mydir="${mydirs[$dir]/\~/${HOME}}"
 			info_text "Opening $mydir..."
-			openfile "$mydir"
+			openfile "${mydir}"
 		else
 			error_text "Directory alias does not exist"
 		fi
@@ -513,20 +513,20 @@ elif [[ "$1" = "regex" ]]; then
 		regex="$2"
 		if arggt "2"; then
 			fname="$3"
-			if [[ -f "$fname" ]]; then
+			if [[ -f "${fname}" ]]; then
 				info_text "Searching for $regex in $fname..."
 				info_text "Number of matches:"
-				grep -c "$regex" "$fname"
+				grep -c "${regex}" "${fname}"
 			else
 				error_text "File does not exist"
 			fi
 		else
 			info_text "Enter the filename you would like to search:"
 			read -r fname
-			if [[ -f "$fname" ]]; then
+			if [[ -f "${fname}" ]]; then
 				info_text "Searching for $regex in $fname..."
 				info_text "Number of matches:"
-				grep -c "$regex" "$fname"
+				grep -c "${regex}" "${fname}"
 			else
 				error_text "File does not exist"
 			fi
@@ -536,9 +536,9 @@ elif [[ "$1" = "regex" ]]; then
 		read -r regex
 		info_text "Enter the filename you would like to search:"
 		read -r fname
-		if [[ -f "$fname" ]]; then
+		if [[ -f "${fname}" ]]; then
 			info_text "Searching for $regex in $fname..."
-			grep -E "$regex" "$fname"
+			grep -E "${regex}" "${fname}"
 		else
 			error_text "File does not exist"
 		fi
@@ -549,30 +549,30 @@ elif [[ "$1" = "rgxmatch" ]]; then
 		regex="$2"
 		if arggt "2"; then
 			fname="$3"
-			if [[ -f "$fname" ]]; then
+			if [[ -f "${fname}" ]]; then
 				info_text "Searching for $regex in $fname..."
 				echo ""
 				info_text "Matches: "
-				data=$(cat "$fname")
-				[[ "$data" =~ $regex ]]
+				data=$(cat "${fname}")
+				[[ "${data}" =~ $regex ]]
 				token=$(echo "${BASH_REMATCH[1]}")
-				echo "$token"
-				clipboard "$token"
+				echo "${token}"
+				clipboard "${token}"
 			else
 				error_text "File does not exist"
 			fi
 		else
 			info_text "Enter the filename you would like to search:"
 			read -r fname
-			if [[ -f "$fname" ]]; then
+			if [[ -f "${fname}" ]]; then
 				info_text "Searching for $regex in $fname..."
 				echo ""
 				info_text "Matches: "
-				data=$(cat "$fname")
-				[[ "$data" =~ $regex ]]
+				data=$(cat "${fname}")
+				[[ "${data}" =~ $regex ]]
 				token=$(echo "${BASH_REMATCH[1]}")
-				echo "$token"
-				clipboard "$token"
+				echo "${token}"
+				clipboard "${token}"
 			else
 				error_text "File does not exist"
 			fi
@@ -582,9 +582,9 @@ elif [[ "$1" = "rgxmatch" ]]; then
 		read -r regex
 		info_text "Enter the filename you would like to search:"
 		read -r fname
-		if [[ -f "$fname" ]]; then
+		if [[ -f "${fname}" ]]; then
 			info_text "Searching for $regex in $fname..."
-			grep -c "$regex" "$fname"
+			grep -c "${regex}" "${fname}"
 		else
 			error_text "File does not exist"
 		fi
@@ -612,14 +612,14 @@ elif [[ "$1" = "encrypt" ]]; then
 		info_text "Enter the file/directory you would like to encrypt:"
 		read -r filepath
 
-		if [[ -d "$filepath" ]]; then
-			tar -cvf "$filepath.tar" "$filepath"
+		if [[ -d "${filepath}" ]]; then
+			tar -cvf "$filepath.tar" "${filepath}"
 			gpg -c "$filepath.tar"
 			rm "$filepath.tar"
 			info_text "$filepath.tar.gpg file created successfully!"
 		
-		elif [[ -f "$filepath" ]]; then
-			gpg -c "$filepath"
+		elif [[ -f "${filepath}" ]]; then
+			gpg -c "${filepath}"
 			info_text "$filepath.gpg file created successfully!"
 
 		else
@@ -639,8 +639,8 @@ elif [[ "$1" = "decrypt" ]]; then
 	else
 		info_text "Enter the file you would like to decrypt: (must have a .gpg extension)"
 		read -r filepath
-		if [[ -f "$filepath" ]]; then
-			gpg -d "$filepath"
+		if [[ -f "${filepath}" ]]; then
+			gpg -d "${filepath}"
 			info_text "$filepath file decrypted successfully!"
 		else
 			error_text "File path provided does not exist. Please try again"
@@ -653,7 +653,7 @@ elif [[ "$1" = "weather" ]]; then
 	if arggt "1"; then
 		city="$2"
 		info_text "Getting weather for $city..."
-		curl wttr.in/"$city"
+		curl wttr.in/"${city}"
 	else
 		info_text "Getting weather for your current location..."
 		curl wttr.in
@@ -664,7 +664,7 @@ elif [[ "$1" = "moon" ]]; then
 	curl wttr.in/moon
 
 elif [[ "$1" = "leap-year" ]]; then
-	if [[ "$year" =~ ^[0-9]*00$ ]]; then
+	if [[ "${year}" =~ ^[0-9]*00$ ]]; then
 		if [[ "$((year % 400))" -eq 0 ]]; then
 			info_text "$year is a leap year"
 		else
@@ -686,7 +686,7 @@ elif [[ "$1" = "webtext" ]]; then
 	else
 		info_text "Enter the webpage you would like to parse:"
 		read -r webpage
-		webtext "$webpage"
+		webtext "${webpage}"
 	fi
 
 # HELP UTILITIES
@@ -721,7 +721,7 @@ elif [[ "$1" = "google" ]]; then
 # UPDATE
 
 elif [[ "$1" = "update" ]]; then
-	cd "$mydir" || error_text "Failed to execute 'cd $mydir'..." && exit
+	cd "${mydir}" || error_text "Failed to execute 'cd $mydir'..." && exit
 	git pull origin master
 	cd - || error_text "Failed to execute 'cd -'..." && exit
 
@@ -754,7 +754,7 @@ elif [[ "$1" = "keystore" ]]; then
 		fi
 	else
 		read -rp "${GREEN}Enter the key you would like to add to your keystore:${RESET} " key
-		check_keystore "$key"
+		check_keystore "${key}"
 	fi
 	info_text "You're done!"
 
@@ -783,7 +783,7 @@ elif [[ "$1" = "img_stdout" ]]; then
 	output=$(command_info | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
 	output="\$ wix\n\n$output\n"
 
-	convert -background "#300A24" -fill white -font "DejaVu-Sans-Mono" -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"$output" .generated/wixcli-output-preview.png
+	convert -background "#300A24" -fill white -font "DejaVu-Sans-Mono" -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"${output}" .generated/wixcli-output-preview.png
 
 # ERROR
 
