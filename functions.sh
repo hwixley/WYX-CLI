@@ -6,7 +6,7 @@ ORANGE=$(tput setaf 3)
 RED=$(tput setaf 1)
 BLUE=$(tput setaf 4)
 CYAN=$(tput setaf 6)
-BLACK=$(tput setaf 0)
+# BLACK=$(tput setaf 0)
 RESET=$(tput setaf 7)
 
 # FILE EXTs
@@ -33,7 +33,7 @@ warn_text() {
 }
 
 error_text() {
-	if [ "$1" = "" ]; then
+	if [[ "$1" = "" ]]; then
 		echo "$notsupported"
 	else
 		echo "${RED}$1${RESET}"
@@ -42,7 +42,7 @@ error_text() {
 
 # VALIDATION
 empty() {
-	if [ "$1" = "" ]; then
+	if [[ "$1" = "" ]]; then
 		return 0
 	else
 		return 1

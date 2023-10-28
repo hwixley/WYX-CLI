@@ -18,7 +18,7 @@ repo_url=${repo_url%".git"}
 # AUTO UPDATE CLI
 
 pull() {
-	if [ "$1" != "$branch" ]; then
+	if [[ "$1" != "$branch" ]]; then
 		git checkout "$1"
 	fi
 	git pull origin "$1"
@@ -33,7 +33,7 @@ wix_update() {
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		repo_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
-	if [ "$repo_branch" != "master" ]; then
+	if [[ "$repo_branch" != "master" ]]; then
 		warn_text "Not on master branch, skipping update"
 		cd "$current_dir" || return 1
 		return 1
@@ -45,12 +45,12 @@ wix_update() {
 	REMOTE=$(git rev-parse "$UPSTREAM")
 	BASE=$(git merge-base @ "$UPSTREAM")
 
-	if [ "$LOCAL" = "$REMOTE" ]; then
+	if [[ "$LOCAL" = "$REMOTE" ]]; then
 		info_text "Up-to-date"
-	elif [ "$LOCAL" = "$BASE" ]; then
+	elif [[ "$LOCAL" = "$BASE" ]]; then
 		info_text "Updating..."
 		pull "$branch"
-	elif [ "$REMOTE" = "$BASE" ]; then
+	elif [[ "$REMOTE" = "$BASE" ]]; then
 		echo "Need to push"
 	else
 		echo "Diverged"

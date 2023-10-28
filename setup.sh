@@ -63,20 +63,20 @@ md_dir=.wix-cli-data
 mkdir $md_dir
 declare -a files=("git-user.txt" "git-orgs.txt" "dir-aliases.txt" "run-configs.txt" "todo.txt" ".env")
 for i in "${files[@]}"; do
-	if ! [ -f "$md_dir/$i" ]; then
+	if ! [[ -f "$md_dir/$i" ]]; then
 		touch "$md_dir/$i"
 		chmod +rwx "$md_dir/$i"
 	else
-		warn_text "File $i already exists. Would you like to overwrite it? [ y / n ]"
+		warn_text "File $i already exists. Would you like to overwrite it? [[ y / n ]"
 		read -r overwrite_file
-		if [ "$overwrite_file" = "y" ]; then
+		if [[ "$overwrite_file" = "y" ]]; then
 			rm "$md_dir/$i"
 			touch "$md_dir/$i"
 			chmod +rwx "$md_dir/$i"
 		fi
 	fi
 done
-if ! [ -d "$md_dir/run-configs" ]; then
+if ! [[ -d "$md_dir/run-configs" ]]; then
 	mkdir "$md_dir/run-configs"
 fi
 
@@ -95,7 +95,7 @@ echo "name=$fullname" >> $md_dir/git-user.txt
 echo ""
 h1_text "Please enter the default github organization you want to setup with this cli: (enter it's github username) ***leave empty if none***"
 read -r gitorg
-if [ "$gitorg" != "" ]; then
+if [[ "$gitorg" != "" ]]; then
 	echo "default=$gitorg" >> $md_dir/git-orgs.txt
 fi
 
@@ -103,9 +103,9 @@ echo ""
 echo "The default directory aliases setup are as follows:"
 echo "1) docs = ~/Documents"
 echo "2) down = ~/Downloads"
-h1_text "Would you like to include these? [ y / n ]"
+h1_text "Would you like to include these? [[ y / n ]"
 read -r keep_default_diraliases
-if [ "$keep_default_diraliases" = "y" ]; then
+if [[ "$keep_default_diraliases" = "y" ]]; then
 	{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> $md_dir/dir-aliases.txt
 fi
 
@@ -115,10 +115,10 @@ info_text "Okay we should be good to go!"
 
 # ADD ALIAS TO ENV FILE
 envfile=$(envfile)
-if [ "$(alias wix)" != "" ]; then
-	warn_text "It looks like you already have a wix alias setup. Would you like to overwrite it? [ y / n ]"
+if [[ "$(alias wix)" != "" ]]; then
+	warn_text "It looks like you already have a wix alias setup. Would you like to overwrite it? [[ y / n ]"
 	read -r overwrite_alias
-    if [ "$overwrite_alias" = "y" ]; then
+    if [[ "$overwrite_alias" = "y" ]]; then
 		echo "${ORANGE}Please edit the $envfile file manually to remove your old alias${RESET}"
         setup_alias
     fi
@@ -128,12 +128,12 @@ fi
 
 # ADD COMPLETION TO COMPLETION FILE
 completionfile="$HOME/.bash_completion"
-if [ -f "$completionfile" ]; then
+if [[ -f "$completionfile" ]]; then
 	completion_search=$(cat "$completionfile" | grep -c "$(pwd)/completion.sh")
-	if [ "$completion_search" != "" ]; then
-		warn_text "It looks like you already have wix completion setup. Would you like to overwrite it? [ y / n ]"
+	if [[ "$completion_search" != "" ]]; then
+		warn_text "It looks like you already have wix completion setup. Would you like to overwrite it? [[ y / n ]"
 		read -r overwrite_completion
-		if [ "$overwrite_completion" = "y" ]; then
+		if [[ "$overwrite_completion" = "y" ]]; then
 			echo "${ORANGE}Please edit the $HOME/.bashrc file manually to remove your old completion${RESET}"
 			setup_completion
 		fi
@@ -142,9 +142,9 @@ if [ -f "$completionfile" ]; then
 	fi
 else
 	warn_text "It looks like you don't have a $HOME/.bash_completion file (allowing you to use the wix command with tab-completion)."
-	warn_text "Would you like to create one? [ y / n ]"
+	warn_text "Would you like to create one? [[ y / n ]"
 	read -r create_completion
-	if [ "$create_completion" = "y" ]; then
+	if [[ "$create_completion" = "y" ]]; then
 		touch "$HOME/.bash_completion"
 		setup_completion
 	else
