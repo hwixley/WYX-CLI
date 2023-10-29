@@ -14,7 +14,7 @@ scriptdir="${mydir}/py-scripts"
 # shellcheck source-path=SCRIPTDIR
 # shellcheck source=functions.sh
 source "${mydir}/functions.sh"
-source "${mydir}/argparse_services.sh"
+source "${mydir}/argparse-services.sh"
 
 # DEFAULT
 
