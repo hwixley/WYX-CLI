@@ -17,21 +17,21 @@ upscaled_y = np.empty((x, y*alpha, 3))
 
 offset = 0
 for col in range(y):
-    for a in range(alpha):
-        if offset < y*alpha:
-            upscaled_y[:,offset,:] = arr[:,col,:]
+    # for a in range(alpha):
+    if offset < y*alpha:
+        upscaled_y[:,offset,:] = arr[:,col,:]
 
-            offset += 1
+        offset += 1
 
 upscaled_x = np.empty((x*alpha, y*alpha,3))
 
 offset = 0
 for row in range(x):
-    for a in range(alpha):
-        if offset < x*alpha:
-            upscaled_x[offset,:,:] = upscaled_y[row,:,:]
+    # for a in range(alpha):
+    if offset < x*alpha:
+        upscaled_x[offset,:,:] = upscaled_y[row,:,:]
 
-            offset += 1
+        offset += 1
 
 
 cv2.imwrite(f"{fname}-{x*alpha}x{y*alpha}.png", upscaled_x)

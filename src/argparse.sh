@@ -8,13 +8,13 @@ date=$(date)
 year="${date:24:29}"
 
 mydir=$(dirname "${mypath}")
-datadir="${mydir}/.wix-cli-data"
-scriptdir="${mydir}/scripts"
+datadir="${mydir}/../.wix-cli"
+scriptdir="${mydir}/py-scripts"
 
 # shellcheck source-path=SCRIPTDIR
 # shellcheck source=functions.sh
 source "${mydir}/functions.sh"
-source "${mydir}/services.sh"
+source "${mydir}/argparse_services.sh"
 
 # DEFAULT
 
@@ -106,12 +106,14 @@ elif [[ "$1" = "genb64" ]]; then
 elif [[ "$1" = "edit" ]]; then
 	warn_text "Edit wix-cli script..."
 	editfile "${mypath}"
-	info_text "Saving changes to $mypath..."
-	source $(envfile)
+	info_text "Saving changes to ${mypath}..."
+	# shellcheck source=/home/hwixley/.bashrc
+	source "$(envfile)"
 	
 elif [[ "$1" = "save" ]]; then
 	info_text "Sourcing bash :)"
-	source $(envfile)
+	# shellcheck source=/home/hwixley/.bashrc
+	source "$(envfile)"
 	
 elif [[ "$1" = "cat" ]]; then
 	cat "${mypath}"
@@ -124,12 +126,12 @@ elif [[ "$1" = "-v" ]] || [[ "$1" = "--version" ]] || [[ "$1" = "version" ]]; th
 # 	read -r alias
 # 	info_text "Enter the directory:"
 # 	read -r i_dir
-# 	info_text "Adding $alias=$i_dir to custom dirs"
-# 	sed -i "${insertline}imydirs["${alias}"]=${i_dir}" $mypath
+# 	info_text "Adding ${alias}=${i_dir} to custom dirs"
+# 	sed -i "${insertline}imydirs["${alias}"]=${i_dir}" ${mypath}
 # 	wix save
 	
 # elif [[ "$1" = "mydirs" ]]; then
-# 	for x in $dirkeys; do printf "[%s]=%s\n" "${x}" "${mydirs[$x]}" ; done
+# 	for x in ${dirkeys}; do printf "[%s]=%s\n" "${x}" "${mydirs[${x}]}" ; done
 	
 
 # GITHUB AUTOMATION
@@ -155,32 +157,35 @@ elif [[ "$1" = "pull" ]]; then
 	fi
 
 elif [[ "$1" = "mpull" ]]; then
-	if [[ "$(git branch --list master)" ]]; then
+	master_list=$(git branch --list master)
+	main_list=$(git branch --list main)
+
+	if [[ -n "${master_list}" ]]; then
 		pull "master"
-	elif [[ "$(git branch --list main)" ]]; then
+	elif [[ -n "${main_list}" ]]; then
 		pull "main"
 	else
 		warn_text "No master or main branch found..."
 	fi
 
 elif [[ "$1" = "repo" ]]; then
-	info_text "Redirecting to $repo_url..."
+	info_text "Redirecting to ${repo_url}..."
 	giturl "https://github.com/${repo_url}"
 
 elif [[ "$1" = "branch" ]]; then
-	info_text "Redirecting to ${branch} on $repo_url..."
+	info_text "Redirecting to ${branch} on ${repo_url}..."
 	giturl "https://github.com/${repo_url}/tree/${branch}"
 
 elif [[ "$1" = "actions" ]]; then
-	info_text "Redirecting to Action Workflows on $repo_url..."
+	info_text "Redirecting to Action Workflows on ${repo_url}..."
 	giturl "https://github.com/${repo_url}/actions"
 
 elif [[ "$1" = "issues" ]]; then
-	info_text "Redirecting to Issues on $repo_url..."
+	info_text "Redirecting to Issues on ${repo_url}..."
 	giturl "https://github.com/${repo_url}/issues"
 
 elif [[ "$1" = "prs" ]]; then
-	info_text "Redirecting to Pull Requests on $repo_url..."
+	info_text "Redirecting to Pull Requests on ${repo_url}..."
 	giturl "https://github.com/${repo_url}/pulls"
 
 elif [[ "$1" = "notifs" ]]; then
@@ -208,7 +213,7 @@ elif [[ "$1" = "nb" ]]; then
 	fi
 	
 elif [[ "$1" = "pr" ]]; then
-	info_text "Creating PR for ${branch} in $repo_url..."
+	info_text "Creating PR for ${branch} in ${repo_url}..."
 	giturl "https://github.com/${repo_url}/pull/new/${branch}"
 	
 elif [[ "$1" = "bpr" ]]; then
@@ -266,12 +271,12 @@ elif [[ "$1" = "editd" ]]; then
 	if ! arggt "1"; then
 		info_text "What data would you like to edit?"
 		read -r data_to_edit_prompt
-		data_to_edit=$data_to_edit_prompt
+		data_to_edit=${data_to_edit_prompt}
 
 		declare -a datanames
 		datanames=( "user" "myorgs" "mydirs" "myscripts" )
 		if ! printf '%s\0' "${datanames[@]}" | grep -Fxqz -- "${data_to_edit_prompt}"; then
-			error_text "'$data_to_edit_prompt' is not a valid piece of data, please try one of the following: ${datanames[*]}"
+			error_text "'${data_to_edit_prompt}' is not a valid piece of data, please try one of the following: ${datanames[*]}"
 			return 1
 		fi
 	fi
@@ -292,9 +297,9 @@ elif [[ "$1" = "create-script" ]]; then
 	if ! arggt "1"; then
 		info_text "Enter the name of the script you would like to add:"
 		read -r script_name_prompt
-		script_name=$script_name_prompt
+		script_name=${script_name_prompt}
 	fi
-	fname="${datadir}/run-configs/$script_name.sh"
+	fname="${datadir}/run-configs/${script_name}.sh"
 	touch "${fname}"
 	chmod u+x "${fname}"
 	editfile "${fname}"
@@ -304,11 +309,11 @@ elif [[ "$1" = "edits" ]]; then
 	if ! arggt "1"; then
 		info_text "What script would you like to edit?"
 		read -r script_to_edit_prompt
-		script_to_edit=$script_to_edit_prompt
+		script_to_edit=${script_to_edit_prompt}
 	fi
 	if scriptexists "${script_to_edit}"; then
 		info_text "Editing ${script_to_edit} script..."
-		editfile "${datadir}/run-configs/$script_to_edit.sh"
+		editfile "${datadir}/run-configs/${script_to_edit}.sh"
 	else
 		error_text "This script does not exist... Please try again"
 	fi
@@ -320,13 +325,13 @@ elif [[ "$1" = "newscript" ]]; then
 		read -r name_prompt
 		name="${name_prompt}"
 	fi
-	if [[ -f "${datadir}/$name.sh" ]]; then
+	if [[ -f "${datadir}/${name}.sh" ]]; then
 		error_text "Error: this script name already exists"
 	else
 		info_text "Creating new script..."
-		echo "$name=${name}" >> "${datadir}/run-configs.txt"
-		touch "${datadir}/run-configs/$name.sh"
-		editfile "${datadir}/run-configs/$name.sh"
+		echo "${name}=${name}" >> "${datadir}/run-configs.txt"
+		touch "${datadir}/run-configs/${name}.sh"
+		editfile "${datadir}/run-configs/${name}.sh"
 	fi
 
 # FILE CREATION
@@ -342,9 +347,9 @@ elif [[ "$1" = "newf" ]]; then
 	if [[ "${exts[*]}" =~ ${fext} ]]; then
 		info_text "Enter a filename for your $1 file:"
 		read -r fname
-		info_text "Creating $fname.$1"
-		touch "$fname.$1"
-		editfile "$fname.$1"
+		info_text "Creating ${fname}.$1"
+		touch "${fname}.$1"
+		editfile "${fname}.$1"
 	fi
 
 # FIND FILE
@@ -406,8 +411,8 @@ elif [[ "$1" = "ip" ]]; then
 	echo ""
 	echo "IP: ${ip}"
 	echo ""
-	echo "${ORANGE}Address:${RESET} $city, $region, $zip, ${country}"
-	echo "${ORANGE}Latitude & Longitude:${RESET} ($lat, $long)"
+	echo "${ORANGE}Address:${RESET} ${city}, ${region}, ${zip}, ${country}"
+	echo "${ORANGE}Latitude & Longitude:${RESET} (${lat}, ${long})"
 	echo "${ORANGE}Timezone:${RESET} ${time_zone}"
 	echo "${ORANGE}ASN Org:${RESET} ${asn_org}"
 	
@@ -438,7 +443,7 @@ elif [[ "$1" = "wpass" ]]; then
 	if mac; then
 		info_text "Enter the SSID of the network you would like to get the password for:"
 		read -r ssid
-		info_text "Getting password for $ssid..."
+		info_text "Getting password for ${ssid}..."
 		security find-generic-password -ga "${ssid}" | grep "password:"
 		echo ""
 	else
@@ -467,8 +472,8 @@ elif [[ "$1" = "genqr" ]]; then
 		fi
 	fi
 	info_text "Generating a QR code..."
-	qrencode -o "$fname.png" "${link}"
-	display "$fname.png"
+	qrencode -o "${fname}.png" "${link}"
+	display "${fname}.png"
 
 # UPSCALE PHOTO
 
@@ -486,7 +491,7 @@ elif [[ "$1" = "upscale" ]]; then
 			alpha="${mult}"
 		fi
 	fi
-	info_text "Upscaling $fname..."
+	info_text "Upscaling ${fname}..."
 	python3 "${scriptdir}/photo-upscale.py" "${fname}" "${alpha}"
 
 # OPEN FILE
@@ -495,8 +500,8 @@ elif [[ "$1" = "fopen" ]]; then
 	if arggt "1"; then
 		dir="$2"
 		if direxists "${dir}"; then
-			mydir="${mydirs[$dir]/\~/${HOME}}"
-			info_text "Opening $mydir..."
+			mydir="${mydirs[${dir}]/\~/${HOME}}"
+			info_text "Opening ${mydir}..."
 			openfile "${mydir}"
 		else
 			error_text "Directory alias does not exist"
@@ -514,7 +519,7 @@ elif [[ "$1" = "regex" ]]; then
 		if arggt "2"; then
 			fname="$3"
 			if [[ -f "${fname}" ]]; then
-				info_text "Searching for ${regex} in $fname..."
+				info_text "Searching for ${regex} in ${fname}..."
 				info_text "Number of matches:"
 				grep -c "${regex}" "${fname}"
 			else
@@ -524,7 +529,7 @@ elif [[ "$1" = "regex" ]]; then
 			info_text "Enter the filename you would like to search:"
 			read -r fname
 			if [[ -f "${fname}" ]]; then
-				info_text "Searching for ${regex} in $fname..."
+				info_text "Searching for ${regex} in ${fname}..."
 				info_text "Number of matches:"
 				grep -c "${regex}" "${fname}"
 			else
@@ -537,7 +542,7 @@ elif [[ "$1" = "regex" ]]; then
 		info_text "Enter the filename you would like to search:"
 		read -r fname
 		if [[ -f "${fname}" ]]; then
-			info_text "Searching for ${regex} in $fname..."
+			info_text "Searching for ${regex} in ${fname}..."
 			grep -E "${regex}" "${fname}"
 		else
 			error_text "File does not exist"
@@ -550,7 +555,7 @@ elif [[ "$1" = "rgxmatch" ]]; then
 		if arggt "2"; then
 			fname="$3"
 			if [[ -f "${fname}" ]]; then
-				info_text "Searching for ${regex} in $fname..."
+				info_text "Searching for ${regex} in ${fname}..."
 				echo ""
 				info_text "Matches: "
 				data=$(cat "${fname}")
@@ -565,7 +570,7 @@ elif [[ "$1" = "rgxmatch" ]]; then
 			info_text "Enter the filename you would like to search:"
 			read -r fname
 			if [[ -f "${fname}" ]]; then
-				info_text "Searching for ${regex} in $fname..."
+				info_text "Searching for ${regex} in ${fname}..."
 				echo ""
 				info_text "Matches: "
 				data=$(cat "${fname}")
@@ -583,7 +588,7 @@ elif [[ "$1" = "rgxmatch" ]]; then
 		info_text "Enter the filename you would like to search:"
 		read -r fname
 		if [[ -f "${fname}" ]]; then
-			info_text "Searching for ${regex} in $fname..."
+			info_text "Searching for ${regex} in ${fname}..."
 			grep -c "${regex}" "${fname}"
 		else
 			error_text "File does not exist"
@@ -613,14 +618,14 @@ elif [[ "$1" = "encrypt" ]]; then
 		read -r filepath
 
 		if [[ -d "${filepath}" ]]; then
-			tar -cvf "$filepath.tar" "${filepath}"
-			gpg -c "$filepath.tar"
-			rm "$filepath.tar"
-			info_text "$filepath.tar.gpg file created successfully!"
+			tar -cvf "${filepath}.tar" "${filepath}"
+			gpg -c "${filepath}.tar"
+			rm "${filepath}.tar"
+			info_text "${filepath}.tar.gpg file created successfully!"
 		
 		elif [[ -f "${filepath}" ]]; then
 			gpg -c "${filepath}"
-			info_text "$filepath.gpg file created successfully!"
+			info_text "${filepath}.gpg file created successfully!"
 
 		else
 			error_text "File path provided does not exist. Please try again"
@@ -641,7 +646,7 @@ elif [[ "$1" = "decrypt" ]]; then
 		read -r filepath
 		if [[ -f "${filepath}" ]]; then
 			gpg -d "${filepath}"
-			info_text "$filepath file decrypted successfully!"
+			info_text "${filepath} file decrypted successfully!"
 		else
 			error_text "File path provided does not exist. Please try again"
 		fi
@@ -652,7 +657,7 @@ elif [[ "$1" = "decrypt" ]]; then
 elif [[ "$1" = "weather" ]]; then
 	if arggt "1"; then
 		city="$2"
-		info_text "Getting weather for $city..."
+		info_text "Getting weather for ${city}..."
 		curl wttr.in/"${city}"
 	else
 		info_text "Getting weather for your current location..."
@@ -666,14 +671,14 @@ elif [[ "$1" = "moon" ]]; then
 elif [[ "$1" = "leap-year" ]]; then
 	if [[ "${year}" =~ ^[0-9]*00$ ]]; then
 		if [[ "$((year % 400))" -eq 0 ]]; then
-			info_text "$year is a leap year"
+			info_text "${year} is a leap year"
 		else
-			info_text "$year is not a leap year"
+			info_text "${year} is not a leap year"
 		fi
 	elif [[ "$((year % 4))" -eq 0 ]]; then
-		info_text "$year is a leap year"
+		info_text "${year} is a leap year"
 	else
-		info_text "$year is not a leap year"
+		info_text "${year} is not a leap year"
 	fi
 	next_one=$((year + 4 - (year % 4)))
 	info_text "The next leap year is ${next_one}"
@@ -694,13 +699,13 @@ elif [[ "$1" = "webtext" ]]; then
 elif [[ "$1" = "explain" ]]; then
 	if arggt "1"; then
 		cmd="$2"
-		info_text "Finding explanation for $cmd..."
+		info_text "Finding explanation for ${cmd}..."
 		cmd="${cmd// /+}"
 		openurl "https://explainshell.com/explain?cmd=${cmd}"
 	else
 		info_text "Enter the command you would like to explain:"
 		read -r cmd
-		info_text "Finding explanation for $cmd..."
+		info_text "Finding explanation for ${cmd}..."
 		cmd="${cmd// /+}"
 		openurl "https://explainshell.com/explain?cmd=${cmd}"
 	fi
@@ -721,7 +726,7 @@ elif [[ "$1" = "google" ]]; then
 # UPDATE
 
 elif [[ "$1" = "update" ]]; then
-	cd "${mydir}" || error_text "Failed to execute 'cd $mydir'..." && exit
+	cd "${mydir}" || error_text "Failed to execute 'cd ${mydir}'..." && exit
 	git pull origin master
 	cd - || error_text "Failed to execute 'cd -'..." && exit
 
@@ -781,7 +786,7 @@ elif [[ "$1" = "setup" ]]; then
 
 elif [[ "$1" = "img_stdout" ]]; then
 	output=$(command_info | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
-	output="\$ wix\n\n$output\n"
+	output="\$ wix\n\n${output}\n"
 
 	convert -background "#300A24" -fill white -font "DejaVu-Sans-Mono" -pointsize 18 -border 20x15 -bordercolor "#300A24" label:"${output}" .generated/wixcli-output-preview.png
 

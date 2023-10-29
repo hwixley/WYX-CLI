@@ -8,6 +8,12 @@ BLUE=$(tput setaf 4)
 CYAN=$(tput setaf 6)
 # BLACK=$(tput setaf 0)
 RESET=$(tput setaf 7)
+export GREEN
+export ORANGE
+export RED
+export BLUE
+export CYAN
+export RESET
 
 # FILE EXTs
 export exts=("sh" "txt" "py")
@@ -99,4 +105,24 @@ mac() {
 	else
 		return 1
 	fi
+}
+
+clipboard() {
+	if command -v pbcopy >/dev/null 2>&1; then
+		info_text "This has been saved to your clipboard!"
+		echo "$1" | pbcopy
+	elif command -v xclip >/dev/null 2>&1; then
+		info_text "This has been saved to your clipboard!"
+		echo "$1" | xclip -selection c
+	else
+		warn_text "Clipboard not supported on this system, please install xclip or pbcopy."
+	fi
+}
+
+editfile() {
+    if using_zsh; then
+        vi "$1"
+    else
+        gedit "$1"
+    fi
 }

@@ -4,8 +4,8 @@
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 mydir=$(dirname "${mypath}")
 
-# shellcheck source=functions.sh
-source "${mydir}/functions.sh"
+# shellcheck source=src/functions.sh
+source "${mydir}/src/functions.sh"
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -68,7 +68,7 @@ wix_update ""
 
 # ARGPARSE
 
-# shellcheck source=completion.sh
-source "${mydir}/completion.sh"
-# shellcheck source=argparse.sh
-source "${mydir}/argparse.sh" "${@:1}"
+# shellcheck source=src/completion.sh
+source "${mydir}/src/completion.sh"
+# shellcheck source=src/argparse.sh
+source "${mydir}/src/argparse.sh" "${@:1}"

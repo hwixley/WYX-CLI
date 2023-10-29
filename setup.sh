@@ -1,7 +1,9 @@
 #!/bin/bash
 
+mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 mydir=$(dirname "${mypath}")
-source "${mydir}/functions.sh"
+# shellcheck source=src/functions.sh
+source "${mydir}/src/functions.sh"
 
 # COLORS #
 GREEN=$(tput setaf 2)
@@ -29,14 +31,14 @@ setup_alias() {
 	envfile=$(envfile)
 	cdir=$(pwd)
 	{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source ${cdir}/wix-cli.sh\""; } >> "${envfile}"
-	# shellcheck source=/home/hwixley/.bashrc
+	# shellcheck source=$HOME/.bashrc
 	source "${envfile}"
 }
 
 setup_completion() {
 	cdir=$(pwd)
 	{ echo ""; echo "# WIX CLI"; echo "source ${cdir}/completion.sh"; } >> "${HOME}/.bash_completion"
-	# shellcheck source=/home/hwixley/.bash_completion
+	# shellcheck source=$HOME/.bash_completion
 	source "${HOME}/.bash_completion"
 }
 
@@ -63,7 +65,7 @@ chmod +x wix-cli.sh
 
 
 # SETUP METADATA FILES
-md_dir=.wix-cli-data
+md_dir=.wix-cli
 mkdir "${md_dir}"
 declare -a files=("git-user.txt" "git-orgs.txt" "dir-aliases.txt" "run-configs.txt" "todo.txt" ".env")
 for i in "${files[@]}"; do

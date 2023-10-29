@@ -8,8 +8,8 @@ year="${date:24:29}"
 
 # shellcheck source=functions.sh
 mydir=$(dirname "${mypath}")
-datadir=${mydir}/.wix-cli-data
-scriptdir=${mydir}/scripts
+datadir=${mydir}/../.wix-cli
+scriptdir=${mydir}/py-scripts
 
 source "${mydir}/functions.sh"
 
@@ -24,6 +24,7 @@ for line in "${user_lines[@]}"; do
 	value=${line#*=}
 	user[${key}]=${value}
 done
+export user
 
 declare -A myorgs
 declare -a org_lines org_lines=()
@@ -35,6 +36,7 @@ for line in "${org_lines[@]}"; do
 	value=${line#*=}
 	myorgs[${key}]=${value}
 done
+export myorgs
 
 declare -A mydirs
 declare -a dir_lines dir_lines=()
@@ -46,6 +48,7 @@ for line in "${dir_lines[@]}"; do
 	value=${line#*=}
 	mydirs[${key}]=${value}
 done
+export mydirs
 
 declare -A myscripts
 declare -a script_lines script_lines=()
@@ -57,6 +60,7 @@ for line in "${script_lines[@]}"; do
 	value=${line#*=}
 	myscripts[${key}]=${value}
 done
+export myscripts
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -66,30 +70,10 @@ curr_remote=$(git config --get remote.origin.url)
 remote=$(echo "${curr_remote}" | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 repo_url=${remote#"git@github.com:"}
 export repo_url=${repo_url%".git"}
-export branch=$branch
+export branch=${branch}
 
 
 # MODULAR FUNCTIONS
-
-clipboard() {
-	if command -v pbcopy >/dev/null 2>&1; then
-		info_text "This has been saved to your clipboard!"
-		echo "$1" | pbcopy
-	elif command -v xclip >/dev/null 2>&1; then
-		info_text "This has been saved to your clipboard!"
-		echo "$1" | xclip -selection c
-	else
-		warn_text "Clipboard not supported on this system, please install xclip or pbcopy."
-	fi
-}
-
-editfile() {
-    if using_zsh; then
-        vi "$1"
-    else
-        gedit "$1"
-    fi
-}
 
 arggt() {
 	if [[ "${num_args}" -gt "$1" ]]; then
@@ -268,10 +252,10 @@ ginit() {
 		if [[ "${rlicense}" = "y" ]] || [[ "${rlicense}" = "Y" ]];
 		then
 			touch "LICENSE.md"
-			echo -e "MIT License\n\nCopyright (c) ${user["name"]} $year\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE." >> "LICENSE.md"
+			echo -e "MIT License\n\nCopyright (c) ${user["name"]} ${year}\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE." >> "LICENSE.md"
 		fi
 		commit "wix-cli: first commit"
-		git remote add origin "git@github.com:$1/$rname.git"
+		git remote add origin "git@github.com:$1/${rname}.git"
 		openurl "https://github.com/$3"
 	else
 		echo "# $2" >> README.md
@@ -300,8 +284,8 @@ wix_cd() {
 		info_text "Where do you want to go?"
 		read -r dir
 		if direxists "${dir}" ; then
-			info_text "Travelling to -> ${mydirs[$dir]}"
-			cd "${mydirs[$dir]:?}" || exit
+			info_text "Travelling to -> ${mydirs[${dir}]}"
+			cd "${mydirs[${dir}]:?}" || exit
 			return 0
 		else
 			error_text
@@ -315,7 +299,7 @@ wix_new() {
 		if empty "$2" ; then
 			info_text "Provide a name for this directory:"
 			read -r dname
-			info_text "Generating new dir (${mydirs[$1]}/$dname)..."
+			info_text "Generating new dir (${mydirs[$1]}/${dname})..."
 			mkdir "${mydirs[$1]:?}/${dname}"
 			cd "${mydirs[$1]:?}/${dname}" || exit
 		else
@@ -377,13 +361,13 @@ wix_ginit() {
 			echo ""
 			h1_text "Your saved GitHub organization aliases:"
 			for key in "${!myorgs[@]}"; do
-				echo "$key: ${myorgs[$key]}"
+				echo "${key}: ${myorgs[${key}]}"
 			done
 			echo ""
 			info_text "Please enter the organization name alias you would like to use:"
 			read -r orgalias
 			if orgexists "${orgalias}" ; then
-				ginit "${myorgs[$orgalias]}" "$2" "organizations/${myorgs[$orgalias]}/repositories/new"
+				ginit "${myorgs[${orgalias}]}" "$2" "organizations/${myorgs[${orgalias}]}/repositories/new"
 			else
 				ginit "${user[username]}" "$2" "new"
 			fi

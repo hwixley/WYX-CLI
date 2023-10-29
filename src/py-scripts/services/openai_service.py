@@ -7,9 +7,9 @@ from termcolor import colored
 class OpenAIService:
 
     FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-    REPO_PATH = FILE_PATH.replace("/scripts/services", "")
+    REPO_PATH = FILE_PATH.replace("/src/py-scripts/services", "")
     LOCAL_PATH = os.getcwd()
-    KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
+    KEY_PATH = f"{REPO_PATH}/.wix-cli/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
     ASSISTANT_MESSAGE = { "role": "system", "content": "You are a helpful assistant."}
