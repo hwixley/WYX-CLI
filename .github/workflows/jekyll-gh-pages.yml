@@ -1,7 +1,7 @@
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
 name: Deploy Jekyll GH-Pages
 
-# Controls when the action will run. Triggers the workflow on push events or pull requests
+# Controls when the action will run. Triggers the workflow on push events
 on:
   push:
     branches: [ master ]
