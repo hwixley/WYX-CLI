@@ -73,7 +73,7 @@ for i in "${files[@]}"; do
 		touch "${md_dir}/${i}"
 		chmod +rwx "${md_dir}/${i}"
 	else
-		warn_text "File ${i} already exists. Would you like to overwrite it? [[ y / n ]"
+		warn_text "File ${i} already exists. Would you like to overwrite it? [ y / n ]"
 		read -r overwrite_file
 		if [[ "${overwrite_file}" = "y" ]]; then
 			rm "${md_dir}/${i}"
@@ -109,7 +109,7 @@ echo ""
 echo "The default directory aliases setup are as follows:"
 echo "1) docs = ~/Documents"
 echo "2) down = ~/Downloads"
-h1_text "Would you like to include these? [[ y / n ]"
+h1_text "Would you like to include these? [ y / n ]"
 read -r keep_default_diraliases
 if [[ "${keep_default_diraliases}" = "y" ]]; then
 	{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> ${md_dir}/dir-aliases.txt
@@ -123,7 +123,7 @@ info_text "Okay we should be good to go!"
 envfile=$(envfile)
 alias_check=$(alias wix)
 if [[ "${alias_check}" != "" ]]; then
-	warn_text "It looks like you already have a wix alias setup. Would you like to overwrite it? [[ y / n ]"
+	warn_text "It looks like you already have a wix alias setup. Would you like to overwrite it? [ y / n ]"
 	read -r overwrite_alias
     if [[ "${overwrite_alias}" = "y" ]]; then
 		echo "${ORANGE}Please edit the ${envfile} file manually to remove your old alias${RESET}"
@@ -138,7 +138,7 @@ completionfile="${HOME}/.bash_completion"
 if [[ -f "${completionfile}" ]]; then
 	completion_search=$(cat "${completionfile}" | grep -c "$(pwd)/src/completion.sh")
 	if [[ "${completion_search}" != "" ]]; then
-		warn_text "It looks like you already have wix completion setup. Would you like to overwrite it? [[ y / n ]"
+		warn_text "It looks like you already have wix completion setup. Would you like to overwrite it? [ y / n ]"
 		read -r overwrite_completion
 		if [[ "${overwrite_completion}" = "y" ]]; then
 			echo "${ORANGE}Please edit the ${HOME}/.bashrc file manually to remove your old completion${RESET}"
@@ -149,7 +149,7 @@ if [[ -f "${completionfile}" ]]; then
 	fi
 else
 	warn_text "It looks like you don't have a ${HOME}/.bash_completion file (allowing you to use the wix command with tab-completion)."
-	warn_text "Would you like to create one? [[ y / n ]"
+	warn_text "Would you like to create one? [ y / n ]"
 	read -r create_completion
 	if [[ "${create_completion}" = "y" ]]; then
 		touch "${HOME}/.bash_completion"

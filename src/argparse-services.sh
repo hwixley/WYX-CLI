@@ -247,7 +247,7 @@ ginit() {
 		info_text "Provide a name for this repository:"
 		read -r rname
 		echo "# ${rname}" >> README.md
-		info_text "Would you like to add a MIT license to this repository? [[ Yy / Nn ]"
+		info_text "Would you like to add a MIT license to this repository? [ Yy / Nn ]"
 		read -r rlicense
 		if [[ "${rlicense}" = "y" ]] || [[ "${rlicense}" = "Y" ]];
 		then
@@ -328,11 +328,11 @@ wix_delete() {
 		if empty "$2" ; then
 			error_text "You did not provide a path in this directory to delete, try again..."
 		else
-			error_text "Are you sure you want to delete ${mydirs[$1]}/$2? [[ Yy / Nn]"
+			error_text "Are you sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
 			read -r response
 			if [[ "${response}" = "y" ]] || [[ "${response}" = "Y" ]];
 			then
-				error_text "Are you really sure you want to delete ${mydirs[$1]}/$2? [[ Yy / Nn]"
+				error_text "Are you really sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
 				read -r response
 				if [[ "${response}" = "y" ]] || [[ "${response}" = "Y" ]];
 				then
@@ -354,7 +354,7 @@ wix_ginit() {
 	fi
 
 	if empty "${branch}" ; then
-		info_text "Would you like you to host this repository under a GitHub organization? [[ Yy / Nn ]"
+		info_text "Would you like you to host this repository under a GitHub organization? [ Yy / Nn ]"
 		read -r response
 		if [[ "${response}" = "y" ]] || [[ "${response}" = "Y" ]];
 		then
