@@ -1,14 +1,15 @@
-import os, sys
+import os
+import sys
 import openai
-from logger import error, info
+from logger import error
 from termcolor import colored
 
 class OpenAIService:
 
     FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-    REPO_PATH = FILE_PATH.replace("/scripts/services", "")
+    REPO_PATH = FILE_PATH.replace("/src/py-scripts/services", "")
     LOCAL_PATH = os.getcwd()
-    KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
+    KEY_PATH = f"{REPO_PATH}/.wix-cli/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
     ASSISTANT_MESSAGE = { "role": "system", "content": "You are a helpful assistant."}
@@ -17,12 +18,12 @@ class OpenAIService:
 
     def __init__(self):
         self.API_KEY = os.environ.get(self.KEY_NAME)
-        if self.API_KEY == None:
+        if self.API_KEY is None:
             if os.path.exists(f"{self.KEY_PATH}"):
                 with open(f"{self.KEY_PATH}", "r") as f:
-                    for l in f.read().split("\n"):
-                        if l.startswith(self.KEY_NAME):
-                            self.API_KEY = l.replace(f"{self.KEY_NAME}=", "")
+                    for line in f.read().split("\n"):
+                        if line.startswith(self.KEY_NAME):
+                            self.API_KEY = line.replace(f"{self.KEY_NAME}=", "")
                             break
             else:
                 error("No API key found.")
@@ -33,8 +34,8 @@ class OpenAIService:
     def format_message(self, role, message):
         return { "role": role, "content": message }
 
-    def get_response(self, prompt, chat_history: list = []):
-        history = chat_history + [self.format_message("user", prompt[:self.MAX_TOKENS])]
+    def get_response(self, prompt, chat_history: list = None):
+        history = chat_history or [] + [self.format_message("user", prompt[:self.MAX_TOKENS])]
         completion = openai.ChatCompletion.create(
             model=self.ENGINE,
             messages=history

@@ -1,4 +1,6 @@
-import random, string, sys
+import random
+import string
+import sys
 
 DEFAULT_LENGTH = 16
 
