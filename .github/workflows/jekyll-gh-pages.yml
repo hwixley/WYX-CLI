@@ -5,8 +5,6 @@ name: Deploy Jekyll GH-Pages
 on:
   push:
     branches: [ master ]
-  pull_request:
-    types: [opened, reopened]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:

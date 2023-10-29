@@ -4,8 +4,6 @@ name: Generate Stdout Image
 on:
   push:
     branches: [ master ]
-  pull_request:
-    types: [opened, reopened]
 
 permissions:
   contents: write
