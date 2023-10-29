@@ -37,7 +37,7 @@ setup_alias() {
 
 setup_completion() {
 	cdir=$(pwd)
-	{ echo ""; echo "# WIX CLI"; echo "source ${cdir}/completion.sh"; } >> "${HOME}/.bash_completion"
+	{ echo ""; echo "# WIX CLI"; echo "source ${cdir}/src/completion.sh"; } >> "${HOME}/.bash_completion"
 	# shellcheck source=$HOME/.bash_completion
 	source "${HOME}/.bash_completion"
 }
@@ -136,7 +136,7 @@ fi
 # ADD COMPLETION TO COMPLETION FILE
 completionfile="${HOME}/.bash_completion"
 if [[ -f "${completionfile}" ]]; then
-	completion_search=$(cat "${completionfile}" | grep -c "$(pwd)/completion.sh")
+	completion_search=$(cat "${completionfile}" | grep -c "$(pwd)/src/completion.sh")
 	if [[ "${completion_search}" != "" ]]; then
 		warn_text "It looks like you already have wix completion setup. Would you like to overwrite it? [[ y / n ]"
 		read -r overwrite_completion
