@@ -1014,8 +1014,9 @@ elif [ "$1" = "regex" ]; then
 		if arggt "2"; then
 			fname="$3"
 			if [ -f "$fname" ]; then
-				info_text "Searching for $regex in $fname..."
-				info_text "Number of matches:"
+				info_text "Searching for $regex in $fname..." && echo ""
+				grep "$regex" "$fname"
+				echo "" && info_text "Number of matches:"
 				grep -c "$regex" "$fname"
 			else
 				error_text "File does not exist"
@@ -1024,8 +1025,9 @@ elif [ "$1" = "regex" ]; then
 			info_text "Enter the filename you would like to search:"
 			read -r fname
 			if [ -f "$fname" ]; then
-				info_text "Searching for $regex in $fname..."
-				info_text "Number of matches:"
+				info_text "Searching for $regex in $fname..." && echo ""
+				grep "$regex" "$fname"
+				echo "" && info_text "Number of matches:"
 				grep -c "$regex" "$fname"
 			else
 				error_text "File does not exist"

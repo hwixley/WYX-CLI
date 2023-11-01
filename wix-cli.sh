@@ -34,7 +34,7 @@ wix_update() {
 		repo_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
 	if [ "$repo_branch" != "master" ]; then
-		warn_text "Not on master branch, skipping update"
+		warn_text "Not on master branch, skipping update" && echo ""
 		cd "$current_dir" || return 1
 		return 1
 	fi 
