@@ -476,7 +476,7 @@ command_info() {
 	echo ""
 	h1_text "FILE UTILITIES:"
 	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
-	echo "- find \"<fname>.<fext>\"		${ORANGE}: find a file inside the current directory with the respective name${RESET}"
+	echo "- find \"<regex?>\"		${ORANGE}: find a file inside the current directory using regex${RESET}"
 	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
 	echo "- rgxmatch \"<regex?>\" \"<fname?>\"${ORANGE}: return the string matches of your regex in the given file${RESET}"
 	echo "- encrypt <dirname|fname?>	${ORANGE}: GPG encrypt a file/directory (saves as a new .gpg file)${RESET}"
@@ -851,11 +851,13 @@ elif [ "$1" = "newf" ]; then
 
 elif [ "$1" = "find" ]; then
 	if arggt "1"; then
-		find . -type f -name "$2"
+		# find . -type f -name "$2"
+		find . -regextype posix-extended -regex ".*$2.*"
 	else
-		info_text "Enter the filename you would like to find:"
-		read -r fname
-		find . -type f -name "$fname"
+		info_text "Enter the regex you would like to use:"
+		read -r regex
+		# find . -type f -name "$fname"
+		find . -regextype posix-extended -regex "$regex"
 	fi
 
 # CLIPBOARD
