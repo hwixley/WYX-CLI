@@ -11,7 +11,7 @@ class OpenAIService:
     KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
-    ASSISTANT_MESSAGE = { "role": "system", "content": "You are a helpful assistant."}
+    ASSISTANT_MESSAGE = { "role": "system", "content": "You are a developer pushing code to a git repository. You are writing a commit message for the changes you have made. You must use the following bash git outputs to write an informative and relevant commit message. Make sure to ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why."}
     SEPARATOR="-"*110
     MAX_TOKENS=4097
 
