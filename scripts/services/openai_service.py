@@ -3,15 +3,21 @@ import openai
 from logger import error, info
 from termcolor import colored
 
+def read_file(file_path):
+    with open(file_path, "r") as f:
+        return f.read()
+    
 class OpenAIService:
 
     FILE_PATH = os.path.dirname(os.path.abspath(__file__))
     REPO_PATH = FILE_PATH.replace("/scripts/services", "")
     LOCAL_PATH = os.getcwd()
+    LOCAL_README_PATH = f"{LOCAL_PATH}/.github/README.md" if os.path.exists(f"{LOCAL_PATH}/.github/README.md") else (f"{LOCAL_PATH}/README.md" if os.path.exists(f"{LOCAL_PATH}/README.md") else "")
+    LOCAL_README = ("\n\nFor context this is the repository's README file: \n" + read_file(LOCAL_README_PATH)) if os.path.exists(LOCAL_README_PATH) else ""
     KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
-    ASSISTANT_MESSAGE = { "role": "system", "content": "You are a developer pushing code to a git repository. You are writing a commit message for the changes you have made. You must use the following bash git outputs to write an informative and relevant commit message. Make sure to ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why."}
+    ASSISTANT_MESSAGE = { "role": "system", "content": f"You are a developer pushing code to a git repository. You are writing a commit message for the changes you have made. You must use the following bash git outputs to write an informative and relevant commit message. Make sure to ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why.{LOCAL_README}"}
     SEPARATOR="-"*110
     MAX_TOKENS=4097
 
