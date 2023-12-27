@@ -7,11 +7,7 @@ Optimize your development productivity in the terminal
 [![CODEQL](https://github.com/hwixley/wix-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wix-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-1.1.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
 
 <hr>
-
-<!--![wix-terminal](https://user-images.githubusercontent.com/57837950/233463510-d7bf606c-d0a9-45d6-902f-ce0df53862a7.png)-->
-<!--<img src="https://github.com/hwixley/WIX-CLI/assets/57837950/4dc97b6e-53c7-4f15-9b43-ed8fb106378c" style="width: 100%">-->
 <p align="center">
-<!-- <img src="https://github.com/hwixley/WIX-CLI/assets/57837950/fb4e4c64-64e3-48c9-b091-781def49d592" style="width: 90%; display: flex; margin: auto"> -->
 <img src="../.generated/wixcli-output-preview.png" style="width: 90%; display: flex; margin: auto">
 </p>
 
@@ -59,6 +55,12 @@ Provides developers with the ability for optimising the execution of commonly pe
 I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser repetitive and time-wasting. I decided to start developing my own bash script to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal.
 
 I knew I was not the only one who had suffered from these productivity issues as my co-workers saw interest in the tool I was developing. Upon this I decided to start developing a more generic and robust version of my original tool to allow developers across the world optimize their productivity with this tool too!
+
+<hr>
+
+## Support This Project
+
+I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :coffee: :zap:
 
 <hr>
 
@@ -262,9 +264,3 @@ Please post bug reports and new features in the issues section - there are custo
 ## Make A Contribution
 
 Contributions are welcome! Pick up a ticket from the Issues section and link it in your PR, I will review it when I can!
-
-<hr>
-
-## Support This Project
-
-I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :coffee: :zap:
