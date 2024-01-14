@@ -1,0 +1,7 @@
+id,name
+sys-info,Get Shell Type
+cd,Navigate Directory Aliases
+back,Go Back A Directory
+run,Run Script Aliases
+vsc,Open Directory Aliases in VSCode
+genpass
