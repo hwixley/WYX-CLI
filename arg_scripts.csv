@@ -1,7 +1,61 @@
-id,name
-sys-info,Get Shell Type
-cd,Navigate Directory Aliases
-back,Go Back A Directory
-run,Run Script Aliases
-vsc,Open Directory Aliases in VSCode
-genpass
+id,path,name,public,args
+sys-info,sys-info,"Get Shell Type",true,
+cd,cd,"Navigate Directory Aliases",true,
+back,back,"Go Back A Directory",true,
+run,run,"Run Script Aliases",true,"<myscript>"
+vsc,vsc,"Open Directory Aliases in VSCode",true,"<mydir>"
+genpass,genpass,"Generate A Random Password",true,"<pass-length?>"
+genhex,genhex,"Generate A Random Hex String",true
+genb64,genb64,"Generate A Random Base64 String",true
+version,version,"WIX-CLI Version",true
+-v,version,"WIX-CLI Version",false
+--v,version,"WIX-CLI Version",false
+ginit,ginit,"Initialise Git Repository",true
+push,push,"Add, Commit, & Push Git Changes",true
+pull,pull,"Pull Git Changes",true
+mpull,mpull,"Pull Git Changes From Master/Main Branch",true
+repo,repo,"View Your Repository On GitHub",true
+branch,branch,"View Your Current Branch On GitHub",true
+actions,actions,"View Your Repository Actions On GitHub",true
+issues,issues,"View Your Repository Issues On GitHub",true
+prs,prs,"View Your Repository PRs On GitHub",true
+notifs,notifs,"View Your GitHub Notifications",true
+commits,commits,"View Your Branch Git Commits",true
+lastcommit,lastcommit,"View Your Last Commit & Copy It's ID",true
+nb,nb,"Checkout, Add, Commit, & Push A New Git Branch",true
+pr,pr,"Open A Pull Request From Your Current Git Branch on GitHub",true
+bpr,bpr,"Checkout, Add, Commit, & Push A New Git Branch, Then Open A PR For It On GitHub",true
+profile,profile,"View Your GitHub Profile",true
+org,org,"View Your GitHub Organisation",true
+help,help,"View WIX-CLI Documentation",true
+user,user,"View Your User Configuration",true
+mydirs,mydirs,"View Your Directory Aliases Configuration",true
+myorgs,myorgs,"View Your GitHub Organisation Configuration",true
+myscripts,myscripts,"View Your Scripts Configuration",true
+todo,todo,"View Your To-Do List",true
+editd,editd,"Edit Your WIX-CLI Configuration",true
+edits,edits,"Edit A Script File",true
+newscript,newscript,"Create A New Script",true
+find,find,"Regex Search Current Directory For File",true
+lastcmd,lastcmd,"Copy Your Last Command To Your Clipboard",true
+ip,ip,"View Your Local & Public IPs",true
+wifi,wifi,"View Available WiFi Networks",true
+hardware-ports,hardware-ports,"View Your Hardware Ports",true
+wpass,wpass,"View Your Saved WiFi Passwords",true
+speedtest,speedtest,"Run A Speed Test On Your Network",true
+genqr,genqr,"Generate a QR code from a URL",true
+upscale,upscale,"Scale up an image, uses no smoothing",true
+fopen,fopen,"Open current directory in your files application",true
+encrypt,encrypt,"Encrypt a file using GPG",true
+decrypt,decrypt,"Decrypt a GPG-encrypted file",true
+weather,weather,"View the weather forecast for your location in the terminal2,true
+moon,moon,"View the moon phase",true
+leap-year,leap-year,"Check when the next leap year is",true
+webtext,webtext,"Read-only websites in your terminal",true
+explain,explain,"Explain a bash command",true
+ask-gpt,ask-gpt,"Start a conversation with ChatGPT",true
+google,google,"Google a query",true
+install-deps,install-deps,"Install WIX-CLI dependencies",true
+keystore,keystore,"Add a key-value pair to your '.env' keystore",true
+setup,setup,"Setup WIX-CLI Third Party API-based utilities",true
+img_stdout,img_stdout,"Output wix STDOUT to an image",false
