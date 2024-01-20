@@ -39,7 +39,7 @@ setup_completion() {
 # INITIAL SETUP
 if ! using_zsh; then
 	info_text "Installing dependencies..."
-	sudo apt-get install xclip
+	sudo apt-get install xclip csvkit
 	curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 	sudo apt-get install speedtest
 fi

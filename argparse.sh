@@ -516,12 +516,33 @@ command_info() {
 }
 
 
+declare -a ids
+declare -A paths names publics args
 # DEFAULT
 
 if [ $num_args -eq 0 ]; then
 	command_info
 
 # GENERAL
+
+else
+	#!/bin/bash
+	OLDIFS=$IFS
+	IFS=","
+	while read -r id path name public args
+	do
+
+		echo -e "$user \
+		======================\n\
+		Role :\t $job\n\
+		ID :\t $uid\n\
+		SITE :\t $location\n"
+	done < $1
+	IFS=$OLDIFS
+fi
+
+if [ "1" = ")" ]; then
+	echo "1"
 
 elif [ "$1" = "sys-info" ]; then
 	if using_zsh; then

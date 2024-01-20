@@ -1,0 +1,28 @@
+#!/bin/bash
+
+csv_file=$(pwd)/src/data/arg_scripts.csv
+
+lib.csv.all(){
+    lines=$(csvsql --query "select * from arg_scripts where id='$1'" "${csv_file}")
+    echo "$lines"
+}
+
+lib.csv.name(){
+    lines=$(csvsql --query "select name from arg_scripts where id='$1'" "${csv_file}")
+    echo "$lines"
+}
+
+lib.csv.path(){
+    lines=$(csvsql --query "select path from arg_scripts where id='$1'" "${csv_file}")
+    echo "$lines"
+}
+
+lib.csv.public(){
+    lines=$(csvsql --query "select public from arg_scripts where id='$1'" "${csv_file}")
+    echo "$lines"
+}
+
+lib.csv.args(){
+    lines=$(csvsql --query "select args from arg_scripts where id='$1'" "${csv_file}")
+    echo "$lines"
+}

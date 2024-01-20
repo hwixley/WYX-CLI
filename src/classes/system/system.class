@@ -1,0 +1,9 @@
+#!/bin/bash
+
+system.stdout.printValue(){
+    echo $($@)
+}
+
+system.stdout.printString(){
+    echo $@
+}
