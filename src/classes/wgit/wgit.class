@@ -83,17 +83,17 @@ wgit.commit() {
 		if [ -f "${WIX_DATA_DIR}/.env" ]; then
 			if grep -q "OPENAI_API_KEY=" "${WIX_DATA_DIR}/.env" && grep -q "USE_SMART_COMMIT=true" "${WIX_DATA_DIR}/.env" ; then
 				IFS=$'\n' lines=($(python3 "$WIX_SCRIPT_DIR/services/openai_service.py" "smart"))
-				h2_text "GPT-3 Suggestion"
+				sys.h2 "GPT-3 Suggestion"
 				if sys.using_zsh; then
-					h2_text "Title:${RESET}	${lines[1]}"
-					h2_text "Description:${RESET} ${lines[2]}"
+					sys.h2 "Title:${RESET}	${lines[1]}"
+					sys.h2 "Description:${RESET} ${lines[2]}"
 					echo ""
 					sys.info "Press enter to use this suggestion or type your own description."
 					read -r description
 					git commit -m "${description:-${lines[1]}}" -m "${lines[2]}"
 				else
-					h2_text "Title:${RESET}	${lines[0]}"
-					h2_text "Description:${RESET} ${lines[1]}"
+					sys.h2 "Title:${RESET}	${lines[0]}"
+					sys.h2 "Description:${RESET} ${lines[1]}"
 					echo ""
 					sys.info "Press enter to use this suggestion or type your own description."
 					read -r description
