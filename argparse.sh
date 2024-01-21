@@ -182,69 +182,9 @@ check_keystore() {
 }
 
 
-commit() {
-	git add .
-	if sys.empty "$1" ; then
-		if [ -f "${datadir}/.env" ]; then
-			if grep -q "OPENAI_API_KEY=" "${datadir}/.env" && grep -q "USE_SMART_COMMIT=true" "${datadir}/.env" ; then
-				IFS=$'\n' lines=($(python3 "$scriptdir/services/openai_service.py" "smart"))
-				h2_text "GPT-3 Suggestion"
-				if sys.using_zsh; then
-					h2_text "Title:${RESET}	${lines[1]}"
-					h2_text "Description:${RESET} ${lines[2]}"
-					echo ""
-					sys.info "Press enter to use this suggestion or type your own description."
-					read -r description
-					git commit -m "${description:-${lines[1]}}" -m "${lines[2]}"
-				else
-					h2_text "Title:${RESET}	${lines[0]}"
-					h2_text "Description:${RESET} ${lines[1]}"
-					echo ""
-					sys.info "Press enter to use this suggestion or type your own description."
-					read -r description
-					git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
-				fi
-			else
-				sys.info "Provide a commit description: (defaults to 'wix-cli quick commit')"
-				read -r description
-				git commit -m "${description:-wix-cli quick commit}"
-			fi
-		else
-			sys.info "Provide a commit description: (defaults to 'wix-cli quick commit')"
-			read -r description
-			git commit -m "${description:-wix-cli quick commit}"
-		fi
-	else
-		git commit -m "${1:-wix-cli quick commit}"
-	fi
-}
 
-push() {
-	if [ "$1" != "$branch" ]; then
-		git checkout "$1"
-	fi
-	commit "$2"
-	git push origin "$1"
-}
 
-npush() {
-	git checkout -b "$1"
-	commit "$2"
-	git push origin "$1"
-}
 
-pull() {
-	if [ "$1" != "$branch" ]; then
-		git checkout "$1"
-	fi
-	git pull origin "$1"
-}
-
-bpr() {
-	npush "$1"
-	sys.info "Creating PR for $branch in $repo_url..."
-	sys.openurl "https://github.com/$repo_url/pull/new/$1"
-}
 
 # COMMAND FUNCTIONS
 wix_cd() {
