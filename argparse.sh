@@ -11,8 +11,6 @@ source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 sys sys
 source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
 wgit wgit
-source $(dirname ${BASH_SOURCE[0]})/src/classes/user/user.h
-user user
 source $(dirname ${BASH_SOURCE[0]})/src/classes/wixd/wixd.h
 wixd wixd
 
@@ -31,9 +29,9 @@ if [ $num_args -eq 0 ]; then
 	wixd.command_info
 
 else
-	source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
+	source $(dirname ${BASH_SOURCE[0]})/src/classes/cmd/cmd.h
 	# Parse input into command object and run it (if valid)
-	command inputCommand
+	cmd inputCommand
 	inputCommand.id '=' "$1"
 	inputCommand_path="${WIX_DIR}/src/commands/$(inputCommand.path).sh"
 

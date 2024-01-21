@@ -6,7 +6,7 @@ if ! wixd.arggt "1"; then
     read -r script_to_edit_prompt
     script_to_edit=$script_to_edit_prompt
 fi
-if scriptexists "$script_to_edit"; then
+if wixd.scriptexists "$script_to_edit"; then
     sys.info "Editing $script_to_edit script..."
     sys.editfile "$WIX_DATA_DIR/run-configs/$script_to_edit.sh"
 else

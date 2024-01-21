@@ -11,21 +11,6 @@ for line in "${user_lines[@]}"; do
 	user[$key]=$value
 done
 
-wixd.user(){
-    return "${user[@]}"
-}
-
-declare -A myorgs
-declare -a org_lines org_lines=()
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    org_lines+=("$line")
-done < "$WIX_DATA_DIR/git-orgs.txt"
-for line in "${org_lines[@]}"; do
-	key=${line%%=*}
-	value=${line#*=}
-	myorgs[$key]=$value
-done
-
 user.orgs(){
     return "${myorgs[@]}"
 }
@@ -41,35 +26,6 @@ for line in "${dir_lines[@]}"; do
 	mydirs[$key]=$value
 done
 
-# wixd.dirs(){
-#     echo "${mydirs[$dir]}"
-#     # while IFS='' read -r line || [[ -n "$line" ]]; do
-#     #     key=${line%%=*}
-#     #     value=${line#*=}
-#     #     echo "$key"
-#     #     if [[ "$key" = "$1" ]]; then
-#     #         echo "$value"
-#     #     fi
-#     # done < "$WIX_DATA_DIR/dir-aliases.txt"
-# }
-
-# wixd.direxists() {
-#     dir=$(wixd.dirs "$1")
-#     if [[ "$dir" != "" ]]; then
-#         return 0
-#     else
-#         return 1
-#     fi
-# }
-
-# wixd.scripts(){
-
-
-#     return $myscripts
-# }
-
-
-
 wixd.arggt() {
 	if [ "$num_args" -gt "$1" ]; then
 		return 0
@@ -79,6 +35,17 @@ wixd.arggt() {
 }
 
 wixd.orgexists() {
+    declare -A myorgs
+    declare -a org_lines org_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        org_lines+=("$line")
+    done < "$WIX_DATA_DIR/git-orgs.txt"
+    for line in "${org_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        myorgs[$key]=$value
+    done
+
 	if [[ -v myorgs[$1] ]]; then
 		return 0
 	else
@@ -86,12 +53,23 @@ wixd.orgexists() {
 	fi
 }
 
-wixd.scriptexists() {
+wixd.scriptexists(){
+    declare -A myscripts
+    declare -a script_lines script_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        script_lines+=("$line")
+    done < "$WIX_DATA_DIR/run-configs.txt"
+    for line in "${script_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        myscripts[$key]=$value
+    done
+
 	if [[ -v myscripts[$1] ]]; then
-		return 0
-	else
-		return 1
-	fi
+        return 0
+    else
+        return 1
+    fi
 }
 
 wixd.check_keystore() {
@@ -162,10 +140,9 @@ wixd.cd() {
         value=${line#*=}
         mydirs[$key]=$value
     done
-    
 	if wixd.arggt "1" ; then
-		if [[ -v mydirs[$1] ]]; then
-			alias_dest="${mydirs[$dir]}"
+		if [[ -v mydirs["$1"] ]]; then
+			alias_dest="${mydirs[$1]}"
 			destination="${alias_dest/~/${HOME}}"
 			if ! sys.empty "$2" ; then
 				destination="${alias_dest/~/${HOME}}/$2"
@@ -194,11 +171,22 @@ wixd.cd() {
 }
 
 wixd.run() {
-	if scriptexists "$1"; then
+    declare -A myscripts
+    declare -a script_lines script_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        script_lines+=("$line")
+    done < "$WIX_DATA_DIR/run-configs.txt"
+    for line in "${script_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        myscripts[$key]=$value
+    done
+
+	if [[ -v myscripts[$1] ]]; then
 		sys.info "Running $1 script!"
 		source "$WIX_DATA_DIR/run-configs/${myscripts[$1]}.sh"
 	else
-		sys.error "This is only supported for gs currently"
+		sys.error "This script does not exist... Please try again"
 	fi
 }
 

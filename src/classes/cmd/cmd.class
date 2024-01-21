@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Class named "cmd" for bash Object Oriented Programming (OOP)
+. "${WIX_DIR}/src/classes/lib/lib.h"
+
+lib lib
+
+# property
+cmd_properties=()
+
+# properties IDs
+id=0
+
+cmd.sayHello(){
+    echo Hello
+}
+
+cmd.property(){
+    if [ "$2" == "=" ]
+    then
+	    cmd_properties[$1]=$3
+    else
+	    echo "${cmd_properties[$1]}"
+    fi
+}
+
+cmd.id(){
+    if [ "$1" == "=" ]
+    then
+	    cmd.property id = "$2"
+    else
+	    cmd.property id
+    fi
+}
+
+cmd.name(){
+    lib.csv.name "$(cmd.id '')"
+}
+
+cmd.path(){
+    lib.csv.path "$(cmd.id '')"
+}
+
+cmd.public(){
+    lib.csv.public "$(cmd.id '')"
+}
+
+cmd.args(){
+    lib.csv.args "$(cmd.id '')"
+}

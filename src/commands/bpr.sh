@@ -2,7 +2,7 @@
 
 if git.is_git_repo ; then
     if wixd.arggt "1" ; then
-        wgit.bpr "$1"
+        wgit.bpr "$@"
     else
         sys.info "Provide a branch name:"
         read -r name

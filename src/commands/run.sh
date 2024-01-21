@@ -1,3 +1,3 @@
 #!/bin/bash
 
-wix_run "$1"
+wixd.run "$@"
