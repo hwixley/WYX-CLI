@@ -9,9 +9,11 @@ year="${date:24:29}"
 # Load bash classes
 source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
-source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
 sys sys
+source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
 wgit wgit
+source $(dirname ${BASH_SOURCE[0]})/src/classes/user/user.h
+user user
 
 # Load source git data
 branch=""
@@ -30,14 +32,6 @@ arggt() {
 	else
 		return 1
 	fi	
-}
-
-direxists() {
-	if [[ -v mydirs[$1] ]]; then
-		return 0
-	else
-		return 1
-	fi
 }
 
 orgexists() {
@@ -120,49 +114,31 @@ check_keystore() {
 # COMMAND FUNCTIONS
 wix_cd() {
 	if arggt "1" ; then
-		if direxists "$1" ; then
-			destination="${mydirs[$1]/~/${HOME}}"
+		if user.direxists "$1" ; then
+			alias_dest=$(user.dirs "$1")
+			destination="${alias_dest/~/${HOME}}"
 			if ! sys.empty "$2" ; then
-				destination="${mydirs[$1]/~/${HOME}}/$2"
+				destination="${alias_dest/~/${HOME}}/$2"
 			fi
 			sys.info "Travelling to -> $destination"
 			eval cd "$destination" || (sys.error "The path $destination does not exist" && return 1)
 			return 0
 		else
+			echo "HI"
 			sys.error
 			return 1
 		fi
 	else
 		sys.info "Where do you want to go?"
 		read -r dir
-		if direxists "$dir" ; then
-			sys.info "Travelling to -> ${mydirs[$dir]}"
-			cd "${mydirs[$dir]:?}" || exit
+		if user.direxists "$dir" ; then
+			sys.info "Travelling to -> $(user.dirs "$")"
+			cd "${user.dirs[$dir]:?}" || exit
 			return 0
 		else
 			sys.error
 			return 1
 		fi
-	fi
-}
-
-wix_new() {
-	if direxists "$1" ; then
-		if sys.empty "$2" ; then
-			sys.info "Provide a name for this directory:"
-			read -r dname
-			sys.info "Generating new dir (${mydirs[$1]}/$dname)..."
-			mkdir "${mydirs[$1]:?}/$dname"
-			cd "${mydirs[$1]:?}/$dname" || exit
-		else
-			sys.info "Generating new dir (${mydirs[$1]}/$2)..."
-			mkdir "${mydirs[$1]:?}/$2"
-			cd "${mydirs[$1]:?}/$2" || exit
-		fi
-		return 0
-	else
-		sys.error
-		return 1
 	fi
 }
 

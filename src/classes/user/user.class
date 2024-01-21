@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source "$WIX_DIR/src/classes/user/user.class"
-
 declare -A user
 declare -a user_lines user_lines=()
 while IFS='' read -r line || [[ -n "$line" ]]; do
@@ -12,6 +10,10 @@ for line in "${user_lines[@]}"; do
 	value=${line#*=}
 	user[$key]=$value
 done
+
+user.user(){
+    return $user
+}
 
 declare -A myorgs
 declare -a org_lines org_lines=()
@@ -24,6 +26,10 @@ for line in "${org_lines[@]}"; do
 	myorgs[$key]=$value
 done
 
+user.orgs(){
+    return $myorgs
+}
+
 declare -A mydirs
 declare -a dir_lines dir_lines=()
 while IFS='' read -r line || [[ -n "$line" ]]; do
@@ -35,13 +41,52 @@ for line in "${dir_lines[@]}"; do
 	mydirs[$key]=$value
 done
 
-declare -A myscripts
-declare -a script_lines script_lines=()
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    script_lines+=("$line")
-done < "$WIX_DATA_DIR/run-configs.txt"
-for line in "${script_lines[@]}"; do
-	key=${line%%=*}
-	value=${line#*=}
-	myscripts[$key]=$value
-done
+user.dirs(){
+    declare -A mydirs
+    declare -a dir_lines dir_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        dir_lines+=("$line")
+    done < "$WIX_DATA_DIR/dir-aliases.txt"
+    for line in "${dir_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        mydirs[$key]=$value
+    done
+
+    echo "${mydirs[$1]}"
+}
+
+user.direxists() {
+    declare -A mydirs
+    declare -a dir_lines dir_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        dir_lines+=("$line")
+    done < "$WIX_DATA_DIR/dir-aliases.txt"
+    for line in "${dir_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        mydirs[$key]=$value
+    done
+
+    if [[ -v mydirs[$1] ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+user.scripts(){
+    declare -A myscripts
+    declare -a script_lines script_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        script_lines+=("$line")
+    done < "$WIX_DATA_DIR/run-configs.txt"
+    for line in "${script_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        myscripts[$key]=$value
+    done
+
+    return $myscripts
+}
+
