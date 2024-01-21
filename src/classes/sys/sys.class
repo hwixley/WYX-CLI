@@ -97,3 +97,31 @@ sys.mac() {
 		return 1
 	fi
 }
+
+sys.linux() {
+	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+sys.windows() {
+	if [[ "$OSTYPE" == "msys" ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+sys.wsl() {
+	if [[ "$(uname -r)" == *"Microsoft"* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+sys.webtext() {
+	lynx -dump -cookies "$1"
+}

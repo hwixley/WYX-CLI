@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if arggt "1" ; then
-    push "$1"
+    wgit.push "$1"
 else
-    push "$branch"
+    wgit.push "$branch"
 fi

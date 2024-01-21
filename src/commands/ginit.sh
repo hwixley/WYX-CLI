@@ -1,3 +1,3 @@
 #!/bin/bash
 
-wix_ginit "$1"
+wgit.wix_ginit "${@:2}"

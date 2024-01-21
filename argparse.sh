@@ -12,7 +12,9 @@ datadir=$mydir/.wix-cli-data
 scriptdir=$mydir/scripts
 
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
+source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
 sys sys
+wgit wgit
 
 
 # DATA
@@ -179,18 +181,6 @@ check_keystore() {
 	echo ""
 }
 
-is_git_repo() {
-	if git rev-parse --git-dir > /dev/null 2>&1; then
-		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-	fi
-	if ! sys.empty "$branch" ; then
-		return 0
-	else
-		sys.error "This is not a git repository..."
-		return 1
-	fi
-}
-
 
 commit() {
 	git add .
@@ -256,30 +246,6 @@ bpr() {
 	sys.openurl "https://github.com/$repo_url/pull/new/$1"
 }
 
-ginit() {
-	git init
-	if sys.empty "$2" ; then
-		sys.info "Provide a name for this repository:"
-		read -r rname
-		echo "# $rname" >> README.md
-		sys.info "Would you like to add a MIT license to this repository? [ Yy / Nn ]"
-		read -r rlicense
-		if [ "$rlicense" = "y" ] || [ "$rlicense" = "Y" ]
-		then
-			touch "LICENSE.md"
-			echo -e "MIT License\n\nCopyright (c) ${user["name"]} $year\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE." >> "LICENSE.md"
-		fi
-		commit "wix-cli: first commit"
-		git remote add origin "git@github.com:$1/$rname.git"
-		sys.openurl "https://github.com/$3"
-	else
-		echo "# $2" >> README.md
-		commit "wix-cli: first commit"
-		git remote add origin "git@github.com:$1/$2.git"
-		sys.openurl "https://github.com/$3"
-	fi
-}
-
 # COMMAND FUNCTIONS
 wix_cd() {
 	if arggt "1" ; then
@@ -338,77 +304,7 @@ wix_run() {
 	fi
 }
 
-wix_delete() {
-	if direxists "$1" ; then
-		if sys.empty "$2" ; then
-			sys.error "You did not provide a path in this directory to delete, try again..."
-		else
-			sys.error "Are you sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
-			read -r response
-			if [ "$response" = "y" ] || [ "$response" = "Y" ]
-			then
-				sys.error "Are you really sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
-				read -r response
-				if [ "$response" = "y" ] || [ "$response" = "Y" ]
-				then
-					sys.error "Deleting ${mydirs[$1]}/$2"
-					rm -rf "${mydirs[$1]:?}/$2"
-				fi
-			fi
-		fi
-	else
-		sys.error
-	fi
-}
 
-# GITHUB AUTOMATION COMMAND FUNCTIONS
-wix_ginit() {
-	if ! sys.empty "$1"; then
-		mkdir "$1"
-		cd "$1" || return 1
-	fi
-
-	if sys.empty "$branch" ; then
-		sys.info "Would you like you to host this repository under a GitHub organization? [ Yy / Nn ]"
-		read -r response
-		if [ "$response" = "y" ] || [ "$response" = "Y" ]
-		then
-			echo ""
-			sys.h1 "Your saved GitHub organization aliases:"
-			for key in "${!myorgs[@]}"; do
-				echo "$key: ${myorgs[$key]}"
-			done
-			echo ""
-			sys.info "Please enter the organization name alias you would like to use:"
-			read -r orgalias
-			if orgexists "$orgalias" ; then
-				ginit "${myorgs[$orgalias]}" "$2" "organizations/${myorgs[$orgalias]}/repositories/new"
-			else
-				ginit "${user[username]}" "$2" "new"
-			fi
-		else
-			ginit "${user[username]}" "$2" "new"
-		fi
-	else
-		sys.error "This is already a git repository..."
-	fi
-}
-
-wix_gnew() {	
-	if wix_new "$1" "$2" ; then
-		wix_ginit "$1" "$2"
-	fi
-}
-
-giturl() {
-	if is_git_repo ; then
-		sys.openurl "$1"
-	fi
-}
-
-webtext() {
-	lynx -dump -cookies "$1"
-}
 
 command_info() {
 	echo "Welcome to the..."

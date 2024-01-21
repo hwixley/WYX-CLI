@@ -1,4 +1,4 @@
 #!/bin/bash
 
 sys.info "Redirecting to your Notifications..."
-giturl "https://github.com/notifications"
+wgit.giturl "https://github.com/notifications"
