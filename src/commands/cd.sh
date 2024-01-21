@@ -1,3 +1,3 @@
 #!/bin/bash
 
-wixd.cd "$2"
+wixd.cd "$@"

@@ -7,7 +7,6 @@ date=$(date)
 year="${date:24:29}"
 
 # Load bash classes
-source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 sys sys
 source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
@@ -32,6 +31,7 @@ if [ $num_args -eq 0 ]; then
 	wixd.command_info
 
 else
+	source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
 	# Parse input into command object and run it (if valid)
 	command inputCommand
 	inputCommand.id '=' "$1"
