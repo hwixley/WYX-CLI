@@ -17,8 +17,8 @@ class OpenAIService:
     KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
-    ASSISTANT_MESSAGE_DEV = { "role": "system", "content": f"You are a developer pushing code to a git repository. You are writing a commit message for the changes you have made. You must use the following bash git outputs to write an informative and relevant commit message. Make sure to ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why.{LOCAL_README}"}
-    ASSISTANT_MESSAGE = { "role": "system", "content": f"You are an assistant setup on a command line for the WIX-CLI project"}
+    ASSISTANT_MESSAGE_DEV = { "role": "system", "content": f"You are the WIX-CLI Smart Commit bot. You must write an informative yet succinct commit message for the changes you can see have been made from the specified 'git ...' command outputs. Ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why.{LOCAL_README}"}
+    ASSISTANT_MESSAGE = { "role": "system", "content": f"Your name is the WIX-CLI bot, you were created by Harry Wixley for a bash CLI project. You are an assistant setup on a command line to help developers with any queries they may have developer related or otherwise."}
     SEPARATOR="-"*110
     MAX_TOKENS=4097
 
