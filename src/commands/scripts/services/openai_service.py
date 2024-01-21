@@ -10,7 +10,7 @@ def read_file(file_path):
 class OpenAIService:
 
     FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-    REPO_PATH = FILE_PATH.replace("/scripts/services", "")
+    REPO_PATH = FILE_PATH.replace("/src/commands/scripts/services", "")
     LOCAL_PATH = os.getcwd()
     LOCAL_README_PATH = f"{LOCAL_PATH}/.github/README.md" if os.path.exists(f"{LOCAL_PATH}/.github/README.md") else (f"{LOCAL_PATH}/README.md" if os.path.exists(f"{LOCAL_PATH}/README.md") else "")
     LOCAL_README = ("\n\nFor context this is the repository's README file: \n" + read_file(LOCAL_README_PATH)) if os.path.exists(LOCAL_README_PATH) else ""
