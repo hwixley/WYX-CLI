@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# -- WIXD CLASS --
+
+# ====================================
+# -- INPUTS --
+# ====================================
+
 wixd.arggt() {
 	if [ "$num_args" -gt "$1" ]; then
 		return 0
@@ -7,6 +13,12 @@ wixd.arggt() {
 		return 1
 	fi	
 }
+
+# ====================================
+# -- DATA --
+# ====================================
+
+# User
 
 wixd.user.username() {
     declare -A user
@@ -38,20 +50,7 @@ wixd.user.name() {
     echo "${user[name]}"
 }
 
-wixd.org() {
-    declare -A myorgs
-    declare -a org_lines org_lines=()
-    while IFS='' read -r line || [[ -n "$line" ]]; do
-        org_lines+=("$line")
-    done < "$WIX_DATA_DIR/git-orgs.txt"
-    for line in "${org_lines[@]}"; do
-        key=${line%%=*}
-        value=${line#*=}
-        myorgs[$key]=$value
-    done
-
-    echo "${myorgs[$1]}"
-}
+# Directories
 
 wixd.direxists() {
     declare -A mydirs
@@ -70,6 +69,52 @@ wixd.direxists() {
     else
         return 1
     fi
+}
+
+wixd.dir() {
+    declare -A mydirs
+    declare -a dir_lines dir_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        dir_lines+=("$line")
+    done < "$WIX_DATA_DIR/dir-aliases.txt"
+    for line in "${dir_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        mydirs[$key]=$value
+    done
+
+    echo "${mydirs[$1]}"
+}
+
+# Organizations
+
+wixd.org() {
+    declare -A myorgs
+    declare -a org_lines org_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        org_lines+=("$line")
+    done < "$WIX_DATA_DIR/git-orgs.txt"
+    for line in "${org_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        myorgs[$key]=$value
+    done
+
+    echo "${myorgs[$1]}"
+}
+
+wixd.orgs() {
+        # declare -A myorgs
+    declare -a org_lines org_lines=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        org_lines+=("$line")
+    done < "$WIX_DATA_DIR/git-orgs.txt"
+    for line in "${org_lines[@]}"; do
+        key=${line%%=*}
+        value=${line#*=}
+        # myorgs[$key]=$value
+        echo "${key}: ${value}"
+    done
 }
 
 wixd.orgexists() {
@@ -91,6 +136,8 @@ wixd.orgexists() {
 	fi
 }
 
+# Scripts
+
 wixd.scriptexists(){
     declare -A myscripts
     declare -a script_lines script_lines=()
@@ -109,6 +156,8 @@ wixd.scriptexists(){
         return 1
     fi
 }
+
+# Keystore
 
 wixd.check_keystore() {
 	envfile="$WIX_DATA_DIR/.env"
@@ -166,7 +215,10 @@ wixd.check_keystore() {
 	echo ""
 }
 
-# COMMAND FUNCTIONS
+# ====================================
+# -- COMMAND FUNCTIONS --
+# ====================================
+
 wixd.cd() {
     declare -A mydirs
     declare -a dir_lines dir_lines=()
@@ -228,6 +280,9 @@ wixd.run() {
 	fi
 }
 
+# ====================================
+# -- INFO FUNCTIONS --
+# ====================================
 
 
 wixd.command_info() {

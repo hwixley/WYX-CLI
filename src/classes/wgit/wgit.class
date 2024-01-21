@@ -58,14 +58,12 @@ wgit.wix_ginit(){
 		then
 			echo ""
 			sys.h1 "Your saved GitHub organization aliases:"
-			for key in "${!myorgs[@]}"; do
-				echo "$key: ${myorgs[$key]}"
-			done
+			wixd.orgs
 			echo ""
 			sys.info "Please enter the organization name alias you would like to use:"
 			read -r orgalias
-			if orgexists "$orgalias" ; then
-				wgit.ginit "${myorgs[$orgalias]}" "$2" "organizations/${myorgs[$orgalias]}/repositories/new"
+			if wixd.orgexists "$orgalias" ; then
+				wgit.ginit "$(wixd.org $orgalias)" "$2" "organizations/$(wixd.org $orgalias)/repositories/new"
 			else
 				wgit.ginit "$(wixd.user.username)" "$2" "new"
 			fi
