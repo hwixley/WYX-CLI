@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if git.is_git_repo ; then
+if wgit.is_git_repo ; then
     if wixd.arggt "1" ; then
         wgit.bpr "$@"
     else
