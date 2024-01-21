@@ -160,7 +160,6 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 ### Code Editing
 
 1. `vsc <mydir>`: open location of alias in Visual Studio Code
-2. `xc <mydir>`: open location of alias in XCode (only available for macintosh systems)
 
 ### Custom Script/Environment Execution
 
@@ -212,10 +211,8 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 1. `fopen`: open the current directory in your native files application
 2. `find <fname>.<fext>`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
-3. `regex <regex?> <fname?>`: counts number of regex matches found in the given file
-4. `rgxmatch <regex?> <fname?>`: returns strings of regex matches found in the given file
-5. `encrypt <dirname|fname?>`: GPG encrypt a file/directory (saves a new .gpg file)
-6. `decrypt <fname?>`: GPG decrypt a file (must be a .gpg file)
+3. `encrypt <dirname|fname?>`: GPG encrypt a file/directory (saves a new .gpg file)
+4. `decrypt <fname?>`: GPG decrypt a file (must be a .gpg file)
 
 ### Network Utilities
 
