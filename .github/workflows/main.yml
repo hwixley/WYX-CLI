@@ -6,6 +6,7 @@ on:
   push:
     branches: [ master ]
     paths:
+      - .github/workflows/main.yml
       - '*.sh'
       - src/**
 

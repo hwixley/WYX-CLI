@@ -8,6 +8,7 @@ on:
   push:
     branches: [ master ]
     paths:
+      - .github/workflows/jekyll-gh-pages.yml
       - .github/README.md
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
