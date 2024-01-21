@@ -10,14 +10,15 @@ def read_file(file_path):
 class OpenAIService:
 
     FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-    REPO_PATH = FILE_PATH.replace("/scripts/services", "")
+    REPO_PATH = FILE_PATH.replace("/src/commands/scripts/services", "")
     LOCAL_PATH = os.getcwd()
     LOCAL_README_PATH = f"{LOCAL_PATH}/.github/README.md" if os.path.exists(f"{LOCAL_PATH}/.github/README.md") else (f"{LOCAL_PATH}/README.md" if os.path.exists(f"{LOCAL_PATH}/README.md") else "")
     LOCAL_README = ("\n\nFor context this is the repository's README file: \n" + read_file(LOCAL_README_PATH)) if os.path.exists(LOCAL_README_PATH) else ""
     KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
-    ASSISTANT_MESSAGE = { "role": "system", "content": f"You are a developer pushing code to a git repository. You are writing a commit message for the changes you have made. You must use the following bash git outputs to write an informative and relevant commit message. Make sure to ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why.{LOCAL_README}"}
+    ASSISTANT_MESSAGE_DEV = { "role": "system", "content": f"You are the WIX-CLI Smart Commit bot. You must write an informative yet succinct commit message for the changes you can see have been made from the specified 'git ...' command outputs. Ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why.{LOCAL_README}"}
+    ASSISTANT_MESSAGE = { "role": "system", "content": f"Your name is the WIX-CLI bot, you were created by Harry Wixley for a bash CLI project. You are an assistant setup on a command line to help developers with any queries they may have developer related or otherwise."}
     SEPARATOR="-"*110
     MAX_TOKENS=4097
 
@@ -52,14 +53,16 @@ class OpenAIService:
         return f"`git diff` output: {os.popen('git diff').read()}, and `git status` output: {os.popen('git status').read()}."
     
     def get_commit_title(self):
+        chat_history = [self.ASSISTANT_MESSAGE_DEV]
         title_prompt = f"You are in a team of developers working on a project. Write a 1 line commit message less than or equal to 50 characters technically describing the following bash git outputs. {self.get_git_diff()} Do not mention anything about the branch these changes were made on. Mention specifically which functions, classes or variables were modified/created/deleted and why."
-        title_response = self.get_response(title_prompt)
+        title_response = self.get_response(title_prompt, chat_history)
         return f"GPT-commit: {title_response}"
     
     def get_commit_description(self):
+        chat_history = [self.ASSISTANT_MESSAGE_DEV]
         title = self.get_commit_title()
         description_prompt = f"You are in a team of developers working on a project. Write a 2 line commit message technically describing the following bash git outputs. {self.get_git_diff()} Do not repeat the title \"{title}\", and do not mention anything about the branch these changes were made on. Mention specifically which functions, classes or variables were modified/created/deleted and why."
-        description_response = self.get_response(description_prompt)
+        description_response = self.get_response(description_prompt, chat_history)
         return (title, description_response)
     
     def get_smart_commit(self):

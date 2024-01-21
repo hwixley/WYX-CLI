@@ -4,7 +4,7 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-[![CODEQL](https://github.com/hwixley/wix-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wix-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-1.1.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
+[![CODEQL](https://github.com/hwixley/wix-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wix-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-2.0.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
 
 <hr>
 <p align="center">
@@ -19,6 +19,7 @@ Optimize your development productivity in the terminal
   - [Table of Contents](#table-of-contents)
   - [What It Does](#what-it-does)
     - [Why It Was Made](#why-it-was-made)
+  - [Support This Project](#support-this-project)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
   - [Extra Feature Setup](#extra-feature-setup)
@@ -42,7 +43,6 @@ Optimize your development productivity in the terminal
     - [Help Utilities](#help-utilities)
   - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
   - [Make A Contribution](#make-a-contribution)
-  - [Support This Project](#support-this-project)
 
 <hr>
 

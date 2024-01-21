@@ -1,0 +1,140 @@
+#!/bin/bash
+
+. "${WIX_DIR}/src/classes/sys/sys.h"
+sys sys
+
+wgit.is_git_repo(){
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+	fi
+	if ! sys.empty "$branch" ; then
+		return 0
+	else
+		sys.error "This is not a git repository..."
+		return 1
+	fi
+}
+
+wgit.giturl(){
+    if wgit.is_git_repo ; then
+		sys.openurl "$1"
+	fi
+}
+
+wgit.ginit(){
+    git init
+	if sys.empty "$2" ; then
+		sys.info "Provide a name for this repository:"
+		read -r rname
+		echo "# $rname" >> README.md
+		sys.info "Would you like to add a MIT license to this repository? [ Yy / Nn ]"
+		read -r rlicense
+		if [ "$rlicense" = "y" ] || [ "$rlicense" = "Y" ]
+		then
+			touch "LICENSE.md"
+			echo -e "MIT License\n\nCopyright (c) $(wixd.user.name) $year\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE." >> "LICENSE.md"
+		fi
+		wgit.commit "wix-cli: first commit"
+		git remote add origin "git@github.com:$1/$rname.git"
+		sys.openurl "https://github.com/$3"
+	else
+		echo "# $2" >> README.md
+		wgit.commit "wix-cli: first commit"
+		git remote add origin "git@github.com:$1/$2.git"
+		sys.openurl "https://github.com/$3"
+	fi
+}
+
+wgit.wix_ginit(){
+    if ! sys.empty "$1"; then
+		mkdir "$1"
+		cd "$1" || return 1
+	fi
+
+	if sys.empty "$branch" ; then
+		sys.info "Would you like you to host this repository under a GitHub organization? [ Yy / Nn ]"
+		read -r response
+		if [ "$response" = "y" ] || [ "$response" = "Y" ]
+		then
+			echo ""
+			sys.h1 "Your saved GitHub organization aliases:"
+			wixd.orgs
+			echo ""
+			sys.info "Please enter the organization name alias you would like to use:"
+			read -r orgalias
+			if wixd.orgexists "$orgalias" ; then
+				wgit.ginit "$(wixd.org $orgalias)" "$2" "organizations/$(wixd.org $orgalias)/repositories/new"
+			else
+				wgit.ginit "$(wixd.user.username)" "$2" "new"
+			fi
+		else
+			wgit.ginit "$(wixd.user.username)" "$2" "new"
+		fi
+	else
+		sys.error "This is already a git repository..."
+	fi
+}
+
+wgit.commit() {
+	git add .
+	if sys.empty "$1" ; then
+		if [ -f "${WIX_DATA_DIR}/.env" ]; then
+			if grep -q "OPENAI_API_KEY=" "${WIX_DATA_DIR}/.env" && grep -q "USE_SMART_COMMIT=true" "${WIX_DATA_DIR}/.env" ; then
+				IFS=$'\n' lines=($(python3 "$WIX_SCRIPT_DIR/services/openai_service.py" "smart"))
+				sys.h2 "GPT-3 Suggestion"
+				if sys.using_zsh; then
+					sys.h2 "Title:${RESET}	${lines[1]}"
+					sys.h2 "Description:${RESET} ${lines[2]}"
+					echo ""
+					sys.info "Press enter to use this suggestion or type your own description."
+					read -r description
+					git commit -m "${description:-${lines[1]}}" -m "${lines[2]}"
+				else
+					sys.h2 "Title:${RESET}	${lines[0]}"
+					sys.h2 "Description:${RESET} ${lines[1]}"
+					echo ""
+					sys.info "Press enter to use this suggestion or type your own description."
+					read -r description
+					git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
+				fi
+			else
+				sys.info "Provide a commit description: (defaults to 'wix-cli quick commit')"
+				read -r description
+				git commit -m "${description:-wix-cli quick commit}"
+			fi
+		else
+			sys.info "Provide a commit description: (defaults to 'wix-cli quick commit')"
+			read -r description
+			git commit -m "${description:-wix-cli quick commit}"
+		fi
+	else
+		git commit -m "${1:-wix-cli quick commit}"
+	fi
+}
+
+wgit.push() {
+	if [ "$1" != "$branch" ]; then
+		git checkout "$1"
+	fi
+	wgit.commit "$2"
+	git push origin "$1"
+}
+
+wgit.npush() {
+	git checkout -b "$1"
+	wgit.commit "$2"
+	git push origin "$1"
+}
+
+wgit.pull() {
+	if [ "$1" != "$branch" ]; then
+		git checkout "$1"
+	fi
+	git pull origin "$1"
+}
+
+wgit.bpr() {
+	wgit.npush "$1"
+	sys.info "Creating PR for $branch in $repo_url..."
+	sys.openurl "https://github.com/$repo_url/pull/new/$1"
+}

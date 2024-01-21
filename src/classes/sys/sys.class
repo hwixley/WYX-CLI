@@ -9,30 +9,27 @@ CYAN=$(tput setaf 6)
 BLACK=$(tput setaf 0)
 RESET=$(tput setaf 7)
 
-# FILE EXTs
-export exts=("sh" "txt" "py")
-
 # CONST STRING PROMPTS
 export notsupported="${RED}This path is not supported${RESET}"
 
 # PROMPTS
-info_text() {
+sys.info() {
 	echo "${GREEN}$1${RESET}"
 }
 
-h1_text() {
+sys.h1() {
 	echo "${BLUE}$1${RESET}"
 }
 
-h2_text() {
+sys.h2() {
 	echo "${CYAN}$1${RESET}"
 }
 
-warn_text() {
+sys.warn() {
 	echo "${ORANGE}$1${RESET}"
 }
 
-error_text() {
+sys.error() {
 	if [ "$1" = "" ]; then
 		echo "$notsupported"
 	else
@@ -41,7 +38,7 @@ error_text() {
 }
 
 # VALIDATION
-empty() {
+sys.empty() {
 	if [ "$1" = "" ]; then
 		return 0
 	else
@@ -50,7 +47,7 @@ empty() {
 }
 
 # MAC & LINUX FUNCTIONS
-using_zsh() {
+sys.using_zsh() {
 	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 		return 0
 	else
@@ -58,8 +55,8 @@ using_zsh() {
 	fi
 }
 
-openurl() {
-	if using_zsh; then
+sys.openurl() {
+	if sys.using_zsh; then
 		open "$1"
 	else
 		{
@@ -68,8 +65,8 @@ openurl() {
 	fi
 }
 
-envfile() {
-	if using_zsh; then
+sys.envfile() {
+	if sys.using_zsh; then
 		echo "$HOME/.zshrc"
 	else
 		echo "$HOME/.bashrc"
@@ -77,8 +74,8 @@ envfile() {
 	return 0
 }
 
-arm() {
-	if using_zsh; then
+sys.arm() {
+	if sys.using_zsh; then
 		if [[ "$(sysctl -n sysctl.proc_translated)" == "1" ]] || [[ "$(uname -m)" == "arm64" ]]; then
 			return 0;
 		else
@@ -89,14 +86,62 @@ arm() {
 	fi
 }
 
-openfile() {
+sys.openfile() {
 	xdg-open "file:///$1"
 }
 
-mac() {
+sys.mac() {
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		return 0
 	else
 		return 1
 	fi
+}
+
+sys.linux() {
+	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+sys.windows() {
+	if [[ "$OSTYPE" == "msys" ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+sys.wsl() {
+	if [[ "$(uname -r)" == *"Microsoft"* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+sys.webtext() {
+	lynx -dump -cookies "$1"
+}
+
+sys.clipboard() {
+	if command -v pbcopy >/dev/null 2>&1; then
+		sys.info "This has been saved to your clipboard!"
+		echo "$1" | pbcopy
+	elif command -v xclip >/dev/null 2>&1; then
+		sys.info "This has been saved to your clipboard!"
+		echo "$1" | xclip -selection c
+	else
+		sys.warn "Clipboard not supported on this system, please install xclip or pbcopy."
+	fi
+}
+
+sys.editfile() {
+    if sys.using_zsh; then
+        vi "$1"
+    else
+        gedit "$1"
+    fi
 }

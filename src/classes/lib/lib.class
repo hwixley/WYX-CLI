@@ -1,0 +1,32 @@
+#!/bin/bash
+
+csv_file="${WIX_DIR}/src/data/arg_scripts.csv"
+
+lib.csv.all(){
+    lines=$(csvsql --query "select * from arg_scripts where id='$1'" "${csv_file}")
+    echo "$lines"
+}
+
+lib.csv.name(){
+    lines=$(csvsql --query "select name from arg_scripts where id='$1'" "${csv_file}")
+    lines_array=($lines)
+    echo "${lines_array[1]}"
+}
+
+lib.csv.path(){
+    lines=$(csvsql --query "select path from arg_scripts where id='$1'" "${csv_file}")
+    lines_array=($lines)
+    echo "${lines_array[1]}"
+}
+
+lib.csv.public(){
+    lines=$(csvsql --query "select public from arg_scripts where id='$1'" "${csv_file}")
+    lines_array=($lines)
+    echo "${lines_array[1]}"
+}
+
+lib.csv.args(){
+    lines=$(csvsql --query "select args from arg_scripts where id='$1'" "${csv_file}")
+    lines_array=($lines)
+    echo "${lines_array[1]}"
+}

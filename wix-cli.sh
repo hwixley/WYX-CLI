@@ -2,9 +2,13 @@
 
 # CLI CONSTS
 mypath=$(readlink -f "${BASH_SOURCE:-$0}")
-mydir=$(dirname "$mypath")
+WIX_DIR=$(dirname "$mypath")
+WIX_DATA_DIR=$WIX_DIR/.wix-cli-data
+WIX_SCRIPT_DIR=$WIX_DIR/src/commands/scripts
+export WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR
 
-source $mydir/functions.sh
+source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
+sys sys
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -25,16 +29,16 @@ pull() {
 }
 
 wix_update() {
-	info_text "Checking for updates..."
+	sys.info "Checking for updates..."
 
 	current_dir=$(pwd)
-	cd "$mydir" || return 1
+	cd "$WIX_DIR" || return 1
 	repo_branch=""
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		repo_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
 	if [ "$repo_branch" != "master" ]; then
-		warn_text "Not on master branch, skipping update" && echo ""
+		sys.warn "Not on master branch, skipping update" && echo ""
 		cd "$current_dir" || return 1
 		return 1
 	fi 
@@ -46,9 +50,9 @@ wix_update() {
 	BASE=$(git merge-base @ "$UPSTREAM")
 
 	if [ "$LOCAL" = "$REMOTE" ]; then
-		info_text "Up-to-date"
+		sys.info "Up-to-date"
 	elif [ "$LOCAL" = "$BASE" ]; then
-		info_text "Updating..."
+		sys.info "Updating..."
 		pull "$branch"
 	elif [ "$REMOTE" = "$BASE" ]; then
 		echo "Need to push"
@@ -65,5 +69,5 @@ wix_update ""
 
 # ARGPARSE
 
-source "$mydir/completion.sh"
-source "$mydir/argparse.sh" "${@:1}"
+source "$WIX_DIR/completion.sh"
+source "$WIX_DIR/argparse.sh" "${@:1}"
