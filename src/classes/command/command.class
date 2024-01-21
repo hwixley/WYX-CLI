@@ -34,7 +34,6 @@ command.id(){
     fi
 }
 
-
 command.name(){
     lib.csv.name "$(command.id '')"
 }

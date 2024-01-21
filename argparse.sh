@@ -515,18 +515,28 @@ command_info() {
 	echo ""
 }
 
+# Source bash classes
+source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
+source $(dirname ${BASH_SOURCE[0]})/src/classes/system/system.h
 
-declare -a ids
-declare -A paths names publics args
-# DEFAULT
 
 if [ $num_args -eq 0 ]; then
+	# No input - show command info
 	command_info
 
-# GENERAL
-
-
 else
-	error_text "Invalid command! Try again"
-	echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
+	# Parse input into command object and run it (if valid)
+	command inputCommand
+	inputCommand.id '=' "$1"
+	inputCommand_path="$(dirname BASH_SOURCE[0])/src/commands/$(inputCommand.path).sh"
+
+	if [ -f "${inputCommand_path}" ]; then
+		# Valid command found - run it
+		source "${inputCommand_path}" "${@:2}"
+		
+	else
+		# Invalid command - show error message
+		error_text "Invalid command! Try again"
+		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
+	fi
 fi
