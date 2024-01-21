@@ -9,7 +9,7 @@ year="${date:24:29}"
 
 mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
-scriptdir=$mydir/scripts
+scriptdir=$mydir/src/commands/scripts
 
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
