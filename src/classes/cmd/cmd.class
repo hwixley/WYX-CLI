@@ -1,19 +1,9 @@
 #!/bin/bash
 
-# Class named "cmd" for bash Object Oriented Programming (OOP)
 . "${WIX_DIR}/src/classes/lib/lib.h"
-
 lib lib
 
-# property
 cmd_properties=()
-
-# properties IDs
-id=0
-
-cmd.sayHello(){
-    echo Hello
-}
 
 cmd.property(){
     if [ "$2" == "=" ]
