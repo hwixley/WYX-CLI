@@ -1,7 +1,7 @@
 #!/bin/bash
 
 hex_size=32
-if arggt "1"; then
+if wixd.arggt "1"; then
     if ! [[ "$1" =~ ^[0-9]+$ ]]; then
         sys.error "Error: the base64-length argument must be an integer"
         return 1

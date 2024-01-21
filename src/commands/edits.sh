@@ -1,7 +1,7 @@
 #!/bin/bash
 
 script_to_edit="$1"
-if ! arggt "1"; then
+if ! wixd.arggt "1"; then
     sys.info "What script would you like to edit?"
     read -r script_to_edit_prompt
     script_to_edit=$script_to_edit_prompt

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if arggt "1"; then
-    if arggt "2"; then
+if wixd.arggt "1"; then
+    if wixd.arggt "2"; then
         check_keystore "$1" "$2"
     else
         check_keystore "$1"

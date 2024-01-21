@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if arggt "1"; then
+if wixd.arggt "1"; then
     if orgexists "$1"; then
         wgit.giturl "https://github.com/${myorgs[$1]}"
     else

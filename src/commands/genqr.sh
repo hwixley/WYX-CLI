@@ -2,12 +2,12 @@
 
 link="$1"
 fname="$2"
-if ! arggt "1"; then
+if ! wixd.arggt "1"; then
     sys.info "Enter the URL you would like to link to:"
     read -r url
     link="$url"
 
-    if ! arggt "2"; then
+    if ! wixd.arggt "2"; then
         sys.info "Enter the name for your QR code:"
         read -r qrname
         fname="$qrname"

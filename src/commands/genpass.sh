@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pass_size=16
-if arggt "1"; then
+if wixd.arggt "1"; then
     if ! [[ "$1" =~ ^[0-9]+$ ]]; then
         sys.error "Error: the password-length argument must be an integer"
         return 1

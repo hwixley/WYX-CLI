@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if arggt "1"; then
+if wixd.arggt "1"; then
     # find . -type f -name "$1"
     find . -regextype posix-extended -regex ".*$1.*"
 else

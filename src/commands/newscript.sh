@@ -1,7 +1,7 @@
 #!/bin/bash
 
 name="$1"
-if ! arggt "1"; then
+if ! wixd.arggt "1"; then
     sys.info "What would you like to call your script? (no spaces)"
     read -r name_prompt
     name="$name_prompt"

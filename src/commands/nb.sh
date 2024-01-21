@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if arggt "1" ; then
+if wixd.arggt "1" ; then
     wgit.npush "$1"
 else
     sys.info "Provide a branch name:"

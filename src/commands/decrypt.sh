@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sys.info "Decrypting $1..."
-if arggt "1"; then
+if wixd.arggt "1"; then
     if [ -f "$1" ]; then
         gpg -d "$1"
         sys.info "$1 file decrypted successfully!"

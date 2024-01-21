@@ -52,23 +52,14 @@ user.dirs(){
         value=${line#*=}
         mydirs[$key]=$value
     done
-
-    echo "${mydirs[$1]}"
+    # echo "1: $1"
+    echo "2: $2"
+    echo "${mydirs[$2]}"
 }
 
 user.direxists() {
-    declare -A mydirs
-    declare -a dir_lines dir_lines=()
-    while IFS='' read -r line || [[ -n "$line" ]]; do
-        dir_lines+=("$line")
-    done < "$WIX_DATA_DIR/dir-aliases.txt"
-    for line in "${dir_lines[@]}"; do
-        key=${line%%=*}
-        value=${line#*=}
-        mydirs[$key]=$value
-    done
-
-    if [[ -v mydirs[$1] ]]; then
+    dir=$(user.dirs "$1")
+    if [[ "$dir" != "" ]]; then
         return 0
     else
         return 1
