@@ -2,7 +2,7 @@
 
 if wixd.arggt "1"; then
     dir="$1"
-    if direxists "$dir"; then
+    if wixd.direxists "$dir"; then
         mydir="${mydirs[$dir]/\~/${HOME}}"
         sys.info "Opening $WIX_DIR..."
         sys.openfile "$WIX_DIR"
