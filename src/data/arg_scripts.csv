@@ -59,3 +59,4 @@ install-deps,install-deps,"Install WIX-CLI dependencies",true
 keystore,keystore,"Add a key-value pair to your '.env' keystore",true
 setup,setup,"Setup WIX-CLI Third Party API-based utilities",true
 img_stdout,img_stdout,"Output wix STDOUT to an image",false
+copy,copy,"Copy output of a command to clipboard",true,
