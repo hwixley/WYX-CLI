@@ -11,7 +11,9 @@ mydir=$(dirname "$mypath")
 datadir=$mydir/.wix-cli-data
 scriptdir=$mydir/scripts
 
-source $mydir/functions.sh
+source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
+sys sys
+
 
 # DATA
 declare -A user
@@ -71,18 +73,18 @@ repo_url=${repo_url%".git"}
 
 clipboard() {
 	if command -v pbcopy >/dev/null 2>&1; then
-		info_text "This has been saved to your clipboard!"
+		sys.info "This has been saved to your clipboard!"
 		echo "$1" | pbcopy
 	elif command -v xclip >/dev/null 2>&1; then
-		info_text "This has been saved to your clipboard!"
+		sys.info "This has been saved to your clipboard!"
 		echo "$1" | xclip -selection c
 	else
-		warn_text "Clipboard not supported on this system, please install xclip or pbcopy."
+		sys.warn "Clipboard not supported on this system, please install xclip or pbcopy."
 	fi
 }
 
 editfile() {
-    if using_zsh; then
+    if sys.using_zsh; then
         vi "$1"
     else
         gedit "$1"
@@ -123,55 +125,55 @@ scriptexists() {
 
 check_keystore() {
 	envfile="$datadir/.env"
-	if [[ -f "$envfile" ]]; then
+	if [[ -f "$sys.envfile" ]]; then
 		# Check if key-value pair exists in .env file
-		if grep -q "^$1=" "$envfile"; then
+		if grep -q "^$1=" "$sys.envfile"; then
 			# Prompt user to replace the existing value
 			read -rp "${GREEN}Key \"$1\" already exists. Do you want to replace the value? (y/n):${RESET} " choice
 			if [[ $choice == "y" || $choice == "Y" ]]; then
 				if [ -n "$2" ]; then
 					# Replace the value in .env
-					sed -i "s/^$1=.*/$1=$2/" "$envfile"
-					info_text "Value for key \"$1\" replaced successfully!"
+					sed -i "s/^$1=.*/$1=$2/" "$sys.envfile"
+					sys.info "Value for key \"$1\" replaced successfully!"
 				else
 					# Prompt user to enter the value
 					read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
 
 					# Replace the value in .env
-					sed -i "s/^$1=.*/$1=$value/" "$envfile"
-					info_text "Value for key \"$1\" replaced successfully!"
+					sed -i "s/^$1=.*/$1=$value/" "$sys.envfile"
+					sys.info "Value for key \"$1\" replaced successfully!"
 				fi
 			else
-				info_text "Value for key \"$1\" not replaced."
+				sys.info "Value for key \"$1\" not replaced."
 			fi
 		else
 			if [ -n "$2" ]; then
 				# Append key-value pair to .env
-				echo "$1=$2" >> "$envfile"
-				info_text "Value for key \"$1\" appended successfully!"
+				echo "$1=$2" >> "$sys.envfile"
+				sys.info "Value for key \"$1\" appended successfully!"
 			else
 				# Prompt user to enter the value
 				read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
 
 				# Append key-value pair to .env
-				echo "$1=$value" >> "$envfile"
-				info_text "Value for key \"$1\" appended successfully!"
+				echo "$1=$value" >> "$sys.envfile"
+				sys.info "Value for key \"$1\" appended successfully!"
 			fi
 		fi
 	else
 		if [ -n "$2" ]; then
 			# Create .env file and add the key-value pair
-			echo "$1=$2" > "$envfile"
-			info_text ".env file created successfully!"
-			info_text "Value for key \"$1\" appended successfully!"
+			echo "$1=$2" > "$sys.envfile"
+			sys.info ".env file created successfully!"
+			sys.info "Value for key \"$1\" appended successfully!"
 		else
 			# Prompt user to enter the value
 			read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
 
 			# Create .env file and add the key-value pair
-			echo "$1=$value" > "$envfile"
-			info_text ".env file created successfully!"
-			info_text "Value for key \"$1\" appended successfully!"
+			echo "$1=$value" > "$sys.envfile"
+			sys.info ".env file created successfully!"
+			sys.info "Value for key \"$1\" appended successfully!"
 		fi
 	fi
 	echo ""
@@ -181,10 +183,10 @@ is_git_repo() {
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
-	if ! empty "$branch" ; then
+	if ! sys.empty "$branch" ; then
 		return 0
 	else
-		error_text "This is not a git repository..."
+		sys.error "This is not a git repository..."
 		return 1
 	fi
 }
@@ -192,33 +194,33 @@ is_git_repo() {
 
 commit() {
 	git add .
-	if empty "$1" ; then
+	if sys.empty "$1" ; then
 		if [ -f "${datadir}/.env" ]; then
 			if grep -q "OPENAI_API_KEY=" "${datadir}/.env" && grep -q "USE_SMART_COMMIT=true" "${datadir}/.env" ; then
 				IFS=$'\n' lines=($(python3 "$scriptdir/services/openai_service.py" "smart"))
 				h2_text "GPT-3 Suggestion"
-				if using_zsh; then
+				if sys.using_zsh; then
 					h2_text "Title:${RESET}	${lines[1]}"
 					h2_text "Description:${RESET} ${lines[2]}"
 					echo ""
-					info_text "Press enter to use this suggestion or type your own description."
+					sys.info "Press enter to use this suggestion or type your own description."
 					read -r description
 					git commit -m "${description:-${lines[1]}}" -m "${lines[2]}"
 				else
 					h2_text "Title:${RESET}	${lines[0]}"
 					h2_text "Description:${RESET} ${lines[1]}"
 					echo ""
-					info_text "Press enter to use this suggestion or type your own description."
+					sys.info "Press enter to use this suggestion or type your own description."
 					read -r description
 					git commit -m "${description:-${lines[0]}}" -m "${lines[1]}"
 				fi
 			else
-				info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
+				sys.info "Provide a commit description: (defaults to 'wix-cli quick commit')"
 				read -r description
 				git commit -m "${description:-wix-cli quick commit}"
 			fi
 		else
-			info_text "Provide a commit description: (defaults to 'wix-cli quick commit')"
+			sys.info "Provide a commit description: (defaults to 'wix-cli quick commit')"
 			read -r description
 			git commit -m "${description:-wix-cli quick commit}"
 		fi
@@ -250,17 +252,17 @@ pull() {
 
 bpr() {
 	npush "$1"
-	info_text "Creating PR for $branch in $repo_url..."
-	openurl "https://github.com/$repo_url/pull/new/$1"
+	sys.info "Creating PR for $branch in $repo_url..."
+	sys.openurl "https://github.com/$repo_url/pull/new/$1"
 }
 
 ginit() {
 	git init
-	if empty "$2" ; then
-		info_text "Provide a name for this repository:"
+	if sys.empty "$2" ; then
+		sys.info "Provide a name for this repository:"
 		read -r rname
 		echo "# $rname" >> README.md
-		info_text "Would you like to add a MIT license to this repository? [ Yy / Nn ]"
+		sys.info "Would you like to add a MIT license to this repository? [ Yy / Nn ]"
 		read -r rlicense
 		if [ "$rlicense" = "y" ] || [ "$rlicense" = "Y" ]
 		then
@@ -269,12 +271,12 @@ ginit() {
 		fi
 		commit "wix-cli: first commit"
 		git remote add origin "git@github.com:$1/$rname.git"
-		openurl "https://github.com/$3"
+		sys.openurl "https://github.com/$3"
 	else
 		echo "# $2" >> README.md
 		commit "wix-cli: first commit"
 		git remote add origin "git@github.com:$1/$2.git"
-		openurl "https://github.com/$3"
+		sys.openurl "https://github.com/$3"
 	fi
 }
 
@@ -283,25 +285,25 @@ wix_cd() {
 	if arggt "1" ; then
 		if direxists "$1" ; then
 			destination="${mydirs[$1]/~/${HOME}}"
-			if ! empty "$2" ; then
+			if ! sys.empty "$2" ; then
 				destination="${mydirs[$1]/~/${HOME}}/$2"
 			fi
-			info_text "Travelling to -> $destination"
-			eval cd "$destination" || (error_text "The path $destination does not exist" && return 1)
+			sys.info "Travelling to -> $destination"
+			eval cd "$destination" || (sys.error "The path $destination does not exist" && return 1)
 			return 0
 		else
-			error_text
+			sys.error
 			return 1
 		fi
 	else
-		info_text "Where do you want to go?"
+		sys.info "Where do you want to go?"
 		read -r dir
 		if direxists "$dir" ; then
-			info_text "Travelling to -> ${mydirs[$dir]}"
+			sys.info "Travelling to -> ${mydirs[$dir]}"
 			cd "${mydirs[$dir]:?}" || exit
 			return 0
 		else
-			error_text
+			sys.error
 			return 1
 		fi
 	fi
@@ -309,75 +311,75 @@ wix_cd() {
 
 wix_new() {
 	if direxists "$1" ; then
-		if empty "$2" ; then
-			info_text "Provide a name for this directory:"
+		if sys.empty "$2" ; then
+			sys.info "Provide a name for this directory:"
 			read -r dname
-			info_text "Generating new dir (${mydirs[$1]}/$dname)..."
+			sys.info "Generating new dir (${mydirs[$1]}/$dname)..."
 			mkdir "${mydirs[$1]:?}/$dname"
 			cd "${mydirs[$1]:?}/$dname" || exit
 		else
-			info_text "Generating new dir (${mydirs[$1]}/$2)..."
+			sys.info "Generating new dir (${mydirs[$1]}/$2)..."
 			mkdir "${mydirs[$1]:?}/$2"
 			cd "${mydirs[$1]:?}/$2" || exit
 		fi
 		return 0
 	else
-		error_text
+		sys.error
 		return 1
 	fi
 }
 
 wix_run() {
 	if scriptexists "$1"; then
-		info_text "Running $1 script!"
+		sys.info "Running $1 script!"
 		source "$datadir/run-configs/${myscripts[$1]}.sh"
 	else
-		error_text "This is only supported for gs currently"
+		sys.error "This is only supported for gs currently"
 	fi
 }
 
 wix_delete() {
 	if direxists "$1" ; then
-		if empty "$2" ; then
-			error_text "You did not provide a path in this directory to delete, try again..."
+		if sys.empty "$2" ; then
+			sys.error "You did not provide a path in this directory to delete, try again..."
 		else
-			error_text "Are you sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
+			sys.error "Are you sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
 			read -r response
 			if [ "$response" = "y" ] || [ "$response" = "Y" ]
 			then
-				error_text "Are you really sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
+				sys.error "Are you really sure you want to delete ${mydirs[$1]}/$2? [ Yy / Nn]"
 				read -r response
 				if [ "$response" = "y" ] || [ "$response" = "Y" ]
 				then
-					error_text "Deleting ${mydirs[$1]}/$2"
+					sys.error "Deleting ${mydirs[$1]}/$2"
 					rm -rf "${mydirs[$1]:?}/$2"
 				fi
 			fi
 		fi
 	else
-		error_text
+		sys.error
 	fi
 }
 
 # GITHUB AUTOMATION COMMAND FUNCTIONS
 wix_ginit() {
-	if ! empty "$1"; then
+	if ! sys.empty "$1"; then
 		mkdir "$1"
 		cd "$1" || return 1
 	fi
 
-	if empty "$branch" ; then
-		info_text "Would you like you to host this repository under a GitHub organization? [ Yy / Nn ]"
+	if sys.empty "$branch" ; then
+		sys.info "Would you like you to host this repository under a GitHub organization? [ Yy / Nn ]"
 		read -r response
 		if [ "$response" = "y" ] || [ "$response" = "Y" ]
 		then
 			echo ""
-			h1_text "Your saved GitHub organization aliases:"
+			sys.h1 "Your saved GitHub organization aliases:"
 			for key in "${!myorgs[@]}"; do
 				echo "$key: ${myorgs[$key]}"
 			done
 			echo ""
-			info_text "Please enter the organization name alias you would like to use:"
+			sys.info "Please enter the organization name alias you would like to use:"
 			read -r orgalias
 			if orgexists "$orgalias" ; then
 				ginit "${myorgs[$orgalias]}" "$2" "organizations/${myorgs[$orgalias]}/repositories/new"
@@ -388,7 +390,7 @@ wix_ginit() {
 			ginit "${user[username]}" "$2" "new"
 		fi
 	else
-		error_text "This is already a git repository..."
+		sys.error "This is already a git repository..."
 	fi
 }
 
@@ -400,7 +402,7 @@ wix_gnew() {
 
 giturl() {
 	if is_git_repo ; then
-		openurl "$1"
+		sys.openurl "$1"
 	fi
 }
 
@@ -411,31 +413,31 @@ webtext() {
 command_info() {
 	echo "Welcome to the..."
 	echo ""
-	info_text " ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}888P ${CYAN}8${BLUE}88 ${CYAN}Y${BLUE}8b Y8P${GREEN}     e88'Y88 888     888 "
-	info_text "  ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8P  ${CYAN}8${BLUE}88  ${CYAN}Y${BLUE}8b Y${GREEN}     d888  'Y 888     888 "
-	info_text "   ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}   ${CYAN}8${BLUE}88   ${CYAN}Y${BLUE}8b${GREEN}     C8888     888     888 "
-	info_text "    ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b    ${CYAN}8${BLUE}88  e ${CYAN}Y${BLUE}8b${GREEN}     Y888  ,d 888  ,d 888 "
-	info_text "     ${CYAN}Y${BLUE}8P ${CYAN}Y${BLUE}     ${CYAN}8${BLUE}88 d8b ${CYAN}Y${BLUE}8b${GREEN}     \"88,d88 888,d88 888 "
+	sys.info " ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}888P ${CYAN}8${BLUE}88 ${CYAN}Y${BLUE}8b Y8P${GREEN}     e88'Y88 888     888 "
+	sys.info "  ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8P  ${CYAN}8${BLUE}88  ${CYAN}Y${BLUE}8b Y${GREEN}     d888  'Y 888     888 "
+	sys.info "   ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}   ${CYAN}8${BLUE}88   ${CYAN}Y${BLUE}8b${GREEN}     C8888     888     888 "
+	sys.info "    ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b    ${CYAN}8${BLUE}88  e ${CYAN}Y${BLUE}8b${GREEN}     Y888  ,d 888  ,d 888 "
+	sys.info "     ${CYAN}Y${BLUE}8P ${CYAN}Y${BLUE}     ${CYAN}8${BLUE}88 d8b ${CYAN}Y${BLUE}8b${GREEN}     \"88,d88 888,d88 888 "
 	echo ""
 	echo "v$version"
 	echo ""
-	h1_text	"MAINTENANCE:"
+	sys.h1	"MAINTENANCE:"
 	echo "- sys-info			${ORANGE}: view shell info${RESET}"
 	echo "- update			${ORANGE}: update wix-cli${RESET}"
 	echo "- install-deps			${ORANGE}: install dependencies${RESET}"
 	echo ""
-	h1_text "DIRECTORY NAVIGATION:"
+	sys.h1 "DIRECTORY NAVIGATION:"
 	echo "- cd <mydir> 			${ORANGE}: navigation${RESET}"
 	echo "- back 				${ORANGE}: return to last dir${RESET}"
 	echo ""
-	h1_text "CODE:"
+	sys.h1 "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open directory in Visual Studio Code${RESET}"
-	if using_zsh; then
+	if sys.using_zsh; then
 		echo "- xc <mydir>			${ORANGE}: open directory in XCode${RESET}"
 	fi
 	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
 	echo ""
-	h1_text "GITHUB AUTOMATION:"
+	sys.h1 "GITHUB AUTOMATION:"
 	echo "- push <branch?>		${ORANGE}: push changes to repo branch${RESET}"
 	echo "- pull <branch?>		${ORANGE}: pull changes from repo branch${RESET}"
 	echo "- ginit <newdir?>		${ORANGE}: setup git repo in existing/new directory${RESET}"
@@ -446,7 +448,7 @@ command_info() {
 	echo "- lastcommit			${ORANGE}: view last commit${RESET}"
 	echo "- setup smart_commit		${ORANGE}: setup smart commit${RESET}"
 	echo ""
-	h1_text "URLS:"
+	sys.h1 "URLS:"
 	echo "- repo 				${ORANGE}: go to git repo URL${RESET}"
 	echo "- branch 			${ORANGE}: go to git branch URL${RESET}"
 	echo "- prs 				${ORANGE}: go to git repo Pull Requests URL${RESET}"
@@ -457,24 +459,24 @@ command_info() {
 	echo "- org <myorg?>			${ORANGE}: go to git org URL${RESET}"
 	echo "- help				${ORANGE}: go to wix-cli GitHub Pages URL${RESET}"
 	echo ""
-	h1_text "MY DATA:"
+	sys.h1 "MY DATA:"
 	echo "- user 				${ORANGE}: view your user-specific data (ie. name, GitHub username)${RESET}"
 	echo "- myorgs 			${ORANGE}: view your GitHub organizations and their aliases${RESET}"
 	echo "- mydirs 			${ORANGE}: view your directory aliases${RESET}"
 	echo "- myscripts 			${ORANGE}: view your script aliases${RESET}"
 	echo "- todo				${ORANGE}: view your to-do list${RESET}"
 	echo ""
-	h1_text "MANAGE MY DATA:"
+	sys.h1 "MANAGE MY DATA:"
 	echo "- editd <data> 			${ORANGE}: edit a piece of your data (ie. user, myorgs, mydirs, myscripts, todo)${RESET}"
 	echo "- edits <myscript> 		${ORANGE}: edit a script (you must use an alias present in myscripts)${RESET}"
 	echo "- newscript <script-name?>	${ORANGE}: create a new script${RESET}"
 	echo ""
-	h1_text "ENV/KEYSTORE:"
+	sys.h1 "ENV/KEYSTORE:"
 	echo "- keystore <key> <value?>	${ORANGE}: add a key-value pair to your keystore${RESET}"
 	echo "- setup openai_key		${ORANGE}: setup your OpenAI API key${RESET}"
 	echo "- setup smart_commit		${ORANGE}: setup your smart commit${RESET}"
 	echo ""
-	h1_text "FILE UTILITIES:"
+	sys.h1 "FILE UTILITIES:"
 	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
 	echo "- find \"<regex?>\"		${ORANGE}: find a file inside the current directory using regex${RESET}"
 	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
@@ -482,33 +484,33 @@ command_info() {
 	echo "- encrypt <dirname|fname?>	${ORANGE}: GPG encrypt a file/directory (saves as a new .gpg file)${RESET}"
 	echo "- decrypt <fname?>	${ORANGE}: GPG decrypt a file (must be a .gpg file)${RESET}"
 	echo ""
-	h1_text "NETWORK UTILITIES:"
+	sys.h1 "NETWORK UTILITIES:"
 	echo "- ip				${ORANGE}: get local and public IP addresses of your computer${RESET}"
 	echo "- wifi				${ORANGE}: list information on your available wifi networks${RESET}"
 	echo "- wpass				${ORANGE}: list your saved wifi passwords${RESET}"
 	echo "- speedtest			${ORANGE}: run a network speedtest${RESET}"
 	echo "- hardware-ports		${ORANGE}: list your hardware ports${RESET}"
 	echo ""
-	h1_text "IMAGE UTILITIES:"
+	sys.h1 "IMAGE UTILITIES:"
 	echo "- genqr <url?> <fname?>		${ORANGE}: generate a png QR code for the specified URL${RESET}"
 	echo "- upscale <fname?> <scale?>	${ORANGE}: upscale an image's resolution (**does not smooth interpolated pixels**)${RESET}"
 	echo ""
-	h1_text "TEXT UTILITIES:"
+	sys.h1 "TEXT UTILITIES:"
 	echo "- genpass <pass-length?>	${ORANGE}: generate and copy random password string (of default length 16)${RESET}"
 	echo "- genhex <hex-length?>		${ORANGE}: generate and copy random hex string (of default length 32)${RESET}"
 	echo "- genb64 <base64-length?>	${ORANGE}: generate and copy random base64 string (of default length 32)${RESET}"
 	echo "- copy <string?|cmd?> 		${ORANGE}: copy a string or the output of a shell command (using \$(<cmd>) syntax) to your clipboard${RESET}"
 	echo "- lastcmd			${ORANGE}: copy the last command you ran to your clipboard${RESET}"
 	echo ""
-	h1_text "WEB UTILITIES:"
+	sys.h1 "WEB UTILITIES:"
 	echo "- webtext <url?>		${ORANGE}: extract readable text from a website" 
 	echo ""
-	h1_text	"MISC UTILITIES:"
+	sys.h1	"MISC UTILITIES:"
 	echo "- weather <city?>		${ORANGE}: get the weather forecast for your current location${RESET}"
 	echo "- moon				${ORANGE}: get the current moon phase${RESET}"
 	echo "- leap-year			${ORANGE}: tells you the next leap year"
 	echo ""
-	h1_text "HELP UTILITIES:"
+	sys.h1 "HELP UTILITIES:"
 	echo "- explain \"<cmd?>\"		${ORANGE}: explain the syntax of the input bash command${RESET}"
 	echo "- ask-gpt			${ORANGE}: start a conversation with OpenAI's ChatGPT in the terminal${RESET}"
 	echo "- google \"<query?>\"		${ORANGE}: google a query${RESET}"
@@ -517,7 +519,6 @@ command_info() {
 
 # Source bash classes
 source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
-source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 
 
 if [ $num_args -eq 0 ]; then
@@ -536,7 +537,7 @@ else
 
 	else
 		# Invalid command - show error message
-		error_text "Invalid command! Try again"
+		sys.error "Invalid command! Try again"
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
 fi

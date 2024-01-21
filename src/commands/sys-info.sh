@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if using_zsh; then
+if sys.using_zsh; then
     echo "ZSH (0_0)"
 else
     echo "BASH (-_-)"

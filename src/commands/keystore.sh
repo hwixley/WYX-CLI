@@ -10,4 +10,4 @@ else
     read -rp "${GREEN}Enter the key you would like to add to your keystore:${RESET} " key
     check_keystore "$key"
 fi
-info_text "You're done!"
+sys.info "You're done!"

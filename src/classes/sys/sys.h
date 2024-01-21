@@ -1,3 +1,3 @@
-system(){
-    . <(sed "s/system/$1/g" $(dirname ${BASH_SOURCE[0]})/system.class)
+sys(){
+    . <(sed "s/sys/$1/g" $(dirname ${BASH_SOURCE[0]})/sys.class)
 }

@@ -8,7 +8,7 @@ if arggt "1"; then
         clipboard "$1"
     fi
 else
-    info_text "Enter the text you would like to copy to your clipboard:"
+    sys.info "Enter the text you would like to copy to your clipboard:"
     read -r text
     clipboard "$text"
 fi

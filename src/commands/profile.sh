@@ -1,3 +1,3 @@
 #!/bin/bash
 
-openurl "https://github.com/${user[username]}"
+sys.openurl "https://github.com/${user[username]}"

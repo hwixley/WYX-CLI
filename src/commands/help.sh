@@ -1,3 +1,3 @@
 #!/bin/bash
 
-openurl "https://hwixley.github.io/WIX-CLI/index.html"
+sys.openurl "https://hwixley.github.io/WIX-CLI/index.html"

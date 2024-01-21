@@ -36,3 +36,64 @@ sys.error() {
 		echo "${RED}$1${RESET}"
 	fi
 }
+
+# VALIDATION
+sys.empty() {
+	if [ "$1" = "" ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+# MAC & LINUX FUNCTIONS
+sys.using_zsh() {
+	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+sys.openurl() {
+	if sys.using_zsh; then
+		open "$1"
+	else
+		{
+			xdg-open "$1"
+		} &> /dev/null
+	fi
+}
+
+sys.envfile() {
+	if sys.using_zsh; then
+		echo "$HOME/.zshrc"
+	else
+		echo "$HOME/.bashrc"
+	fi
+	return 0
+}
+
+sys.arm() {
+	if sys.using_zsh; then
+		if [[ "$(sysctl -n sysctl.proc_translated)" == "1" ]] || [[ "$(uname -m)" == "arm64" ]]; then
+			return 0;
+		else
+			return 1;
+		fi
+	else
+		return 1;
+	fi
+}
+
+sys.openfile() {
+	xdg-open "file:///$1"
+}
+
+sys.mac() {
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}

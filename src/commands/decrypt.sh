@@ -1,20 +1,20 @@
 #!/bin/bash
 
-info_text "Decrypting $2..."
+sys.info "Decrypting $1..."
 if arggt "1"; then
-    if [ -f "$2" ]; then
-        gpg -d "$2"
-        info_text "$2 file decrypted successfully!"
+    if [ -f "$1" ]; then
+        gpg -d "$1"
+        sys.info "$1 file decrypted successfully!"
     else
-        error_text "File path provided does not exist. Please try again"
+        sys.error "File path provided does not exist. Please try again"
     fi
 else
-    info_text "Enter the file you would like to decrypt: (must have a .gpg extension)"
+    sys.info "Enter the file you would like to decrypt: (must have a .gpg extension)"
     read -r filepath
     if [ -f "$filepath" ]; then
         gpg -d "$filepath"
-        info_text "$filepath file decrypted successfully!"
+        sys.info "$filepath file decrypted successfully!"
     else
-        error_text "File path provided does not exist. Please try again"
+        sys.error "File path provided does not exist. Please try again"
     fi
 fi

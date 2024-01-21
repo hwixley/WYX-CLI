@@ -2,14 +2,14 @@
 
 data_to_edit="$1"
 if ! arggt "1"; then
-    info_text "What data would you like to edit?"
+    sys.info "What data would you like to edit?"
     read -r data_to_edit_prompt
     data_to_edit=$data_to_edit_prompt
 
     declare -a datanames
     datanames=( "user" "myorgs" "mydirs" "myscripts" )
     if ! printf '%s\0' "${datanames[@]}" | grep -Fxqz -- "$data_to_edit_prompt"; then
-        error_text "'$data_to_edit_prompt' is not a valid piece of data, please try one of the following: ${datanames[*]}"
+        sys.error "'$data_to_edit_prompt' is not a valid piece of data, please try one of the following: ${datanames[*]}"
         return 1
     fi
 fi
