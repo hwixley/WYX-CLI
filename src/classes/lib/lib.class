@@ -1,6 +1,6 @@
 #!/bin/bash
 
-csv_file=$(pwd)/src/data/arg_scripts.csv
+csv_file="${mydir}/src/data/arg_scripts.csv"
 
 lib.csv.all(){
     lines=$(csvsql --query "select * from arg_scripts where id='$1'" "${csv_file}")

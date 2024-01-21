@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Class named "command" for bash Object Oriented Programming (OOP)
-. "${mydir}/src/classes/lib/lib.h"
+# Class named "command" for bash Object
+
+. "$(pwd)/src/classes/lib/lib.h"
 
 lib lib
 

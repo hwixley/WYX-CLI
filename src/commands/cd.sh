@@ -1,3 +1,3 @@
 #!/bin/bash
 
-wix_cd "$2"
+wix_cd "$1"

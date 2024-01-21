@@ -528,12 +528,12 @@ else
 	# Parse input into command object and run it (if valid)
 	command inputCommand
 	inputCommand.id '=' "$1"
-	inputCommand_path="$(dirname BASH_SOURCE[0])/src/commands/$(inputCommand.path).sh"
+	inputCommand_path="${mydir}/src/commands/$(inputCommand.path).sh"
 
 	if [ -f "${inputCommand_path}" ]; then
 		# Valid command found - run it
 		source "${inputCommand_path}" "${@:2}"
-		
+
 	else
 		# Invalid command - show error message
 		error_text "Invalid command! Try again"
