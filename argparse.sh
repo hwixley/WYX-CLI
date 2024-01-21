@@ -6,15 +6,14 @@ num_args=$#
 date=$(date)
 year="${date:24:29}"
 
+# Load bash classes
+source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
 sys sys
 wgit wgit
 
-
-# DATA
-
-
+# Load source git data
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
 	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -286,7 +285,7 @@ command_info() {
 }
 
 # Source bash classes
-source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
+
 
 
 if [ $num_args -eq 0 ]; then

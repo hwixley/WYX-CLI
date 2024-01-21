@@ -8,6 +8,7 @@ WIX_SCRIPT_DIR=$WIX_DIR/src/commands/scripts
 export WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR
 
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
+sys sys
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
