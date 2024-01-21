@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat "$datadir/git-orgs.txt"
+cat "$WIX_DATA_DIR/git-orgs.txt"

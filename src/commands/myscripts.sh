@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat "$datadir/run-configs.txt"  
+cat "$WIX_DATA_DIR/run-configs.txt"  

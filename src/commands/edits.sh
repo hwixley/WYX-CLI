@@ -8,7 +8,7 @@ if ! arggt "1"; then
 fi
 if scriptexists "$script_to_edit"; then
     sys.info "Editing $script_to_edit script..."
-    editfile "$datadir/run-configs/$script_to_edit.sh"
+    sys.editfile "$WIX_DATA_DIR/run-configs/$script_to_edit.sh"
 else
     sys.error "This script does not exist... Please try again"
 fi

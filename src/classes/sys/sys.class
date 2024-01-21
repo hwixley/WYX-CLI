@@ -125,3 +125,23 @@ sys.wsl() {
 sys.webtext() {
 	lynx -dump -cookies "$1"
 }
+
+sys.clipboard() {
+	if command -v pbcopy >/dev/null 2>&1; then
+		sys.info "This has been saved to your clipboard!"
+		echo "$1" | pbcopy
+	elif command -v xclip >/dev/null 2>&1; then
+		sys.info "This has been saved to your clipboard!"
+		echo "$1" | xclip -selection c
+	else
+		sys.warn "Clipboard not supported on this system, please install xclip or pbcopy."
+	fi
+}
+
+sys.editfile() {
+    if sys.using_zsh; then
+        vi "$1"
+    else
+        gedit "$1"
+    fi
+}

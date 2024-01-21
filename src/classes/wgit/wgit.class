@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "${mydir}/src/classes/sys/sys.h"
+. "${WIX_DIR}/src/classes/sys/sys.h"
 sys sys
 
 wgit.is_git_repo(){
@@ -80,9 +80,9 @@ wgit.wix_ginit(){
 wgit.commit() {
 	git add .
 	if sys.empty "$1" ; then
-		if [ -f "${datadir}/.env" ]; then
-			if grep -q "OPENAI_API_KEY=" "${datadir}/.env" && grep -q "USE_SMART_COMMIT=true" "${datadir}/.env" ; then
-				IFS=$'\n' lines=($(python3 "$scriptdir/services/openai_service.py" "smart"))
+		if [ -f "${WIX_DATA_DIR}/.env" ]; then
+			if grep -q "OPENAI_API_KEY=" "${WIX_DATA_DIR}/.env" && grep -q "USE_SMART_COMMIT=true" "${WIX_DATA_DIR}/.env" ; then
+				IFS=$'\n' lines=($(python3 "$WIX_SCRIPT_DIR/services/openai_service.py" "smart"))
 				h2_text "GPT-3 Suggestion"
 				if sys.using_zsh; then
 					h2_text "Title:${RESET}	${lines[1]}"

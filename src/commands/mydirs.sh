@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat "$datadir/dir-aliases.txt"
+cat "$WIX_DATA_DIR/dir-aliases.txt"

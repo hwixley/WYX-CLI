@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Class named "command" for bash Object Oriented Programming (OOP)
-. "${mydir}/src/classes/lib/lib.h"
+. "${WIX_DIR}/src/classes/lib/lib.h"
 
 lib lib
 

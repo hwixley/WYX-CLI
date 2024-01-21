@@ -9,6 +9,6 @@ if arggt "1"; then
         pass_size=$1
     fi
 fi
-pass=$(python3 "${scriptdir}/random_string_gen.py" "$pass_size")
+pass=$(python3 "${WIX_SCRIPT_DIR}/random_string_gen.py" "$pass_size")
 sys.info "Your random password string is: ${RESET}$pass"
-clipboard "$pass"
+sys.clipboard "$pass"

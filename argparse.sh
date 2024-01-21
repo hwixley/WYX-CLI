@@ -3,13 +3,8 @@
 # CLI CONSTS
 version="1.1.0"
 num_args=$#
-mypath=$(readlink -f "${BASH_SOURCE:-$0}")
 date=$(date)
 year="${date:24:29}"
-
-mydir=$(dirname "$mypath")
-datadir=$mydir/.wix-cli-data
-scriptdir=$mydir/src/commands/scripts
 
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
@@ -18,49 +13,7 @@ wgit wgit
 
 
 # DATA
-declare -A user
-declare -a user_lines user_lines=()
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    user_lines+=("$line")
-done < "$datadir/git-user.txt"
-for line in "${user_lines[@]}"; do
-	key=${line%%=*}
-	value=${line#*=}
-	user[$key]=$value
-done
 
-declare -A myorgs
-declare -a org_lines org_lines=()
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    org_lines+=("$line")
-done < "$datadir/git-orgs.txt"
-for line in "${org_lines[@]}"; do
-	key=${line%%=*}
-	value=${line#*=}
-	myorgs[$key]=$value
-done
-
-declare -A mydirs
-declare -a dir_lines dir_lines=()
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    dir_lines+=("$line")
-done < "$datadir/dir-aliases.txt"
-for line in "${dir_lines[@]}"; do
-	key=${line%%=*}
-	value=${line#*=}
-	mydirs[$key]=$value
-done
-
-declare -A myscripts
-declare -a script_lines script_lines=()
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    script_lines+=("$line")
-done < "$datadir/run-configs.txt"
-for line in "${script_lines[@]}"; do
-	key=${line%%=*}
-	value=${line#*=}
-	myscripts[$key]=$value
-done
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -72,27 +25,6 @@ repo_url=${repo_url%".git"}
 
 
 # MODULAR FUNCTIONS
-
-clipboard() {
-	if command -v pbcopy >/dev/null 2>&1; then
-		sys.info "This has been saved to your clipboard!"
-		echo "$1" | pbcopy
-	elif command -v xclip >/dev/null 2>&1; then
-		sys.info "This has been saved to your clipboard!"
-		echo "$1" | xclip -selection c
-	else
-		sys.warn "Clipboard not supported on this system, please install xclip or pbcopy."
-	fi
-}
-
-editfile() {
-    if sys.using_zsh; then
-        vi "$1"
-    else
-        gedit "$1"
-    fi
-}
-
 arggt() {
 	if [ "$num_args" -gt "$1" ]; then
 		return 0
@@ -126,7 +58,7 @@ scriptexists() {
 }
 
 check_keystore() {
-	envfile="$datadir/.env"
+	envfile="$WIX_DATA_DIR/.env"
 	if [[ -f "$sys.envfile" ]]; then
 		# Check if key-value pair exists in .env file
 		if grep -q "^$1=" "$sys.envfile"; then
@@ -238,7 +170,7 @@ wix_new() {
 wix_run() {
 	if scriptexists "$1"; then
 		sys.info "Running $1 script!"
-		source "$datadir/run-configs/${myscripts[$1]}.sh"
+		source "$WIX_DATA_DIR/run-configs/${myscripts[$1]}.sh"
 	else
 		sys.error "This is only supported for gs currently"
 	fi
@@ -365,7 +297,7 @@ else
 	# Parse input into command object and run it (if valid)
 	command inputCommand
 	inputCommand.id '=' "$1"
-	inputCommand_path="${mydir}/src/commands/$(inputCommand.path).sh"
+	inputCommand_path="${WIX_DIR}/src/commands/$(inputCommand.path).sh"
 
 	if [ -f "${inputCommand_path}" ]; then
 		# Valid command found - run it

@@ -14,4 +14,4 @@ if ! arggt "1"; then
     fi
 fi
 sys.info "Upscaling $fname..."
-python3 "$scriptdir/photo-upscale.py" "$fname" "$alpha" 
+python3 "$WIX_SCRIPT_DIR/photo-upscale.py" "$fname" "$alpha" 

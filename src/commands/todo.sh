@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat "$datadir/todo.txt" 
+cat "$WIX_DATA_DIR/todo.txt" 

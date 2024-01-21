@@ -14,13 +14,13 @@ if ! arggt "1"; then
     fi
 fi
 if [ "$data_to_edit" = "user" ]; then
-    editfile "$datadir/git-user.txt"
+    sys.editfile "$WIX_DATA_DIR/git-user.txt"
 elif [ "$data_to_edit" = "myorgs" ]; then
-    editfile "$datadir/git-orgs.txt"
+    sys.editfile "$WIX_DATA_DIR/git-orgs.txt"
 elif [ "$data_to_edit" = "mydirs" ]; then
-    editfile "$datadir/dir-aliases.txt"
+    sys.editfile "$WIX_DATA_DIR/dir-aliases.txt"
 elif [ "$data_to_edit" = "myscripts" ]; then
-    editfile "$datadir/run-configs.txt"
+    sys.editfile "$WIX_DATA_DIR/run-configs.txt"
 elif [ "$data_to_edit" = "todo" ]; then
-    editfile "$datadir/todo.txt"
+    sys.editfile "$WIX_DATA_DIR/todo.txt"
 fi

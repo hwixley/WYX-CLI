@@ -1,51 +1,47 @@
 #!/bin/bash
 
-# Class named "command" for bash Object
+source "$WIX_DIR/src/classes/user/user.class"
 
-. "$(pwd)/src/classes/lib/lib.h"
+declare -A user
+declare -a user_lines user_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    user_lines+=("$line")
+done < "$WIX_DATA_DIR/git-user.txt"
+for line in "${user_lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	user[$key]=$value
+done
 
-lib lib
+declare -A myorgs
+declare -a org_lines org_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    org_lines+=("$line")
+done < "$WIX_DATA_DIR/git-orgs.txt"
+for line in "${org_lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	myorgs[$key]=$value
+done
 
-# property
-command_properties=()
+declare -A mydirs
+declare -a dir_lines dir_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    dir_lines+=("$line")
+done < "$WIX_DATA_DIR/dir-aliases.txt"
+for line in "${dir_lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	mydirs[$key]=$value
+done
 
-# properties IDs
-id=0
-
-command.sayHello(){
-    echo Hello
-}
-
-command.property(){
-    if [ "$2" == "=" ]
-    then
-	    command_properties[$1]=$3
-    else
-	    echo "${command_properties[$1]}"
-    fi
-}
-
-command.id(){
-    if [ "$1" == "=" ]
-    then
-	    command.property id = "$2"
-    else
-	    command.property id
-    fi
-}
-
-command.name(){
-    lib.csv.name "$(command.id '')"
-}
-
-command.path(){
-    lib.csv.path "$(command.id '')"
-}
-
-command.public(){
-    lib.csv.public "$(command.id '')"
-}
-
-command.args(){
-    lib.csv.args "$(command.id '')"
-}
+declare -A myscripts
+declare -a script_lines script_lines=()
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    script_lines+=("$line")
+done < "$WIX_DATA_DIR/run-configs.txt"
+for line in "${script_lines[@]}"; do
+	key=${line%%=*}
+	value=${line#*=}
+	myscripts[$key]=$value
+done

@@ -3,12 +3,12 @@
 if arggt "1"; then
     if [[ "$1" =~ ^\$\(.*\)$ ]]; then
         DATA="$1"
-        clipboard "$DATA"
+        sys.clipboard "$DATA"
     else
-        clipboard "$1"
+        sys.clipboard "$1"
     fi
 else
-    sys.info "Enter the text you would like to copy to your clipboard:"
+    sys.info "Enter the text you would like to copy to your sys.clipboard:"
     read -r text
-    clipboard "$text"
+    sys.clipboard "$text"
 fi
