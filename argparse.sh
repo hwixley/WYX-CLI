@@ -531,12 +531,7 @@ else
 	IFS=","
 	while read -r id path name public args
 	do
-
-		echo -e "$user \
-		======================\n\
-		Role :\t $job\n\
-		ID :\t $uid\n\
-		SITE :\t $location\n"
+		ifs+=$("$id")
 	done < $1
 	IFS=$OLDIFS
 fi

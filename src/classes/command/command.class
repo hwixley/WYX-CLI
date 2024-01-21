@@ -42,3 +42,11 @@ command.name(){
 command.path(){
     lib.csv.path "$(command.id '')"
 }
+
+command.public(){
+    lib.csv.public "$(command.id '')"
+}
+
+command.args(){
+    lib.csv.args "$(command.id '')"
+}

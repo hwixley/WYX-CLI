@@ -9,20 +9,24 @@ lib.csv.all(){
 
 lib.csv.name(){
     lines=$(csvsql --query "select name from arg_scripts where id='$1'" "${csv_file}")
-    echo "$lines"
+    lines_array=($lines)
+    echo "${lines_array[1]}"
 }
 
 lib.csv.path(){
     lines=$(csvsql --query "select path from arg_scripts where id='$1'" "${csv_file}")
-    echo "$lines"
+    lines_array=($lines)
+    echo "${lines_array[1]}"
 }
 
 lib.csv.public(){
     lines=$(csvsql --query "select public from arg_scripts where id='$1'" "${csv_file}")
-    echo "$lines"
+    lines_array=($lines)
+    echo "${lines_array[1]}"
 }
 
 lib.csv.args(){
     lines=$(csvsql --query "select args from arg_scripts where id='$1'" "${csv_file}")
-    echo "$lines"
+    lines_array=($lines)
+    echo "${lines_array[1]}"
 }

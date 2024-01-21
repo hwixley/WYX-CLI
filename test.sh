@@ -12,6 +12,8 @@ newCommand.id = "genpass"
 
 newCommand.path
 
+newCommand.args
+
 # new.fileName = "file1"
 
 # system.stdout.printString "value is"
