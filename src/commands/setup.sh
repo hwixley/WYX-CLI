@@ -3,14 +3,14 @@
 if [ "$1" = "openai_key" ]; then
     sys.info "Setting up OpenAI key..."
     echo ""
-    check_keystore "OPENAI_API_KEY"
+    wixd.check_keystore "OPENAI_API_KEY"
     sys.info "You're done!"
 
 elif [ "$1" = "smart_commit" ]; then
     sys.info "Setting up smart commit..."
     echo ""
-    check_keystore "OPENAI_API_KEY"
-    check_keystore "USE_SMART_COMMIT" "true"
+    wixd.check_keystore "OPENAI_API_KEY"
+    wixd.check_keystore "USE_SMART_COMMIT" "true"
     sys.info "You're done!"
     
 else
