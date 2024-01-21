@@ -517,7 +517,7 @@ command_info() {
 
 # Source bash classes
 source $(dirname ${BASH_SOURCE[0]})/src/classes/command/command.h
-source $(dirname ${BASH_SOURCE[0]})/src/classes/system/system.h
+source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 
 
 if [ $num_args -eq 0 ]; then

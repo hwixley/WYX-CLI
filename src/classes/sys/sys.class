@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# COLORS
+GREEN=$(tput setaf 2)
+ORANGE=$(tput setaf 3)
+RED=$(tput setaf 1)
+BLUE=$(tput setaf 4)
+CYAN=$(tput setaf 6)
+BLACK=$(tput setaf 0)
+RESET=$(tput setaf 7)
+
+# CONST STRING PROMPTS
+export notsupported="${RED}This path is not supported${RESET}"
+
+# PROMPTS
+sys.info() {
+	echo "${GREEN}$1${RESET}"
+}
+
+sys.h1() {
+	echo "${BLUE}$1${RESET}"
+}
+
+sys.h2() {
+	echo "${CYAN}$1${RESET}"
+}
+
+sys.warn() {
+	echo "${ORANGE}$1${RESET}"
+}
+
+sys.error() {
+	if [ "$1" = "" ]; then
+		echo "$notsupported"
+	else
+		echo "${RED}$1${RESET}"
+	fi
+}
