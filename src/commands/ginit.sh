@@ -1,3 +1,3 @@
 #!/bin/bash
 
-wix_ginit "$2"
+wix_ginit "$1"
