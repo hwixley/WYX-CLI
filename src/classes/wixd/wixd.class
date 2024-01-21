@@ -298,7 +298,6 @@ wixd.command_info() {
 	echo ""
 	sys.h1	"MAINTENANCE:"
 	echo "- sys-info			${ORANGE}: view shell info${RESET}"
-	echo "- update			${ORANGE}: update wix-cli${RESET}"
 	echo "- install-deps			${ORANGE}: install dependencies${RESET}"
 	echo ""
 	sys.h1 "DIRECTORY NAVIGATION:"
@@ -307,9 +306,6 @@ wixd.command_info() {
 	echo ""
 	sys.h1 "CODE:"
 	echo "- vsc <mydir>			${ORANGE}: open directory in Visual Studio Code${RESET}"
-	if sys.using_zsh; then
-		echo "- xc <mydir>			${ORANGE}: open directory in XCode${RESET}"
-	fi
 	echo "- run <myscript> 		${ORANGE}: setup and run environment${RESET}"
 	echo ""
 	sys.h1 "GITHUB AUTOMATION:"
@@ -354,8 +350,6 @@ wixd.command_info() {
 	sys.h1 "FILE UTILITIES:"
 	echo "- fopen				${ORANGE}: open current directory in files application${RESET}"
 	echo "- find \"<regex?>\"		${ORANGE}: find a file inside the current directory using regex${RESET}"
-	echo "- regex \"<regex?>\" \"<fname?>\"	${ORANGE}: return the number of regex matches in the given file${RESET}"
-	echo "- rgxmatch \"<regex?>\" \"<fname?>\"${ORANGE}: return the string matches of your regex in the given file${RESET}"
 	echo "- encrypt <dirname|fname?>	${ORANGE}: GPG encrypt a file/directory (saves as a new .gpg file)${RESET}"
 	echo "- decrypt <fname?>	${ORANGE}: GPG decrypt a file (must be a .gpg file)${RESET}"
 	echo ""
