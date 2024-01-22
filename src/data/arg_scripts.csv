@@ -9,7 +9,7 @@ genhex,genhex,"Generate A Random Hex String",true
 genb64,genb64,"Generate A Random Base64 String",true
 version,version,"WIX-CLI Version",true
 -v,version,"WIX-CLI Version",false
---v,version,"WIX-CLI Version",false
+--version,version,"WIX-CLI Version",false
 ginit,ginit,"Initialise Git Repository",true
 push,push,"Add, Commit, & Push Git Changes",true
 pull,pull,"Pull Git Changes",true
