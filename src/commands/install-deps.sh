@@ -1,13 +1,13 @@
 #!/bin/bash
 
-if ! sys.using_zsh; then
+if ! sys.shell.zsh; then
     sys.info "Installing dependencies..."
     sudo apt-get install xclip
     curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
     sudo apt-get install speedtest
 fi
 
-if sys.mac; then
+if sys.os.mac; then
     sys.info "Installing dependencies..."
     brew install xclip jq
     brew tap teamookla/speedtest

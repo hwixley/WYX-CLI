@@ -3,7 +3,7 @@
 source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
 
 setup_alias() {
-	envfile=$(sys.envfile)
+	envfile=$(sys.shell.envfile)
 	{ echo ""; echo "# WIX CLI"; echo "alias wix=\"source $(pwd)/wix-cli.sh\""; } >> "$envfile"
 	source "$envfile"
 }
@@ -14,14 +14,14 @@ setup_completion() {
 }
 
 # INITIAL SETUP
-if ! sys.using_zsh; then
+if ! sys.shell.zsh; then
 	sys.info "Installing dependencies..."
 	sudo apt-get install xclip csvkit
 	curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 	sudo apt-get install speedtest
 fi
 
-if sys.mac; then
+if sys.os.mac; then
 	sys.info "Installing dependencies..."
 	brew install xclip jq
 	brew tap teamookla/speedtest

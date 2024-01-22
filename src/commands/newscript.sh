@@ -13,5 +13,5 @@ else
     echo "$name=$name" >> "$WIX_DATA_DIR/run-configs.txt"
     touch "$WIX_DATA_DIR/run-configs/$name.sh"
     chmod u+x "$WIX_DATA_DIR/run-configs/$name.sh"
-    sys.editfile "$WIX_DATA_DIR/run-configs/$name.sh"
+    sys.util.editfile "$WIX_DATA_DIR/run-configs/$name.sh"
 fi

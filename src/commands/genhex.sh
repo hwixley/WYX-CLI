@@ -12,4 +12,4 @@ fi
 pass=$(openssl rand -hex "$hex_size")
 truncated_pass="${pass:0:$hex_size}"
 sys.info "Your random hex string is: ${RESET}$truncated_pass"
-sys.clipboard "$truncated_pass"
+sys.util.clipboard "$truncated_pass"

@@ -37,17 +37,8 @@ sys.error() {
 	fi
 }
 
-# VALIDATION
-sys.empty() {
-	if [ "$1" = "" ]; then
-		return 0
-	else
-		return 1
-	fi
-}
-
-# MAC & LINUX FUNCTIONS
-sys.using_zsh() {
+# Shell utilities
+sys.shell.zsh() {
 	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 		return 0
 	else
@@ -55,18 +46,8 @@ sys.using_zsh() {
 	fi
 }
 
-sys.openurl() {
-	if sys.using_zsh; then
-		open "$1"
-	else
-		{
-			xdg-open "$1"
-		} &> /dev/null
-	fi
-}
-
-sys.envfile() {
-	if sys.using_zsh; then
+sys.shell.envfile() {
+	if sys.shell.zsh; then
 		echo "$HOME/.zshrc"
 	else
 		echo "$HOME/.bashrc"
@@ -74,23 +55,13 @@ sys.envfile() {
 	return 0
 }
 
-sys.arm() {
-	if sys.using_zsh; then
-		if [[ "$(sysctl -n sysctl.proc_translated)" == "1" ]] || [[ "$(uname -m)" == "arm64" ]]; then
-			return 0;
-		else
-			return 1;
-		fi
-	else
-		return 1;
-	fi
+# System specifications
+
+sys.cpu.architecture() {
+	uname -m
 }
 
-sys.openfile() {
-	xdg-open "file:///$1"
-}
-
-sys.mac() {
+sys.os.mac() {
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		return 0
 	else
@@ -98,7 +69,7 @@ sys.mac() {
 	fi
 }
 
-sys.linux() {
+sys.os.linux() {
 	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 		return 0
 	else
@@ -106,7 +77,7 @@ sys.linux() {
 	fi
 }
 
-sys.windows() {
+sys.os.windows() {
 	if [[ "$OSTYPE" == "msys" ]]; then
 		return 0
 	else
@@ -114,7 +85,7 @@ sys.windows() {
 	fi
 }
 
-sys.wsl() {
+sys.os.wsl() {
 	if [[ "$(uname -r)" == *"Microsoft"* ]]; then
 		return 0
 	else
@@ -122,11 +93,13 @@ sys.wsl() {
 	fi
 }
 
-sys.webtext() {
+# System utilities
+
+sys.util.webtext() {
 	lynx -dump -cookies "$1"
 }
 
-sys.clipboard() {
+sys.util.clipboard() {
 	if command -v pbcopy >/dev/null 2>&1; then
 		sys.info "This has been saved to your clipboard!"
 		echo "$1" | pbcopy
@@ -138,10 +111,32 @@ sys.clipboard() {
 	fi
 }
 
-sys.editfile() {
-    if sys.using_zsh; then
+sys.util.editfile() {
+    if sys.shell.zsh; then
         vi "$1"
     else
         gedit "$1"
     fi
+}
+
+sys.util.openfile() {
+	xdg-open "file:///$1"
+}
+
+sys.util.openurl() {
+	if sys.shell.zsh; then
+		open "$1"
+	else
+		{
+			xdg-open "$1"
+		} &> /dev/null
+	fi
+}
+
+sys.util.empty() {
+	if [ "$1" = "" ]; then
+		return 0
+	else
+		return 1
+	fi
 }

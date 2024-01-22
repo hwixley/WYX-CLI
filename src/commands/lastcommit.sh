@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sys.clipboard "$(git rev-parse HEAD)"
+sys.util.clipboard "$(git rev-parse HEAD)"
 git show HEAD

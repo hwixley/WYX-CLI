@@ -7,7 +7,7 @@ wgit.is_git_repo(){
     if git rev-parse --git-dir > /dev/null 2>&1; then
 		branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
-	if ! sys.empty "$branch" ; then
+	if ! sys.util.empty "$branch" ; then
 		return 0
 	else
 		sys.error "This is not a git repository..."
@@ -17,13 +17,13 @@ wgit.is_git_repo(){
 
 wgit.giturl(){
     if wgit.is_git_repo ; then
-		sys.openurl "$1"
+		sys.util.openurl "$1"
 	fi
 }
 
 wgit.ginit(){
     git init
-	if sys.empty "$2" ; then
+	if sys.util.empty "$2" ; then
 		sys.info "Provide a name for this repository:"
 		read -r rname
 		echo "# $rname" >> README.md
@@ -36,22 +36,22 @@ wgit.ginit(){
 		fi
 		wgit.commit "wix-cli: first commit"
 		git remote add origin "git@github.com:$1/$rname.git"
-		sys.openurl "https://github.com/$3"
+		sys.util.openurl "https://github.com/$3"
 	else
 		echo "# $2" >> README.md
 		wgit.commit "wix-cli: first commit"
 		git remote add origin "git@github.com:$1/$2.git"
-		sys.openurl "https://github.com/$3"
+		sys.util.openurl "https://github.com/$3"
 	fi
 }
 
 wgit.wix_ginit(){
-    if ! sys.empty "$1"; then
+    if ! sys.util.empty "$1"; then
 		mkdir "$1"
 		cd "$1" || return 1
 	fi
 
-	if sys.empty "$branch" ; then
+	if sys.util.empty "$branch" ; then
 		sys.info "Would you like you to host this repository under a GitHub organization? [ Yy / Nn ]"
 		read -r response
 		if [ "$response" = "y" ] || [ "$response" = "Y" ]
@@ -77,12 +77,12 @@ wgit.wix_ginit(){
 
 wgit.commit() {
 	git add .
-	if sys.empty "$1" ; then
+	if sys.util.empty "$1" ; then
 		if [ -f "${WIX_DATA_DIR}/.env" ]; then
 			if grep -q "OPENAI_API_KEY=" "${WIX_DATA_DIR}/.env" && grep -q "USE_SMART_COMMIT=true" "${WIX_DATA_DIR}/.env" ; then
 				IFS=$'\n' lines=($(python3 "$WIX_SCRIPT_DIR/services/openai_service.py" "smart"))
 				sys.h2 "GPT-3 Suggestion"
-				if sys.using_zsh; then
+				if sys.shell.zsh; then
 					sys.h2 "Title:${RESET}	${lines[1]}"
 					sys.h2 "Description:${RESET} ${lines[2]}"
 					echo ""
@@ -136,5 +136,5 @@ wgit.pull() {
 wgit.bpr() {
 	wgit.npush "$1"
 	sys.info "Creating PR for $branch in $repo_url..."
-	sys.openurl "https://github.com/$repo_url/pull/new/$1"
+	sys.util.openurl "https://github.com/$repo_url/pull/new/$1"
 }

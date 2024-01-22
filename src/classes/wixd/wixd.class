@@ -234,7 +234,7 @@ wixd.cd() {
 		if [[ -v mydirs["$1"] ]]; then
 			alias_dest="${mydirs[$1]}"
 			destination="${alias_dest/~/${HOME}}"
-			if ! sys.empty "$2" ; then
+			if ! sys.util.empty "$2" ; then
 				destination="${alias_dest/~/${HOME}}/$2"
 			fi
 			sys.info "Travelling to -> $destination"

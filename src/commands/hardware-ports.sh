@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if sys.mac; then
+if sys.os.mac; then
     networksetup -listallhardwareports
 else
     echo "Not supported on this OS"

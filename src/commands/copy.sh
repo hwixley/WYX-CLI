@@ -3,12 +3,12 @@
 if wixd.arggt "1"; then
     if [[ "$1" =~ ^\$\(.*\)$ ]]; then
         DATA="$1"
-        sys.clipboard "$DATA"
+        sys.util.clipboard "$DATA"
     else
-        sys.clipboard "$1"
+        sys.util.clipboard "$1"
     fi
 else
-    sys.info "Enter the text you would like to copy to your sys.clipboard:"
+    sys.info "Enter the text you would like to copy to your sys.util.clipboard:"
     read -r text
-    sys.clipboard "$text"
+    sys.util.clipboard "$text"
 fi
