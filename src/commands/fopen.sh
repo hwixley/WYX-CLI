@@ -5,11 +5,11 @@ if wixd.arggt "1"; then
     if wixd.direxists "$dir"; then
         mydir="${mydirs[$dir]/\~/${HOME}}"
         sys.info "Opening $WIX_DIR..."
-        sys.openfile "$WIX_DIR"
+        sys.util.openfile "$WIX_DIR"
     else
         sys.error "Directory alias does not exist"
     fi
 else
     sys.info "Opening current directory..."
-    sys.openfile "$(pwd)"
+    sys.util.openfile "$(pwd)"
 fi

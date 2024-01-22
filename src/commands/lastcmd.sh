@@ -2,4 +2,4 @@
 
 lastcmd=$(fc -ln -1)
 trimmed=$(echo "$lastcmd" | xargs)
-sys.clipboard "$trimmed"
+sys.util.clipboard "$trimmed"

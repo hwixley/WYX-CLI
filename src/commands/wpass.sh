@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if sys.mac; then
+if sys.os.mac; then
     sys.info "Enter the SSID of the network you would like to get the password for:"
     read -r ssid
     sys.info "Getting password for $ssid..."

@@ -2,7 +2,7 @@
 
 echo ""
 sys.info "Local IPs:"
-if sys.mac; then
+if sys.os.mac; then
     ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
 else
     hostname -I
@@ -29,7 +29,7 @@ echo "${ORANGE}ASN Org:${RESET} $asn_org"
 
 echo ""
 sys.info "Eth0 MAC Address:"
-if sys.mac; then
+if sys.os.mac; then
     ifconfig en1 | awk '/ether/{print $2}'
 else
     cat "/sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address"

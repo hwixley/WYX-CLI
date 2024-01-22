@@ -11,4 +11,4 @@ if wixd.arggt "1"; then
 fi
 pass=$(python3 "${WIX_SCRIPT_DIR}/random_string_gen.py" "$pass_size")
 sys.info "Your random password string is: ${RESET}$pass"
-sys.clipboard "$pass"
+sys.util.clipboard "$pass"
