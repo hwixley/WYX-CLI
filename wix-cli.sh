@@ -1,13 +1,17 @@
 #!/bin/bash
 
 # CLI CONSTS
-mypath=$(readlink -f "${BASH_SOURCE:-$0}")
+if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
+	mypath="${(%):-%N}"
+else
+	mypath="${BASH_SOURCE[0]}"
+fi
 WIX_DIR=$(dirname "$mypath")
 WIX_DATA_DIR=$WIX_DIR/.wix-cli-data
 WIX_SCRIPT_DIR=$WIX_DIR/src/commands/scripts
 export WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR
 
-source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
+source $WIX_DIR/src/classes/sys/sys.h
 sys sys
 
 branch=""
