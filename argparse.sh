@@ -33,11 +33,8 @@ else
 	# Parse input into command object and run it (if valid)
 	cmd inputCommand
 	inputCommand.id = $1
-	echo "inputCommand.id: $(inputCommand.id)"
-
 
 	inputCommand_path="${WIX_DIR}/src/commands/$(inputCommand.path).sh"
-	echo "inputCommand_path: $inputCommand_path"
 
 	if [ -f "${inputCommand_path}" ]; then
 		# Valid command found - run it
