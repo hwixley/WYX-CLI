@@ -177,14 +177,14 @@ wixd.check_keystore() {
 			if [[ $choice == "y" || $choice == "Y" ]]; then
 				if [ -n "$2" ]; then
 					# Replace the value in .env
-					sed -i "s/^$1=.*/$1=$2/" "$envfile"
+					sys.util.inlinesed "s/^$1=.*/$1=$2/" "$envfile"
 					sys.info "Value for key \"$1\" replaced successfully!"
 				else
 					# Prompt user to enter the value
 					value=$(sys.util.inlineread "${GREEN}Enter the value for \"$1\":${RESET}")
 
 					# Replace the value in .env
-					sed -i "s/^$1=.*/$1=$value/" "$envfile"
+					sys.util.inlinesed "s/^$1=.*/$1=$value/" "$envfile"
 					sys.info "Value for key \"$1\" replaced successfully!"
 				fi
 			else

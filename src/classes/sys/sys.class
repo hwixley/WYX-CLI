@@ -149,3 +149,11 @@ sys.util.inlineread() {
 	fi
 	echo "$input"
 }
+
+sys.util.inlinesed() {
+	if sys.shell.zsh; then
+		sed -i '' "$1" "$2"
+	else
+		sed -i "$1" "$2"
+	fi
+}
