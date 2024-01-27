@@ -37,6 +37,7 @@ else
 
 
 	inputCommand_path="${WIX_DIR}/src/commands/$(inputCommand.path).sh"
+	echo "inputCommand_path: $inputCommand_path"
 
 	if [ -f "${inputCommand_path}" ]; then
 		# Valid command found - run it

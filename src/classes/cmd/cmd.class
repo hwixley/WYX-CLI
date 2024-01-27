@@ -1,17 +1,28 @@
+# cmd class - used to parse input into command objects
 
-
+# load dependencies
 . "${WIX_DIR}/src/classes/lib/lib.h"
 lib lib
+. "${WIX_DIR}/src/classes/sys/sys.h"
+sys sys
 
+# class properties
 WIX_cmd_properties="id:default,name:default,path:default,public:default,args:default"
 export WIX_cmd_properties
 
+# class methods
 cmd.property(){
     if [ "$2" = "=" ]
     then
         WIX_cmd_properties=$(echo "$WIX_cmd_properties" | sed -E -e "s/$1:[^,]*/$1:$3/g")
     else
-	    echo "${WIX_cmd_properties[$1]}"
+        if [[ $WIX_cmd_properties =~ $1:([^,]+), ]]; then
+            if sys.shell.zsh; then
+                echo "${match[1]}"
+            else
+                echo "${BASH_REMATCH[1]}"
+            fi
+        fi
     fi
 }
 
