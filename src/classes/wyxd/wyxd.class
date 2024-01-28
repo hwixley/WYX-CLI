@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# -- WIXD CLASS --
+# -- WYXD CLASS --
 
 # Dependencies: sys
-. "$WIX_DIR/src/classes/sys/sys.class"
+. "$WYX_DIR/src/classes/sys/sys.class"
 sys sys
 
 # ====================================
 # -- INPUTS --
 # ====================================
 
-wixd.arggt() {
+wyxd.arggt() {
 	if [ "$num_args" -gt "$1" ]; then
 		return 0
 	else
@@ -24,12 +24,12 @@ wixd.arggt() {
 
 # User
 
-wixd.user.username() {
+wyxd.user.username() {
     declare -A user
     declare -a user_lines user_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         user_lines+=("$line")
-    done < "$WIX_DATA_DIR/git-user.txt"
+    done < "$WYX_DATA_DIR/git-user.txt"
     for line in "${user_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -39,12 +39,12 @@ wixd.user.username() {
     echo "${user[username]}"
 }
 
-wixd.user.name() {
+wyxd.user.name() {
     declare -A user
     declare -a user_lines user_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         user_lines+=("$line")
-    done < "$WIX_DATA_DIR/git-user.txt"
+    done < "$WYX_DATA_DIR/git-user.txt"
     for line in "${user_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -56,12 +56,12 @@ wixd.user.name() {
 
 # Directories
 
-wixd.direxists() {
+wyxd.direxists() {
     declare -A mydirs
     declare -a dir_lines dir_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         dir_lines+=("$line")
-    done < "$WIX_DATA_DIR/dir-aliases.txt"
+    done < "$WYX_DATA_DIR/dir-aliases.txt"
     for line in "${dir_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -75,12 +75,12 @@ wixd.direxists() {
     fi
 }
 
-wixd.dir() {
+wyxd.dir() {
     declare -A mydirs
     declare -a dir_lines dir_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         dir_lines+=("$line")
-    done < "$WIX_DATA_DIR/dir-aliases.txt"
+    done < "$WYX_DATA_DIR/dir-aliases.txt"
     for line in "${dir_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -92,12 +92,12 @@ wixd.dir() {
 
 # Organizations
 
-wixd.org() {
+wyxd.org() {
     declare -A myorgs
     declare -a org_lines org_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         org_lines+=("$line")
-    done < "$WIX_DATA_DIR/git-orgs.txt"
+    done < "$WYX_DATA_DIR/git-orgs.txt"
     for line in "${org_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -107,12 +107,12 @@ wixd.org() {
     echo "${myorgs[$1]}"
 }
 
-wixd.orgs() {
+wyxd.orgs() {
         # declare -A myorgs
     declare -a org_lines org_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         org_lines+=("$line")
-    done < "$WIX_DATA_DIR/git-orgs.txt"
+    done < "$WYX_DATA_DIR/git-orgs.txt"
     for line in "${org_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -121,12 +121,12 @@ wixd.orgs() {
     done
 }
 
-wixd.orgexists() {
+wyxd.orgexists() {
     declare -A myorgs
     declare -a org_lines org_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         org_lines+=("$line")
-    done < "$WIX_DATA_DIR/git-orgs.txt"
+    done < "$WYX_DATA_DIR/git-orgs.txt"
     for line in "${org_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -142,12 +142,12 @@ wixd.orgexists() {
 
 # Scripts
 
-wixd.scriptexists(){
+wyxd.scriptexists(){
     declare -A myscripts
     declare -a script_lines script_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         script_lines+=("$line")
-    done < "$WIX_DATA_DIR/run-configs.txt"
+    done < "$WYX_DATA_DIR/run-configs.txt"
     for line in "${script_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -163,8 +163,8 @@ wixd.scriptexists(){
 
 # Keystore
 
-wixd.check_keystore() {
-	envfile="$WIX_DATA_DIR/.env"
+wyxd.check_keystore() {
+	envfile="$WYX_DATA_DIR/.env"
 	echo "1: $1"
 	echo "2: $2"
 	echo "3: $3"
@@ -227,18 +227,18 @@ wixd.check_keystore() {
 # -- COMMAND FUNCTIONS --
 # ====================================
 
-wixd.cd() {
+wyxd.cd() {
     declare -A mydirs
     declare -a dir_lines dir_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         dir_lines+=("$line")
-    done < "$WIX_DATA_DIR/dir-aliases.txt"
+    done < "$WYX_DATA_DIR/dir-aliases.txt"
     for line in "${dir_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
         mydirs[$key]=$value
     done
-	if wixd.arggt "1" ; then
+	if wyxd.arggt "1" ; then
 		if [[ -v mydirs["$1"] ]]; then
 			alias_dest="${mydirs[$1]}"
 			destination="${alias_dest/~/${HOME}}"
@@ -268,12 +268,12 @@ wixd.cd() {
 	fi
 }
 
-wixd.run() {
+wyxd.run() {
     declare -A myscripts
     declare -a script_lines script_lines=()
     while IFS='' read -r line || [[ -n "$line" ]]; do
         script_lines+=("$line")
-    done < "$WIX_DATA_DIR/run-configs.txt"
+    done < "$WYX_DATA_DIR/run-configs.txt"
     for line in "${script_lines[@]}"; do
         key=${line%%=*}
         value=${line#*=}
@@ -282,7 +282,7 @@ wixd.run() {
 
 	if [[ -v myscripts[$1] ]]; then
 		sys.info "Running $1 script!"
-		source "$WIX_DATA_DIR/run-configs/${myscripts[$1]}.sh"
+		source "$WYX_DATA_DIR/run-configs/${myscripts[$1]}.sh"
 	else
 		sys.error "This script does not exist... Please try again"
 	fi
@@ -293,7 +293,7 @@ wixd.run() {
 # ====================================
 
 
-wixd.command_info() {
+wyxd.command_info() {
 	echo "Welcome to the..."
 	echo ""
 	sys.info " ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}8b ${CYAN}Y${BLUE}888P ${CYAN}8${BLUE}88 ${CYAN}Y${BLUE}8b Y8P${GREEN}     e88'Y88 888     888 "
@@ -336,7 +336,7 @@ wixd.command_info() {
 	echo "- notifs			${ORANGE}: go to git notifications URL${RESET}"
 	echo "- profile			${ORANGE}: go to git profile URL${RESET}"
 	echo "- org <myorg?>			${ORANGE}: go to git org URL${RESET}"
-	echo "- help				${ORANGE}: go to wix-cli GitHub Pages URL${RESET}"
+	echo "- help				${ORANGE}: go to wyx-cli GitHub Pages URL${RESET}"
 	echo ""
 	sys.h1 "MY DATA:"
 	echo "- user 				${ORANGE}: view your user-specific data (ie. name, GitHub username)${RESET}"

@@ -6,12 +6,12 @@ if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 else
 	mypath="${BASH_SOURCE[0]}"
 fi
-WIX_DIR=$(dirname "$mypath")
-WIX_DATA_DIR=$WIX_DIR/.wix-cli-data
-WIX_SCRIPT_DIR=$WIX_DIR/src/commands/scripts
-export WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR
+WYX_DIR=$(dirname "$mypath")
+WYX_DATA_DIR=$WYX_DIR/.wyx-cli-data
+WYX_SCRIPT_DIR=$WYX_DIR/src/commands/scripts
+export WYX_DIR WYX_DATA_DIR WYX_SCRIPT_DIR
 
-source $WIX_DIR/src/classes/sys/sys.h
+source $WYX_DIR/src/classes/sys/sys.h
 sys sys
 
 branch=""
@@ -32,11 +32,11 @@ pull() {
 	git pull origin "$1"
 }
 
-wix_update() {
+wyx_update() {
 	sys.info "Checking for updates..."
 
 	current_dir=$(pwd)
-	cd "$WIX_DIR" || return 1
+	cd "$WYX_DIR" || return 1
 	repo_branch=""
 	if git rev-parse --git-dir > /dev/null 2>&1; then
 		repo_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -69,9 +69,9 @@ wix_update() {
 	# } &> /dev/null
 }
 
-wix_update ""
+wyx_update ""
 
 # ARGPARSE
 
-source "$WIX_DIR/completion.sh"
-source "$WIX_DIR/argparse.sh" "${@:1}"
+source "$WYX_DIR/completion.sh"
+source "$WYX_DIR/argparse.sh" "${@:1}"

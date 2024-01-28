@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if wixd.arggt "1"; then
+if wyxd.arggt "1"; then
     city="$1"
     sys.info "Getting weather for $city..."
     curl wttr.in/"$city"

@@ -1,22 +1,22 @@
 # cmd class - used to parse input into command objects
 
 # load dependencies
-. "${WIX_DIR}/src/classes/lib/lib.h"
+. "${WYX_DIR}/src/classes/lib/lib.h"
 lib lib
-. "${WIX_DIR}/src/classes/sys/sys.h"
+. "${WYX_DIR}/src/classes/sys/sys.h"
 sys sys
 
 # class properties
-WIX_cmd="id:"
-export WIX_cmd
+WYX_cmd="id:"
+export WYX_cmd
 
 # class methods
 cmd.property(){
     if [ "$2" = "=" ]
     then
-        WIX_cmd=$(echo "$WIX_cmd" | sed -E -e "s/$1:[^,]*/$1:$3/g")
+        WYX_cmd=$(echo "$WYX_cmd" | sed -E -e "s/$1:[^,]*/$1:$3/g")
     else
-        if [[ $WIX_cmd =~ $1:([^,]*) ]]; then
+        if [[ $WYX_cmd =~ $1:([^,]*) ]]; then
             if sys.shell.zsh; then
                 echo "${match[1]}"
             else
@@ -52,5 +52,5 @@ cmd.args(){
 }
 
 cmd.unset(){
-    unset WIX_cmd
+    unset WYX_cmd
 }

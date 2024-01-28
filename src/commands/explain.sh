@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if wixd.arggt "1"; then
+if wyxd.arggt "1"; then
     cmd="$1"
     sys.info "Finding explanation for $cmd..."
     cmd="${cmd// /+}"

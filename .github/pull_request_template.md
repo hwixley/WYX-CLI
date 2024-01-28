@@ -1,6 +1,6 @@
 # Pull Request Checks
 - [ ] An appropriate title prefix (`[BUG-FIX]`, `[NEW-FEATURE]`,`[REFINEMENT]`, `[METADATA]`) and title have been used.
-- [ ] Documentation has been updated on the README and `wix` command output where necessary.
+- [ ] Documentation has been updated on the README and `wyx` command output where necessary.
 
 # What changes have been made
 

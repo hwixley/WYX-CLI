@@ -33,15 +33,15 @@ jobs:
     # Run the script
     - name: Run script file
       run: |
-        chmod +x wix-cli.sh
-        ./wix-cli.sh img_stdout
+        chmod +x wyx-cli.sh
+        ./wyx-cli.sh img_stdout
       shell: bash
 
     # Commit and push changes
     - name: Commit changes
       run: |
-        git config --local user.name "WIX-CLI Bot"
-        git config --local user.email "hwixley1@gmail.com"
-        git add .generated/wixcli-output-preview.png
-        git commit -m "GH-Action: Update 'wix' stdout image"
+        git config --local user.name "WYX-CLI Bot"
+        git config --local user.email "hwyxley1@gmail.com"
+        git add .generated/wyxcli-output-preview.png
+        git commit -m "GH-Action: Update 'wyx' stdout image"
         git push
