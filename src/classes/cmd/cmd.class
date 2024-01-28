@@ -50,3 +50,7 @@ cmd.public(){
 cmd.args(){
     lib.csv.args "$(cmd.id '')"
 }
+
+cmd.unset(){
+    unset WIX_cmd
+}

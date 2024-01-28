@@ -157,11 +157,3 @@ sys.util.inlinesed() {
 		sed -i "$1" "$2"
 	fi
 }
-
-sys.util.unset() {
-	if sys.shell.zsh; then
-		unset "$@"
-	else
-		export -n "$1"
-	fi
-}
