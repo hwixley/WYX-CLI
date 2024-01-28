@@ -14,9 +14,12 @@ lib.csv.name(){
 }
 
 lib.csv.path(){
-    lines=$(csvsql --query "select path from arg_scripts where id='$1'" "${csv_file}")
-    lines_array=($lines)
-    echo "${lines_array[1]}"
+    IFS=$'\n' lines=($(csvsql --query "select path from arg_scripts where id='$1'" "${csv_file}"))
+    if sys.shell.zsh; then
+        echo "${lines[2]}"
+    else
+        echo "${lines[1]}"
+    fi
 }
 
 lib.csv.public(){

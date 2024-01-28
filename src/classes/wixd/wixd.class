@@ -2,6 +2,10 @@
 
 # -- WIXD CLASS --
 
+# Dependencies: sys
+. "$WIX_DIR/src/classes/sys/sys.class"
+sys sys
+
 # ====================================
 # -- INPUTS --
 # ====================================
@@ -161,22 +165,26 @@ wixd.scriptexists(){
 
 wixd.check_keystore() {
 	envfile="$WIX_DATA_DIR/.env"
+	echo "1: $1"
+	echo "2: $2"
+	echo "3: $3"
+	echo "$envfile"
 	if [[ -f "$envfile" ]]; then
 		# Check if key-value pair exists in .env file
 		if grep -q "^$1=" "$envfile"; then
 			# Prompt user to replace the existing value
-			read -rp "${GREEN}Key \"$1\" already exists. Do you want to replace the value? (y/n):${RESET} " choice
+			choice=$(sys.util.inlineread "${GREEN}Key \"$1\" already exists. Do you want to replace the value? (y/n):${RESET}")
 			if [[ $choice == "y" || $choice == "Y" ]]; then
 				if [ -n "$2" ]; then
 					# Replace the value in .env
-					sed -i "s/^$1=.*/$1=$2/" "$envfile"
+					sys.util.inlinesed "s/^$1=.*/$1=$2/" "$envfile"
 					sys.info "Value for key \"$1\" replaced successfully!"
 				else
 					# Prompt user to enter the value
-					read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+					value=$(sys.util.inlineread "${GREEN}Enter the value for \"$1\":${RESET}")
 
 					# Replace the value in .env
-					sed -i "s/^$1=.*/$1=$value/" "$envfile"
+					sys.util.inlinesed "s/^$1=.*/$1=$value/" "$envfile"
 					sys.info "Value for key \"$1\" replaced successfully!"
 				fi
 			else
@@ -189,7 +197,7 @@ wixd.check_keystore() {
 				sys.info "Value for key \"$1\" appended successfully!"
 			else
 				# Prompt user to enter the value
-				read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+				value=$(sys.util.inlineread "${GREEN}Enter the value for \"$1\":${RESET} ")
 
 				# Append key-value pair to .env
 				echo -e "\n$1=$value" >> "$envfile"
@@ -204,7 +212,7 @@ wixd.check_keystore() {
 			sys.info "Value for key \"$1\" appended successfully!"
 		else
 			# Prompt user to enter the value
-			read -rp "${GREEN}Enter the value for \"$1\":${RESET} " value
+			value=$(sys.util.inlineread "${GREEN}Enter the value for \"$1\":${RESET} ")
 
 			# Create .env file and add the key-value pair
 			echo "$1=$value" > "$envfile"

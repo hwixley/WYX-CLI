@@ -7,11 +7,11 @@ date=$(date)
 year="${date:24:29}"
 
 # Load bash classes
-source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
+source $WIX_DIR/src/classes/sys/sys.h
 sys sys
-source $(dirname ${BASH_SOURCE[0]})/src/classes/wgit/wgit.h
+source $WIX_DIR/src/classes/wgit/wgit.h
 wgit wgit
-source $(dirname ${BASH_SOURCE[0]})/src/classes/wixd/wixd.h
+source $WIX_DIR/src/classes/wixd/wixd.h
 wixd wixd
 
 # Load source git data
@@ -29,15 +29,17 @@ if [ $num_args -eq 0 ]; then
 	wixd.command_info
 
 else
-	source $(dirname ${BASH_SOURCE[0]})/src/classes/cmd/cmd.h
+	source $WIX_DIR/src/classes/cmd/cmd.h
 	# Parse input into command object and run it (if valid)
 	cmd inputCommand
-	inputCommand.id '=' "$1"
+	inputCommand.id '=' $1
+
 	inputCommand_path="${WIX_DIR}/src/commands/$(inputCommand.path).sh"
 
 	if [ -f "${inputCommand_path}" ]; then
 		# Valid command found - run it
 		source "${inputCommand_path}" "${@:2}"
+		inputCommand.unset
 
 	else
 		# Invalid command - show error message
@@ -45,3 +47,5 @@ else
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
 fi
+
+unset WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR

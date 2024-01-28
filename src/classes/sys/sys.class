@@ -140,3 +140,20 @@ sys.util.empty() {
 		return 1
 	fi
 }
+
+sys.util.inlineread() {
+	if sys.shell.zsh; then
+		read "input?$1"
+	else
+		read -rp "$1 " input
+	fi
+	echo "$input"
+}
+
+sys.util.inlinesed() {
+	if sys.shell.zsh; then
+		sed -i '' "$1" "$2"
+	else
+		sed -i "$1" "$2"
+	fi
+}
