@@ -39,7 +39,7 @@ else
 	if [ -f "${inputCommand_path}" ]; then
 		# Valid command found - run it
 		source "${inputCommand_path}" "${@:2}"
-		export -n WIX_inputCommand
+		sys.util.unset WIX_inputCommand
 
 	else
 		# Invalid command - show error message
@@ -48,4 +48,4 @@ else
 	fi
 fi
 
-export -n WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR
+sys.util.unset WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR
