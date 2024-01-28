@@ -32,7 +32,7 @@ else
 	source $WIX_DIR/src/classes/cmd/cmd.h
 	# Parse input into command object and run it (if valid)
 	cmd inputCommand
-	inputCommand.id = $1
+	inputCommand.id '=' $1
 
 	inputCommand_path="${WIX_DIR}/src/commands/$(inputCommand.path).sh"
 
