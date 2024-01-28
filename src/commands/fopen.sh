@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if wixd.arggt "1"; then
+if wyxd.arggt "1"; then
     dir="$1"
-    if wixd.direxists "$dir"; then
+    if wyxd.direxists "$dir"; then
         mydir="${mydirs[$dir]/\~/${HOME}}"
-        sys.info "Opening $WIX_DIR..."
-        sys.util.openfile "$WIX_DIR"
+        sys.info "Opening $WYX_DIR..."
+        sys.util.openfile "$WYX_DIR"
     else
         sys.error "Directory alias does not exist"
     fi

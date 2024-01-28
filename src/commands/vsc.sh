@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if wixd.direxists "$1"; then
-    wixd.cd "$1"
+if wyxd.direxists "$1"; then
+    wyxd.cd "$1"
     sys.info "Opening up VSCode editor..."
     code .
 else

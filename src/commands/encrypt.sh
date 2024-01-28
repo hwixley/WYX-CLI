@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sys.info "Encrypting $1..."
-if wixd.arggt "1"; then
+if wyxd.arggt "1"; then
     if [ -d "$1" ]; then
         tar -cvf "$1.tar" "$1"
         gpg -c "$1.tar"

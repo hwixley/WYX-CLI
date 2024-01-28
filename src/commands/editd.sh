@@ -1,7 +1,7 @@
 #!/bin/bash
 
 data_to_edit="$1"
-if ! wixd.arggt "1"; then
+if ! wyxd.arggt "1"; then
     sys.info "What data would you like to edit?"
     read -r data_to_edit_prompt
     data_to_edit=$data_to_edit_prompt
@@ -14,13 +14,13 @@ if ! wixd.arggt "1"; then
     fi
 fi
 if [ "$data_to_edit" = "user" ]; then
-    sys.util.editfile "$WIX_DATA_DIR/git-user.txt"
+    sys.util.editfile "$WYX_DATA_DIR/git-user.txt"
 elif [ "$data_to_edit" = "myorgs" ]; then
-    sys.util.editfile "$WIX_DATA_DIR/git-orgs.txt"
+    sys.util.editfile "$WYX_DATA_DIR/git-orgs.txt"
 elif [ "$data_to_edit" = "mydirs" ]; then
-    sys.util.editfile "$WIX_DATA_DIR/dir-aliases.txt"
+    sys.util.editfile "$WYX_DATA_DIR/dir-aliases.txt"
 elif [ "$data_to_edit" = "myscripts" ]; then
-    sys.util.editfile "$WIX_DATA_DIR/run-configs.txt"
+    sys.util.editfile "$WYX_DATA_DIR/run-configs.txt"
 elif [ "$data_to_edit" = "todo" ]; then
-    sys.util.editfile "$WIX_DATA_DIR/todo.txt"
+    sys.util.editfile "$WYX_DATA_DIR/todo.txt"
 fi

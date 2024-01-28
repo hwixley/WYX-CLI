@@ -1,21 +1,21 @@
-# ⚡️ WIX CLI ⚡️
+# ⚡️ WYX CLI ⚡️
 
 Optimize your development productivity in the terminal
 
 <hr>
 
-[![CODEQL](https://github.com/hwixley/wix-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wix-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WIX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-2.1.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
+[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-3.0.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
 
 <hr>
 <p align="center">
-<img src="../.generated/wixcli-output-preview.png" style="width: 90%; display: flex; margin: auto">
+<img src="../.generated/wyxcli-output-preview.png" style="width: 90%; display: flex; margin: auto">
 </p>
 
 <hr>
 
 ## Table of Contents
 
-- [⚡️ WIX CLI ⚡️](#️-wix-cli-️)
+- [⚡️ WYX CLI ⚡️](#️-wyx-cli-️)
   - [Table of Contents](#table-of-contents)
   - [What It Does](#what-it-does)
     - [Why It Was Made](#why-it-was-made)
@@ -68,8 +68,8 @@ I am developing this project in my spare time to help developer's across the glo
 
 <ins>The dependencies include:</ins>
 
-- `openssl` for the [Random String Generation](https://github.com/hwixley/wix-cli#text-utilities) commands.
-- `git` for all [Git Automation](https://github.com/hwixley/wix-cli#git-automation) commands.
+- `openssl` for the [Random String Generation](https://github.com/hwixley/wyx-cli#text-utilities) commands.
+- `git` for all [Git Automation](https://github.com/hwixley/wyx-cli#git-automation) commands.
 - Visual Studio Code for the `vsc` code editor command.
 - XCode for the `xc` code editor command (only available for Macintosh systems).
 - `speedtest` (the Ookla speedtest-cli) for runnning network speed tests. The installation commands for this on MacOS and Debian are in `setup.sh`.
@@ -81,13 +81,13 @@ I am developing this project in my spare time to help developer's across the glo
 1. Clone this repository into a folder of your choice:
 
 ```
-git clone git@github.com:hwixley/WIX-CLI.git
+git clone git@github.com:hwixley/WYX-CLI.git
 ```
 
 2. Navigate into the directory:
 
 ```
-cd WIX-CLI
+cd WYX-CLI
 ```
 
 3. Give permissions to the setup script and run it:
@@ -98,14 +98,14 @@ chmod +x setup.sh && ./setup.sh
 
 4. Reopen your terminal or run `source ~/.bashrc` (`source ~/.zshrc` for unix systems)
 
-Type `wix` to see the list of commands and start developing some magic!
+Type `wyx` to see the list of commands and start developing some magic!
 
 ## Extra Feature Setup
 
-1. You can use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs) when using the `wix push` command. <i>This requires an OpenAI API key.</i>
+1. You can use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs) when using the `wyx push` command. <i>This requires an OpenAI API key.</i>
 
 ```
-wix setup smart_commit
+wyx setup smart_commit
 ```
 
 ## Factory-reset Installation
@@ -116,7 +116,7 @@ wix setup smart_commit
 rm -rf <path-of-installation>
 ```
 
-1. Remove the wix-cli script setup in your environment file
+1. Remove the wyx-cli script setup in your environment file
    - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems)
      ```
      gedit ~/.bashrc
@@ -125,10 +125,10 @@ rm -rf <path-of-installation>
      ```
      vi ~/.bashrc
      ```
-   - Remove the 2 lines for the wix-cli:<br>
-     - The first line is a comment: `# WIX-CLI`<br>
-     - The second line is where the command is actually setup: `alias wix="<path-of-installation>/wix-cli.sh"`
-2. Follow the [installation instructions](https://github.com/hwixley/wix-cli#installation)
+   - Remove the 2 lines for the wyx-cli:<br>
+     - The first line is a comment: `# WYX-CLI`<br>
+     - The second line is where the command is actually setup: `alias wyx="<path-of-installation>/wyx-cli.sh"`
+2. Follow the [installation instructions](https://github.com/hwixley/wyx-cli#installation)
 
 <hr>
 
@@ -144,7 +144,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 
 <br>
 
-<i>**\*\*Note: all commands below should be preceded by the `wix` command, this was ommitted for readability.\*\***</i>
+<i>**\*\*Note: all commands below should be preceded by the `wyx` command, this was ommitted for readability.\*\***</i>
 <br>
 
 ### Navigation
@@ -187,7 +187,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 6. `notifs`: go to your GitHub Notifications
 7. `profile`: go to your GitHub profile
 8. `org <myorg?>`: go to the specified url of the GitHub organization
-9. `help`: go to the wix-cli GitHub Pages url for documentation
+9. `help`: go to the wyx-cli GitHub Pages url for documentation
 
 ### Data for Custom Scripting Logic
 

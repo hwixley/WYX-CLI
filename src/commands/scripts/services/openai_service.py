@@ -14,11 +14,11 @@ class OpenAIService:
     LOCAL_PATH = os.getcwd()
     LOCAL_README_PATH = f"{LOCAL_PATH}/.github/README.md" if os.path.exists(f"{LOCAL_PATH}/.github/README.md") else (f"{LOCAL_PATH}/README.md" if os.path.exists(f"{LOCAL_PATH}/README.md") else "")
     LOCAL_README = ("\n\nFor context this is the repository's README file: \n" + read_file(LOCAL_README_PATH)) if os.path.exists(LOCAL_README_PATH) else ""
-    KEY_PATH = f"{REPO_PATH}/.wix-cli-data/.env"
+    KEY_PATH = f"{REPO_PATH}/.wyx-cli-data/.env"
     KEY_NAME="OPENAI_API_KEY"
     ENGINE="gpt-3.5-turbo"
-    ASSISTANT_MESSAGE_DEV = { "role": "system", "content": f"You are the WIX-CLI Smart Commit bot. You must write an informative yet succinct commit message for the changes you can see have been made from the specified 'git ...' command outputs. Ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why.{LOCAL_README}"}
-    ASSISTANT_MESSAGE = { "role": "system", "content": f"Your name is the WIX-CLI bot, you were created by Harry Wixley for a bash CLI project. You are an assistant setup on a command line to help developers with any queries they may have developer related or otherwise."}
+    ASSISTANT_MESSAGE_DEV = { "role": "system", "content": f"You are the WYX-CLI Smart Commit bot. You must write an informative yet succinct commit message for the changes you can see have been made from the specified 'git ...' command outputs. Ignore cache files and mention specifically which functions, classes or variables were modified/created/deleted and why.{LOCAL_README}"}
+    ASSISTANT_MESSAGE = { "role": "system", "content": f"Your name is the WYX-CLI bot, you were created by Harry Wixley for a bash CLI project. You are an assistant setup on a command line to help developers with any queries they may have developer related or otherwise."}
     SEPARATOR="-"*110
     MAX_TOKENS=4097
 
