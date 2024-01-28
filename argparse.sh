@@ -39,6 +39,7 @@ else
 	if [ -f "${inputCommand_path}" ]; then
 		# Valid command found - run it
 		source "${inputCommand_path}" "${@:2}"
+		export -n WIX_inputCommand
 
 	else
 		# Invalid command - show error message
@@ -46,3 +47,5 @@ else
 		echo "Type 'wix' to see the list of available commands (and their arguments), or 'wix help' to be redirected to more in-depth online documentation"
 	fi
 fi
+
+export -n WIX_DIR WIX_DATA_DIR WIX_SCRIPT_DIR
