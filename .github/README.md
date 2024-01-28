@@ -4,7 +4,7 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-[![CODEQL](https://github.com/hwyxley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwyxley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwyxley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwyxley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwyxley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwyxley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-2.1.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
+[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-2.1.0-blue?labelColor=gray&style=flat) ![Platforms](https://img.shields.io/badge/Platforms-BASH%20&%20ZSH-orange?labelColor=gray&style=flat)
 
 <hr>
 <p align="center">
@@ -60,7 +60,7 @@ I knew I was not the only one who had suffered from these productivity issues as
 
 ## Support This Project
 
-I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwyxley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :coffee: :zap:
+I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :coffee: :zap:
 
 <hr>
 
@@ -68,8 +68,8 @@ I am developing this project in my spare time to help developer's across the glo
 
 <ins>The dependencies include:</ins>
 
-- `openssl` for the [Random String Generation](https://github.com/hwyxley/wyx-cli#text-utilities) commands.
-- `git` for all [Git Automation](https://github.com/hwyxley/wyx-cli#git-automation) commands.
+- `openssl` for the [Random String Generation](https://github.com/hwixley/wyx-cli#text-utilities) commands.
+- `git` for all [Git Automation](https://github.com/hwixley/wyx-cli#git-automation) commands.
 - Visual Studio Code for the `vsc` code editor command.
 - XCode for the `xc` code editor command (only available for Macintosh systems).
 - `speedtest` (the Ookla speedtest-cli) for runnning network speed tests. The installation commands for this on MacOS and Debian are in `setup.sh`.
@@ -81,7 +81,7 @@ I am developing this project in my spare time to help developer's across the glo
 1. Clone this repository into a folder of your choice:
 
 ```
-git clone git@github.com:hwyxley/WYX-CLI.git
+git clone git@github.com:hwixley/WYX-CLI.git
 ```
 
 2. Navigate into the directory:
@@ -128,7 +128,7 @@ rm -rf <path-of-installation>
    - Remove the 2 lines for the wyx-cli:<br>
      - The first line is a comment: `# WYX-CLI`<br>
      - The second line is where the command is actually setup: `alias wyx="<path-of-installation>/wyx-cli.sh"`
-2. Follow the [installation instructions](https://github.com/hwyxley/wyx-cli#installation)
+2. Follow the [installation instructions](https://github.com/hwixley/wyx-cli#installation)
 
 <hr>
 

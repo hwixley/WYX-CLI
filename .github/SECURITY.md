@@ -9,4 +9,4 @@
 
 ## Reporting a Vulnerability
 
-Please submit an issue with the tag `vulnerability` describing the vulnerability you have found and assign @hwyxley to it.
+Please submit an issue with the tag `vulnerability` describing the vulnerability you have found and assign @hwixley to it.
