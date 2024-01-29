@@ -440,15 +440,52 @@ sys.dependencies.install() {
 		brew install xclip jq csvkit
 		brew tap teamookla/speedtest
 		brew install speedtest --force
-		pip3 install -r $WYX_DIR/requirements.txt
+		pip3 install -r "${WYX_DIR}/requirements.txt"
 	elif sys.os.linux; then
 		sys.info "Installing dependencies for Linux..."
 		sudo apt-get update
 		sudo apt-get -y install xclip jq csvkit
 		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 		sudo apt-get -y install speedtest
-		pip3 install -r $WYX_DIR/requirements.txt
+		pip3 install -r "${WYX_DIR}/requirements.txt"
 	else
 		sys.error "This OS is not supported"
 	fi
+}
+
+sys.dependencies.update() {
+	if sys.os.mac; then
+		sys.info "Updating dependencies for macOS..."
+		brew update
+		brew upgrade xclip jq csvkit
+		brew tap teamookla/speedtest
+		brew upgrade speedtest --force
+		pip3 install -r "${WYX_DIR}/requirements.txt"
+	elif sys.os.linux; then
+		sys.info "Updating dependencies for Linux..."
+		sudo apt-get update
+		sudo apt-get -y upgrade xclip jq csvkit
+		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+		sudo apt-get -y upgrade speedtest
+		pip3 install -r "${WYX_DIR}/requirements.txt"
+	else
+		sys.error "This OS is not supported"
+	fi
+}
+
+sys.dependencies.list() {
+	if sys.os.mac; then
+		sys.info "Listing dependencies for macOS..."
+		echo ""
+		sys.h1 "Brew: ${RESET}xclip, jq, csvkit, speedtest"
+		sys.h1 "Pip: ${RESET}$(cat "${WYX_DIR}/requirements.txt" | xargs)"
+	elif sys.os.linux; then
+		sys.info "Listing dependencies for Linux..."
+		echo ""
+		sys.h1 "Apt: ${RESET}xclip, jq, csvkit, speedtest"
+		sys.h1 "Pip: ${RESET}$(cat "${WYX_DIR}/requirements.txt" | xargs)"
+	else
+		sys.error "This OS is not supported"
+	fi
+	echo ""
 }
