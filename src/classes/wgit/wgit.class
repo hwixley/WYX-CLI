@@ -77,11 +77,8 @@ wgit.wyx_ginit(){
 
 wgit.commit() {
 	git add .
-	echo "test"
 	if sys.util.empty "$1" ; then
-		echo "${WYX_DATA_DIR}/.env"
 		if [ -f "${WYX_DATA_DIR}/.env" ]; then
-			echo "${WYX_DATA_DIR}/.env"
 			if grep -q "OPENAI_API_KEY=" "${WYX_DATA_DIR}/.env" && grep -q "USE_SMART_COMMIT=true" "${WYX_DATA_DIR}/.env" ; then
 				IFS=$'\n' lines=($(python3 "$WYX_SCRIPT_DIR/services/openai_service.py" "smart"))
 				sys.h2 "GPT-3 Suggestion"
