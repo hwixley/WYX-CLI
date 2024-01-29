@@ -161,40 +161,73 @@ sys.gpu.tostring() {
 	sys.h2 "Driver: ${RESET}$(sys.gpu.driver)"
 }
 
-# sys.ram.* - RAM specifications
+# sys.mem.* - Memory specifications
 
-sys.ram.total() {
-	free -h | grep Mem | awk '{print $2}'
+sys.mem.pagesize() {
+	getconf PAGESIZE
 }
 
-sys.ram.used() {
-	free -h | grep Mem | awk '{print $3}'
+sys.mem.total() {
+	if sys.os.mac; then
+		system_profiler SPHardwareDataType | grep "Memory:" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		free -h | grep Mem | awk '{print $2}'
+	fi
 }
 
-sys.ram.free() {
-	free -h | grep Mem | awk '{print $4}'
+sys.mem.used() {
+	if sys.os.mac; then
+		used=$(vm_stat | grep "Pages active" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((used * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $3}'
+	fi
 }
 
-sys.ram.shared() {
-	free -h | grep Mem | awk '{print $5}'
+sys.mem.free() {
+	if sys.os.mac; then
+		free=$(vm_stat | grep "Pages free" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((free * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $4}'
+	fi
 }
 
-sys.ram.buffcache() {
-	free -h | grep Mem | awk '{print $6}'
+sys.mem.shared() {
+	if sys.os.mac; then
+		shared=$(vm_stat | grep "Pages occupied by compressor" | awk '{ print $5 }' | sed 's/\.//')
+		echo "$((shared * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $5}'
+	fi
 }
 
-sys.ram.available() {
-	free -h | grep Mem | awk '{print $7}'
+sys.mem.buffcache() {
+	if sys.os.mac; then
+		purgeable=$(vm_stat | grep "Pages purgeable" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((purgeable * $(sys.mem.pagesize) / 1024 / 1024)) MB"
+	else
+		free -h | grep Mem | awk '{print $6}'
+	fi
 }
 
-sys.ram.tostring() {
-	sys.h1r "RAM:"
-	sys.h2r "Total: ${RESET}$(sys.ram.total)"
-	sys.h2 "Used: ${RESET}$(sys.ram.used)"
-	sys.h2 "Free: ${RESET}$(sys.ram.free)"
-	sys.h2 "Shared: ${RESET}$(sys.ram.shared)"
-	sys.h2 "Buffer/Cache: ${RESET}$(sys.ram.buffcache)"
-	sys.h2 "Available: ${RESET}$(sys.ram.available)"
+sys.mem.available() {
+	if sys.os.mac; then
+		inactive=$(vm_stat | grep "Pages inactive" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((inactive * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $7}'
+	fi
+}
+
+sys.mem.tostring() {
+	sys.h1r "MEMORY:"
+	sys.h2r "Total: ${RESET}$(sys.mem.total)"
+	sys.h2 "Used: ${RESET}$(sys.mem.used)"
+	sys.h2 "Free: ${RESET}$(sys.mem.free)"
+	sys.h2 "Shared: ${RESET}$(sys.mem.shared)"
+	sys.h2 "Buffer/Cache: ${RESET}$(sys.mem.buffcache)"
+	sys.h2 "Available: ${RESET}$(sys.mem.available)"
 }
 
 # sys.fs.* - Filesystem specifications
