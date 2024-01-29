@@ -45,7 +45,37 @@ for i in "${files[@]}"; do
 			rm "$md_dir/$i"
 			touch "$md_dir/$i"
 			chmod +rwx "$md_dir/$i"
+
+			echo ""
+			if [ "$i" = "git-user.txt" ]; then
+				sys.h1 "Please enter your github username:"
+				read -r gituser
+				echo ""
+				sys.h1 "Please enter your full name (this will be used for copyright clauses on GitHub software licenses):"
+				read -r fullname
+				{ echo "username=$gituser"; echo "name=$fullname"; } >> "$md_dir/$i"
+			elif [ "$i" = "git-orgs.txt" ]; then
+				sys.h1 "Please enter the default github organization you want to setup with this cli: (enter it's github username) ***leave empty if none***"
+				read -r gitorg
+				{ echo "default=$gitorg"; } >> "$md_dir/$i"
+			elif [ "$i" = "dir-aliases.txt" ]; then
+				sys.h1 "Would you like to include the default directory aliases? [ y / n ]"
+				read -r keep_default_diraliases
+				if [ "$keep_default_diraliases" = "y" ]; then
+					{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> "$md_dir/$i"
+				fi
+			elif [ "$i" = "run-configs.txt" ]; then
+				sys.info "Run configs flushed"
+			elif [ "$i" = ".env" ]; then
+				sys.info "Environment variables flushed"
+			elif [ "$i" = "todo.txt" ]; then
+				sys.info "TODO flushed"
+				{ echo "TODO:"; echo ""; } >> "$md_dir/$i"
+			fi
+
+			sys.info "$i setup complete!"
 		fi
+		echo ""
 	fi
 done
 if ! [ -d "$md_dir/run-configs" ]; then
@@ -54,31 +84,40 @@ fi
 
 
 # GET USER SPECIFIC DETAILS
-echo ""
-sys.h1 "Please enter your github username:"
-read -r gituser
-echo "username=$gituser" >> $md_dir/git-user.txt
+user_file=$(cat $md_dir/git-user.txt)
+if [ "$user_file" = "" ]; then
+	echo ""
+	sys.h1 "Please enter your github username:"
+	read -r gituser
+	echo "username=$gituser" >> $md_dir/git-user.txt
 
-echo ""
-sys.h1 "Please enter your full name (this will be used for copyright clauses on GitHub software licenses):"
-read -r fullname
-echo "name=$fullname" >> $md_dir/git-user.txt
-
-echo ""
-sys.h1 "Please enter the default github organization you want to setup with this cli: (enter it's github username) ***leave empty if none***"
-read -r gitorg
-if [ "$gitorg" != "" ]; then
-	echo "default=$gitorg" >> $md_dir/git-orgs.txt
+	echo ""
+	sys.h1 "Please enter your full name (this will be used for copyright clauses on GitHub software licenses):"
+	read -r fullname
+	echo "name=$fullname" >> $md_dir/git-user.txt
 fi
 
-echo ""
-echo "The default directory aliases setup are as follows:"
-echo "1) docs = ~/Documents"
-echo "2) down = ~/Downloads"
-sys.h1 "Would you like to include these? [ y / n ]"
-read -r keep_default_diraliases
-if [ "$keep_default_diraliases" = "y" ]; then
-	{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> $md_dir/dir-aliases.txt
+org_file=$(cat $md_dir/git-orgs.txt)
+if [ "$org_file" = "" ]; then
+	echo ""
+	sys.h1 "Please enter the default github organization you want to setup with this cli: (enter it's github username) ***leave empty if none***"
+	read -r gitorg
+	if [ "$gitorg" != "" ]; then
+		echo "default=$gitorg" >> $md_dir/git-orgs.txt
+	fi
+fi
+
+dir_file=$(cat $md_dir/dir-aliases.txt)
+if [ "$dir_file" = "" ]; then
+	echo ""
+	echo "The default directory aliases setup are as follows:"
+	echo "1) docs = ~/Documents"
+	echo "2) down = ~/Downloads"
+	sys.h1 "Would you like to include these? [ y / n ]"
+	read -r keep_default_diraliases
+	if [ "$keep_default_diraliases" = "y" ]; then
+		{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> $md_dir/dir-aliases.txt
+	fi
 fi
 
 # FINAL SETUP
