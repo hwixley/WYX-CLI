@@ -151,7 +151,7 @@ sys.gpu.model() {
 }
 
 sys.gpu.driver() {
-	lspci -k | grep -A 2 -i "VGA" | grep "Kernel driver in use"
+	lspci -k | grep -EA3 'VGA|3D|Display' | grep "Kernel driver in use:" | cut -d ":" -f2 | cut -d " " -f2-
 }
 
 sys.gpu.tostring() {
@@ -197,30 +197,36 @@ sys.ram.tostring() {
 	sys.h2 "Available: ${RESET}$(sys.ram.available)"
 }
 
+# sys.fs.* - Filesystem specifications
+
+sys.fs.disk() {
+	df -P . | sed -n '$s/[[:blank:]].*//p'
+}
+
 # sys.disk.* - Disk specifications
 
 sys.disk.total() {
-	df -h | grep "/dev/sda1" | awk '{print $2}'
+	df -h | grep "$(sys.fs.disk)" | awk '{print $2}'
 }
 
 sys.disk.used() {
-	df -h | grep "/dev/sda1" | awk '{print $3}'
+	df -h | grep "$(sys.fs.disk)" | awk '{print $3}'
 }
 
 sys.disk.avail() {
-	df -h | grep "/dev/sda1" | awk '{print $4}'
+	df -h | grep "$(sys.fs.disk)" | awk '{print $4}'
 }
 
 sys.disk.use() {
 	if sys.os.mac; then
 		df -h | grep "/dev/disk1s1" | awk '{print $5}'
 	else
-		df -h | grep "/dev/sda1" | awk '{print $5}'
+		df -h | grep "$(sys.fs.disk)" | awk '{print $5}'
 	fi
 }
 
 sys.disk.mounted() {
-	sys.util.trim "$(df -h | grep "/dev/sda1" | awk '{print $6}')"
+	df -h | grep "$(sys.fs.disk)" | awk '{print $6}'
 }
 
 sys.disk.tostring() {
@@ -232,11 +238,23 @@ sys.disk.tostring() {
 	sys.h2 "Mounted: ${RESET}$(sys.disk.mounted)"
 }
 
-# sys.os.* - OS specifications
+# sys.kernel.* - Kernel specifications
 
-sys.os.name() {
+sys.kernel.name() {
 	uname -s
 }
+
+sys.kernel.version() {
+	uname -r
+}
+
+sys.kernel.tostring() {
+	sys.h1r "Kernel:"
+	sys.h2 "Name: ${RESET}$(sys.kernel.name)"
+	sys.h2 "Version: ${RESET}$(sys.kernel.version)"
+}
+
+# sys.os.* - OS specifications
 
 sys.os.mac() {
 	if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -267,22 +285,6 @@ sys.os.wsl() {
 		return 0
 	else
 		return 1
-	fi
-}
-
-sys.os.tostring() {
-	sys.h1r "OS:"
-	sys.h2 "Name: ${RESET}$(sys.os.name)"
-	if sys.os.mac; then
-		sys.h2 "Type: ${RESET}macOS"
-	elif sys.os.linux; then
-		sys.h2 "Type: ${RESET}Linux"
-	elif sys.os.windows; then
-		sys.h2 "Type: ${RESET}Windows"
-	elif sys.os.wsl; then
-		sys.h2 "Type: ${RESET}WSL"
-	else
-		sys.h2 "Type: ${RESET}Unknown"
 	fi
 }
 

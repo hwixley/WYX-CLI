@@ -5,7 +5,7 @@ echo ""
 sys.hR
 sys.warn "SYSTEM SPECS"
 sys.hR
-sys.os.tostring
+sys.kernel.tostring
 sys.hR
 sys.shell.tostring
 sys.hR
