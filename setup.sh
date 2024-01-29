@@ -1,6 +1,14 @@
 #!/bin/bash
 
-source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.h
+if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
+	mypath="${(%):-%N}"
+else
+	mypath="${BASH_SOURCE[0]}"
+fi
+WYX_DIR=$(dirname "$mypath")
+
+source ${WYX_DIR}/src/classes/sys/sys.h
+sys sys
 
 setup_alias() {
 	envfile=$(sys.shell.envfile)
@@ -13,23 +21,8 @@ setup_completion() {
 	source "$HOME/.bash_completion"
 }
 
-# INITIAL SETUP
-if ! sys.shell.zsh; then
-	sys.info "Installing dependencies..."
-	sudo apt-get install xclip csvkit
-	curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
-	sudo apt-get install speedtest
-fi
-
-if sys.os.mac; then
-	sys.info "Installing dependencies..."
-	brew install xclip jq
-	brew tap teamookla/speedtest
-	brew install speedtest --force
-fi
-
-sys.info "Installing python dependencies..."
-pip3 install -r requirements.txt
+# Install dependencies
+sys.dependencies.install
 
 sys.info "Setting up wyx-cli..."
 chmod +x wyx-cli.sh

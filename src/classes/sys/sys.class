@@ -13,6 +13,14 @@ RESET=$(tput setaf 7)
 export notsupported="${RED}This path is not supported${RESET}"
 
 # PROMPTS
+sys.hr() {
+	echo "------------------------------------------------------------"
+}
+
+sys.hR() {
+	echo "============================================================"
+}
+
 sys.info() {
 	echo "${GREEN}$1${RESET}"
 }
@@ -23,6 +31,28 @@ sys.h1() {
 
 sys.h2() {
 	echo "${CYAN}$1${RESET}"
+}
+
+sys.h1r() {
+	echo "${BLUE}$1${RESET}"
+	sys.hr
+}
+
+sys.h2r() {
+	echo "${CYAN}$1${RESET}"
+	sys.hr
+}
+
+sys.hr1r() {
+	sys.hr
+	echo "${BLUE}$1${RESET}"
+	sys.hr
+}
+
+sys.hr2r() {
+	sys.hr
+	echo "${CYAN}$1${RESET}"
+	sys.hr
 }
 
 sys.warn() {
@@ -38,6 +68,9 @@ sys.error() {
 }
 
 # Shell utilities
+
+# sys.shell.* - Shell specifications
+
 sys.shell.zsh() {
 	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 		return 0
@@ -55,11 +88,234 @@ sys.shell.envfile() {
 	return 0
 }
 
+sys.shell.completionfile() {
+	if sys.shell.zsh; then
+		echo "$HOME/.zshrc"
+	else
+		echo "$HOME/.bash_completion"
+	fi
+	return 0
+}
+
+sys.shell.tostring() {
+	sys.h1r "Shell:"
+	if sys.shell.zsh; then
+		echo "zsh (0_0)"
+	else
+		echo "bash (-_-)"
+	fi
+}
+
 # System specifications
+
+# sys.cpu.* - CPU specifications
 
 sys.cpu.architecture() {
 	uname -m
 }
+
+sys.cpu.model() {
+	if sys.os.mac; then
+		system_profiler SPHardwareDataType | grep "Chip" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		sys.util.trim "$(lscpu | grep "Model name" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
+}
+
+sys.cpu.cores() {
+	if sys.os.mac; then
+		system_profiler SPHardwareDataType | grep "Cores" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		sys.util.trim "$(lscpu | grep "Core(s) per socket" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
+}
+
+sys.cpu.threads() {
+	if sys.os.mac; then
+		top -s 0 -l 2 | grep threads | cut -d " " -f2 | head -n 1
+	else
+		sys.util.trim "$(lscpu | grep "Thread(s) per core" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
+}
+
+sys.cpu.total() {
+	if sys.os.mac; then
+		sys.cpu.cores
+	else
+		sys.util.trim "$(lscpu | grep "CPU(s)" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
+}
+
+sys.cpu.tostring() {
+	sys.h1r "CPU:"
+	sys.h2 "Architecture: ${RESET}$(sys.cpu.architecture)"
+	sys.h2 "Model: ${RESET}$(sys.cpu.model)"
+	sys.h2 "Cores: ${RESET}$(sys.cpu.cores)"
+	sys.h2 "Threads: ${RESET}$(sys.cpu.threads)"
+	sys.h2 "Total: ${RESET}$(sys.cpu.total)"
+}
+
+
+# sys.gpu.* - GPU specifications
+
+sys.gpu.vendor() {
+	if sys.os.mac; then
+		system_profiler SPDisplaysDataType | grep "Chipset Model" | cut -d ":" -f2 | cut -d " " -f2
+	else
+		lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f2
+	fi
+}
+
+sys.gpu.model() {
+	if sys.os.mac; then
+		system_profiler SPDisplaysDataType | grep "Chipset Model" | cut -d ":" -f2 | cut -d " " -f3-
+	else
+		lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f3-
+	fi
+}
+
+sys.gpu.driver() {
+	if sys.os.mac; then
+		system_profiler SPDisplaysDataType | grep "Driver Version" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		lspci -k | grep -EA3 'VGA|3D|Display' | grep "Kernel driver in use:" | cut -d ":" -f2 | cut -d " " -f2-
+	fi
+}
+
+sys.gpu.tostring() {
+	sys.h1r "GPU:"
+	sys.h2 "Vendor: ${RESET}$(sys.gpu.vendor)"
+	sys.h2 "Model: ${RESET}$(sys.gpu.model)"
+	sys.h2 "Driver: ${RESET}$(sys.gpu.driver)"
+}
+
+# sys.mem.* - Memory specifications
+
+sys.mem.pagesize() {
+	getconf PAGESIZE
+}
+
+sys.mem.total() {
+	if sys.os.mac; then
+		system_profiler SPHardwareDataType | grep "Memory:" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		free -h | grep Mem | awk '{print $2}'
+	fi
+}
+
+sys.mem.used() {
+	if sys.os.mac; then
+		used=$(vm_stat | grep "Pages active" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((used * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $3}'
+	fi
+}
+
+sys.mem.free() {
+	if sys.os.mac; then
+		free=$(vm_stat | grep "Pages free" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((free * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $4}'
+	fi
+}
+
+sys.mem.shared() {
+	if sys.os.mac; then
+		shared=$(vm_stat | grep "Pages occupied by compressor" | awk '{ print $5 }' | sed 's/\.//')
+		echo "$((shared * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $5}'
+	fi
+}
+
+sys.mem.buffcache() {
+	if sys.os.mac; then
+		purgeable=$(vm_stat | grep "Pages purgeable" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((purgeable * $(sys.mem.pagesize) / 1024 / 1024)) MB"
+	else
+		free -h | grep Mem | awk '{print $6}'
+	fi
+}
+
+sys.mem.available() {
+	if sys.os.mac; then
+		inactive=$(vm_stat | grep "Pages inactive" | awk '{ print $3 }' | sed 's/\.//')
+		echo "$((inactive * $(sys.mem.pagesize) / 1024 / 1024 / 1024)) GB"
+	else
+		free -h | grep Mem | awk '{print $7}'
+	fi
+}
+
+sys.mem.tostring() {
+	sys.h1r "MEMORY:"
+	sys.h2r "Total: ${RESET}$(sys.mem.total)"
+	sys.h2 "Used: ${RESET}$(sys.mem.used)"
+	sys.h2 "Free: ${RESET}$(sys.mem.free)"
+	sys.h2 "Shared: ${RESET}$(sys.mem.shared)"
+	sys.h2 "Buffer/Cache: ${RESET}$(sys.mem.buffcache)"
+	sys.h2 "Available: ${RESET}$(sys.mem.available)"
+}
+
+# sys.fs.* - Filesystem specifications
+
+sys.fs.disk() {
+	df -P . | sed -n '$s/[[:blank:]].*//p'
+}
+
+# sys.disk.* - Disk specifications
+
+sys.disk.total() {
+	df -h | grep "$(sys.fs.disk)" | awk '{print $2}'
+}
+
+sys.disk.used() {
+	df -h | grep "$(sys.fs.disk)" | awk '{print $3}'
+}
+
+sys.disk.avail() {
+	df -h | grep "$(sys.fs.disk)" | awk '{print $4}'
+}
+
+sys.disk.use() {
+	if sys.os.mac; then
+		df -h | grep "/dev/disk1s1" | awk '{print $5}'
+	else
+		df -h | grep "$(sys.fs.disk)" | awk '{print $5}'
+	fi
+}
+
+sys.disk.mounted() {
+	df -h | grep "$(sys.fs.disk)" | awk '{print $6}'
+}
+
+sys.disk.tostring() {
+	sys.h1r "Disk:"
+	sys.h2r "Total: ${RESET}$(sys.disk.total)"
+	sys.h2 "Used: ${RESET}$(sys.disk.used)"
+	sys.h2 "Available: ${RESET}$(sys.disk.avail)"
+	sys.h2 "Use: ${RESET}$(sys.disk.use)"
+	sys.h2 "Mounted: ${RESET}$(sys.disk.mounted)"
+}
+
+# sys.kernel.* - Kernel specifications
+
+sys.kernel.name() {
+	uname -s
+}
+
+sys.kernel.version() {
+	uname -r
+}
+
+sys.kernel.tostring() {
+	sys.h1r "Kernel:"
+	sys.h2 "Name: ${RESET}$(sys.kernel.name)"
+	sys.h2 "Version: ${RESET}$(sys.kernel.version)"
+}
+
+# sys.os.* - OS specifications
 
 sys.os.mac() {
 	if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -93,7 +349,22 @@ sys.os.wsl() {
 	fi
 }
 
-# System utilities
+# sys.host.* - Host specifications
+
+sys.host.name() {
+	hostname
+}
+
+sys.host.tostring() {
+	sys.hr1r "HOST: ${RESET}$(sys.host.name)"
+	if sys.os.mac; then
+		system_profiler SPHardwareDataType
+	else
+		hostnamectl
+	fi
+}
+
+# sys.util.* - System utilities
 
 sys.util.webtext() {
 	lynx -dump -cookies "$1"
@@ -155,5 +426,29 @@ sys.util.inlinesed() {
 		sed -i '' "$1" "$2"
 	else
 		sed -i "$1" "$2"
+	fi
+}
+
+sys.util.trim() {
+	echo "$1" | xargs
+}
+
+sys.dependencies.install() {
+	if sys.os.mac; then
+		sys.info "Installing dependencies for macOS..."
+		brew update
+		brew install xclip jq csvkit
+		brew tap teamookla/speedtest
+		brew install speedtest --force
+		pip3 install -r $WYX_DIR/requirements.txt
+	elif sys.os.linux; then
+		sys.info "Installing dependencies for Linux..."
+		sudo apt-get update
+		sudo apt-get -y install xclip jq csvkit
+		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+		sudo apt-get -y install speedtest
+		pip3 install -r $WYX_DIR/requirements.txt
+	else
+		sys.error "This OS is not supported"
 	fi
 }
