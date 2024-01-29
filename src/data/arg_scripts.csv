@@ -60,3 +60,5 @@ keystore,keystore,"Add a key-value pair to your '.env' keystore",true
 setup,setup,"Setup WYX-CLI Third Party API-based utilities",true
 img_stdout,img_stdout,"Output wyx STDOUT to an image",false
 copy,copy,"Copy output of a command to clipboard",true,
+update-deps,update-deps,"Update the project dependencies",true,
+list-deps,list-deps,"List the project dependencies",true,
