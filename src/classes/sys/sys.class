@@ -38,6 +38,9 @@ sys.error() {
 }
 
 # Shell utilities
+
+# sys.shell.* - Shell specifications
+
 sys.shell.zsh() {
 	if [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
 		return 0
@@ -55,10 +58,154 @@ sys.shell.envfile() {
 	return 0
 }
 
+sys.shell.completionfile() {
+	if sys.shell.zsh; then
+		echo "$HOME/.zshrc"
+	else
+		echo "$HOME/.bash_completion"
+	fi
+	return 0
+}
+
+sys.shell.tostring() {
+	sys.h1 "Shell:"
+	if sys.shell.zsh; then
+		echo "zsh (0_0)"
+	else
+		echo "bash (-_-)"
+	fi
+}
+
 # System specifications
+
+# sys.cpu.* - CPU specifications
 
 sys.cpu.architecture() {
 	uname -m
+}
+
+sys.cpu.model() {
+	lscpu | grep "Model name" | cut -d ":" -f2 | cut -d " " -f2-
+}
+
+sys.cpu.cores() {
+	lscpu | grep "Core(s) per socket" | cut -d ":" -f2 | cut -d " " -f2-
+}
+
+sys.cpu.threads() {
+	lscpu | grep "Thread(s) per core" | cut -d ":" -f2 | cut -d " " -f2-
+}
+
+sys.cpu.total() {
+	lscpu | grep "CPU(s)" | cut -d ":" -f2 | cut -d " " -f2-
+}
+
+sys.cpu.tostring() {
+	sys.h1 "CPU:"
+	sys.h2 "Architecture: ${RESET}$(sys.cpu.architecture)"
+	sys.h2 "Model: ${RESET}$(sys.cpu.model)"
+	sys.h2 "Cores: ${RESET}$(sys.cpu.cores)"
+	sys.h2 "Threads: ${RESET}$(sys.cpu.threads)"
+	sys.h2 "Total: ${RESET}$(sys.cpu.total)"
+}
+
+
+# sys.gpu.* - GPU specifications
+
+sys.gpu.vendor() {
+	lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f2
+}
+
+sys.gpu.model() {
+	lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f3-
+}
+
+sys.gpu.driver() {
+	lspci -k | grep -A 2 -i "VGA" | grep "Kernel driver in use"
+}
+
+sys.gpu.tostring() {
+	sys.h1 "GPU:"
+	sys.h2 "Vendor: ${RESET}$(sys.gpu.vendor)"
+	sys.h2 "Model: ${RESET}$(sys.gpu.model)"
+	sys.h2 "Driver: ${RESET}$(sys.gpu.driver)"
+}
+
+# sys.ram.* - RAM specifications
+
+sys.ram.total() {
+	free -h | grep Mem | awk '{print $2}'
+}
+
+sys.ram.used() {
+	free -h | grep Mem | awk '{print $3}'
+}
+
+sys.ram.free() {
+	free -h | grep Mem | awk '{print $4}'
+}
+
+sys.ram.shared() {
+	free -h | grep Mem | awk '{print $5}'
+}
+
+sys.ram.buffcache() {
+	free -h | grep Mem | awk '{print $6}'
+}
+
+sys.ram.available() {
+	free -h | grep Mem | awk '{print $7}'
+}
+
+sys.ram.tostring() {
+	sys.h1 "RAM:"
+	sys.h2 "Total: ${RESET}$(sys.ram.total)"
+	sys.h2 "Used: ${RESET}$(sys.ram.used)"
+	sys.h2 "Free: ${RESET}$(sys.ram.free)"
+	sys.h2 "Shared: ${RESET}$(sys.ram.shared)"
+	sys.h2 "Buffer/Cache: ${RESET}$(sys.ram.buffcache)"
+	sys.h2 "Available: ${RESET}$(sys.ram.available)"
+}
+
+# sys.disk.* - Disk specifications
+
+sys.disk.total() {
+	df -h | grep "/dev/sda1" | awk '{print $2}'
+}
+
+sys.disk.used() {
+	df -h | grep "/dev/sda1" | awk '{print $3}'
+}
+
+sys.disk.avail() {
+	df -h | grep "/dev/sda1" | awk '{print $4}'
+}
+
+sys.disk.use() {
+	if sys.os.mac; then
+		df -h | grep "/dev/disk1s1" | awk '{print $5}'
+	else
+		df -h | grep "/dev/sda1" | awk '{print $5}'
+	fi
+}
+
+sys.disk.mounted() {
+	df -h | grep "/dev/sda1" | awk '{print $6}'
+}
+
+sys.disk.tostring() {
+	sys.h1 "Disk:"
+	sys.h2 "Total: ${RESET}$(sys.disk.total)"
+	sys.h2 "Used: ${RESET}$(sys.disk.used)"
+	sys.h2 "Available: ${RESET}$(sys.disk.avail)"
+	sys.h2 "Use: ${RESET}$(sys.disk.use)"
+	sys.h2 "Mounted: ${RESET}$(sys.disk.mounted)"
+}
+
+# sys.os.* - OS specifications
+
+sys.os.name() {
+	uname -s
 }
 
 sys.os.mac() {
@@ -93,7 +240,7 @@ sys.os.wsl() {
 	fi
 }
 
-# System utilities
+# sys.util.* - System utilities
 
 sys.util.webtext() {
 	lynx -dump -cookies "$1"
@@ -155,5 +302,25 @@ sys.util.inlinesed() {
 		sed -i '' "$1" "$2"
 	else
 		sed -i "$1" "$2"
+	fi
+}
+
+sys.dependencies.install() {
+	if sys.os.mac; then
+		sys.info "Installing dependencies for macOS..."
+		brew update
+		brew install xclip jq csvkit
+		brew tap teamookla/speedtest
+		brew install speedtest --force
+		pip3 install -r $WYX_DIR/requirements.txt
+	elif sys.os.linux; then
+		sys.info "Installing dependencies for Linux..."
+		sudo apt-get update
+		sudo apt-get -y install xclip jq csvkit
+		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+		sudo apt-get -y install speedtest
+		pip3 install -r $WYX_DIR/requirements.txt
+	else
+		sys.error "This OS is not supported"
 	fi
 }

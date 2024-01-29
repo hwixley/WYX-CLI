@@ -1,7 +1,14 @@
 #!/bin/bash
 
-if sys.shell.zsh; then
-    echo "ZSH (0_0)"
-else
-    echo "BASH (-_-)"
-fi
+sys.shell.tostring
+echo ""
+sys.cpu.tostring
+echo ""
+sys.os.tostring
+echo ""
+sys.ram.tostring
+echo ""
+sys.disk.tostring
+echo ""
+sys.gpu.tostring
+echo ""
