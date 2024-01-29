@@ -162,7 +162,7 @@ sys.gpu.vendor() {
 	if sys.os.mac; then
 		system_profiler SPDisplaysDataType | grep "Chipset Model" | cut -d ":" -f2 | cut -d " " -f2
 	else
-		lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f1
+		lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f2
 	fi
 }
 
@@ -356,8 +356,8 @@ sys.host.name() {
 }
 
 sys.host.tostring() {
+	sys.hr1r "HOST: ${RESET}$(sys.host.name)"
 	if sys.os.mac; then
-		sys.hr1r "HOST: ${RESET}$(sys.host.name)"
 		system_profiler SPHardwareDataType
 	else
 		hostnamectl
