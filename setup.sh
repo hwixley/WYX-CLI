@@ -30,7 +30,9 @@ chmod +x wyx-cli.sh
 
 # SETUP METADATA FILES
 md_dir=.wyx-cli-data
-mkdir $md_dir
+if ! [ -d "$md_dir" ]; then
+	mkdir $md_dir
+fi
 declare -a files=("git-user.txt" "git-orgs.txt" "dir-aliases.txt" "run-configs.txt" "todo.txt" ".env")
 for i in "${files[@]}"; do
 	if ! [ -f "$md_dir/$i" ]; then
@@ -84,8 +86,9 @@ echo ""
 sys.info "Okay we should be good to go!"
 
 # ADD ALIAS TO ENV FILE
-envfile=$(envfile)
-if [ "$(alias wyx)" != "" ]; then
+envfile=$(sys.shell.envfile)
+wyx_alias=$(cat "$envfile" | grep -c "alias wyx")
+if [ "$wyx_alias" != "" ]; then
 	sys.warn "It looks like you already have a wyx alias setup. Would you like to overwrite it? [ y / n ]"
 	read -r overwrite_alias
     if [ "$overwrite_alias" = "y" ]; then
@@ -123,6 +126,6 @@ else
 fi
 
 echo ""
-sys.info "WYX CLI successfully added to $envfile !"
+sys.info "WYX CLI setup complete !"
 sys.info "Use 'wyx' to get going :)"
 echo ""
