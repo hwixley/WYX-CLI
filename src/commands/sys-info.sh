@@ -1,14 +1,20 @@
 #!/bin/bash
 
-sys.shell.tostring
+sys.host.tostring
 echo ""
-sys.cpu.tostring
-echo ""
+sys.hR
+sys.warn "SYSTEM SPECS"
+sys.hR
 sys.os.tostring
-echo ""
-sys.ram.tostring
-echo ""
-sys.disk.tostring
-echo ""
+sys.hR
+sys.shell.tostring
+sys.hR
+sys.cpu.tostring
+sys.hR
 sys.gpu.tostring
+sys.hR
+sys.ram.tostring
+sys.hR
+sys.disk.tostring
+sys.hR
 echo ""

@@ -13,6 +13,14 @@ RESET=$(tput setaf 7)
 export notsupported="${RED}This path is not supported${RESET}"
 
 # PROMPTS
+sys.hr() {
+	echo "------------------------------------------------------------"
+}
+
+sys.hR() {
+	echo "============================================================"
+}
+
 sys.info() {
 	echo "${GREEN}$1${RESET}"
 }
@@ -23,6 +31,28 @@ sys.h1() {
 
 sys.h2() {
 	echo "${CYAN}$1${RESET}"
+}
+
+sys.h1r() {
+	echo "${BLUE}$1${RESET}"
+	sys.hr
+}
+
+sys.h2r() {
+	echo "${CYAN}$1${RESET}"
+	sys.hr
+}
+
+sys.hr1r() {
+	sys.hr
+	echo "${BLUE}$1${RESET}"
+	sys.hr
+}
+
+sys.hr2r() {
+	sys.hr
+	echo "${CYAN}$1${RESET}"
+	sys.hr
 }
 
 sys.warn() {
@@ -68,7 +98,7 @@ sys.shell.completionfile() {
 }
 
 sys.shell.tostring() {
-	sys.h1 "Shell:"
+	sys.h1r "Shell:"
 	if sys.shell.zsh; then
 		echo "zsh (0_0)"
 	else
@@ -85,23 +115,23 @@ sys.cpu.architecture() {
 }
 
 sys.cpu.model() {
-	lscpu | grep "Model name" | cut -d ":" -f2 | cut -d " " -f2-
+	sys.util.trim "$(lscpu | grep "Model name" | cut -d ":" -f2 | cut -d " " -f2-)"
 }
 
 sys.cpu.cores() {
-	lscpu | grep "Core(s) per socket" | cut -d ":" -f2 | cut -d " " -f2-
+	sys.util.trim "$(lscpu | grep "Core(s) per socket" | cut -d ":" -f2 | cut -d " " -f2-)"
 }
 
 sys.cpu.threads() {
-	lscpu | grep "Thread(s) per core" | cut -d ":" -f2 | cut -d " " -f2-
+	sys.util.trim "$(lscpu | grep "Thread(s) per core" | cut -d ":" -f2 | cut -d " " -f2-)"
 }
 
 sys.cpu.total() {
-	lscpu | grep "CPU(s)" | cut -d ":" -f2 | cut -d " " -f2-
+	sys.util.trim "$(lscpu | grep "CPU(s)" | cut -d ":" -f2 | cut -d " " -f2-)"
 }
 
 sys.cpu.tostring() {
-	sys.h1 "CPU:"
+	sys.h1r "CPU:"
 	sys.h2 "Architecture: ${RESET}$(sys.cpu.architecture)"
 	sys.h2 "Model: ${RESET}$(sys.cpu.model)"
 	sys.h2 "Cores: ${RESET}$(sys.cpu.cores)"
@@ -125,7 +155,7 @@ sys.gpu.driver() {
 }
 
 sys.gpu.tostring() {
-	sys.h1 "GPU:"
+	sys.h1r "GPU:"
 	sys.h2 "Vendor: ${RESET}$(sys.gpu.vendor)"
 	sys.h2 "Model: ${RESET}$(sys.gpu.model)"
 	sys.h2 "Driver: ${RESET}$(sys.gpu.driver)"
@@ -158,8 +188,8 @@ sys.ram.available() {
 }
 
 sys.ram.tostring() {
-	sys.h1 "RAM:"
-	sys.h2 "Total: ${RESET}$(sys.ram.total)"
+	sys.h1r "RAM:"
+	sys.h2r "Total: ${RESET}$(sys.ram.total)"
 	sys.h2 "Used: ${RESET}$(sys.ram.used)"
 	sys.h2 "Free: ${RESET}$(sys.ram.free)"
 	sys.h2 "Shared: ${RESET}$(sys.ram.shared)"
@@ -190,12 +220,12 @@ sys.disk.use() {
 }
 
 sys.disk.mounted() {
-	df -h | grep "/dev/sda1" | awk '{print $6}'
+	sys.util.trim "$(df -h | grep "/dev/sda1" | awk '{print $6}')"
 }
 
 sys.disk.tostring() {
-	sys.h1 "Disk:"
-	sys.h2 "Total: ${RESET}$(sys.disk.total)"
+	sys.h1r "Disk:"
+	sys.h2r "Total: ${RESET}$(sys.disk.total)"
 	sys.h2 "Used: ${RESET}$(sys.disk.used)"
 	sys.h2 "Available: ${RESET}$(sys.disk.avail)"
 	sys.h2 "Use: ${RESET}$(sys.disk.use)"
@@ -238,6 +268,32 @@ sys.os.wsl() {
 	else
 		return 1
 	fi
+}
+
+sys.os.tostring() {
+	sys.h1r "OS:"
+	sys.h2 "Name: ${RESET}$(sys.os.name)"
+	if sys.os.mac; then
+		sys.h2 "Type: ${RESET}macOS"
+	elif sys.os.linux; then
+		sys.h2 "Type: ${RESET}Linux"
+	elif sys.os.windows; then
+		sys.h2 "Type: ${RESET}Windows"
+	elif sys.os.wsl; then
+		sys.h2 "Type: ${RESET}WSL"
+	else
+		sys.h2 "Type: ${RESET}Unknown"
+	fi
+}
+
+# sys.host.* - Host specifications
+
+sys.host.name() {
+	hostname
+}
+
+sys.host.tostring() {
+	hostnamectl
 }
 
 # sys.util.* - System utilities
@@ -303,6 +359,10 @@ sys.util.inlinesed() {
 	else
 		sed -i "$1" "$2"
 	fi
+}
+
+sys.util.trim() {
+	echo "$1" | xargs
 }
 
 sys.dependencies.install() {
