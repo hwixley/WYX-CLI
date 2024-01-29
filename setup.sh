@@ -6,7 +6,9 @@ else
 	mypath="${BASH_SOURCE[0]}"
 fi
 WYX_DIR=$(dirname "$mypath")
+
 source ${WYX_DIR}/src/classes/sys/sys.h
+sys sys
 
 setup_alias() {
 	envfile=$(sys.shell.envfile)
@@ -20,8 +22,7 @@ setup_completion() {
 }
 
 # Install dependencies
-sys.info "Installing dependencies..."
-source $(dirname ${BASH_SOURCE[0]})/src/classes/sys/sys.install-deps.sh
+sys.dependencies.install
 
 sys.info "Setting up wyx-cli..."
 chmod +x wyx-cli.sh
