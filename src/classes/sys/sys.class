@@ -115,19 +115,35 @@ sys.cpu.architecture() {
 }
 
 sys.cpu.model() {
-	sys.util.trim "$(lscpu | grep "Model name" | cut -d ":" -f2 | cut -d " " -f2-)"
+	if sys.os.mac; then
+		system_profiler SPHardwareDataType | grep "Chip" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		sys.util.trim "$(lscpu | grep "Model name" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
 }
 
 sys.cpu.cores() {
-	sys.util.trim "$(lscpu | grep "Core(s) per socket" | cut -d ":" -f2 | cut -d " " -f2-)"
+	if sys.os.mac; then
+		system_profiler SPHardwareDataType | grep "Cores" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		sys.util.trim "$(lscpu | grep "Core(s) per socket" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
 }
 
 sys.cpu.threads() {
-	sys.util.trim "$(lscpu | grep "Thread(s) per core" | cut -d ":" -f2 | cut -d " " -f2-)"
+	if sys.os.mac; then
+		top -s 0 -l 2 | grep threads | cut -d " " -f2 | head -n 1
+	else
+		sys.util.trim "$(lscpu | grep "Thread(s) per core" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
 }
 
 sys.cpu.total() {
-	sys.util.trim "$(lscpu | grep "CPU(s)" | cut -d ":" -f2 | cut -d " " -f2-)"
+	if sys.os.mac; then
+		sys.cpu.cores
+	else
+		sys.util.trim "$(lscpu | grep "CPU(s)" | cut -d ":" -f2 | cut -d " " -f2-)"
+	fi
 }
 
 sys.cpu.tostring() {
@@ -143,15 +159,27 @@ sys.cpu.tostring() {
 # sys.gpu.* - GPU specifications
 
 sys.gpu.vendor() {
-	lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f2
+	if sys.os.mac; then
+		system_profiler SPDisplaysDataType | grep "Chipset Model" | cut -d ":" -f2 | cut -d " " -f2
+	else
+		lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f1
+	fi
 }
 
 sys.gpu.model() {
-	lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f3-
+	if sys.os.mac; then
+		system_profiler SPDisplaysDataType | grep "Chipset Model" | cut -d ":" -f2 | cut -d " " -f3-
+	else
+		lspci | grep VGA | cut -d ":" -f3 | cut -d " " -f3-
+	fi
 }
 
 sys.gpu.driver() {
-	lspci -k | grep -EA3 'VGA|3D|Display' | grep "Kernel driver in use:" | cut -d ":" -f2 | cut -d " " -f2-
+	if sys.os.mac; then
+		system_profiler SPDisplaysDataType | grep "Driver Version" | cut -d ":" -f2 | cut -d " " -f2-
+	else
+		lspci -k | grep -EA3 'VGA|3D|Display' | grep "Kernel driver in use:" | cut -d ":" -f2 | cut -d " " -f2-
+	fi
 }
 
 sys.gpu.tostring() {
@@ -328,7 +356,12 @@ sys.host.name() {
 }
 
 sys.host.tostring() {
-	hostnamectl
+	if sys.os.mac; then
+		sys.hr1r "HOST: ${RESET}$(sys.host.name)"
+		system_profiler SPHardwareDataType
+	else
+		hostnamectl
+	fi
 }
 
 # sys.util.* - System utilities
