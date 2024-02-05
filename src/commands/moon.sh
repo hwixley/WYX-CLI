@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sys.info "Getting moon phase..."
+sys.log.info "Getting moon phase..."
 curl wttr.in/moon

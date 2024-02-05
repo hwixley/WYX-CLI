@@ -2,19 +2,19 @@
 
 sys.host.tostring
 echo ""
-sys.hR
-sys.warn "SYSTEM SPECS"
-sys.hR
+sys.log.hR
+sys.log.warn "SYSTEM SPECS"
+sys.log.hR
 sys.kernel.tostring
-sys.hR
+sys.log.hR
 sys.shell.tostring
-sys.hR
+sys.log.hR
 sys.cpu.tostring
-sys.hR
+sys.log.hR
 sys.gpu.tostring
-sys.hR
+sys.log.hR
 sys.disk.tostring
-sys.hR
+sys.log.hR
 sys.mem.tostring
-sys.hR
+sys.log.hR
 echo ""

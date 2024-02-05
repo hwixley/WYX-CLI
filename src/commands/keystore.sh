@@ -14,4 +14,4 @@ else
     fi
     wyxd.check_keystore "$key"
 fi
-sys.info "You're done!"
+sys.log.info "You're done!"

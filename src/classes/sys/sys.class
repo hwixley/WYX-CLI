@@ -13,53 +13,53 @@ RESET=$(tput setaf 7)
 export notsupported="${RED}This path is not supported${RESET}"
 
 # PROMPTS
-sys.hr() {
+sys.log.hr() {
 	echo "------------------------------------------------------------"
 }
 
-sys.hR() {
+sys.log.hR() {
 	echo "============================================================"
 }
 
-sys.info() {
+sys.log.info() {
 	echo "${GREEN}$1${RESET}"
 }
 
-sys.h1() {
+sys.log.h1() {
 	echo "${BLUE}$1${RESET}"
 }
 
-sys.h2() {
+sys.log.h2() {
 	echo "${CYAN}$1${RESET}"
 }
 
-sys.h1r() {
+sys.log.h1r() {
 	echo "${BLUE}$1${RESET}"
-	sys.hr
+	sys.log.hr
 }
 
-sys.h2r() {
+sys.log.h2r() {
 	echo "${CYAN}$1${RESET}"
-	sys.hr
+	sys.log.hr
 }
 
-sys.hr1r() {
-	sys.hr
+sys.log.hr1r() {
+	sys.log.hr
 	echo "${BLUE}$1${RESET}"
-	sys.hr
+	sys.log.hr
 }
 
-sys.hr2r() {
-	sys.hr
+sys.log.hr2r() {
+	sys.log.hr
 	echo "${CYAN}$1${RESET}"
-	sys.hr
+	sys.log.hr
 }
 
-sys.warn() {
+sys.log.warn() {
 	echo "${ORANGE}$1${RESET}"
 }
 
-sys.error() {
+sys.log.error() {
 	if [ "$1" = "" ]; then
 		echo "$notsupported"
 	else
@@ -98,7 +98,7 @@ sys.shell.completionfile() {
 }
 
 sys.shell.tostring() {
-	sys.h1r "Shell:"
+	sys.log.h1r "Shell:"
 	if sys.shell.zsh; then
 		echo "zsh (0_0)"
 	else
@@ -147,12 +147,12 @@ sys.cpu.total() {
 }
 
 sys.cpu.tostring() {
-	sys.h1r "CPU:"
-	sys.h2 "Architecture: ${RESET}$(sys.cpu.architecture)"
-	sys.h2 "Model: ${RESET}$(sys.cpu.model)"
-	sys.h2 "Cores: ${RESET}$(sys.cpu.cores)"
-	sys.h2 "Threads: ${RESET}$(sys.cpu.threads)"
-	sys.h2 "Total: ${RESET}$(sys.cpu.total)"
+	sys.log.h1r "CPU:"
+	sys.log.h2 "Architecture: ${RESET}$(sys.cpu.architecture)"
+	sys.log.h2 "Model: ${RESET}$(sys.cpu.model)"
+	sys.log.h2 "Cores: ${RESET}$(sys.cpu.cores)"
+	sys.log.h2 "Threads: ${RESET}$(sys.cpu.threads)"
+	sys.log.h2 "Total: ${RESET}$(sys.cpu.total)"
 }
 
 
@@ -183,10 +183,10 @@ sys.gpu.driver() {
 }
 
 sys.gpu.tostring() {
-	sys.h1r "GPU:"
-	sys.h2 "Vendor: ${RESET}$(sys.gpu.vendor)"
-	sys.h2 "Model: ${RESET}$(sys.gpu.model)"
-	sys.h2 "Driver: ${RESET}$(sys.gpu.driver)"
+	sys.log.h1r "GPU:"
+	sys.log.h2 "Vendor: ${RESET}$(sys.gpu.vendor)"
+	sys.log.h2 "Model: ${RESET}$(sys.gpu.model)"
+	sys.log.h2 "Driver: ${RESET}$(sys.gpu.driver)"
 }
 
 # sys.mem.* - Memory specifications
@@ -249,13 +249,13 @@ sys.mem.available() {
 }
 
 sys.mem.tostring() {
-	sys.h1r "MEMORY:"
-	sys.h2r "Total: ${RESET}$(sys.mem.total)"
-	sys.h2 "Used: ${RESET}$(sys.mem.used)"
-	sys.h2 "Free: ${RESET}$(sys.mem.free)"
-	sys.h2 "Shared: ${RESET}$(sys.mem.shared)"
-	sys.h2 "Buffer/Cache: ${RESET}$(sys.mem.buffcache)"
-	sys.h2 "Available: ${RESET}$(sys.mem.available)"
+	sys.log.h1r "MEMORY:"
+	sys.log.h2r "Total: ${RESET}$(sys.mem.total)"
+	sys.log.h2 "Used: ${RESET}$(sys.mem.used)"
+	sys.log.h2 "Free: ${RESET}$(sys.mem.free)"
+	sys.log.h2 "Shared: ${RESET}$(sys.mem.shared)"
+	sys.log.h2 "Buffer/Cache: ${RESET}$(sys.mem.buffcache)"
+	sys.log.h2 "Available: ${RESET}$(sys.mem.available)"
 }
 
 # sys.fs.* - Filesystem specifications
@@ -291,12 +291,12 @@ sys.disk.mounted() {
 }
 
 sys.disk.tostring() {
-	sys.h1r "Disk:"
-	sys.h2r "Total: ${RESET}$(sys.disk.total)"
-	sys.h2 "Used: ${RESET}$(sys.disk.used)"
-	sys.h2 "Available: ${RESET}$(sys.disk.avail)"
-	sys.h2 "Use: ${RESET}$(sys.disk.use)"
-	sys.h2 "Mounted: ${RESET}$(sys.disk.mounted)"
+	sys.log.h1r "Disk:"
+	sys.log.h2r "Total: ${RESET}$(sys.disk.total)"
+	sys.log.h2 "Used: ${RESET}$(sys.disk.used)"
+	sys.log.h2 "Available: ${RESET}$(sys.disk.avail)"
+	sys.log.h2 "Use: ${RESET}$(sys.disk.use)"
+	sys.log.h2 "Mounted: ${RESET}$(sys.disk.mounted)"
 }
 
 # sys.kernel.* - Kernel specifications
@@ -310,9 +310,9 @@ sys.kernel.version() {
 }
 
 sys.kernel.tostring() {
-	sys.h1r "Kernel:"
-	sys.h2 "Name: ${RESET}$(sys.kernel.name)"
-	sys.h2 "Version: ${RESET}$(sys.kernel.version)"
+	sys.log.h1r "Kernel:"
+	sys.log.h2 "Name: ${RESET}$(sys.kernel.name)"
+	sys.log.h2 "Version: ${RESET}$(sys.kernel.version)"
 }
 
 # sys.os.* - OS specifications
@@ -356,7 +356,7 @@ sys.host.name() {
 }
 
 sys.host.tostring() {
-	sys.hr1r "HOST: ${RESET}$(sys.host.name)"
+	sys.log.hr1r "HOST: ${RESET}$(sys.host.name)"
 	if sys.os.mac; then
 		system_profiler SPHardwareDataType
 	else
@@ -372,13 +372,13 @@ sys.util.webtext() {
 
 sys.util.clipboard() {
 	if command -v pbcopy >/dev/null 2>&1; then
-		sys.info "This has been saved to your clipboard!"
+	sys.log.info "This has been saved to your clipboard!"
 		echo "$1" | pbcopy
 	elif command -v xclip >/dev/null 2>&1; then
-		sys.info "This has been saved to your clipboard!"
+	sys.log.info "This has been saved to your clipboard!"
 		echo "$1" | xclip -selection c
 	else
-		sys.warn "Clipboard not supported on this system, please install xclip or pbcopy."
+	sys.log.warn "Clipboard not supported on this system, please install xclip or pbcopy."
 	fi
 }
 
@@ -435,57 +435,57 @@ sys.util.trim() {
 
 sys.dependencies.install() {
 	if sys.os.mac; then
-		sys.info "Installing dependencies for macOS..."
+	sys.log.info "Installing dependencies for macOS..."
 		brew update
 		brew install xclip jq csvkit
 		brew tap teamookla/speedtest
 		brew install speedtest --force
 		pip3 install -r "${WYX_DIR}/requirements.txt"
 	elif sys.os.linux; then
-		sys.info "Installing dependencies for Linux..."
+	sys.log.info "Installing dependencies for Linux..."
 		sudo apt-get update
 		sudo apt-get -y install xclip jq csvkit
 		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 		sudo apt-get -y install speedtest
 		pip3 install -r "${WYX_DIR}/requirements.txt"
 	else
-		sys.error "This OS is not supported"
+	sys.log.error "This OS is not supported"
 	fi
 }
 
 sys.dependencies.update() {
 	if sys.os.mac; then
-		sys.info "Updating dependencies for macOS..."
+	sys.log.info "Updating dependencies for macOS..."
 		brew update
 		brew upgrade xclip jq csvkit
 		brew tap teamookla/speedtest
 		brew upgrade speedtest --force
 		pip3 install -r "${WYX_DIR}/requirements.txt"
 	elif sys.os.linux; then
-		sys.info "Updating dependencies for Linux..."
+	sys.log.info "Updating dependencies for Linux..."
 		sudo apt-get update
 		sudo apt-get -y upgrade xclip jq csvkit
 		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 		sudo apt-get -y upgrade speedtest
 		pip3 install -r "${WYX_DIR}/requirements.txt"
 	else
-		sys.error "This OS is not supported"
+	sys.log.error "This OS is not supported"
 	fi
 }
 
 sys.dependencies.list() {
 	if sys.os.mac; then
-		sys.info "Listing dependencies for macOS..."
+	sys.log.info "Listing dependencies for macOS..."
 		echo ""
-		sys.h1 "Brew: ${RESET}xclip, jq, csvkit, speedtest"
-		sys.h1 "Pip: ${RESET}$(cat "${WYX_DIR}/requirements.txt" | xargs)"
+	sys.log.h1 "Brew: ${RESET}xclip, jq, csvkit, speedtest"
+	sys.log.h1 "Pip: ${RESET}$(cat "${WYX_DIR}/requirements.txt" | xargs)"
 	elif sys.os.linux; then
-		sys.info "Listing dependencies for Linux..."
+	sys.log.info "Listing dependencies for Linux..."
 		echo ""
-		sys.h1 "Apt: ${RESET}xclip, jq, csvkit, speedtest"
-		sys.h1 "Pip: ${RESET}$(cat "${WYX_DIR}/requirements.txt" | xargs)"
+	sys.log.h1 "Apt: ${RESET}xclip, jq, csvkit, speedtest"
+	sys.log.h1 "Pip: ${RESET}$(cat "${WYX_DIR}/requirements.txt" | xargs)"
 	else
-		sys.error "This OS is not supported"
+	sys.log.error "This OS is not supported"
 	fi
 	echo ""
 }
