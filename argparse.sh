@@ -43,7 +43,7 @@ else
 
 	else
 		# Invalid command - show error message
-		sys.error "Invalid command! Try again"
+		sys.log.error "Invalid command! Try again"
 		echo "Type 'wyx' to see the list of available commands (and their arguments), or 'wyx help' to be redirected to more in-depth online documentation"
 	fi
 fi

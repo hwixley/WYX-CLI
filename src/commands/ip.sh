@@ -1,14 +1,14 @@
 #!/bin/bash
 
 echo ""
-sys.info "Local IPs:"
+sys.log.info "Local IPs:"
 if sys.os.mac; then
     ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
 else
     hostname -I
 fi
 echo ""
-sys.info "Public IP:"
+sys.log.info "Public IP:"
 public_ip=$(curl ifconfig.co/json)
 ip=$(echo "$public_ip" | jq -r '.ip')
 city=$(echo "$public_ip" | jq -r '.city')
@@ -28,7 +28,7 @@ echo "${ORANGE}Timezone:${RESET} $time_zone"
 echo "${ORANGE}ASN Org:${RESET} $asn_org"
 
 echo ""
-sys.info "Eth0 MAC Address:"
+sys.log.info "Eth0 MAC Address:"
 if sys.os.mac; then
     ifconfig en1 | awk '/ether/{print $2}'
 else

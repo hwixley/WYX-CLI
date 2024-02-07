@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd - || sys.error "Failed to execute 'cd -'..."
+cd - || sys.log.error "Failed to execute 'cd -'..."

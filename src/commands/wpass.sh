@@ -1,12 +1,12 @@
 #!/bin/bash
 
 if sys.os.mac; then
-    sys.info "Enter the SSID of the network you would like to get the password for:"
+    sys.log.info "Enter the SSID of the network you would like to get the password for:"
     read -r ssid
-    sys.info "Getting password for $ssid..."
+    sys.log.info "Getting password for $ssid..."
     security find-generic-password -ga "$ssid" | grep "password:"
     echo ""
 else
-    sys.info "Listing saved Wifi passwords:"
+    sys.log.info "Listing saved Wifi passwords:"
     sudo grep -r '^psk=' /etc/NetworkManager/system-connections/
 fi
