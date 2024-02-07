@@ -1,9 +1,14 @@
 #!/bin/bash
 
-csv_file="${WYX_DIR}/src/data/arg_scripts.csv"
+scripts_csv_file="${WYX_DIR}/src/data/arg_scripts.csv"
+categories_csv_file="${WYX_DIR}/src/data/arg_categories.csv"
 
-lib.csv.query(){
-    csvsql --query "select $1 from arg_scripts $2" "${csv_file}"
+lib.csv.scripts.query(){
+    csvsql --query "select $1 from arg_scripts $2" "${scripts_csv_file}"
+}
+
+lib.csv.categories.query(){
+    csvsql --query "select $1 from arg_categories $2" "${categories_csv_file}"
 }
 
 lib.csv.query.id(){
