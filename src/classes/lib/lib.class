@@ -2,19 +2,12 @@
 
 csv_file="${WYX_DIR}/src/data/arg_scripts.csv"
 
-lib.csv.all(){
-    lines=$(csvsql --query "select * from arg_scripts where id='$1'" "${csv_file}")
-    echo "$lines"
+lib.csv.query(){
+    csvsql --query "select $1 from arg_scripts $2" "${csv_file}"
 }
 
-lib.csv.name(){
-    lines=$(csvsql --query "select name from arg_scripts where id='$1'" "${csv_file}")
-    lines_array=($lines)
-    echo "${lines_array[1]}"
-}
-
-lib.csv.path(){
-    IFS=$'\n' lines=($(csvsql --query "select path from arg_scripts where id='$1'" "${csv_file}"))
+lib.csv.query.id(){
+    IFS=$'\n' lines=($(lib.csv.query "$1" "where id='$2'"))
     if sys.shell.zsh; then
         echo "${lines[2]}"
     else
@@ -22,14 +15,25 @@ lib.csv.path(){
     fi
 }
 
+lib.csv.all(){
+    IFS=$'\n' lines=($(lib.csv.query "id"))
+    for line in "${lines[@]:1}"; do
+        echo "$line"
+    done
+}
+
+lib.csv.name(){
+    lib.csv.query.id "name" "$1"
+}
+
+lib.csv.path(){
+    lib.csv.query.id "path" "$1"
+}
+
 lib.csv.public(){
-    lines=$(csvsql --query "select public from arg_scripts where id='$1'" "${csv_file}")
-    lines_array=($lines)
-    echo "${lines_array[1]}"
+    lib.csv.query.id "public" "$1"
 }
 
 lib.csv.args(){
-    lines=$(csvsql --query "select args from arg_scripts where id='$1'" "${csv_file}")
-    lines_array=($lines)
-    echo "${lines_array[1]}"
+    lib.csv.query.id "args" "$1"
 }
