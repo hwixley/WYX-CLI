@@ -33,7 +33,7 @@ pull() {
 }
 
 wyx_update() {
-	sys.info "Checking for updates..."
+	sys.log.info "Checking for updates..."
 
 	current_dir=$(pwd)
 	cd "$WYX_DIR" || return 1
@@ -42,7 +42,7 @@ wyx_update() {
 		repo_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
 	if [ "$repo_branch" != "master" ]; then
-		sys.warn "Not on master branch, skipping update" && echo ""
+		sys.log.warn "Not on master branch, skipping update" && echo ""
 		cd "$current_dir" || return 1
 		return 1
 	fi 
@@ -54,9 +54,9 @@ wyx_update() {
 	BASE=$(git merge-base @ "$UPSTREAM")
 
 	if [ "$LOCAL" = "$REMOTE" ]; then
-		sys.info "Up-to-date"
+		sys.log.info "Up-to-date"
 	elif [ "$LOCAL" = "$BASE" ]; then
-		sys.info "Updating..."
+		sys.log.info "Updating..."
 		pull "$branch"
 	elif [ "$REMOTE" = "$BASE" ]; then
 		echo "Need to push"

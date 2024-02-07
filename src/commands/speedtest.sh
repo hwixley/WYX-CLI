@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sys.info "Running speedtest..."
+sys.log.info "Running speedtest..."
 speedtest
