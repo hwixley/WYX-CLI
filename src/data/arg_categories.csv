@@ -1,0 +1,17 @@
+id,name
+sys,system
+deps,dependencies
+nav,directory navigation
+code,code
+git,git automation
+urls,urls
+mydata,my data
+mmdata,manage my data
+env,env/keystore
+futil,file utilities
+nutil,network utilities
+iutil,image utilities
+tutil,text utilities
+wutil,web utilities
+mutil,misc utilities
+hutil,help utilities
