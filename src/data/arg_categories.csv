@@ -1,4 +1,5 @@
 id,name
+version,version
 sys,system
 deps,dependencies
 nav,directory navigation
