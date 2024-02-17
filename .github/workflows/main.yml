@@ -44,6 +44,7 @@ jobs:
       run: |
         git config --local user.name "WYX-CLI Bot"
         git config --local user.email "hwixley1@gmail.com"
+        git pull
         git add .generated/wyxcli-output-preview.png src/data/.cache/cmdinfo.wyx
         git commit -m "GH-Action: Update 'wyx' stdout image"
         git push
