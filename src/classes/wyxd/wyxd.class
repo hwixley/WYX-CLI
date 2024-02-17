@@ -322,7 +322,6 @@ wyxd.command_info() {
 		sys.log.info "Fetching command information..."
 		echo ""
 		(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.wyx" & wait)
-		echo ""
 	fi
 	echo ""
 }
