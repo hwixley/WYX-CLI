@@ -35,6 +35,8 @@ jobs:
       run: |
         chmod +x wyx-cli.sh
         ./wyx-cli.sh img_stdout
+        rm src/data/.cache/cmdinfo.wyx
+        ./wyx-cli.sh
       shell: bash
 
     # Commit and push changes
@@ -42,6 +44,6 @@ jobs:
       run: |
         git config --local user.name "WYX-CLI Bot"
         git config --local user.email "hwixley1@gmail.com"
-        git add .generated/wyxcli-output-preview.png
+        git add .generated/wyxcli-output-preview.png src/data/.cache/cmdinfo.wyx
         git commit -m "GH-Action: Update 'wyx' stdout image"
         git push
