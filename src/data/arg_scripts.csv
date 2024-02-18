@@ -64,3 +64,4 @@ update-deps,update-deps,"Update the project dependencies",true,,deps
 list-deps,list-deps,"List the project dependencies",true,,deps
 update-readme,update_readme,"Auto-update the project's readme with the available commands",false,,
 update-cache,update_cache,"Auto-update the project's cache with the available commands",false,,
+pp,pp,"Pull-Push Git Changes to Current Branch"
