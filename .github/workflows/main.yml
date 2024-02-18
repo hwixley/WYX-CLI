@@ -1,4 +1,4 @@
-name: Generate Stdout Image
+name: Auto-update Project README & Cache
 
 # Controls when the action will run. Triggers the workflow on push events
 on:
@@ -33,8 +33,12 @@ jobs:
     # Run the script
     - name: Run script file
       run: |
+        export TERM=xterm-256color
         chmod +x wyx-cli.sh
-        ./wyx-cli.sh img_stdout
+        mkdir .wyx-cli-data && touch .wyx-cli-data/git-user.txt
+        printf "username=bot\nname=WYX-CLI Bot\n" >> .wyx-cli-data/git-user.txt
+        ./wyx-cli.sh update-stdout
+        ./wyx-cli.sh update-cache
       shell: bash
 
     # Commit and push changes
@@ -42,6 +46,7 @@ jobs:
       run: |
         git config --local user.name "WYX-CLI Bot"
         git config --local user.email "hwixley1@gmail.com"
-        git add .generated/wyxcli-output-preview.png
-        git commit -m "GH-Action: Update 'wyx' stdout image"
+        git pull
+        git add .generated/wyxcli-output-preview.png src/data/.cache/cmdinfo.git.wyx src/data/.cache/cmdinfo.term.wyx .github/README.md
+        git commit -m "GH-Action: auto-update README & cache files"
         git push

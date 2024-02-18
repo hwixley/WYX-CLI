@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # CLI CONSTS
-version="3.1.0"
+version="3.1.1"
 num_args=$#
 date=$(date)
 year="${date:24:29}"
@@ -13,6 +13,8 @@ source $WYX_DIR/src/classes/wgit/wgit.h
 wgit wgit
 source $WYX_DIR/src/classes/wyxd/wyxd.h
 wyxd wyxd
+source $WYX_DIR/src/classes/lib/lib.h
+lib lib
 
 # Load source git data
 branch=""

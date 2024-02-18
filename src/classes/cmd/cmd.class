@@ -36,19 +36,19 @@ cmd.id(){
 }
 
 cmd.name(){
-    lib.csv.name "$(cmd.id '')"
+    lib.csv.scripts.name "$(cmd.id '')"
 }
 
 cmd.path(){
-    lib.csv.path "$(cmd.id '')"
+    lib.csv.scripts.path "$(cmd.id '')"
 }
 
 cmd.public(){
-    lib.csv.public "$(cmd.id '')"
+    lib.csv.scripts.public "$(cmd.id '')"
 }
 
 cmd.args(){
-    lib.csv.args "$(cmd.id '')"
+    lib.csv.scripts.args "$(cmd.id '')"
 }
 
 cmd.unset(){
