@@ -339,7 +339,8 @@ wyxd.cache.update() {
 	fi
 	sys.log.info "Updating wyxd cache..."
 	echo ""
-	(wyxd.cache.cmdinfo & wyxd.readme.update & wait)
+	wyxd.cache.cmdinfo
+	wyxd.readme.update
 }
 
 wyxd.readme.update() {
