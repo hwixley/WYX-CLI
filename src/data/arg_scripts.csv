@@ -11,9 +11,9 @@ version,version,"WYX-CLI Version",true,,version
 -v,version,"WYX-CLI Version",false
 --version,version,"WYX-CLI Version",false
 ginit,ginit,"Initialise Git Repository",true,,git
-push,push,"Add, Commit, & Push Git Changes",true,,git
-pull,pull,"Pull Git Changes",true,,git
-mpull,mpull,"Pull Git Changes From Master/Main Branch",true,,git
+push,push,"Add-Commit-Push Git Changes to Current Branch",true,,git
+pull,pull,"Pull Git Changes for Current Branch",true,,git
+mpull,mpull,"Checkout-Pull Git Changes From Master/Main Branch",true,,git
 repo,repo,"View Your Repository On GitHub",true,,git
 branch,branch,"View Your Current Branch On GitHub",true,,git
 actions,actions,"View Your Repository Actions On GitHub",true,,git
@@ -22,9 +22,9 @@ prs,prs,"View Your Repository PRs On GitHub",true,,git
 notifs,notifs,"View Your GitHub Notifications",true,,git
 commits,commits,"View Your Branch Git Commits",true,,git
 lastcommit,lastcommit,"View Your Last Commit & Copy It's ID",true,,git
-nb,nb,"Checkout, Add, Commit, & Push A New Git Branch",true,,git
+nb,nb,"Checkout-Add-Commit-Push A New Git Branch",true,,git
 pr,pr,"Open A Pull Request From Your Current Git Branch on GitHub",true,,git
-bpr,bpr,"Checkout, Add, Commit, & Push A New Git Branch, Then Open A PR For It On GitHub",true,,git
+bpr,bpr,"Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub",true,,git
 profile,profile,"View Your GitHub Profile",true,,git
 org,org,"View Your GitHub Organisation",true,,git
 help,help,"View WYX-CLI Documentation",true,,hutil
@@ -44,7 +44,7 @@ hardware-ports,hardware-ports,"View Your Hardware Ports",true,,nutil
 wpass,wpass,"View Your Saved WiFi Passwords",true,,nutil
 speedtest,speedtest,"Run A Speed Test On Your Network",true,,nutil
 genqr,genqr,"Generate a QR code from a URL",true,,iutil
-upscale,upscale,"Scale up an image, uses no smoothing",true,,iutil
+upscale,upscale,"Scale up an image (uses no smoothing)",true,,iutil
 fopen,fopen,"Open current directory in your files application",true,,futil
 encrypt,encrypt,"Encrypt a file using GPG",true,,futil
 decrypt,decrypt,"Decrypt a GPG-encrypted file",true,,futil

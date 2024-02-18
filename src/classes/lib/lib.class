@@ -6,6 +6,10 @@ sys sys
 csv_dir="${WYX_DIR}/src/data"
 
 lib.csv.query(){
+    if [ ! -f "${csv_dir}/$1.csv" ]; then
+        sys.log.error "File not found: ${csv_dir}/$1.csv"
+        return 1
+    fi
     csvsql --query "select $2 from $1 $3" "${csv_dir}/$1.csv"
 }
 
@@ -15,6 +19,8 @@ lib.csv.query.one(){
 }
 
 lib.csv.all(){
+    coloured=$(if [ "$1" = "coloured" ]; then return 0; else return 1; fi)
+
     IFS=$'\n' categories=($(lib.csv.query "arg_categories" "id"))
     for category in "${categories[@]:1}"; do
         if [ "$category" = "" ]; then
@@ -31,7 +37,7 @@ lib.csv.all(){
                 continue
             fi
             name=($(lib.csv.query 'arg_scripts' 'name' "where id='$script'"))
-            echo "- $script: ${name[1]}"
+            echo "- $script: ${ORANGE}${name[1]}${RESET}"
         done
         echo ""
     done
