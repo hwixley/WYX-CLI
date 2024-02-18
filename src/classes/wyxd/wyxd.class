@@ -322,7 +322,7 @@ wyxd.command_info() {
 	else
 		sys.log.info "Fetching command information..."
 		echo ""
-		(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.wyx" & wait)
+		(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.wyx" & wyxd.readme.update & wait)
 	fi
 	echo ""
 }
