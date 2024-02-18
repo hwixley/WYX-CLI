@@ -1,5 +1,5 @@
 id,path,name,public,args,category_id
-sys-info,sys-info,"Get Shell Type",true,,sys
+sys-info,sys-info,"Get Detailed System Information",true,,sys
 cd,cd,"Navigate Directory Aliases",true,,nav
 back,back,"Go Back A Directory",true,,nav
 run,run,"Run Script Aliases",true,"<myscript>",code
