@@ -28,8 +28,9 @@ jobs:
         sudo apt -y install ghostscript fonts-freefont-otf imagemagick csvkit
         sudo sed -i 's/\(<policy domain="resource" name="width" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
         sudo sed -i 's/\(<policy domain="resource" name="height" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
-        printf "TERM=xterm-256color; export TERM\n" >> "$HOME/.${SHELL##*/}rc"
-        source "$HOME/.${SHELL##*/}rc"
+        #printf "TERM=xterm-256color; export TERM\n" >> "$HOME/.${SHELL##*/}rc"
+        #source "$HOME/.${SHELL##*/}rc"
+        TERM=xterm-256color; export TERM
       shell: bash
 
     # Run the script
@@ -48,6 +49,6 @@ jobs:
         git config --local user.name "WYX-CLI Bot"
         git config --local user.email "hwixley1@gmail.com"
         git pull
-        git add .generated/wyxcli-output-preview.png src/data/.cache/cmdinfo.wyx .github/README.md
+        git add .generated/wyxcli-output-preview.png src/data/.cache/cmdinfo.git.wyx .github/README.md
         git commit -m "GH-Action: Update 'wyx' stdout image"
         git push
