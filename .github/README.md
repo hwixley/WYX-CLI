@@ -212,6 +212,11 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 ### WEB UTILITIES:
 - `webtext`: Read-only websites in your terminal
 
+### MISC UTILITIES:
+- `weather`: View the weather forecast for your location in the terminal
+- `moon`: View the moon phase
+- `leap-year`: Check when the next leap year is
+
 ### HELP UTILITIES:
 - `help`: View WYX-CLI Documentation
 - `explain`: Explain a bash command

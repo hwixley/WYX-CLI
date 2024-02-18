@@ -48,9 +48,9 @@ upscale,upscale,"Scale up an image (uses no smoothing)",true,,iutil
 fopen,fopen,"Open current directory in your files application",true,,futil
 encrypt,encrypt,"Encrypt a file using GPG",true,,futil
 decrypt,decrypt,"Decrypt a GPG-encrypted file",true,,futil
-weather,weather,"View the weather forecast for your location in the terminal2,true,,misc
-moon,moon,"View the moon phase",true,,misc
-leap-year,leap-year,"Check when the next leap year is",true,,misc
+weather,weather,"View the weather forecast for your location in the terminal",true,,mutil
+moon,moon,"View the moon phase",true,,mutil
+leap-year,leap-year,"Check when the next leap year is",true,,mutil
 webtext,webtext,"Read-only websites in your terminal",true,,wutil
 explain,explain,"Explain a bash command",true,,hutil
 ask-gpt,ask-gpt,"Start a conversation with ChatGPT",true,,hutil

@@ -80,6 +80,11 @@
 ### WEB UTILITIES:
 - `webtext`: [33mRead-only websites in your terminal[37m
 
+### MISC UTILITIES:
+- `weather`: [33mView the weather forecast for your location in the terminal[37m
+- `moon`: [33mView the moon phase[37m
+- `leap-year`: [33mCheck when the next leap year is[37m
+
 ### HELP UTILITIES:
 - `help`: [33mView WYX-CLI Documentation[37m
 - `explain`: [33mExplain a bash command[37m
