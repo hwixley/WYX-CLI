@@ -9,6 +9,7 @@ on:
       - .github/workflows/main.yml
       - '*.sh'
       - src/**
+      - .github/README_TEMPLATE.md
 
 permissions:
   contents: write
