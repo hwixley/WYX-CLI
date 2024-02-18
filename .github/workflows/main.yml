@@ -28,7 +28,7 @@ jobs:
         sudo apt -y install ghostscript fonts-freefont-otf imagemagick csvkit
         sudo sed -i 's/\(<policy domain="resource" name="width" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
         sudo sed -i 's/\(<policy domain="resource" name="height" value="\)[^"]*/\1160KP/' /etc/ImageMagick-6/policy.xml
-        printf "TERM=xterm; export TERM\n" >> "$HOME/.${SHELL##*/}rc"
+        printf "TERM=xterm-256color; export TERM\n" >> "$HOME/.${SHELL##*/}rc"
         source "$HOME/.${SHELL##*/}rc"
       shell: bash
 
