@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # CLI CONSTS
-version="3.1.0"
+version="3.1.1"
 num_args=$#
 date=$(date)
 year="${date:24:29}"
