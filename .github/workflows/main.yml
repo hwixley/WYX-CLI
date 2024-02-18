@@ -48,5 +48,5 @@ jobs:
         git config --local user.email "hwixley1@gmail.com"
         git pull
         git add .generated/wyxcli-output-preview.png src/data/.cache/cmdinfo.git.wyx src/data/.cache/cmdinfo.term.wyx .github/README.md
-        git commit -m "GH-Action: Update 'wyx' stdout image"
+        git commit -m "GH-Action: auto-update README & cache files"
         git push
