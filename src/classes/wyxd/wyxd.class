@@ -319,18 +319,27 @@ wyxd.command_info() {
 	if [ -f "$WYX_DIR/src/data/.cache/cmdinfo.term.wyx" ]; then
 		cat "$WYX_DIR/src/data/.cache/cmdinfo.term.wyx"
 	else
-		wyxd.command_info.cache.all
+		wyxd.cache.update
 	fi
 	echo ""
 }
 
-wyxd.command_info.cache.all() {
+wyxd.cache.cmdinfo() {
 	if [ ! -d "$WYX_DIR/src/data/.cache" ]; then
 		mkdir "$WYX_DIR/src/data/.cache"
 	fi
 	sys.log.info "Fetching command information..."
 	echo ""
-	(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.term.wyx" & lib.csv.all "git" > "$WYX_DIR/src/data/.cache/cmdinfo.git.wyx" & wyxd.readme.update & wait)
+	(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.term.wyx" & lib.csv.all "git" > "$WYX_DIR/src/data/.cache/cmdinfo.git.wyx" & wait)
+}
+
+wyxd.cache.update() {
+	if [ ! -d "$WYX_DIR/src/data/.cache" ]; then
+		mkdir "$WYX_DIR/src/data/.cache"
+	fi
+	sys.log.info "Updating wyxd cache..."
+	echo ""
+	(wyxd.cache.cmdinfo & wyxd.readme.update & wait)
 }
 
 wyxd.readme.update() {
