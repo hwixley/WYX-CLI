@@ -4,7 +4,7 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-$@VERSION@$-blue?labelColor=gray&style=flat) ![Shell Support](https://img.shields.io/badge/Shell%20Support-BASH%20&%20ZSH-orange?labelColor=gray&style=flat) ![Operating Systems](https://img.shields.io/badge/OS%20Support-Debian%-based%20Distros%20&%20MacOS-mediumpurple?labelColor=gray&style=flat)
+[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-@VERSION@-blue?labelColor=gray&style=flat) ![Shell Support](https://img.shields.io/badge/Shell%20Support-BASH%20&%20ZSH-orange?labelColor=gray&style=flat) ![Operating Systems](https://img.shields.io/badge/OS%20Support-Debian%-based%20Distros%20&%20MacOS-mediumpurple?labelColor=gray&style=flat)
 
 <hr>
 <p align="center">
@@ -26,8 +26,6 @@ Optimize your development productivity in the terminal
   - [Factory-reset Installation](#factory-reset-installation)
   - [List of Commands](#list-of-commands)
       - [Defaults](#defaults)
-  - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
-  - [Make A Contribution](#make-a-contribution)
 
 <hr>
 
@@ -132,16 +130,3 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 <i>**\*\*Note: all commands below should be preceded by the `wyx` command, this was ommitted for readability.\*\***</i>
 <br>
 
-$@COMMANDS@$
-
-<hr>
-
-## Bugs, New Features, & Questions
-
-Please post bug reports and new features in the issues section - there are custom templates you can use for each of these. And please post any questions you may have in the discussion section, I will reply to these as soon as I can! :)
-
-<hr>
-
-## Make A Contribution
-
-Contributions are welcome! Pick up a ticket from the Issues section and link it in your PR, I will review it when I can!

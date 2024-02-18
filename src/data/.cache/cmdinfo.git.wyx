@@ -1,0 +1,87 @@
+### VERSION:
+- `version`: [33mWYX-CLI Version[37m
+
+### SYSTEM:
+- `sys-info`: [33mGet Shell Type[37m
+
+### DEPENDENCIES:
+- `install-deps`: [33mInstall WYX-CLI dependencies[37m
+- `update-deps`: [33mUpdate the project dependencies[37m
+- `list-deps`: [33mList the project dependencies[37m
+
+### DIRECTORY NAVIGATION:
+- `cd`: [33mNavigate Directory Aliases[37m
+- `back`: [33mGo Back A Directory[37m
+
+### CODE:
+- `run`: [33mRun Script Aliases[37m
+- `vsc`: [33mOpen Directory Aliases in VSCode[37m
+
+### GIT AUTOMATION:
+- `ginit`: [33mInitialise Git Repository[37m
+- `push`: [33mAdd-Commit-Push Git Changes to Current Branch[37m
+- `pull`: [33mPull Git Changes for Current Branch[37m
+- `mpull`: [33mCheckout-Pull Git Changes From Master/Main Branch[37m
+- `repo`: [33mView Your Repository On GitHub[37m
+- `branch`: [33mView Your Current Branch On GitHub[37m
+- `actions`: [33mView Your Repository Actions On GitHub[37m
+- `issues`: [33mView Your Repository Issues On GitHub[37m
+- `prs`: [33mView Your Repository PRs On GitHub[37m
+- `notifs`: [33mView Your GitHub Notifications[37m
+- `commits`: [33mView Your Branch Git Commits[37m
+- `lastcommit`: [33mView Your Last Commit & Copy It's ID[37m
+- `nb`: [33mCheckout-Add-Commit-Push A New Git Branch[37m
+- `pr`: [33mOpen A Pull Request From Your Current Git Branch on GitHub[37m
+- `bpr`: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
+- `profile`: [33mView Your GitHub Profile[37m
+- `org`: [33mView Your GitHub Organisation[37m
+
+### MY DATA:
+- `user`: [33mView Your User Configuration[37m
+- `mydirs`: [33mView Your Directory Aliases Configuration[37m
+- `myorgs`: [33mView Your GitHub Organisation Configuration[37m
+- `myscripts`: [33mView Your Scripts Configuration[37m
+- `todo`: [33mView Your To-Do List[37m
+
+### MANAGE MY DATA:
+- `editd`: [33mEdit Your WYX-CLI Configuration[37m
+- `edits`: [33mEdit A Script File[37m
+- `newscript`: [33mCreate A New Script[37m
+
+### ENV/KEYSTORE:
+- `keystore`: [33mAdd a key-value pair to your '.env' keystore[37m
+- `setup`: [33mSetup WYX-CLI Third Party API-based utilities[37m
+
+### FILE UTILITIES:
+- `find`: [33mRegex Search Current Directory For File[37m
+- `fopen`: [33mOpen current directory in your files application[37m
+- `encrypt`: [33mEncrypt a file using GPG[37m
+- `decrypt`: [33mDecrypt a GPG-encrypted file[37m
+
+### NETWORK UTILITIES:
+- `ip`: [33mView Your Local & Public IPs[37m
+- `wifi`: [33mView Available WiFi Networks[37m
+- `hardware-ports`: [33mView Your Hardware Ports[37m
+- `wpass`: [33mView Your Saved WiFi Passwords[37m
+- `speedtest`: [33mRun A Speed Test On Your Network[37m
+
+### IMAGE UTILITIES:
+- `genqr`: [33mGenerate a QR code from a URL[37m
+- `upscale`: [33mScale up an image (uses no smoothing)[37m
+
+### TEXT UTILITIES:
+- `genpass`: [33mGenerate A Random Password[37m
+- `genhex`: [33mGenerate A Random Hex String[37m
+- `genb64`: [33mGenerate A Random Base64 String[37m
+- `lastcmd`: [33mCopy Your Last Command To Your Clipboard[37m
+- `copy`: [33mCopy output of a command to clipboard[37m
+
+### WEB UTILITIES:
+- `webtext`: [33mRead-only websites in your terminal[37m
+
+### HELP UTILITIES:
+- `help`: [33mView WYX-CLI Documentation[37m
+- `explain`: [33mExplain a bash command[37m
+- `ask-gpt`: [33mStart a conversation with ChatGPT[37m
+- `google`: [33mGoogle a query[37m
+

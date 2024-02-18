@@ -36,8 +36,8 @@ jobs:
       run: |
         chmod +x wyx-cli.sh
         ./wyx-cli.sh img_stdout
-        rm src/data/.cache/cmdinfo.wyx
-        ./wyx-cli.sh
+        ./wyx-cli.sh update_cache
+        ./wyx-cli.sh update_readme
       shell: bash
 
     # Commit and push changes

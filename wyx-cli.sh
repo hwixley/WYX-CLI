@@ -13,6 +13,8 @@ export WYX_DIR WYX_DATA_DIR WYX_SCRIPT_DIR
 
 source $WYX_DIR/src/classes/sys/sys.h
 sys sys
+source $WYX_DIR/src/classes/lib/lib.h
+lib lib
 
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then

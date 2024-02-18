@@ -316,14 +316,21 @@ wyxd.command_info() {
 	if [ ! -d "$WYX_DIR/src/data/.cache" ]; then
 		mkdir "$WYX_DIR/src/data/.cache"
 	fi
-	if [ -f "$WYX_DIR/src/data/.cache/cmdinfo.wyx" ]; then
-		cat "$WYX_DIR/src/data/.cache/cmdinfo.wyx"
+	if [ -f "$WYX_DIR/src/data/.cache/cmdinfo.term.wyx" ]; then
+		cat "$WYX_DIR/src/data/.cache/cmdinfo.term.wyx"
 	else
-		sys.log.info "Fetching command information..."
-		echo ""
-		(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.wyx" & wyxd.readme.update & wait)
+		wyxd.command_info.cache.all
 	fi
 	echo ""
+}
+
+wyxd.command_info.cache.all() {
+	if [ ! -d "$WYX_DIR/src/data/.cache" ]; then
+		mkdir "$WYX_DIR/src/data/.cache"
+	fi
+	sys.log.info "Fetching command information..."
+	echo ""
+	(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.term.wyx" & lib.csv.all "git" > "$WYX_DIR/src/data/.cache/cmdinfo.git.wyx" & wyxd.readme.update & wait)
 }
 
 wyxd.readme.update() {
@@ -334,8 +341,8 @@ wyxd.readme.update() {
 	sys.log.info "Updating README.md..."
 	echo ""
 	cp "$WYX_DIR/.github/README_TEMPLATE.md" "$WYX_DIR/.github/README.md"
-	sed -i "s/\$@VERSION@\$/$version/g" "$WYX_DIR/.github/README.md"
-	commands=$(lib.csv.all)
-	sed -i "s/\$@COMMANDS@\$/$commands/g" "$WYX_DIR/.github/README.md"
+	sed -i "s:@VERSION@:$version:g" "$WYX_DIR/.github/README.md"
+	commands=$(cat "$WYX_DIR/src/data/.cache/cmdinfo.git.wyx" | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
+	echo "$commands" >> "$WYX_DIR/.github/README.md"
 	sys.log.info "README.md updated successfully!"
 }

@@ -13,6 +13,8 @@ source $WYX_DIR/src/classes/wgit/wgit.h
 wgit wgit
 source $WYX_DIR/src/classes/wyxd/wyxd.h
 wyxd wyxd
+source $WYX_DIR/src/classes/lib/lib.h
+lib lib
 
 # Load source git data
 branch=""

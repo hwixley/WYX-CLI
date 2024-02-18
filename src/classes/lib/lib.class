@@ -19,7 +19,7 @@ lib.csv.query.one(){
 }
 
 lib.csv.all(){
-    coloured=$(if [ "$1" = "coloured" ]; then return 0; else return 1; fi)
+    type="$1"
 
     IFS=$'\n' categories=($(lib.csv.query "arg_categories" "id"))
     for category in "${categories[@]:1}"; do
@@ -31,13 +31,21 @@ lib.csv.all(){
             continue
         fi
         cat=($(lib.csv.query 'arg_categories' 'name' "where id='$category'"))
-        sys.log.h1 "${cat[1]}:"
+        if [ "$type" = "git" ]; then
+            echo "### ${cat[1]}:"
+        else
+            sys.log.h1 "${cat[1]}:"
+        fi
         for script in "${scripts[@]:1}"; do
             if [ "$script" = "" ]; then
                 continue
             fi
             name=($(lib.csv.query 'arg_scripts' 'name' "where id='$script'"))
-            echo "- $script: ${ORANGE}${name[1]}${RESET}"
+            if [ "$type" = "git" ]; then
+                echo "- \`$script\`: ${ORANGE}${name[1]}${RESET}"
+            else
+                echo "- $script: ${ORANGE}${name[1]}${RESET}"
+            fi
         done
         echo ""
     done
