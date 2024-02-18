@@ -35,6 +35,7 @@
 - `bpr`: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
 - `profile`: [33mView Your GitHub Profile[37m
 - `org`: [33mView Your GitHub Organisation[37m
+- `pp`: [33mPull-Push Git Changes to Current Branch[37m
 
 ### MY DATA:
 - `user`: [33mView Your User Configuration[37m
