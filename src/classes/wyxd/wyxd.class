@@ -317,11 +317,26 @@ wyxd.command_info() {
 		mkdir "$WYX_DIR/src/data/.cache"
 	fi
 	if [ -f "$WYX_DIR/src/data/.cache/cmdinfo.wyx" ]; then
-		cat "$WYX_DIR/src/data/.cache/cmdinfo.wyx"
+		cp "$WYX_DIR/src/data/.cache/cmdinfo.wyx" "$WYX_DIR/src/data/.cache/cmdinfo.wyx.bak"
+		(cat "$WYX_DIR/src/data/.cache/cmdinfo.wyx.bak" & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.wyx" & wait)
 	else
 		sys.log.info "Fetching command information..."
 		echo ""
 		(lib.csv.all & lib.csv.all > "$WYX_DIR/src/data/.cache/cmdinfo.wyx" & wait)
 	fi
 	echo ""
+}
+
+wyxd.readme.update() {
+	if [ ! -f "$WYX_DIR/.github/README.md" ]; then
+		sys.log.error "README.md does not exist in the project"
+		return 1
+	fi
+	sys.log.info "Updating README.md..."
+	echo ""
+	cp "$WYX_DIR/.github/README_TEMPLATE.md " "$WYX_DIR/.github/README.md"
+	sed -i "s/\$@VERSION@\$/$version/g" "$WYX_DIR/.github/README.md"
+	commands=$(lib.csv.all)
+	sed -i "s/\$@COMMANDS@\$/$commands/g" "$WYX_DIR/.github/README.md"
+	sys.log.info "README.md updated successfully!"
 }
