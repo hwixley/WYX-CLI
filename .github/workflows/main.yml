@@ -38,8 +38,8 @@ jobs:
         chmod +x wyx-cli.sh
         mkdir .wyx-cli-data && touch .wyx-cli-data/git-user.txt
         printf "username=bot\nname=WYX-CLI Bot\n" >> .wyx-cli-data/git-user.txt
-        ./wyx-cli.sh update-stdout
         ./wyx-cli.sh update-cache
+        ./wyx-cli.sh update-stdout
       shell: bash
 
     # Commit and push changes
