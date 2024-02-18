@@ -4,7 +4,7 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-3.1.0-blue?labelColor=gray&style=flat) ![Shell Support](https://img.shields.io/badge/Shell%20Support-BASH%20&%20ZSH-orange?labelColor=gray&style=flat) ![Operating Systems](https://img.shields.io/badge/OS%20Support-Debian%20Distros%20&%20MacOS-mediumpurple?labelColor=gray&style=flat)
+[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-$@VERSION@$-blue?labelColor=gray&style=flat) ![Shell Support](https://img.shields.io/badge/Shell%20Support-BASH%20&%20ZSH-orange?labelColor=gray&style=flat) ![Operating Systems](https://img.shields.io/badge/OS%20Support-Debian%-based%20Distros%20&%20MacOS-mediumpurple?labelColor=gray&style=flat)
 
 <hr>
 <p align="center">
@@ -26,21 +26,6 @@ Optimize your development productivity in the terminal
   - [Factory-reset Installation](#factory-reset-installation)
   - [List of Commands](#list-of-commands)
       - [Defaults](#defaults)
-    - [Navigation](#navigation)
-    - [Code Editing](#code-editing)
-    - [Custom Script/Environment Execution](#custom-scriptenvironment-execution)
-    - [Git Automation](#git-automation)
-    - [Quick-access URLs](#quick-access-urls)
-    - [Data for Custom Scripting Logic](#data-for-custom-scripting-logic)
-    - [Editing Data for Custom Scripting Logic](#editing-data-for-custom-scripting-logic)
-    - [Env/Keystore Management](#envkeystore-management)
-    - [File Utilities](#file-utilities)
-    - [Network Utilities](#network-utilities)
-    - [Image Utilities](#image-utilities)
-    - [Text Utilities](#text-utilities)
-    - [Web Utilities](#web-utilities)
-    - [Miscellaneous Utilities](#miscellaneous-utilities)
-    - [Help Utilities](#help-utilities)
   - [Bugs, New Features, \& Questions](#bugs-new-features--questions)
   - [Make A Contribution](#make-a-contribution)
 
@@ -147,108 +132,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 <i>**\*\*Note: all commands below should be preceded by the `wyx` command, this was ommitted for readability.\*\***</i>
 <br>
 
-### Navigation
-
-1. `cd <mydir>`: directory navigation using custom aliases stored in `mydirs`
-2. `back`: go back to last directory
-
-<!-- ### Directory Management
-1. `new <mydir> <subdir>`: create new directory in location of alias
-2. `delete <mydir> <subdir>`: delete directory in location of alias
-3. `hide <mydir> <subdir>`: hide directory in location of alias -->
-
-### Code Editing
-
-1. `vsc <mydir>`: open location of alias in Visual Studio Code
-
-### Custom Script/Environment Execution
-
-1. `run <myscript>`: setup and run the script saved under the given script alias
-
-### Git Automation
-
-1. `push <branch?>`: push changes to the given repository branch (prompts you to enter a commit message on execution and leaves a default message if left empty)
-2. `pull <branch?>`: pull changes from the given repository branch
-3. `ginit <newdir?>`: initialize git repository in current directory if `<newdir>` is not set, otherwise, a new directory is created called `<newdir>` and a git repository is initialized there instead
-<!-- 4. `gnew <mydir/org> <repo>`: create and initialize a new directory as a git repository -->
-4. `nb <name?>`: create a new branch
-5. `pr`: create a PR against the default branch from the current branch
-6. `bpr <name?>`: checkout changes to a new branch and create a PR from this branch
-7. `commits`: view detailed commit history
-8. `lastcommit`: view last commit
-
-### Quick-access URLs
-
-1. `repo`: go to the respective GitHub repository url on the default branch from your current directory
-2. `branch`: go to the respective GitHub repository url on the current branch from your current directory
-3. `prs`: go to the Pull Requests page for the respective GitHub repository url from your current directory
-4. `actions`: go to the Action Workflows page for the respective GitHub repository url from your current directory
-5. `issues`: go to the Issues page for the respective GitHub repository url from your current directory
-6. `notifs`: go to your GitHub Notifications
-7. `profile`: go to your GitHub profile
-8. `org <myorg?>`: go to the specified url of the GitHub organization
-9. `help`: go to the wyx-cli GitHub Pages url for documentation
-
-### Data for Custom Scripting Logic
-
-1. `user`: displays stored user-specific data such as: `username` - which represents the user's GitHub username (for configuring GitHub urls), `name` - for software licensing copyright clauses (when setting up GitHub software licenses for your repositories)
-2. `myorgs`: displays stored aliases for user's GitHub organizations (for configuring GitHub urls). Please note you can use the `default` alias for your most commonly used organization, allowing you to not have to type the organization alias in cases where a `<myorg?>` argument is present
-3. `mydirs`: displays stored aliases for user's directories (for efficient terminal navigation)
-4. `myscripts`: displays stored aliases for user's custom scripts (for efficient environment setup or script execution)
-
-### Editing Data for Custom Scripting Logic
-
-1. `editd <data>`: allows the user to edit the specified piece of data (`user`, `myorgs`, `mydirs`, `myscripts`, or `todo`)
-2. `edits <myscript>`: allows the user to edit the specified script (this edits the script referenced from the alias stored in `myscripts` not the `myscripts` aliases data)
-3. `newscript <script-name?>`: allows the user to create a new script
-
-### Env/Keystore Management
-1. `keystore <key> <value?>`: this allows you to add a key-value pair to your '.env' keystore
-2. `setup openai_key`: this allows you to use `ask-gpt` and smart commit features which use OpenAI's API.
-3. `setup smart_commit`: this allows you to use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs). <i>This requires an OpenAI API key.</i>
-
-### File Utilities
-
-1. `fopen`: open the current directory in your native files application
-2. `find <fname>.<fext>`: find a file inside the current directory with the respective name (use `find "*.<ext>"` for finding all files with the given extension)
-3. `encrypt <dirname|fname?>`: GPG encrypt a file/directory (saves a new .gpg file)
-4. `decrypt <fname?>`: GPG decrypt a file (must be a .gpg file)
-
-### Network Utilities
-
-1. `ip`: get local and public IP addresses of your computer
-2. `wifi`: lists details about available wifi networks on your host machine
-3. `wpass`: lists your saved wifi passwords
-4. `speedtest`: run a network speedtest
-5. `hardware-ports`: list your hardware network ports
-
-### Image Utilities
-
-1. `genqr <url?> <fname?>`: generate a png QR code for the specified URL
-2. `upscale <fname?> <scale?>`: upscale an image's resolution (**does not smooth interpolated pixels**)
-
-### Text Utilities
-
-1. `genpass <pass-length>`: generate and copy random password string (includes punctuation, digits, upper/lowercase ASCII) of specified length (of default length 16)
-2. `genhex <hex-length?>`: generate and copy random hex string of specified length (of default length 32)
-3. `genb64 <base64-length?>`: generate and copy random base64 string of specified length (of default length 32)
-4. `copy <string?|cmd?>`: copy a string or the output of a shell command (using $(<cmd>) syntax) to your clipboard
-5. `lastcmd`: copy the last command you ran to your clipboard
-
-### Web Utilities
-
-1. `webtext`: extract readable text from a website
-
-### Miscellaneous Utilities
-
-1. `weather <city?>`: get the weather for your current/specified location
-2. `moon`: get the current moon phase 
-3. `leap-year`: tells you the next leap year
-
-### Help Utilities
-1. `explain "<cmd?>"`: explain the syntax of the specified bash command
-2. `ask-gpt`: start a conversation with OpenAI's ChatGPT in the terminal. <i>This requires an OpenAI API key.</i>
-3. `google <query?>`: google a query
+$@COMMANDS@$
 
 <hr>
 
