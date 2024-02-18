@@ -38,7 +38,6 @@ jobs:
         chmod +x wyx-cli.sh
         ./wyx-cli.sh update-stdout
         ./wyx-cli.sh update-cache
-        ./wyx-cli.sh update-readme
       shell: bash
 
     # Commit and push changes
