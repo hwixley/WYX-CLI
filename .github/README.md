@@ -134,7 +134,7 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 - `version`: WYX-CLI Version
 
 ### SYSTEM:
-- `sys-info`: Get Shell Type
+- `sys-info`: Get Detailed System Information
 
 ### DEPENDENCIES:
 - `install-deps`: Install WYX-CLI dependencies

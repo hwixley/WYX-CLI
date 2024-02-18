@@ -2,7 +2,7 @@
 - `version`: [33mWYX-CLI Version[37m
 
 ### SYSTEM:
-- `sys-info`: [33mGet Shell Type[37m
+- `sys-info`: [33mGet Detailed System Information[37m
 
 ### DEPENDENCIES:
 - `install-deps`: [33mInstall WYX-CLI dependencies[37m
