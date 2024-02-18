@@ -36,6 +36,8 @@ jobs:
     - name: Run script file
       run: |
         chmod +x wyx-cli.sh
+        mkdir .wyx-cli-data && touch .wyx-cli-data/git-user.txt
+        printf "username=bot\nname=WYX-CLI Bot\" >> .wyx-cli-data/git-user.txt
         ./wyx-cli.sh update-stdout
         ./wyx-cli.sh update-cache
       shell: bash
