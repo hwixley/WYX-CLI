@@ -15,7 +15,11 @@ lib.csv.query(){
 
 lib.csv.query.one(){
     lines=($(lib.csv.query "$1" "$2" "$3"))
-    echo "${lines[1]}"
+    if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
+        echo "${lines[2]}"
+    else
+        echo "${lines[1]}"
+    fi
 }
 
 lib.csv.all(){
@@ -40,11 +44,11 @@ lib.csv.all(){
             if [ "$script" = "" ]; then
                 continue
             fi
-            name=($(lib.csv.query 'arg_scripts' 'name' "where id='$script'"))
+            name=$(lib.csv.query.one 'arg_scripts' 'name' "where id='$script'")
             if [ "$type" = "git" ]; then
-                echo "- \`$script\`: ${ORANGE}${name[1]}${RESET}"
+                echo "- \`$script\`: ${ORANGE}${name}${RESET}"
             else
-                echo "- $script: ${ORANGE}${name[1]}${RESET}"
+                echo "- $script: ${ORANGE}${name}${RESET}"
             fi
         done
         echo ""
