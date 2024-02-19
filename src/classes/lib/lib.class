@@ -15,7 +15,7 @@ lib.csv.query(){
 
 lib.csv.query.one(){
     lines=($(lib.csv.query "$1" "$2" "$3"))
-    if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(ps -o args= -p $$)" = *"zsh"* ]]; then
+    if sys.os.mac; then
         echo "${lines[2]}"
     else
         echo "${lines[1]}"
@@ -31,14 +31,16 @@ lib.csv.all(){
             continue
         fi
         IFS=$'\n' scripts=($(lib.csv.query "arg_scripts" "id" "where category_id='$category'"))
-        if [ "${scripts[1]}" = "" ]; then
+        if [ sys.os.mac ] && [ "${scripts[2]}" = "" ]; then
+            continue
+        elif [ "${scripts[1]}" = "" ]; then
             continue
         fi
-        cat=($(lib.csv.query 'arg_categories' 'name' "where id='$category'"))
+        cat=$(lib.csv.query.one 'arg_categories' 'name' "where id='$category'")
         if [ "$type" = "git" ]; then
-            echo "### ${cat[1]}:"
+            echo "### ${cat}:"
         else
-            sys.log.h1 "${cat[1]}:"
+            sys.log.h1 "${cat}:"
         fi
         for script in "${scripts[@]:1}"; do
             if [ "$script" = "" ]; then

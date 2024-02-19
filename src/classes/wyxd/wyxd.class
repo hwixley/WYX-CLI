@@ -352,7 +352,7 @@ wyxd.readme.update() {
 	echo ""
 	cp -f "$WYX_DIR/.github/README_TEMPLATE.md" "$WYX_DIR/.github/README.md"
 	sed -i "s:@VERSION@:$version:g" "$WYX_DIR/.github/README.md"
-	commands=$(cat "$WYX_DIR/src/data/.cache/cmdinfo.git.wyx" | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
-	echo "$commands" >> "$WYX_DIR/.github/README.md"
+	wyx_commands=$(cat "$WYX_DIR/src/data/.cache/cmdinfo.git.wyx" | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g")
+	echo "$wyx_commands" >> "$WYX_DIR/.github/README.md"
 	sys.log.info "README.md updated successfully!"
 }
