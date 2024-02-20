@@ -18,14 +18,13 @@ Optimize your development productivity in the terminal
 - [⚡️ WYX CLI ⚡️](#️-wyx-cli-️)
   - [Table of Contents](#table-of-contents)
   - [What It Does](#what-it-does)
-    - [Why It Was Made](#why-it-was-made)
+  - [Why It Was Made](#why-it-was-made)
   - [Support This Project](#support-this-project)
-  - [Dependencies](#dependencies)
   - [Installation](#installation)
   - [Extra Feature Setup](#extra-feature-setup)
   - [Factory-reset Installation](#factory-reset-installation)
+  - [Dependencies](#dependencies)
   - [List of Commands](#list-of-commands)
-      - [Defaults](#defaults)
 
 <hr>
 
@@ -33,29 +32,17 @@ Optimize your development productivity in the terminal
 
 Provides developers with the ability for optimising the execution of commonly performed tasks, commands, directory navigations, and environment setups/script executions.
 
-### Why It Was Made
+## Why It Was Made
 
-I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser repetitive and time-wasting. I decided to start developing my own bash script to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal.
-
-I knew I was not the only one who had suffered from these productivity issues as my co-workers saw interest in the tool I was developing. Upon this I decided to start developing a more generic and robust version of my original tool to allow developers across the world optimize their productivity with this tool too!
+I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser repetitive and time-wasting. I decided to start developing my own bash scripting library to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal. Due to my experience working simultaneously on Mac and Linux machines one of the key parts of the WYX-CLI project was to also allow the same code to run in different shells and operating systems.
 
 <hr>
 
 ## Support This Project
 
-I am developing this project in my spare time to help developer's across the globe maximize their productivity in the terminal. If you have found this tool useful please leave a star on this repository it really helps me out! I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help me to continue to be able to develop OSS in spare time by helping me stay caffeinated and coding. :coffee: :zap:
+If you have found this tool useful/insightful please leave a :star: on the repository it really helps me out!
 
-<hr>
-
-## Dependencies
-
-<ins>The dependencies include:</ins>
-
-- `openssl` for the [Random String Generation](https://github.com/hwixley/wyx-cli#text-utilities) commands.
-- `git` for all [Git Automation](https://github.com/hwixley/wyx-cli#git-automation) commands.
-- Visual Studio Code for the `vsc` code editor command.
-- XCode for the `xc` code editor command (only available for Macintosh systems).
-- `speedtest` (the Ookla speedtest-cli) for runnning network speed tests. The installation commands for this on MacOS and Debian are in `setup.sh`.
+I also have a [buymeacoffee](https://www.buymeacoffee.com/hwixley) sponsor link if you would like to help turn my caffeine addiction into a problem :coffee::zap:
 
 <hr>
 
@@ -93,13 +80,13 @@ wyx setup smart_commit
 
 ## Factory-reset Installation
 
-1. Remove your installation
+1. Remove your cloned repository
 
 ```
 rm -rf <path-of-installation>
 ```
 
-1. Remove the wyx-cli script setup in your environment file
+2. Remove the wyx-cli script setup in your environment file
    - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems)
      ```
      gedit ~/.bashrc
@@ -115,18 +102,13 @@ rm -rf <path-of-installation>
 
 <hr>
 
+## Dependencies
+View current dependencies for your system by running:
+```
+wyx list-deps
+```
+
+<hr>
+
 ## List of Commands
-
-Please note any command with an argument in angle brackets below (ie. `<branch>`) denotes a dynamic variable which is given by the user. If the text inside these angle has a `?` character at the end (ie. `<branch?>`) this denotes that this argument is optional and if left empty will fallback to the default.
-
-#### Defaults
-
-- `<branch?>` : if left empty the current branch will be used
-- `<org?>` : if left empty the default GitHub organisation set in `myorgs` will be used
-- Any other optional arguments that you omit will be prompted upon execution
-
-<br>
-
-<i>**\*\*Note: all commands below should be preceded by the `wyx` command, this was ommitted for readability.\*\***</i>
-<br>
 
