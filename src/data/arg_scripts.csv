@@ -14,19 +14,19 @@ ginit,ginit,"Initialise Git Repository",true,,git
 push,push,"Add-Commit-Push Git Changes to Current Branch",true,,git
 pull,pull,"Pull Git Changes for Current Branch",true,,git
 mpull,mpull,"Checkout-Pull Git Changes From Master/Main Branch",true,,git
-repo,repo,"View Your Repository On GitHub",true,,git
-branch,branch,"View Your Current Branch On GitHub",true,,git
-actions,actions,"View Your Repository Actions On GitHub",true,,git
-issues,issues,"View Your Repository Issues On GitHub",true,,git
-prs,prs,"View Your Repository PRs On GitHub",true,,git
-notifs,notifs,"View Your GitHub Notifications",true,,git
+repo,repo,"View Your Repository On GitHub",true,,urls
+branch,branch,"View Your Current Branch On GitHub",true,,urls
+actions,actions,"View Your Repository Actions On GitHub",true,,urls
+issues,issues,"View Your Repository Issues On GitHub",true,,urls
+prs,prs,"View Your Repository PRs On GitHub",true,,urls
+notifs,notifs,"View Your GitHub Notifications",true,,urls
 commits,commits,"View Your Branch Git Commits",true,,git
 lastcommit,lastcommit,"View Your Last Commit & Copy It's ID",true,,git
 nb,nb,"Checkout-Add-Commit-Push A New Git Branch",true,,git
 pr,pr,"Open A Pull Request From Your Current Git Branch on GitHub",true,,git
 bpr,bpr,"Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub",true,,git
-profile,profile,"View Your GitHub Profile",true,,git
-org,org,"View Your GitHub Organisation",true,,git
+profile,profile,"View Your GitHub Profile",true,,urls
+org,org,"View Your GitHub Organisation",true,,url
 help,help,"View WYX-CLI Documentation",true,,hutil
 user,user,"View Your User Configuration",true,,mydata
 mydirs,mydirs,"View Your Directory Aliases Configuration",true,,mydata

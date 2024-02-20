@@ -154,20 +154,21 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 - `push`: Add-Commit-Push Git Changes to Current Branch
 - `pull`: Pull Git Changes for Current Branch
 - `mpull`: Checkout-Pull Git Changes From Master/Main Branch
+- `commits`: View Your Branch Git Commits
+- `lastcommit`: View Your Last Commit & Copy It's ID
+- `nb`: Checkout-Add-Commit-Push A New Git Branch
+- `pr`: Open A Pull Request From Your Current Git Branch on GitHub
+- `bpr`: Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub
+- `pp`: Pull-Push Git Changes to Current Branch
+
+### URLs:
 - `repo`: View Your Repository On GitHub
 - `branch`: View Your Current Branch On GitHub
 - `actions`: View Your Repository Actions On GitHub
 - `issues`: View Your Repository Issues On GitHub
 - `prs`: View Your Repository PRs On GitHub
 - `notifs`: View Your GitHub Notifications
-- `commits`: View Your Branch Git Commits
-- `lastcommit`: View Your Last Commit & Copy It's ID
-- `nb`: Checkout-Add-Commit-Push A New Git Branch
-- `pr`: Open A Pull Request From Your Current Git Branch on GitHub
-- `bpr`: Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub
 - `profile`: View Your GitHub Profile
-- `org`: View Your GitHub Organisation
-- `pp`: Pull-Push Git Changes to Current Branch
 
 ### MY DATA:
 - `user`: View Your User Configuration

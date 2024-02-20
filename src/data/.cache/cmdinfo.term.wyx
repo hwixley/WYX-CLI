@@ -22,20 +22,21 @@
 - push: [33mAdd-Commit-Push Git Changes to Current Branch[37m
 - pull: [33mPull Git Changes for Current Branch[37m
 - mpull: [33mCheckout-Pull Git Changes From Master/Main Branch[37m
+- commits: [33mView Your Branch Git Commits[37m
+- lastcommit: [33mView Your Last Commit & Copy It's ID[37m
+- nb: [33mCheckout-Add-Commit-Push A New Git Branch[37m
+- pr: [33mOpen A Pull Request From Your Current Git Branch on GitHub[37m
+- bpr: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
+- pp: [33mPull-Push Git Changes to Current Branch[37m
+
+[34mURLs:[37m
 - repo: [33mView Your Repository On GitHub[37m
 - branch: [33mView Your Current Branch On GitHub[37m
 - actions: [33mView Your Repository Actions On GitHub[37m
 - issues: [33mView Your Repository Issues On GitHub[37m
 - prs: [33mView Your Repository PRs On GitHub[37m
 - notifs: [33mView Your GitHub Notifications[37m
-- commits: [33mView Your Branch Git Commits[37m
-- lastcommit: [33mView Your Last Commit & Copy It's ID[37m
-- nb: [33mCheckout-Add-Commit-Push A New Git Branch[37m
-- pr: [33mOpen A Pull Request From Your Current Git Branch on GitHub[37m
-- bpr: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
 - profile: [33mView Your GitHub Profile[37m
-- org: [33mView Your GitHub Organisation[37m
-- pp: [33mPull-Push Git Changes to Current Branch[37m
 
 [34mMY DATA:[37m
 - user: [33mView Your User Configuration[37m
