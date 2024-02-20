@@ -31,9 +31,8 @@ lib.csv.all(){
             continue
         fi
         IFS=$'\n' scripts=($(lib.csv.query "arg_scripts" "id" "where category_id='$category'"))
-        if [ sys.os.mac ] && [ "${scripts[2]}" = "" ]; then
-            continue
-        elif [ "${scripts[1]}" = "" ]; then
+        
+        if [ "${scripts[1]}" = "" ]; then
             continue
         fi
         cat=$(lib.csv.query.one 'arg_categories' 'name' "where id='$category'")

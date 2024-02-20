@@ -130,6 +130,12 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 <i>**\*\*Note: all commands below should be preceded by the `wyx` command, this was ommitted for readability.\*\***</i>
 <br>
 
+### VERSION:
+- `version`: WYX-CLI Version
+
+### SYSTEM:
+- `sys-info`: Get Detailed System Information
+
 ### DEPENDENCIES:
 - `install-deps`: Install WYX-CLI dependencies
 - `update-deps`: Update the project dependencies
@@ -202,6 +208,9 @@ Please note any command with an argument in angle brackets below (ie. `<branch>`
 - `genb64`: Generate A Random Base64 String
 - `lastcmd`: Copy Your Last Command To Your Clipboard
 - `copy`: Copy output of a command to clipboard
+
+### WEB UTILITIES:
+- `webtext`: Read-only websites in your terminal
 
 ### MISC UTILITIES:
 - `weather`: View the weather forecast for your location in the terminal

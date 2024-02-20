@@ -1,3 +1,9 @@
+### VERSION:
+- `version`: [33mWYX-CLI Version[37m
+
+### SYSTEM:
+- `sys-info`: [33mGet Detailed System Information[37m
+
 ### DEPENDENCIES:
 - `install-deps`: [33mInstall WYX-CLI dependencies[37m
 - `update-deps`: [33mUpdate the project dependencies[37m
@@ -70,6 +76,9 @@
 - `genb64`: [33mGenerate A Random Base64 String[37m
 - `lastcmd`: [33mCopy Your Last Command To Your Clipboard[37m
 - `copy`: [33mCopy output of a command to clipboard[37m
+
+### WEB UTILITIES:
+- `webtext`: [33mRead-only websites in your terminal[37m
 
 ### MISC UTILITIES:
 - `weather`: [33mView the weather forecast for your location in the terminal[37m
