@@ -34,7 +34,7 @@ Provides developers with the ability for optimising the execution of commonly pe
 
 ## Why It Was Made
 
-I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser repetitive and time-wasting. I decided to start developing my own bash scripting library to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal. Due to my experience working simultaneously on Mac and Linux machines one of the key parts of the WYX-CLI project was to also allow the same code to run in different shells and operating systems.
+I found myself executing the same commands repeatedly, finding navigation on the terminal for frequently accessed locations needlessly slow, and the task of pushing out new code via manually submitting a PR on my browser repetitive and time-wasting. I decided to start developing my own bash scripting library to help alleviate these issues, and realized the whole world of opportunity I had to help optimize my own daily workflows on the terminal. Due to my experience working simultaneously on Mac and Linux machines one of the key parts of the WYX-CLI project was to also allow the same code to run in different shells and operating systems. 
 
 <hr>
 
