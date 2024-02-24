@@ -151,6 +151,7 @@ wyx list-deps
 - `prs`: View Your Repository PRs On GitHub
 - `notifs`: View Your GitHub Notifications
 - `profile`: View Your GitHub Profile
+- `org`: View Your GitHub Organisation
 
 ### MY DATA:
 - `user`: View Your User Configuration
