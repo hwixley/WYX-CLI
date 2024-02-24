@@ -26,7 +26,7 @@ nb,nb,"Checkout-Add-Commit-Push A New Git Branch",true,,git
 pr,pr,"Open A Pull Request From Your Current Git Branch on GitHub",true,,git
 bpr,bpr,"Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub",true,,git
 profile,profile,"View Your GitHub Profile",true,,urls
-org,org,"View Your GitHub Organisation",true,,url
+org,org,"View Your GitHub Organisation",true,,urls
 help,help,"View WYX-CLI Documentation",true,,hutil
 user,user,"View Your User Configuration",true,,mydata
 mydirs,mydirs,"View Your Directory Aliases Configuration",true,,mydata
