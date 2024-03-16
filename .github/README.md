@@ -203,6 +203,6 @@ wyx list-deps
 
 ### HELP UTILITIES:
 - `help`: View WYX-CLI Documentation
-- `explain <command?>`: Explain a bash command
+- `explain $(<command?>)`: Explain a bash command
 - `ask-gpt`: Start a conversation with ChatGPT
 - `google <query?>`: Google a query

@@ -89,7 +89,7 @@
 
 ### HELP UTILITIES:
 - `help`: [33mView WYX-CLI Documentation[37m
-- `explain <command?>`: [33mExplain a bash command[37m
+- `explain $(<command?>)`: [33mExplain a bash command[37m
 - `ask-gpt`: [33mStart a conversation with ChatGPT[37m
 - `google <query?>`: [33mGoogle a query[37m
 
