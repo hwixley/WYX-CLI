@@ -1,10 +1,10 @@
 id,path,name,public,args,category_id
 sys-info,sys-info,"Get Detailed System Information",true,,sys
-cd,cd,"Navigate Directory Aliases",true,,nav
+cd,cd,"Navigate Directory Aliases",true,mydir?,nav
 back,back,"Go Back A Directory",true,,nav
-run,run,"Run Script Aliases",true,"<myscript>",code
-vsc,vsc,"Open Directory Aliases in VSCode",true,"<mydir>",code
-genpass,genpass,"Generate A Random Password",true,"<pass-length?>",tutil
+run,run,"Run Script Aliases",true,myscript,code
+vsc,vsc,"Open Directory Aliases in VSCode",true,mydir,code
+genpass,genpass,"Generate A Random Password",true,"pass-length?",tutil
 genhex,genhex,"Generate A Random Hex String",true,,tutil
 genb64,genb64,"Generate A Random Base64 String",true,,tutil
 version,version,"WYX-CLI Version",true,,version
@@ -22,11 +22,11 @@ prs,prs,"View Your Repository PRs On GitHub",true,,urls
 notifs,notifs,"View Your GitHub Notifications",true,,urls
 commits,commits,"View Your Branch Git Commits",true,,git
 lastcommit,lastcommit,"View Your Last Commit & Copy It's ID",true,,git
-nb,nb,"Checkout-Add-Commit-Push A New Git Branch",true,,git
+nb,nb,"Checkout-Add-Commit-Push A New Git Branch",true,"branch-name?",git
 pr,pr,"Open A Pull Request From Your Current Git Branch on GitHub",true,,git
-bpr,bpr,"Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub",true,,git
+bpr,bpr,"Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub",true,"branch-name?",git
 profile,profile,"View Your GitHub Profile",true,,urls
-org,org,"View Your GitHub Organisation",true,,urls
+org,org,"View Your GitHub Organisation",true,myorg?,urls
 help,help,"View WYX-CLI Documentation",true,,hutil
 user,user,"View Your User Configuration",true,,mydata
 mydirs,mydirs,"View Your Directory Aliases Configuration",true,,mydata
@@ -51,15 +51,15 @@ decrypt,decrypt,"Decrypt a GPG-encrypted file",true,,futil
 weather,weather,"View the weather forecast for your location in the terminal",true,,mutil
 moon,moon,"View the moon phase",true,,mutil
 leap-year,leap-year,"Check when the next leap year is",true,,mutil
-webtext,webtext,"Read-only websites in your terminal",true,,wutil
-explain,explain,"Explain a bash command",true,,hutil
+webtext,webtext,"Read-only websites in your terminal",true,url?,wutil
+explain,explain,"Explain a bash command",true,command?,hutil
 ask-gpt,ask-gpt,"Start a conversation with ChatGPT",true,,hutil
-google,google,"Google a query",true,,hutil
+google,google,"Google a query",true,query?,hutil
 install-deps,install-deps,"Install WYX-CLI dependencies",true,,deps
 keystore,keystore,"Add a key-value pair to your '.env' keystore",true,,env
-setup,setup,"Setup WYX-CLI Third Party API-based utilities",true,,env
+setup,setup,"Setup WYX-CLI Third Party API-based utilities",true,"smart_commit",env
 update-stdout,img_stdout,"Output wyx STDOUT to an image",false
-copy,copy,"Copy output of a command to clipboard",true,,tutil
+copy,copy,"Copy output of a command to clipboard",true,command?,tutil
 update-deps,update-deps,"Update the project dependencies",true,,deps
 list-deps,list-deps,"List the project dependencies",true,,deps
 update-readme,update_readme,"Auto-update the project's readme with the available commands",false,,

@@ -124,12 +124,12 @@ wyx list-deps
 - `list-deps`: List the project dependencies
 
 ### DIRECTORY NAVIGATION:
-- `cd`: Navigate Directory Aliases
+- `cd <mydir?>`: Navigate Directory Aliases
 - `back`: Go Back A Directory
 
 ### CODE:
-- `run`: Run Script Aliases
-- `vsc`: Open Directory Aliases in VSCode
+- `run <myscript>`: Run Script Aliases
+- `vsc <mydir>`: Open Directory Aliases in VSCode
 
 ### GIT AUTOMATION:
 - `ginit`: Initialise Git Repository
@@ -138,9 +138,9 @@ wyx list-deps
 - `mpull`: Checkout-Pull Git Changes From Master/Main Branch
 - `commits`: View Your Branch Git Commits
 - `lastcommit`: View Your Last Commit & Copy It's ID
-- `nb`: Checkout-Add-Commit-Push A New Git Branch
+- `nb <branch-name?>`: Checkout-Add-Commit-Push A New Git Branch
 - `pr`: Open A Pull Request From Your Current Git Branch on GitHub
-- `bpr`: Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub
+- `bpr <branch-name?>`: Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub
 - `pp`: Pull-Push Git Changes to Current Branch
 
 ### URLs:
@@ -151,7 +151,7 @@ wyx list-deps
 - `prs`: View Your Repository PRs On GitHub
 - `notifs`: View Your GitHub Notifications
 - `profile`: View Your GitHub Profile
-- `org`: View Your GitHub Organisation
+- `org <myorg?>`: View Your GitHub Organisation
 
 ### MY DATA:
 - `user`: View Your User Configuration
@@ -167,7 +167,7 @@ wyx list-deps
 
 ### ENV/KEYSTORE:
 - `keystore`: Add a key-value pair to your '.env' keystore
-- `setup`: Setup WYX-CLI Third Party API-based utilities
+- `setup <smart_commit>`: Setup WYX-CLI Third Party API-based utilities
 
 ### FILE UTILITIES:
 - `find`: Regex Search Current Directory For File
@@ -187,14 +187,14 @@ wyx list-deps
 - `upscale`: Scale up an image (uses no smoothing)
 
 ### TEXT UTILITIES:
-- `genpass`: Generate A Random Password
+- `genpass <pass-length?>`: Generate A Random Password
 - `genhex`: Generate A Random Hex String
 - `genb64`: Generate A Random Base64 String
 - `lastcmd`: Copy Your Last Command To Your Clipboard
-- `copy`: Copy output of a command to clipboard
+- `copy <command?>`: Copy output of a command to clipboard
 
 ### WEB UTILITIES:
-- `webtext`: Read-only websites in your terminal
+- `webtext <url?>`: Read-only websites in your terminal
 
 ### MISC UTILITIES:
 - `weather`: View the weather forecast for your location in the terminal
@@ -203,6 +203,6 @@ wyx list-deps
 
 ### HELP UTILITIES:
 - `help`: View WYX-CLI Documentation
-- `explain`: Explain a bash command
+- `explain <command?>`: Explain a bash command
 - `ask-gpt`: Start a conversation with ChatGPT
-- `google`: Google a query
+- `google <query?>`: Google a query
