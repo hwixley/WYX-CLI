@@ -10,12 +10,12 @@
 - `list-deps`: [33mList the project dependencies[37m
 
 ### DIRECTORY NAVIGATION:
-- `cd`: [33mNavigate Directory Aliases[37m
+- `cd <mydir?>`: [33mNavigate Directory Aliases[37m
 - `back`: [33mGo Back A Directory[37m
 
 ### CODE:
-- `run`: [33mRun Script Aliases[37m
-- `vsc`: [33mOpen Directory Aliases in VSCode[37m
+- `run <myscript>`: [33mRun Script Aliases[37m
+- `vsc <mydir>`: [33mOpen Directory Aliases in VSCode[37m
 
 ### GIT AUTOMATION:
 - `ginit`: [33mInitialise Git Repository[37m
@@ -24,9 +24,9 @@
 - `mpull`: [33mCheckout-Pull Git Changes From Master/Main Branch[37m
 - `commits`: [33mView Your Branch Git Commits[37m
 - `lastcommit`: [33mView Your Last Commit & Copy It's ID[37m
-- `nb`: [33mCheckout-Add-Commit-Push A New Git Branch[37m
+- `nb <branch-name?>`: [33mCheckout-Add-Commit-Push A New Git Branch[37m
 - `pr`: [33mOpen A Pull Request From Your Current Git Branch on GitHub[37m
-- `bpr`: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
+- `bpr <branch-name?>`: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
 - `pp`: [33mPull-Push Git Changes to Current Branch[37m
 
 ### URLs:
@@ -37,7 +37,7 @@
 - `prs`: [33mView Your Repository PRs On GitHub[37m
 - `notifs`: [33mView Your GitHub Notifications[37m
 - `profile`: [33mView Your GitHub Profile[37m
-- `org`: [33mView Your GitHub Organisation[37m
+- `org <myorg?>`: [33mView Your GitHub Organisation[37m
 
 ### MY DATA:
 - `user`: [33mView Your User Configuration[37m
@@ -53,7 +53,7 @@
 
 ### ENV/KEYSTORE:
 - `keystore`: [33mAdd a key-value pair to your '.env' keystore[37m
-- `setup`: [33mSetup WYX-CLI Third Party API-based utilities[37m
+- `setup <smart_commit>`: [33mSetup WYX-CLI Third Party API-based utilities[37m
 
 ### FILE UTILITIES:
 - `find`: [33mRegex Search Current Directory For File[37m
@@ -73,14 +73,14 @@
 - `upscale`: [33mScale up an image (uses no smoothing)[37m
 
 ### TEXT UTILITIES:
-- `genpass`: [33mGenerate A Random Password[37m
+- `genpass <pass-length?>`: [33mGenerate A Random Password[37m
 - `genhex`: [33mGenerate A Random Hex String[37m
 - `genb64`: [33mGenerate A Random Base64 String[37m
 - `lastcmd`: [33mCopy Your Last Command To Your Clipboard[37m
-- `copy`: [33mCopy output of a command to clipboard[37m
+- `copy <command?>`: [33mCopy output of a command to clipboard[37m
 
 ### WEB UTILITIES:
-- `webtext`: [33mRead-only websites in your terminal[37m
+- `webtext <url?>`: [33mRead-only websites in your terminal[37m
 
 ### MISC UTILITIES:
 - `weather`: [33mView the weather forecast for your location in the terminal[37m
@@ -89,7 +89,7 @@
 
 ### HELP UTILITIES:
 - `help`: [33mView WYX-CLI Documentation[37m
-- `explain`: [33mExplain a bash command[37m
+- `explain $(<command?>)`: [33mExplain a bash command[37m
 - `ask-gpt`: [33mStart a conversation with ChatGPT[37m
-- `google`: [33mGoogle a query[37m
+- `google <query?>`: [33mGoogle a query[37m
 

@@ -46,10 +46,15 @@ lib.csv.all(){
                 continue
             fi
             name=$(lib.csv.query.one 'arg_scripts' 'name' "where id='$script'")
+            arg=$(lib.csv.query.one 'arg_scripts' 'args' "where id='$script'" | tr -d '"')
+            command_name="$script"
+            if [[ "$arg" != "" ]] || [[ "$arg" = "\"\"" ]]; then
+                command_name="$script $arg"
+            fi
             if [ "$type" = "git" ]; then
-                echo "- \`$script\`: ${ORANGE}${name}${RESET}"
+                echo "- \`$command_name\`: ${ORANGE}${name}${RESET}"
             else
-                echo "- $script: ${ORANGE}${name}${RESET}"
+                echo "- $command_name: ${ORANGE}${name}${RESET}"
             fi
         done
         echo ""
