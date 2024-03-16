@@ -8,8 +8,8 @@ genpass,genpass,"Generate A Random Password",true,"<pass-length?>",tutil
 genhex,genhex,"Generate A Random Hex String",true,<length?>,tutil
 genb64,genb64,"Generate A Random Base64 String",true,<length?>,tutil
 version,version,"WYX-CLI Version",true,,version
--v,version,"WYX-CLI Version",false
---version,version,"WYX-CLI Version",false
+-v,version,"WYX-CLI Version",false,,
+--version,version,"WYX-CLI Version",false,,
 ginit,ginit,"Initialise Git Repository",true,,git
 push,push,"Add-Commit-Push Git Changes to Current Branch",true,,git
 pull,pull,"Pull Git Changes for Current Branch",true,,git
