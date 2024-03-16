@@ -161,19 +161,19 @@ wyx list-deps
 - `todo`: View Your To-Do List
 
 ### MANAGE MY DATA:
-- `editd`: Edit Your WYX-CLI Configuration
-- `edits`: Edit A Script File
-- `newscript`: Create A New Script
+- `editd <user|myorgs|mydirs|myscripts|todo>`: Edit Your WYX-CLI Configuration
+- `edits <myscript?>`: Edit A Script File
+- `newscript <name?>`: Create A New Script
 
 ### ENV/KEYSTORE:
-- `keystore`: Add a key-value pair to your '.env' keystore
+- `keystore <key?> <value?>`: Add a key-value pair to your '.env' keystore
 - `setup <smart_commit>`: Setup WYX-CLI Third Party API-based utilities
 
 ### FILE UTILITIES:
-- `find`: Regex Search Current Directory For File
-- `fopen`: Open current directory in your files application
-- `encrypt`: Encrypt a file using GPG
-- `decrypt`: Decrypt a GPG-encrypted file
+- `find <regex?>`: Regex Search Current Directory For File
+- `fopen <dir|mydir?>`: Open current directory in your files application
+- `encrypt <file|dir?>`: Encrypt a file using GPG
+- `decrypt <file?>`: Decrypt a GPG-encrypted file
 
 ### NETWORK UTILITIES:
 - `ip`: View Your Local & Public IPs
@@ -183,15 +183,15 @@ wyx list-deps
 - `speedtest`: Run A Speed Test On Your Network
 
 ### IMAGE UTILITIES:
-- `genqr`: Generate a QR code from a URL
-- `upscale`: Scale up an image (uses no smoothing)
+- `genqr <url?> <name?>`: Generate a QR code from a URL
+- `upscale <file?> <scale-multiplier?>`: Scale up an image (uses no smoothing)
 
 ### TEXT UTILITIES:
 - `genpass <pass-length?>`: Generate A Random Password
-- `genhex`: Generate A Random Hex String
-- `genb64`: Generate A Random Base64 String
+- `genhex <length?>`: Generate A Random Hex String
+- `genb64 <length?>`: Generate A Random Base64 String
 - `lastcmd`: Copy Your Last Command To Your Clipboard
-- `copy <command?>`: Copy output of a command to clipboard
+- `copy $(<command?>)`: Copy output of a command to clipboard
 
 ### WEB UTILITIES:
 - `webtext <url?>`: Read-only websites in your terminal
@@ -203,6 +203,6 @@ wyx list-deps
 
 ### HELP UTILITIES:
 - `help`: View WYX-CLI Documentation
-- `explain $(<command?>)`: Explain a bash command
+- `explain <command?>`: Explain a bash command
 - `ask-gpt`: Start a conversation with ChatGPT
 - `google <query?>`: Google a query

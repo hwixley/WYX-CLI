@@ -47,19 +47,19 @@
 - todo: [33mView Your To-Do List[37m
 
 [34mMANAGE MY DATA:[37m
-- editd: [33mEdit Your WYX-CLI Configuration[37m
-- edits: [33mEdit A Script File[37m
-- newscript: [33mCreate A New Script[37m
+- editd <user|myorgs|mydirs|myscripts|todo>: [33mEdit Your WYX-CLI Configuration[37m
+- edits <myscript?>: [33mEdit A Script File[37m
+- newscript <name?>: [33mCreate A New Script[37m
 
 [34mENV/KEYSTORE:[37m
-- keystore: [33mAdd a key-value pair to your '.env' keystore[37m
+- keystore <key?> <value?>: [33mAdd a key-value pair to your '.env' keystore[37m
 - setup <smart_commit>: [33mSetup WYX-CLI Third Party API-based utilities[37m
 
 [34mFILE UTILITIES:[37m
-- find: [33mRegex Search Current Directory For File[37m
-- fopen: [33mOpen current directory in your files application[37m
-- encrypt: [33mEncrypt a file using GPG[37m
-- decrypt: [33mDecrypt a GPG-encrypted file[37m
+- find <regex?>: [33mRegex Search Current Directory For File[37m
+- fopen <dir|mydir?>: [33mOpen current directory in your files application[37m
+- encrypt <file|dir?>: [33mEncrypt a file using GPG[37m
+- decrypt <file?>: [33mDecrypt a GPG-encrypted file[37m
 
 [34mNETWORK UTILITIES:[37m
 - ip: [33mView Your Local & Public IPs[37m
@@ -69,15 +69,15 @@
 - speedtest: [33mRun A Speed Test On Your Network[37m
 
 [34mIMAGE UTILITIES:[37m
-- genqr: [33mGenerate a QR code from a URL[37m
-- upscale: [33mScale up an image (uses no smoothing)[37m
+- genqr <url?> <name?>: [33mGenerate a QR code from a URL[37m
+- upscale <file?> <scale-multiplier?>: [33mScale up an image (uses no smoothing)[37m
 
 [34mTEXT UTILITIES:[37m
 - genpass <pass-length?>: [33mGenerate A Random Password[37m
-- genhex: [33mGenerate A Random Hex String[37m
-- genb64: [33mGenerate A Random Base64 String[37m
+- genhex <length?>: [33mGenerate A Random Hex String[37m
+- genb64 <length?>: [33mGenerate A Random Base64 String[37m
 - lastcmd: [33mCopy Your Last Command To Your Clipboard[37m
-- copy <command?>: [33mCopy output of a command to clipboard[37m
+- copy $(<command?>): [33mCopy output of a command to clipboard[37m
 
 [34mWEB UTILITIES:[37m
 - webtext <url?>: [33mRead-only websites in your terminal[37m
@@ -89,7 +89,7 @@
 
 [34mHELP UTILITIES:[37m
 - help: [33mView WYX-CLI Documentation[37m
-- explain $(<command?>): [33mExplain a bash command[37m
+- explain <command?>: [33mExplain a bash command[37m
 - ask-gpt: [33mStart a conversation with ChatGPT[37m
 - google <query?>: [33mGoogle a query[37m
 
