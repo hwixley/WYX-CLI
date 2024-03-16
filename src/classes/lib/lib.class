@@ -49,7 +49,7 @@ lib.csv.all(){
             arg=$(lib.csv.query.one 'arg_scripts' 'args' "where id='$script'" | tr -d '"')
             command_name="$script"
             if [[ "$arg" != "" ]] || [[ "$arg" = "\"\"" ]]; then
-                command_name="$script <$arg>"
+                command_name="$script $arg"
             fi
             if [ "$type" = "git" ]; then
                 echo "- \`$command_name\`: ${ORANGE}${name}${RESET}"
