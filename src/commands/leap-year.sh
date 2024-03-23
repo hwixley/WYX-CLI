@@ -1,7 +1,11 @@
 #!/bin/bash
 
 date=$(date)
-year="${date:24:29}"
+if [[ sys.os.mac ]]; then
+    year="${date:24:30}"
+else
+    year="${date:24:29}"
+fi
 
 if [[ "$year" =~ ^[0-9]*00$ ]]; then
     if [ "$((year % 400))" -eq 0 ]; then
