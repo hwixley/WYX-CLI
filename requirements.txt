@@ -1,4 +1,4 @@
-numpy==1.24.2
-openai==0.27.4
+numpy==1.26.4
+openai==1.9.0
 opencv_python==4.7.0.72
-termcolor==1.1.0
+termcolor==2.1.0
