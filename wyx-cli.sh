@@ -16,34 +16,30 @@ sys sys
 source $WYX_DIR/src/classes/lib/lib.h
 lib lib
 
-branch=""
-if git rev-parse --git-dir > /dev/null 2>&1; then
-	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-fi
-remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-repo_url=${remote#"git@github.com:"}
-repo_url=${repo_url%".git"}
-
+wyx_git_branch=""
 
 # AUTO UPDATE CLI
 
 pull() {
-	if [ "$1" != "$branch" ]; then
-		git checkout "$1"
+	if [ "$1" != "$wyx_git_branch" ]; then
+		git checkout "$1" || return 1
 	fi
-	git pull origin "$1"
+	git pull origin "$1" || return 1
 }
 
 wyx_update() {
+	if ! grep -q "WYX_GIT_AUTO_UPDATE=true" "${WYX_DATA_DIR}/.env" ; then
+		sys.log.warn "Auto update disabled" && echo ""
+		return 1
+	fi
 	sys.log.info "Checking for updates..."
 
 	current_dir=$(pwd)
 	cd "$WYX_DIR" || return 1
-	repo_branch=""
 	if git rev-parse --git-dir > /dev/null 2>&1; then
-		repo_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+		wyx_git_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 	fi
-	if [ "$repo_branch" != "master" ]; then
+	if [ "$wyx_git_branch" != "master" ]; then
 		sys.log.warn "Not on master branch, skipping update" && echo ""
 		cd "$current_dir" || return 1
 		return 1
@@ -59,7 +55,7 @@ wyx_update() {
 		sys.log.info "Up-to-date"
 	elif [ "$LOCAL" = "$BASE" ]; then
 		sys.log.info "Updating..."
-		pull "$branch"
+		pull "$wyx_git_branch"
 	elif [ "$REMOTE" = "$BASE" ]; then
 		echo "Need to push"
 	else
