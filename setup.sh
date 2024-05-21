@@ -39,7 +39,7 @@ for i in "${files[@]}"; do
 		touch "$md_dir/$i"
 		chmod +rwx "$md_dir/$i"
 	else
-		sys.log.warn "File $i already exists. Would you like to overwrite it? [ y / n ]"
+		sys.log.warn "File $i already exists. Would you like to overwrite it? [ y / n (default) ]"
 		read -r overwrite_file
 		if [ "$overwrite_file" = "y" ]; then
 			rm "$md_dir/$i"
@@ -59,7 +59,7 @@ for i in "${files[@]}"; do
 				read -r gitorg
 				{ echo "default=$gitorg"; } >> "$md_dir/$i"
 			elif [ "$i" = "dir-aliases.txt" ]; then
-				sys.log.h1 "Would you like to include the default directory aliases? [ y / n ]"
+				sys.log.h1 "Would you like to include the default directory aliases? [ y / n (default) ]"
 				read -r keep_default_diraliases
 				if [ "$keep_default_diraliases" = "y" ]; then
 					{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> "$md_dir/$i"
@@ -68,6 +68,22 @@ for i in "${files[@]}"; do
 				sys.log.info "Run configs flushed"
 			elif [ "$i" = ".env" ]; then
 				sys.log.info "Environment variables flushed"
+				echo ""
+				sys.log.h1 "Would you like the WYX-CLI to auto-update? [ y / n (default) ]"
+				read -r wyx_auto_update
+				if [ "$wyx_auto_update" = "y" ]; then
+					{ echo "WYX_GIT_AUTO_UPDATE=true"; } >> "$md_dir/$i"
+				else
+					{ echo "WYX_GIT_AUTO_UPDATE=false"; } >> "$md_dir/$i"
+				fi
+				echo ""
+				sys.log.h1 "Would you like to enable WYX-CLI smart commit? [ y / n (default) ]"
+				read -r wyx_smart_commit
+				if [ "$wyx_smart_commit" = "y" ]; then
+					{ echo "USE_SMART_COMMIT=true"; } >> "$md_dir/$i"
+				else
+					{ echo "USE_SMART_COMMIT=false"; } >> "$md_dir/$i"
+				fi
 			elif [ "$i" = "todo.txt" ]; then
 				sys.log.info "TODO flushed"
 				{ echo "TODO:"; echo ""; } >> "$md_dir/$i"
@@ -113,7 +129,7 @@ if [ "$dir_file" = "" ]; then
 	echo "The default directory aliases setup are as follows:"
 	echo "1) docs = ~/Documents"
 	echo "2) down = ~/Downloads"
-	sys.log.h1 "Would you like to include these? [ y / n ]"
+	sys.log.h1 "Would you like to include these? [ y / n (default) ]"
 	read -r keep_default_diraliases
 	if [ "$keep_default_diraliases" = "y" ]; then
 		{ echo "docs=~/Documents"; echo "down=~/Downloads"; } >> $md_dir/dir-aliases.txt
@@ -128,7 +144,7 @@ sys.log.info "Okay we should be good to go!"
 envfile=$(sys.shell.envfile)
 wyx_alias=$(cat "$envfile" | grep -c "alias wyx")
 if [ "$wyx_alias" != "" ]; then
-	sys.log.warn "It looks like you already have a wyx alias setup. Would you like to overwrite it? [ y / n ]"
+	sys.log.warn "It looks like you already have a wyx alias setup. Would you like to overwrite it? [ y / n (default) ]"
 	read -r overwrite_alias
     if [ "$overwrite_alias" = "y" ]; then
 		echo "${ORANGE}Please edit the $envfile file manually to remove your old alias${RESET}"
@@ -143,7 +159,7 @@ completionfile="$HOME/.bash_completion"
 if [ -f "$completionfile" ]; then
 	completion_search=$(cat "$completionfile" | grep -c "$(pwd)/completion.sh")
 	if [ "$completion_search" != "" ]; then
-		sys.log.warn "It looks like you already have wyx completion setup. Would you like to overwrite it? [ y / n ]"
+		sys.log.warn "It looks like you already have wyx completion setup. Would you like to overwrite it? [ y / n (default) ]"
 		read -r overwrite_completion
 		if [ "$overwrite_completion" = "y" ]; then
 			echo "${ORANGE}Please edit the $HOME/.bashrc file manually to remove your old completion${RESET}"
@@ -154,7 +170,7 @@ if [ -f "$completionfile" ]; then
 	fi
 else
 	sys.log.warn "It looks like you don't have a $HOME/.bash_completion file (allowing you to use the wyx command with tab-completion)."
-	sys.log.warn "Would you like to create one? [ y / n ]"
+	sys.log.warn "Would you like to create one? [ y / n (default) ]"
 	read -r create_completion
 	if [ "$create_completion" = "y" ]; then
 		touch "$HOME/.bash_completion"
