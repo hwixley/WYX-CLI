@@ -137,7 +137,7 @@ wyx list-deps
 - `pull`: Pull Git Changes for Current Branch
 - `mpull`: Checkout-Pull Git Changes From Master/Main Branch
 - `commits`: View Your Branch Git Commits
-- `lastcommit`: View Your Last Commit & Copy It's ID
+- `lastcommit`: View Your Last Commit & Copy It's SHA
 - `nb <branch-name?>`: Checkout-Add-Commit-Push A New Git Branch
 - `pr`: Open A Pull Request From Your Current Git Branch on GitHub
 - `bpr <branch-name?>`: Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub

@@ -23,7 +23,7 @@
 - pull: [33mPull Git Changes for Current Branch[37m
 - mpull: [33mCheckout-Pull Git Changes From Master/Main Branch[37m
 - commits: [33mView Your Branch Git Commits[37m
-- lastcommit: [33mView Your Last Commit & Copy It's ID[37m
+- lastcommit: [33mView Your Last Commit & Copy It's SHA[37m
 - nb <branch-name?>: [33mCheckout-Add-Commit-Push A New Git Branch[37m
 - pr: [33mOpen A Pull Request From Your Current Git Branch on GitHub[37m
 - bpr <branch-name?>: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
