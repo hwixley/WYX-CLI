@@ -21,9 +21,24 @@ branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
 	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 fi
-remote=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
-repo_url=${remote#"git@github.com:"}
+remote=$(git config --get remote.origin.url)
+repo_url=$(echo "$remote" | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 repo_url=${repo_url%".git"}
+
+echo $repo_url
+
+git_host=""
+if [[ $remote == *"github.com"* ]]; then
+	git_host="github"
+	repo_url=${repo_url#"git@github.com:"}
+elif [[ $remote == *"gitlab.com"* ]]; then
+	git_host="gitlab"
+elif [[ $remote == *"bitbucket.org"* ]]; then
+	git_host="bitbucket"
+elif [[ $remote == *"azure.com"* ]]; then
+	git_host="azure"
+fi
+
 
 
 if [ $num_args -eq 0 ]; then
