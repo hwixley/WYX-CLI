@@ -24,9 +24,6 @@ fi
 remote=$(git config --get remote.origin.url)
 repo_url=$(echo "$remote" | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
 repo_url=${repo_url%".git"}
-
-echo $repo_url
-
 git_host=""
 if [[ $remote == *"github.com"* ]]; then
 	git_host="github"
