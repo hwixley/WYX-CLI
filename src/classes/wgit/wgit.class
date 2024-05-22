@@ -185,3 +185,19 @@ wgit.prs_url() {
 		fi
 	fi
 }
+
+wgit.branch_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url/tree/$branch"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url/-/tree/$branch"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url/branch/$branch"
+		elif [[ "$git_host" = "azure" ]]; then
+			wgit.giturl "https://dev.azure.com/$repo_url?path=%2F&version=GB$branch&_a=contents"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}

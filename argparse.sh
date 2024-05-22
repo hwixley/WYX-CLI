@@ -33,6 +33,7 @@ elif [[ $remote == *"gitlab.com"* ]]; then
 	repo_url=${repo_url#"git@gitlab.com:"}
 elif [[ $remote == *"bitbucket.org"* ]]; then
 	git_host="bitbucket"
+	repo_url=$(echo "$repo_url" | sed 's/\/[^ \/]*\/\([^ \/]*\/[^ \/]*\)/\1/')
 elif [[ $remote == *"azure.com"* ]]; then
 	git_host="azure"
 	org=$(echo "$repo_url" | sed 's/\([^ \/]*\).*/\1/')
