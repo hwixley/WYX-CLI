@@ -25,16 +25,16 @@
 - `commits`: [33mView Your Branch Git Commits[37m
 - `lastcommit`: [33mView Your Last Commit & Copy It's SHA[37m
 - `nb <branch-name?>`: [33mCheckout-Add-Commit-Push A New Git Branch[37m
-- `pr`: [33mOpen A Pull Request From Your Current Git Branch on GitHub[37m
-- `bpr <branch-name?>`: [33mCheckout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub[37m
+- `pr`: [33mOpen A Pull Request From Your Current Git Branch on GitHub/GitLab/BitBucket/Azure[37m
+- `bpr <branch-name?>`: [33mCheckout-Add-Commit-Push New Git Branch & Open PR On GitHub/GitLab/BitBucket/Azure[37m
 - `pp`: [33mPull-Push Git Changes to Current Branch[37m
 
 ### URLs:
-- `repo`: [33mView Your Repository On GitHub[37m
-- `branch`: [33mView Your Current Branch On GitHub[37m
-- `actions`: [33mView Your Repository Actions On GitHub[37m
-- `issues`: [33mView Your Repository Issues On GitHub[37m
-- `prs`: [33mView Your Repository PRs On GitHub[37m
+- `repo`: [33mView Your Repository On GitHub/GitLab/BitBucket/Azure[37m
+- `branch`: [33mView Your Current Branch On GitHub/GitLab/BitBucket/Azure[37m
+- `actions`: [33mView Your Repository Actions On GitHub/GitLab/BitBucket/Azure[37m
+- `issues`: [33mView Your Repository Issues On GitHub/GitLab/BitBucket/Azure[37m
+- `prs`: [33mView Your Repository PRs On GitHub/GitLab/BitBucket/Azure[37m
 - `notifs`: [33mView Your GitHub Notifications[37m
 - `profile`: [33mView Your GitHub Profile[37m
 - `org <myorg?>`: [33mView Your GitHub Organisation[37m

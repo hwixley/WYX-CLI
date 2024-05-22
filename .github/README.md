@@ -4,7 +4,7 @@ Optimize your development productivity in the terminal
 
 <hr>
 
-[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-3.1.2-blue?labelColor=gray&style=flat) ![Shell Support](https://img.shields.io/badge/Shell%20Support-BASH%20&%20ZSH-orange?labelColor=gray&style=flat) ![Operating Systems](https://img.shields.io/badge/OS%20Support-Debian%20Distros%20&%20MacOS-mediumpurple?labelColor=gray&style=flat)
+[![CODEQL](https://github.com/hwixley/wyx-cli/actions/workflows/github-code-scanning/codeql/badge.svg)](https://hwixley.github.io/wyx-cli/) [![Deploy Jekyll GH-Pages](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/jekyll-gh-pages.yml) [![Generate Stdout Image](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml/badge.svg)](https://github.com/hwixley/WYX-CLI/actions/workflows/main.yml)<br>![License](https://img.shields.io/badge/License-MIT-purple?labelColor=gray&style=flat) ![Version](https://img.shields.io/badge/Version-3.1.2-blue?labelColor=gray&style=flat) ![Shell Support](https://img.shields.io/badge/Shell%20Support-BASH%20&%20ZSH-orange?labelColor=gray&style=flat) ![Operating Systems](https://img.shields.io/badge/OS%20Support-Debian%20Distros%20&%20MacOS-mediumpurple?labelColor=gray&style=flat)![Git Support](https://img.shields.io/badge/Git%20Support-GitHub,%20GitLab,%20BitBucket,%20&%20Azure%20DevOps-brown?labelColor=gray&style=flat)
 
 <hr>
 <p align="center">
@@ -139,16 +139,16 @@ wyx list-deps
 - `commits`: View Your Branch Git Commits
 - `lastcommit`: View Your Last Commit & Copy It's SHA
 - `nb <branch-name?>`: Checkout-Add-Commit-Push A New Git Branch
-- `pr`: Open A Pull Request From Your Current Git Branch on GitHub
-- `bpr <branch-name?>`: Checkout-Add-Commit-Push A New Git Branch & Open A PR For It On GitHub
+- `pr`: Open A Pull Request From Your Current Git Branch on GitHub/GitLab/BitBucket/Azure
+- `bpr <branch-name?>`: Checkout-Add-Commit-Push New Git Branch & Open PR On GitHub/GitLab/BitBucket/Azure
 - `pp`: Pull-Push Git Changes to Current Branch
 
 ### URLs:
-- `repo`: View Your Repository On GitHub
-- `branch`: View Your Current Branch On GitHub
-- `actions`: View Your Repository Actions On GitHub
-- `issues`: View Your Repository Issues On GitHub
-- `prs`: View Your Repository PRs On GitHub
+- `repo`: View Your Repository On GitHub/GitLab/BitBucket/Azure
+- `branch`: View Your Current Branch On GitHub/GitLab/BitBucket/Azure
+- `actions`: View Your Repository Actions On GitHub/GitLab/BitBucket/Azure
+- `issues`: View Your Repository Issues On GitHub/GitLab/BitBucket/Azure
+- `prs`: View Your Repository PRs On GitHub/GitLab/BitBucket/Azure
 - `notifs`: View Your GitHub Notifications
 - `profile`: View Your GitHub Profile
 - `org <myorg?>`: View Your GitHub Organisation
