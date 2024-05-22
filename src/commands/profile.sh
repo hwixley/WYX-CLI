@@ -1,3 +1,3 @@
 #!/bin/bash
 
-wgit.profile_url
+wgit.giturl "https://github.com/$(wyxd.user.username)"

@@ -142,7 +142,7 @@ wgit.pr() {
 		elif [[ "$git_host" == "bitbucket" ]]; then
 			sys.util.openurl "https://bitbucket.org/$repo_url/pull-requests/new?source=$1"
 		elif [[ "$git_host" == "azure" ]]; then
-			sys.util.openurl "https://dev.azure.com/$repo_url/_git/$repo_url/pullrequests?sourceRef=$1"
+			sys.util.openurl "https://dev.azure.com/$repo_url/pullrequestcreate?sourceRef=$1"
 		else
 			sys.log.error "This is not a supported git host..."
 		fi
@@ -179,23 +179,7 @@ wgit.prs_url() {
 		elif [[ "$git_host" = "bitbucket" ]]; then
 			wgit.giturl "https://bitbucket.org/$repo_url/pull-requests"
 		elif [[ "$git_host" = "azure" ]]; then
-			wgit.giturl "https://dev.azure.com/$repo_url/_git/$repo_url/pullrequests"
-		else
-			sys.log.error "This is not a supported git host..."
-		fi
-	fi
-}
-
-wgit.profile_url() {
-	if wgit.is_git_repo ; then
-		if [[ "$git_host" = "github" ]]; then
-			wgit.giturl "https://github.com/$(wyxd.user.username)"
-		elif [[ "$git_host" = "gitlab" ]]; then
-			wgit.giturl "https://gitlab.com/$(wyxd.user.username)"
-		elif [[ "$git_host" = "bitbucket" ]]; then
-			wgit.giturl "https://bitbucket.org/$(wyxd.user.username)"
-		elif [[ "$git_host" = "azure" ]]; then
-			wgit.giturl "https://dev.azure.com/$(wyxd.user.username)"
+			wgit.giturl "https://dev.azure.com/$repo_url/pullrequests"
 		else
 			sys.log.error "This is not a supported git host..."
 		fi
