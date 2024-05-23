@@ -133,8 +133,105 @@ wgit.pull() {
 	git pull origin "$1"
 }
 
+wgit.pr() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" == "github" ]]; then
+			sys.util.openurl "https://github.com/$repo_url/pull/new/$1"
+		elif [[ "$git_host" == "gitlab" ]]; then
+			sys.util.openurl "https://gitlab.com/$repo_url/-/merge_requests/new?merge_request%5Bsource_branch%5D=$1"
+		elif [[ "$git_host" == "bitbucket" ]]; then
+			sys.util.openurl "https://bitbucket.org/$repo_url/pull-requests/new?source=$1"
+		elif [[ "$git_host" == "azure" ]]; then
+			sys.util.openurl "https://dev.azure.com/$repo_url/pullrequestcreate?sourceRef=$1"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}
+
 wgit.bpr() {
 	wgit.npush "$1"
-	sys.log.info "Creating PR for $branch in $repo_url..."
-	sys.util.openurl "https://github.com/$repo_url/pull/new/$1"
+	wgit.pr "$1"
+}
+
+wgit.repo_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url"
+		elif [[ "$git_host" = "azure" ]]; then
+			wgit.giturl "https://dev.azure.com/$repo_url"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}
+
+wgit.prs_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url/pulls"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url/merge_requests"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url/pull-requests"
+		elif [[ "$git_host" = "azure" ]]; then
+			wgit.giturl "https://dev.azure.com/$repo_url/pullrequests"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}
+
+wgit.branch_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url/tree/$branch"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url/-/tree/$branch"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url/branch/$branch"
+		elif [[ "$git_host" = "azure" ]]; then
+			wgit.giturl "https://dev.azure.com/$repo_url?path=%2F&version=GB$branch&_a=contents"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}
+
+wgit.issues_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url/issues"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url/issues"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url/issues"
+		elif [[ "$git_host" = "azure" ]]; then
+			new_repo_url=$(echo "$repo_url" | sed 's|/_git/.*||')
+			wgit.giturl "https://dev.azure.com/${new_repo_url}/_workitems"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}
+
+wgit.pipelines_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url/actions"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url/pipelines"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url/pipelines"
+		elif [[ "$git_host" = "azure" ]]; then
+			new_repo_url=$(echo "$repo_url" | sed 's|/_git/.*||')
+			wgit.giturl "https://dev.azure.com/$new_repo_url/_build"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
 }

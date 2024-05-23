@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sys.util.openurl "https://github.com/$(wyxd.user.username)"
+wgit.giturl "https://github.com/$(wyxd.user.username)"
