@@ -201,3 +201,37 @@ wgit.branch_url() {
 		fi
 	fi
 }
+
+wgit.issues_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url/issues"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url/issues"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url/issues"
+		elif [[ "$git_host" = "azure" ]]; then
+			new_repo_url=$(echo "$repo_url" | sed 's|/_git/.*||')
+			wgit.giturl "https://dev.azure.com/${new_repo_url}/_workitems"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}
+
+wgit.pipelines_url() {
+	if wgit.is_git_repo ; then
+		if [[ "$git_host" = "github" ]]; then
+			wgit.giturl "https://github.com/$repo_url/actions"
+		elif [[ "$git_host" = "gitlab" ]]; then
+			wgit.giturl "https://gitlab.com/$repo_url/pipelines"
+		elif [[ "$git_host" = "bitbucket" ]]; then
+			wgit.giturl "https://bitbucket.org/$repo_url/pipelines"
+		elif [[ "$git_host" = "azure" ]]; then
+			new_repo_url=$(echo "$repo_url" | sed 's|/_git/.*||')
+			wgit.giturl "https://dev.azure.com/$new_repo_url/_build"
+		else
+			sys.log.error "This is not a supported git host..."
+		fi
+	fi
+}

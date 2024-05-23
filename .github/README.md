@@ -146,7 +146,7 @@ wyx list-deps
 ### URLs:
 - `repo`: View Your Repository On GitHub/GitLab/BitBucket/Azure
 - `branch`: View Your Current Branch On GitHub/GitLab/BitBucket/Azure
-- `actions`: View Your Repository Actions On GitHub/GitLab/BitBucket/Azure
+- `pipelines`: View Your Pipelines On GitHub/GitLab/BitBucket/Azure
 - `issues`: View Your Repository Issues On GitHub/GitLab/BitBucket/Azure
 - `prs`: View Your Repository PRs On GitHub/GitLab/BitBucket/Azure
 - `notifs`: View Your GitHub Notifications

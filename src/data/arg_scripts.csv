@@ -16,7 +16,7 @@ pull,pull,"Pull Git Changes for Current Branch",true,,git
 mpull,mpull,"Checkout-Pull Git Changes From Master/Main Branch",true,,git
 repo,repo,"View Your Repository On GitHub/GitLab/BitBucket/Azure",true,,urls
 branch,branch,"View Your Current Branch On GitHub/GitLab/BitBucket/Azure",true,,urls
-actions,actions,"View Your Repository Actions On GitHub/GitLab/BitBucket/Azure",true,,urls
+pipelines,pipelines,"View Your Pipelines On GitHub/GitLab/BitBucket/Azure",true,,urls
 issues,issues,"View Your Repository Issues On GitHub/GitLab/BitBucket/Azure",true,,urls
 prs,prs,"View Your Repository PRs On GitHub/GitLab/BitBucket/Azure",true,,urls
 notifs,notifs,"View Your GitHub Notifications",true,,urls

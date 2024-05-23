@@ -32,7 +32,7 @@
 [34mURLs:[37m
 - repo: [33mView Your Repository On GitHub/GitLab/BitBucket/Azure[37m
 - branch: [33mView Your Current Branch On GitHub/GitLab/BitBucket/Azure[37m
-- actions: [33mView Your Repository Actions On GitHub/GitLab/BitBucket/Azure[37m
+- pipelines: [33mView Your Pipelines On GitHub/GitLab/BitBucket/Azure[37m
 - issues: [33mView Your Repository Issues On GitHub/GitLab/BitBucket/Azure[37m
 - prs: [33mView Your Repository PRs On GitHub/GitLab/BitBucket/Azure[37m
 - notifs: [33mView Your GitHub Notifications[37m
