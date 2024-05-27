@@ -155,7 +155,7 @@ wyx list-deps
 
 ### ENV/KEYSTORE 🗝️:
 - `keystore <key?> <value?>`: Add a key-value pair to your '.env' keystore
-- `setup <smart_commit|openai_key|auto_update>`: "Setup WYX-CLI API-based utilities including:\nGPT commits using OpenAI, and WYX-CLI auto-updates with git"
+- `setup <smart_commit|openai_key|auto_update>`: "Setup: ChatGPT commits, ChatGPT client, WYX-CLI auto-updates"
 
 ### MY DATA 📂:
 - `user`: View Your User Configuration
@@ -185,6 +185,9 @@ wyx list-deps
 ### WEB UTILITIES 🌐:
 - `webtext <url?>`: Read-only websites in your terminal
 
+### AI UTILITIES 🤖:
+- `ask-gpt`: Start a conversation with ChatGPT
+
 ### TEXT UTILITIES 📝:
 - `genpass <pass-length?>`: Generate A Random Password
 - `genhex <length?>`: Generate A Random Hex String
@@ -204,5 +207,4 @@ wyx list-deps
 ### HELP UTILITIES ℹ️:
 - `help`: View WYX-CLI Documentation
 - `explain <command?>`: Explain a bash command
-- `ask-gpt`: Start a conversation with ChatGPT
 - `google <query?>`: Google a query

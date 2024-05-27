@@ -53,11 +53,11 @@ moon,moon,"View the moon phase",true,,mutil
 leap-year,leap-year,"Check when the next leap year is",true,,mutil
 webtext,webtext,"Read-only websites in your terminal",true,<url?>,wutil
 explain,explain,"Explain a bash command",true,<command?>,hutil
-ask-gpt,ask-gpt,"Start a conversation with ChatGPT",true,,hutil
+ask-gpt,ask-gpt,"Start a conversation with ChatGPT",true,,aiutil
 google,google,"Google a query",true,<query?>,hutil
 install-deps,install-deps,"Install WYX-CLI dependencies",true,,deps
 keystore,keystore,"Add a key-value pair to your '.env' keystore",true,<key?> <value?>,env
-setup,setup,"Setup WYX-CLI API-based utilities including:\nGPT commits using OpenAI, and WYX-CLI auto-updates with git",true,"<smart_commit|openai_key|auto_update>",env
+setup,setup,"Setup: ChatGPT commits, ChatGPT client, WYX-CLI auto-updates",true,"<smart_commit|openai_key|auto_update>",env
 update-stdout,img_stdout,"Output wyx STDOUT to an image",false,,
 copy,copy,"Copy output of a command to clipboard",true,$(<command?>),tutil
 update-deps,update-deps,"Update the project dependencies",true,,deps

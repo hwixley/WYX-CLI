@@ -41,7 +41,7 @@
 
 ### ENV/KEYSTORE 🗝️:
 - `keystore <key?> <value?>`: [33mAdd a key-value pair to your '.env' keystore[37m
-- `setup <smart_commit|openai_key|auto_update>`: [33m"Setup WYX-CLI API-based utilities including:\nGPT commits using OpenAI, and WYX-CLI auto-updates with git"[37m
+- `setup <smart_commit|openai_key|auto_update>`: [33m"Setup: ChatGPT commits, ChatGPT client, WYX-CLI auto-updates"[37m
 
 ### MY DATA 📂:
 - `user`: [33mView Your User Configuration[37m
@@ -71,6 +71,9 @@
 ### WEB UTILITIES 🌐:
 - `webtext <url?>`: [33mRead-only websites in your terminal[37m
 
+### AI UTILITIES 🤖:
+- `ask-gpt`: [33mStart a conversation with ChatGPT[37m
+
 ### TEXT UTILITIES 📝:
 - `genpass <pass-length?>`: [33mGenerate A Random Password[37m
 - `genhex <length?>`: [33mGenerate A Random Hex String[37m
@@ -90,6 +93,5 @@
 ### HELP UTILITIES ℹ️:
 - `help`: [33mView WYX-CLI Documentation[37m
 - `explain <command?>`: [33mExplain a bash command[37m
-- `ask-gpt`: [33mStart a conversation with ChatGPT[37m
 - `google <query?>`: [33mGoogle a query[37m
 
