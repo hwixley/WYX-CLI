@@ -37,9 +37,9 @@ lib.csv.all(){
         fi
         cat=$(lib.csv.query.one 'arg_categories' 'name' "where id='$category'")
         if [ "$type" = "git" ]; then
-            echo "### ${cat}:"
+            echo "### ${cat}"
         else
-            sys.log.h1 "${cat}:"
+            sys.log.h1 "${cat}"
         fi
         for script in "${scripts[@]:1}"; do
             if [ "$script" = "" ]; then
