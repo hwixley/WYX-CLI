@@ -112,26 +112,26 @@ wyx list-deps
 
 ## List of Commands
 
-### VERSION:
+### VERSION 📦
 - `version`: WYX-CLI Version
 
-### SYSTEM:
-- `sys-info`: Get Detailed System Information
-
-### DEPENDENCIES:
+### DEPENDENCIES 📦
 - `install-deps`: Install WYX-CLI dependencies
 - `update-deps`: Update the project dependencies
 - `list-deps`: List the project dependencies
 
-### DIRECTORY NAVIGATION:
+### SYSTEM 🖥️
+- `sys-info`: Get Detailed System Information
+
+### DIRECTORY NAVIGATION 📍
 - `cd <mydir?>`: Navigate Directory Aliases
 - `back`: Go Back A Directory
 
-### CODE:
+### CODE 💲
 - `run <myscript>`: Run Script Aliases
 - `vsc <mydir>`: Open Directory Aliases in VSCode
 
-### GIT AUTOMATION:
+### GIT AUTOMATION 🐙
 - `ginit`: Initialise Git Repository
 - `push`: Add-Commit-Push Git Changes to Current Branch
 - `pull`: Pull Git Changes for Current Branch
@@ -143,7 +143,7 @@ wyx list-deps
 - `bpr <branch-name?>`: Checkout-Add-Commit-Push New Git Branch & Open PR On GitHub/GitLab/BitBucket/Azure
 - `pp`: Pull-Push Git Changes to Current Branch
 
-### URLs:
+### URLs 🔗
 - `repo`: View Your Repository On GitHub/GitLab/BitBucket/Azure
 - `branch`: View Your Current Branch On GitHub/GitLab/BitBucket/Azure
 - `pipelines`: View Your Pipelines On GitHub/GitLab/BitBucket/Azure
@@ -153,56 +153,58 @@ wyx list-deps
 - `profile`: View Your GitHub Profile
 - `org <myorg?>`: View Your GitHub Organisation
 
-### MY DATA:
+### ENV/KEYSTORE 🗝️
+- `keystore <key?> <value?>`: Add a key-value pair to your '.env' keystore
+- `setup <smart_commit|openai_key|auto_update>`: "Setup: ChatGPT commits, ChatGPT client, WYX-CLI auto-updates"
+
+### MY DATA 📂
 - `user`: View Your User Configuration
 - `mydirs`: View Your Directory Aliases Configuration
 - `myorgs`: View Your GitHub Organisation Configuration
 - `myscripts`: View Your Scripts Configuration
 - `todo`: View Your To-Do List
 
-### MANAGE MY DATA:
+### MANAGE MY DATA 📂
 - `editd <user|myorgs|mydirs|myscripts|todo>`: Edit Your WYX-CLI Configuration
 - `edits <myscript?>`: Edit A Script File
 - `newscript <name?>`: Create A New Script
 
-### ENV/KEYSTORE:
-- `keystore <key?> <value?>`: Add a key-value pair to your '.env' keystore
-- `setup <smart_commit>`: Setup WYX-CLI Third Party API-based utilities
-
-### FILE UTILITIES:
+### FILE UTILITIES 📁
 - `find <regex?>`: Regex Search Current Directory For File
 - `fopen <dir|mydir?>`: Open current directory in your files application
 - `encrypt <file|dir?>`: Encrypt a file using GPG
 - `decrypt <file?>`: Decrypt a GPG-encrypted file
 
-### NETWORK UTILITIES:
+### NETWORK UTILITIES 📡
 - `ip`: View Your Local & Public IPs
 - `wifi`: View Available WiFi Networks
 - `hardware-ports`: View Your Hardware Ports
 - `wpass`: View Your Saved WiFi Passwords
 - `speedtest`: Run A Speed Test On Your Network
 
-### IMAGE UTILITIES:
-- `genqr <url?> <name?>`: Generate a QR code from a URL
-- `upscale <file?> <scale-multiplier?>`: Scale up an image (uses no smoothing)
+### WEB UTILITIES 🌐
+- `webtext <url?>`: Read-only websites in your terminal
 
-### TEXT UTILITIES:
+### AI UTILITIES 🤖
+- `ask-gpt`: Start a conversation with ChatGPT
+
+### TEXT UTILITIES 📝
 - `genpass <pass-length?>`: Generate A Random Password
 - `genhex <length?>`: Generate A Random Hex String
 - `genb64 <length?>`: Generate A Random Base64 String
 - `lastcmd`: Copy Your Last Command To Your Clipboard
 - `copy $(<command?>)`: Copy output of a command to clipboard
 
-### WEB UTILITIES:
-- `webtext <url?>`: Read-only websites in your terminal
+### IMAGE UTILITIES 📸
+- `genqr <url?> <name?>`: Generate a QR code from a URL
+- `upscale <file?> <scale-multiplier?>`: Scale up an image (uses no smoothing)
 
-### MISC UTILITIES:
+### MISC UTILITIES 🛠️
 - `weather`: View the weather forecast for your location in the terminal
 - `moon`: View the moon phase
 - `leap-year`: Check when the next leap year is
 
-### HELP UTILITIES:
+### HELP UTILITIES ℹ️
 - `help`: View WYX-CLI Documentation
 - `explain <command?>`: Explain a bash command
-- `ask-gpt`: Start a conversation with ChatGPT
 - `google <query?>`: Google a query

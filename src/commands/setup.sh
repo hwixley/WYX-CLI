@@ -12,6 +12,12 @@ elif [ "$1" = "smart_commit" ]; then
     wyxd.check_keystore "OPENAI_API_KEY"
     wyxd.check_keystore "USE_SMART_COMMIT" "true"
     sys.log.info "You're done!"
+
+elif [ "$1" = "auto_update" ]; then
+    sys.log.info "Setting up auto update..."
+    echo ""
+    wyxd.check_keystore "AUTO_UPDATE" "true"
+    sys.log.info "You're done!"
     
 else
     sys.log.error "Invalid setup command! Try again"
