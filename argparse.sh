@@ -6,7 +6,11 @@ num_args=$#
 date=$(date)
 year="${date:24:29}"
 
-# Load bash classes
+# ~~~~~~~~~~~~~~~~ Load classes ~~~~~~~~~~~~~~~~~~~~~~~~
+#  Load all the bash OOP-style classes to be inherited
+#  by downstream scripts
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 source $WYX_DIR/src/classes/sys/sys.h
 sys sys
 source $WYX_DIR/src/classes/wgit/wgit.h
@@ -16,15 +20,19 @@ wyxd wyxd
 source $WYX_DIR/src/classes/lib/lib.h
 lib lib
 
-# Load source git data
+# ~~~~~~~~~~~~~ Load source git data ~~~~~~~~~~~~~~~~~~~~
+#  Check if the current directory is a git repository,  
+#  and if so, get the branch and remote URLs across the
+#  different git hosting services.			 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 branch=""
 if git rev-parse --git-dir > /dev/null 2>&1; then
 	branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 fi
 remote=$(git config --get remote.origin.url)
-repo_url=$(echo "$remote" | sed 's/[^ \/]*\/\([^ ]*\/[^.]*\).*/\1/')
-repo_url=${repo_url%".git"}
+repo_url=$(echo "$remote" | sed 's/[^ \/]*\/\([^ ]*\/[^.]*\).*/\1/' | sed 's/\.git//')
 git_host=""
+# 
 if [[ $remote == *"github.com"* ]]; then
 	git_host="github"
 	repo_url=${repo_url#"git@github.com:"}
@@ -43,7 +51,11 @@ elif [[ $remote == *"azure.com"* ]]; then
 fi
 
 
-
+# ~~~~~~~~~~~~~~~~ Parse input ~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Parse the input into a command object and run it if 
+#  it is valid. If the command is invalid, show an error
+#  message.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if [ $num_args -eq 0 ]; then
 	# No input - show command info
 	wyxd.command_info
@@ -57,6 +69,8 @@ else
 	inputCommand_path="${WYX_DIR}/src/commands/$(inputCommand.path).sh"
 
 	if [ -f "${inputCommand_path}" ]; then
+		# set trap
+		trap 'inputCommand.unset && echo "trap happening"' EXIT
 		# Valid command found - run it
 		source "${inputCommand_path}" "${@:2}"
 		inputCommand.unset
