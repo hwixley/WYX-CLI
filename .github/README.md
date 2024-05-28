@@ -181,6 +181,7 @@ wyx list-deps
 - `hardware-ports`: View Your Hardware Ports
 - `wpass`: View Your Saved WiFi Passwords
 - `speedtest`: Run A Speed Test On Your Network
+- `port-scan <host?> <port-range?>`: Scan for open ports on a host
 
 ### WEB UTILITIES 🌐
 - `webtext <url?>`: Read-only websites in your terminal

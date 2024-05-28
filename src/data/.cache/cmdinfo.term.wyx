@@ -67,6 +67,7 @@
 - hardware-ports: [33mView Your Hardware Ports[37m
 - wpass: [33mView Your Saved WiFi Passwords[37m
 - speedtest: [33mRun A Speed Test On Your Network[37m
+- port-scan <host?> <port-range?>: [33mScan for open ports on a host[37m
 
 [34mWEB UTILITIES 🌐[37m
 - webtext <url?>: [33mRead-only websites in your terminal[37m
