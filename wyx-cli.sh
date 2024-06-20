@@ -67,7 +67,9 @@ wyx_update() {
 	# } &> /dev/null
 }
 
-wyx_update ""
+if [ "$1" = "" ]; then
+	wyx_update ""
+fi
 
 # ARGPARSE
 
