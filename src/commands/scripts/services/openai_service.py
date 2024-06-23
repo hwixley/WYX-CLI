@@ -1,13 +1,44 @@
 import os, sys
 from openai import OpenAI
-
-# client = OpenAI(api_key=self.API_KEY)
 from logger import error, info
 from termcolor import colored
+
 
 def read_file(file_path):
     with open(file_path, "r") as f:
         return f.read()
+
+def get_git_diff():
+    return f"`git diff` output: {os.popen('git diff').read()}, and `git status` output: {os.popen('git status').read()}."
+
+def format_message(role, message):
+    return { "role": role, "content": message }
+
+
+class Prompt:
+    title: str
+    description: str
+
+    def __init__(self):
+        self.title = self.gen_title()
+        self.description = self.gen_description()
+
+    def gen_title(self) -> str:
+        return self.prompt_eng(
+            instr_prefix="Write a 1 line commit message less than or equal to 50 characters technically describing the following bash git outputs."
+        )
+    
+    def gen_description(self) -> str:
+        return self.prompt_eng(
+            instr_prefix="Write a 2 line commit message technically describing the following bash git outputs.",
+            instr_suffix=f"Do not repeat the title \"{self.title}\"."
+        )
+
+    def prompt_eng(self, instr_prefix: str, instr_suffix: str = "") -> str:
+        context = f"CONTEXT:\nYou are in a team of developers working on a project. You are using Git source control and need to write succinct yet informative commit messages for the changes that have been made by understanding the passed `git diff` and `git status` outputs."
+        instructions = f"INSTRUCTIONS:\n{instr_prefix} {get_git_diff()}\n\n{instr_suffix} Do not mention anything about the branch these changes were made on, however, you can use the branch name as a hint to for the desired commit message contents if it is relevant. Mention specifically which functions, classes or variables were modified/created/deleted and why."
+        return context + "\n"*2 + instructions
+
 
 class OpenAIService:
 
@@ -39,42 +70,22 @@ class OpenAIService:
         
         self.client = OpenAI(api_key=self.API_KEY)
 
-
-    def format_message(self, role, message):
-        return { "role": role, "content": message }
-
-    def prompt_eng(self, instr_prefix: str, instr_suffix: str = "") -> str:
-        context = f"CONTEXT:\nYou are in a team of developers working on a project. You are using Git source control and need to write succinct yet informative commit messages for the changes that have been made by understanding the passed `git diff` and `git status` outputs."
-        instructions = f"INSTRUCTIONS:\n{instr_prefix} {self.get_git_diff()}\n\n{instr_suffix} Do not mention anything about the branch these changes were made on, however, you can use the branch name as a hint to for the desired commit message contents if it is relevant. Mention specifically which functions, classes or variables were modified/created/deleted and why."
-        return context + "\n"*2 + instructions
-
     def get_response(self, prompt, chat_history: list = []):
-        history = chat_history + [self.format_message("user", prompt[:self.MAX_TOKENS])]
+        history = chat_history + [format_message("user", prompt[:self.MAX_TOKENS])]
         completion = self.client.chat.completions.create(model=self.ENGINE,
         messages=history)
         response = completion.choices[0].message.content
         return response
 
-    def get_git_diff(self):
-        return f"`git diff` output: {os.popen('git diff').read()}, and `git status` output: {os.popen('git status').read()}."
-
-    def get_commit_title(self):
+    def get_commit_title(self, title_prompt: str):
         chat_history = [self.ASSISTANT_MESSAGE_DEV]
-        title_prompt = self.prompt_eng(
-            instr_prefix="Write a 1 line commit message less than or equal to 50 characters technically describing the following bash git outputs.",
-            instr_suffix=""
-        )
         title_response = self.get_response(title_prompt, chat_history)
         return f"GPT-commit: {title_response}"
 
-    def get_commit_description(self):
+    def get_commit_description(self, prompt: Prompt = Prompt()):
         chat_history = [self.ASSISTANT_MESSAGE_DEV]
-        title = self.get_commit_title()
-        description_prompt = self.prompt_eng(
-            instr_prefix="Write a 2 line commit message technically describing the following bash git outputs.",
-            instr_suffix="Do not repeat the title \"{title}\"."
-        )
-        description_response = self.get_response(description_prompt, chat_history)
+        title = self.get_commit_title(title_prompt=prompt.title)
+        description_response = self.get_response(prompt.description, chat_history)
         return (title, description_response)
 
     def get_smart_commit(self):
@@ -100,8 +111,8 @@ class OpenAIService:
             else:
                 question_response = self.get_response(latest_question, chat_history)
 
-                chat_history.append(self.format_message("user", latest_question))
-                chat_history.append(self.format_message("assistant", question_response))
+                chat_history.append(format_message("user", latest_question))
+                chat_history.append(format_message("assistant", question_response))
 
                 print(colored("\n🤖:", "blue") + f" {question_response}")
 
