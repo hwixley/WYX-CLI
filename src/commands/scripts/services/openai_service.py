@@ -2,6 +2,7 @@ import os, sys
 from openai import OpenAI
 from logger import error, info
 from termcolor import colored
+from typing import Optional
 
 
 def read_file(file_path):
@@ -9,7 +10,10 @@ def read_file(file_path):
         return f.read()
 
 def get_git_diff():
-    return f"`git diff` output: {os.popen('git diff').read()}, and `git status` output: {os.popen('git status').read()}."
+    os.popen('git reset')
+    diff = os.popen('git diff').read()
+    clean_diff = "\n".join([line for line in diff.split("\n") if line.startswith("+") or line.startswith("-")])
+    return f"Use the following output of calling `git diff` in the terminal of the repository to inform these changes. Any line that starts with \"+++\" represents the git diff for a given file in the repo, all lines below that until another \"+++\" line is found belong to that given file. Any line that starts with a \"+\" is a line addition, and any line that starts with just a \"-\" is a line deletion in the given file git diff.\n\nOutput:\n\"\"\"\n{clean_diff}\n\"\"\"." #, and `git status` output: {os.popen('git status').read()}."
 
 def format_message(role, message):
     return { "role": role, "content": message }
@@ -25,17 +29,17 @@ class Prompt:
 
     def gen_title(self) -> str:
         return self.prompt_eng(
-            instr_prefix="Write a 1 line commit message less than or equal to 50 characters technically describing the following bash git outputs."
+            instr_prefix="Write a 1 line commit message less than or equal to 50 characters technically describing the changes that were made in the given branch."
         )
     
     def gen_description(self) -> str:
         return self.prompt_eng(
-            instr_prefix="Write a 2 line commit message technically describing the following bash git outputs.",
+            instr_prefix="Write a 2 line commit message technically describing the changes that were made in the given branch.",
             instr_suffix=f"Do not repeat the title \"{self.title}\"."
         )
 
     def prompt_eng(self, instr_prefix: str, instr_suffix: str = "") -> str:
-        context = f"CONTEXT:\nYou are in a team of developers working on a project. You are using Git source control and need to write succinct yet informative commit messages for the changes that have been made by understanding the passed `git diff` and `git status` outputs."
+        context = f"CONTEXT:\nYou are in a team of developers working on a project. You are using Git source control and need to write succinct yet informative commit messages for the changes that have been made by understanding the passed `git diff` and `git status` outputs.\n\nFor example, if you saw a notable library (ie. `from argparse import ArgumentParser`) was imported in the git diff this could be used to inform what the commit message should mention (ie. \"setup cli arguments parser\")"
         instructions = f"INSTRUCTIONS:\n{instr_prefix} {get_git_diff()}\n\n{instr_suffix} Do not mention anything about the branch these changes were made on, however, you can use the branch name as a hint to for the desired commit message contents if it is relevant. Mention specifically which functions, classes or variables were modified/created/deleted and why."
         return context + "\n"*2 + instructions
 
