@@ -76,7 +76,6 @@ wgit.wyx_ginit(){
 }
 
 wgit.commit() {
-	git add .
 	if sys.util.empty "$1" ; then
 		if [ -f "${WYX_DATA_DIR}/.env" ]; then
 			if grep -q "OPENAI_API_KEY=" "${WYX_DATA_DIR}/.env" && grep -q "USE_SMART_COMMIT=true" "${WYX_DATA_DIR}/.env" ; then
@@ -101,14 +100,17 @@ wgit.commit() {
 			else
 				sys.log.info "Provide a commit description: (defaults to 'wyx-cli quick commit')"
 				read -r description
+				git add .
 				git commit -m "${description:-wyx-cli quick commit}"
 			fi
 		else
 			sys.log.info "Provide a commit description: (defaults to 'wyx-cli quick commit')"
 			read -r description
+			git add .
 			git commit -m "${description:-wyx-cli quick commit}"
 		fi
 	else
+		git add .
 		git commit -m "${1:-wyx-cli quick commit}"
 	fi
 }
