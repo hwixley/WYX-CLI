@@ -110,7 +110,7 @@ rm -rf <path-of-installation>
 <hr>
 
 ## Dependencies
-View current dependencies for your system by running:
+View current dependencies for your WYX-CLI configuration by running:
 ```
 wyx list-deps
 ```
