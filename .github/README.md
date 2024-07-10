@@ -66,16 +66,23 @@ cd WYX-CLI
 chmod +x setup.sh && ./setup.sh
 ```
 
-4. Reopen your terminal or run `source ~/.bashrc` (`source ~/.zshrc` for unix systems)
+4. Reopen your terminal or run `source ~/.bashrc` (`source ~/.zshrc` for ZSH shells)
 
 Type `wyx` to see the list of commands and start developing some magic!
 
 ## Extra Feature Setup
 
-1. You can use OpenAI's ChatGPT to write commit messages for you (using `git diff` and `git status` outputs) when using the `wyx push` command. <i>This requires an OpenAI API key.</i>
-
+1. GPT Smart Commit - a feature that uses OpenAI's ChatGPT to write informative commit messages for you (using your `git diff` and `git status` outputs) when using the `wyx push` command (or other wyx commands which use push, ie. `wyx nb`, `wyx bpr` etc.). <i>This requires an OpenAI API key.</i>
 ```
 wyx setup smart_commit
+```
+2. Terminal GPT client - a feature that allows you to talk to OpenAI's ChatGPT directly in the terminal using the `wyx ask-gpt` command. <i>This requires an OpenAI API key.</i>
+```
+wyx setup openai_key
+```
+3. WYX-CLI Auto Update - a feature that allows you to toggle auto-updates on your WYX-CLI installation. When turned on this will perform a git pull to the upstream repository whenever you call `wyx` with no arguments (to prevent slowing down regular command usage).
+```
+wyx setup auto_update
 ```
 
 ## Factory-reset Installation
@@ -87,7 +94,7 @@ rm -rf <path-of-installation>
 ```
 
 2. Remove the wyx-cli script setup in your environment file
-   - Open the file in an editor: (`~/.bashrc` for linux systems, and `~/.zshrc` for unix systems)
+   - Open the file in an editor: (`~/.bashrc` or `~/.zshrc` depending on your shell)
      ```
      gedit ~/.bashrc
      ```
@@ -103,7 +110,7 @@ rm -rf <path-of-installation>
 <hr>
 
 ## Dependencies
-View current dependencies for your system by running:
+View current dependencies for your WYX-CLI configuration by running:
 ```
 wyx list-deps
 ```
