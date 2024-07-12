@@ -16,7 +16,7 @@ elif [ "$1" = "smart_commit" ]; then
 elif [ "$1" = "auto_update" ]; then
     sys.log.info "Setting up auto update..."
     echo ""
-    wyxd.check_keystore "AUTO_UPDATE" "true"
+    wyxd.check_keystore "WYX_GIT_AUTO_UPDATE" "true"
     sys.log.info "You're done!"
     
 else
