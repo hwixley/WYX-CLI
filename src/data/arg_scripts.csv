@@ -66,3 +66,4 @@ update-readme,update_readme,"Auto-update the project's readme with the available
 update-cache,update_cache,"Auto-update the project's cache with the available commands",false,,
 pp,pp,"Pull-Push Git Changes to Current Branch",true,,git
 port-scan,port-scan,"Scan for open ports on a host",true,<host?> <port-range?>,nutil
+multiplex,multiplex,"Create a multiplexed window terminal running multiple commands.",<cmd1> <cmd2?> ...,code
