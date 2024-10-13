@@ -433,18 +433,28 @@ sys.util.trim() {
 	echo "$1" | xargs
 }
 
+sys.dependencies.installed() {
+	if [ $(which "$1") != "" ]; then
+		# echo "yes"
+		return 0
+	else
+		# echo "no"
+		return 1
+	fi
+}
+
 sys.dependencies.install() {
 	if sys.os.mac; then
 		sys.log.info "Installing dependencies for macOS..."
 		brew update
-		brew install xclip jq csvkit lynx
+		brew install xclip jq csvkit lynx tmux
 		brew tap teamookla/speedtest
 		brew install speedtest --force
 		pip3 install -r "${WYX_DIR}/requirements.txt"
 	elif sys.os.linux; then
 		sys.log.info "Installing dependencies for Linux..."
 		sudo apt-get update
-		sudo apt-get -y install xclip jq csvkit lynx
+		sudo apt-get -y install xclip jq csvkit lynx tmux
 		curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 		sudo apt-get -y install speedtest
 		pip3 install -r "${WYX_DIR}/requirements.txt"
