@@ -16,6 +16,7 @@
 ### CODE 💲
 - `run <myscript>`: [33mRun Script Aliases[37m
 - `vsc <mydir>`: [33mOpen Directory Aliases in VSCode[37m
+- `multiplex <cmd1> <cmd2?> ...`: [33mCreate a multiplexed window terminal running multiple commands.[37m
 
 ### GIT AUTOMATION 🐙
 - `ginit`: [33mInitialise Git Repository[37m
