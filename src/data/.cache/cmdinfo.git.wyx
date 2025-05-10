@@ -16,6 +16,7 @@
 ### CODE 💲
 - `run <myscript>`: [33mRun Script Aliases[37m
 - `vsc <mydir>`: [33mOpen Directory Aliases in VSCode[37m
+- `multiplex <cmd1> <cmd2?> ...`: [33mCreate a multiplexed window terminal running multiple commands.[37m
 
 ### GIT AUTOMATION 🐙
 - `ginit`: [33mInitialise Git Repository[37m
@@ -90,6 +91,8 @@
 - `weather`: [33mView the weather forecast for your location in the terminal[37m
 - `moon`: [33mView the moon phase[37m
 - `leap-year`: [33mCheck when the next leap year is[37m
+- `quote`: [33mDaily quote[37m
+- `today`: [33mDaily stats[37m
 
 ### HELP UTILITIES ℹ️
 - `help`: [33mView WYX-CLI Documentation[37m

@@ -391,7 +391,11 @@ sys.util.editfile() {
 }
 
 sys.util.openfile() {
-	xdg-open "file:///$1"
+	if sys.os.mac; then
+		open $1
+	else
+		xdg-open "file:///$1"
+	fi
 }
 
 sys.util.openurl() {
@@ -431,6 +435,16 @@ sys.util.inlinesed() {
 
 sys.util.trim() {
 	echo "$1" | xargs
+}
+
+sys.util.file_regex_search() {
+	local dir="$1"
+  	local pattern="$2"
+	if sys.os.mac; then
+		find -E "$dir" -regex "$pattern"
+	else
+		find "$dir" -regextype posix-extended -regex "$pattern"
+	fi
 }
 
 sys.dependencies.installed() {

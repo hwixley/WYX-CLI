@@ -137,6 +137,7 @@ wyx list-deps
 ### CODE 💲
 - `run <myscript>`: Run Script Aliases
 - `vsc <mydir>`: Open Directory Aliases in VSCode
+- `multiplex <cmd1> <cmd2?> ...`: Create a multiplexed window terminal running multiple commands.
 
 ### GIT AUTOMATION 🐙
 - `ginit`: Initialise Git Repository
@@ -211,6 +212,8 @@ wyx list-deps
 - `weather`: View the weather forecast for your location in the terminal
 - `moon`: View the moon phase
 - `leap-year`: Check when the next leap year is
+- `quote`: Daily quote
+- `today`: Daily stats
 
 ### HELP UTILITIES ℹ️
 - `help`: View WYX-CLI Documentation

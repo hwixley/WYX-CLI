@@ -1,12 +1,6 @@
 #!/bin/bash
 
-date=$(date)
-if [[ sys.os.mac ]]; then
-    year="${date:24:30}"
-else
-    year="${date:24:29}"
-fi
-
+year=$(date +%Y)
 if [[ "$year" =~ ^[0-9]*00$ ]]; then
     if [ "$((year % 400))" -eq 0 ]; then
         sys.log.info "$year is a leap year"
