@@ -38,7 +38,7 @@ jobs:
           source: ./.github
           destination: ./_site
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
 
   # Deployment job
   deploy:
