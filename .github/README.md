@@ -212,6 +212,8 @@ wyx list-deps
 - `weather`: View the weather forecast for your location in the terminal
 - `moon`: View the moon phase
 - `leap-year`: Check when the next leap year is
+- `quote`: Daily quote
+- `today`: Daily stats
 
 ### HELP UTILITIES ℹ️
 - `help`: View WYX-CLI Documentation

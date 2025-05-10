@@ -91,6 +91,8 @@
 - weather: [33mView the weather forecast for your location in the terminal[37m
 - moon: [33mView the moon phase[37m
 - leap-year: [33mCheck when the next leap year is[37m
+- quote: [33mDaily quote[37m
+- today: [33mDaily stats[37m
 
 [34mHELP UTILITIES ℹ️[37m
 - help: [33mView WYX-CLI Documentation[37m

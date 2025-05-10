@@ -67,5 +67,5 @@ update-cache,update_cache,"Auto-update the project's cache with the available co
 pp,pp,"Pull-Push Git Changes to Current Branch",true,,git
 port-scan,port-scan,"Scan for open ports on a host",true,<host?> <port-range?>,nutil
 multiplex,multiplex,"Create a multiplexed window terminal running multiple commands.",true,<cmd1> <cmd2?> ...,code
-today,today,"Weather Today in Your Locality",true,,misc
-quote,quote,"Daily quote",true,,misc
+quote,quote,"Daily quote",true,,mutil
+today,today,"Daily stats",true,,mutil

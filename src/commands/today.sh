@@ -22,6 +22,9 @@ echo "${today_moon}"
 sys.log.hR
 sys.log.info "QUOTE:"
 sys.log.hr
-echo "\"${quote_content}\""
+echo ""
+sys.log.info "\"${quote_content}\""
+echo ""
 sys.log.h2 "- ${quote_author}"
+echo ""
 sys.log.hR
