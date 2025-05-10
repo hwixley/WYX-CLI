@@ -12,22 +12,28 @@ if [ "$#" -lt 1 ]; then
     exit 1
 fi
 
-# Create a new tmux session named "my_session"
-SESSION="my_session"
+# Create a new tmux session
+SESSION="wyxcli_multiplex_session"
 tmux new-session -d -s $SESSION
 
 # Create the first window and run the first command
 tmux send-keys "$1" C-m
 
 # Create additional panes for each command
-for i in $(seq 2 $#); do
-    tmux split-window -t $SESSION -h
-    tmux select-layout -t $SESSION tiled
-    tmux send-keys "${!i}" C-m
+num=$(($#))
+args=("$@")
+for i in $(seq 2 "${num}"); do
+    tmux split-window -t "${SESSION}" -h
+    tmux select-layout -t "${SESSION}" tiled
+    if sys.os.mac; then
+        tmux send-keys "${args[i]}" C-m
+    else
+        tmux send-keys "${!i}" C-m
+    fi
 done
 
 # Adjust the layout to tiled
-tmux select-layout -t $SESSION tiled
+tmux select-layout -t "${SESSION}" tiled
 
 # Attach to the tmux session
-tmux attach-session -t $SESSION
+tmux attach-session -t "${SESSION}"
