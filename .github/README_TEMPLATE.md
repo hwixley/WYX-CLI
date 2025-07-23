@@ -63,7 +63,7 @@ cd WYX-CLI
 3. Give permissions to the setup script and run it:
 
 ```
-chmod +x setup.sh && ./setup.sh
+chmod +x setup.sh && source setup.sh
 ```
 
 4. Reopen your terminal or run `source ~/.bashrc` (`source ~/.zshrc` for ZSH shells)
